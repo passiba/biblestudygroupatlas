@@ -85,14 +85,14 @@
     <property name="attributeSource" ref="attributeSource" />
   </bean>-->
   
-  <!--Spring web serice client for retrieval of bible translation -->
+  <!--Spring web serice client for retrieval of bible translation 
   
    <bean id="webServiceTemplate" 
       class="org.springframework.ws.client.core.WebServiceTemplate">
     <property name="marshaller" ref="marshaller" />
     <property name="unmarshaller" ref="marshaller" />
     <property name="defaultUri" value="http://www.gnpcb.org/esv/share/soap/" />
-  </bean>
+  </bean>-->
   
   <bean id="marshaller" 
       class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
@@ -103,7 +103,9 @@
    	
   <bean id="templateClient"
       class="fi.passiba.biblestudy.crosswaybible.webservice.client.BibleVerseClient">
-    <property name="webServiceTemplate" ref="webServiceTemplate" />
+    <property name="marshaller" ref="marshaller" />
+    <property name="unmarshaller" ref="marshaller" />
+    <property name="defaultUri" value="http://www.gnpcb.org/esv/share/soap/" />
   </bean>
 
 </beans>

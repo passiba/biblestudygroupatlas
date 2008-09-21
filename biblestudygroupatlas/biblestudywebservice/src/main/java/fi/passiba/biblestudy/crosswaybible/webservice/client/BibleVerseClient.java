@@ -10,18 +10,15 @@ import fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.Cross
 import fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.DoPassageQueryResponse;
 import java.io.IOException;
 import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
 /**
  *
  * @author haverinen
  */
-public class BibleVerseClient {
+public class BibleVerseClient  extends WebServiceGatewaySupport{
 
-    private WebServiceTemplate webServiceTemplate;
-  
-    public void setWebServiceTemplate(WebServiceTemplate webServiceTemplate) {
-        this.webServiceTemplate = webServiceTemplate;
-    }
+    
 
    
 
@@ -33,7 +30,7 @@ public class BibleVerseClient {
         request.setKey(requestDetails.getKey());
         request.setPassage(requestDetails.getPassage());
         request.setOptions(requestDetails.getOptions());
-        DoPassageQueryResponse response = (DoPassageQueryResponse) webServiceTemplate.marshalSendAndReceive(request);
+        DoPassageQueryResponse response = (DoPassageQueryResponse) getWebServiceTemplate().marshalSendAndReceive(request);
         if (response != null && response.getReturn() != null && response.getReturn().getCrosswayBible() != null) {
             return response.getReturn().getCrosswayBible();
         }
