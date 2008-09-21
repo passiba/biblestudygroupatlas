@@ -8,6 +8,7 @@ import fi.passiba.biblestudy.crosswaybible.webservice.client.BibleVerseClient;
 import fi.passiba.biblestudy.crosswaybible.webservice.client.domain.RequestDetails;
 import fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.request.Options;
 import fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.CrosswayBible;
+import java.math.BigInteger;
 import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
 /**
@@ -61,7 +62,7 @@ public class CrossWayBibleQueryTest extends
       options.setIncludeHeadingHorizontalLines(false);
       options.setIncludeWordIds(false);
       options.setIncludeContentType(true);      
-      
+      options.setLineLength(BigInteger.valueOf(100));
       requestDetails.setOptions(options);
       CrosswayBible bibleChapter=templateBasedClient.doPassageQuery(requestDetails);
       assertNotNull( bibleChapter);
