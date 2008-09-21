@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>fi.passiba.biblestudy</groupId>
+        <artifactId>biblestudymain</artifactId>
+        <version>1.0</version>
+    </parent>
+    <groupId>fi.passiba.biblestudy</groupId>
+    <artifactId>biblestudywar</artifactId>
+    <packaging>war</packaging>
+    <name>biblestudy</name>
+    <version>1.0</version>
+    <repositories>
+ <!--<repository>
+  <id>java.net</id> 
+  <url>https://maven-repository.dev.java.net/nonav/repository</url> 
+  <layout>legacy</layout> 
+  </repository>
+  
+  <repository>
+  <id>java.net</id> 
+  <url>http://download.java.net/maven/2/</url> 
+  <layout>legacy</layout> 
+  </repository>-->
+        <repository>
+            <id>maven</id>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+            <!--  found at https://maven-repository.dev.java.net  -->
+            <id>java.net</id>
+            <url>http://download.java.net/maven/2</url>
+        </repository>
+        <repository>
+            <id>maven-restlet</id>
+            <name>Public online Restlet repository</name>
+            <url>http://maven.restlet.org</url>
+        </repository>
+        <repository>
+            <id>wicket-snaps</id>
+            <url>http://wicketstuff.org/maven/repository</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+    <dependencies>
+        <!--compiled groovy modules jar file -->
+        <dependency>
+            <groupId>fi.passiba.biblestudy</groupId>
+            <artifactId>biblestudygroovy</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>fi.passiba.biblestudy</groupId>
+            <artifactId>biblestudypersistance</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>fi.passiba.biblestudy</groupId>
+            <artifactId>biblestudywebservice</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.6</version>
+            <scope>test</scope>
+        </dependency>
+      
+        <!-- Jdom -->
+        <dependency>
+            <groupId>jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.0</version>
+        </dependency> 
+        <!--  WICKET DEPENDENCIES -->
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket</artifactId>
+            <version>${wicket.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-extensions</artifactId>
+            <version>${wicket.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-spring-annot</artifactId>
+            <version>${wicket.version}</version>
+        </dependency>
+        <!-- LOGGING DEPENDENCIES - LOG4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+        </dependency>
+
+        <!--  JUNIT DEPENDENCY FOR TESTING -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        
+       
+        <!-- SPRING DEPENDENCY FOR THE EXAMPLE APP -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!--
+        
+       
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.2.1.ga</version>
+           <scope>test</scope>
+           
+        </dependency>-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.4</version>
+            <scope>provided</scope>
+        </dependency>
+     
+         
+        <!-- Google maps wicket extension gmap dependencies -->
+        <dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicket-contrib-gmap2</artifactId>
+            <version>${wicket.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicketstuff-dojo</artifactId>
+            <version>1.3.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>biblestudy</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <configuration>
+                    <container>
+                        <containerId>tomcat6x</containerId>
+                        <type>remote</type>
+                        <zipUrlInstaller>
+                            <url>http://www.nic.funet.fi/pub/mirrors/apache.org/tomcat/tomcat-6/v6.0.16/bin/apache-tomcat-6.0.16.zip</url>
+                            <installDir>${installDir}</installDir>
+                        </zipUrlInstaller>
+                    </container>
+                    <configuration>
+                        <home>C:/java/tools/apache-tomcat-6.0.16</home>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.hostname>localhost</cargo.hostname>
+                            <cargo.servlet.port>8080</cargo.servlet.port>
+                            <cargo.remote.username>admin</cargo.remote.username>
+                            <cargo.remote.password>admin</cargo.remote.password>
+                        </properties>
+                    </configuration>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/java</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
+    </build>
+    <profiles>
+        <profile>
+            <id>tomcat6x</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <containerId>tomcat6x</containerId>
+            </properties>
+        </profile>
+        <profile>
+            <id>itest</id>
+            <activation>
+                <property>
+                    <name>itest</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>surefire-it</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <configuration>
+                                    <excludes>
+                                        <exclude>none</exclude>
+                                    </excludes>
+                                    <includes>
+                                        <include>**/*Test*.java</include>
+                                    </includes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <properties>
+        <installDir>C:/java/tools/SUN/Apache Tomcat 6.0.16</installDir>
+        <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
+        <wicket.version>1.3.4</wicket.version>
+         <!-- <wicket.version>1.4-m3</wicket.version>-->
+        <slf4j.version>1.4.3</slf4j.version>
+        <spring.version>2.0.8</spring.version>
+        <spring.ws.version>1.0.4</spring.ws.version>
+        <spring.modules.version>0.8a</spring.modules.version>
+    </properties>
+</project>

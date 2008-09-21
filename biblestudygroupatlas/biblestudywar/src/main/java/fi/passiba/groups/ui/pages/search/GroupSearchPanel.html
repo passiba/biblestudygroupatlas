@@ -1,0 +1,17 @@
+<wicket:panel>
+<form wicket:id="groupsearchForm">
+    
+    <div id="quicksearch">
+        <h5><wicket:message key="groupsearch">Haku</wicket:message></h5>
+			<!---->
+             <span wicket:id="groupsearchcriteria">
+                                 <label><input type="radio" class="radio" />Piiri</label>
+				<label><input type="radio" class="radio" />Paikkakunta</label>
+                                <label><input type="radio" class="radio"/>Käyttäjätunnus</label>
+             </span>
+                                 <input wicket:id="groupsearchString" type="text" class="text_long" name="search"/>
+				<input type="image" src="images/btn_HAE.gif" value="HAE" class="button" />
+                              
+    </div>
+</form>
+</wicket:panel>

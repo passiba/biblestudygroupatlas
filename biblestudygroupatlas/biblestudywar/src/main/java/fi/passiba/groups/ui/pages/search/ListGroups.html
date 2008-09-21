@@ -1,0 +1,97 @@
+<wicket:extend>
+<!-- sub_navi -->
+<div id="sub_navi">
+    <div class="start"><!-- MSIE fix --></div>
+    <h4><wicket:message key="listGroupsTitle"/></h4>
+    <ul class="level1">
+        <li><a href="#"><wicket:message key="groupInfo"/>
+            </a></li>
+         <li>   <ul class="level2">
+                <li><a href="#"><wicket:message key="groupcalendar"/>
+                    </a></li>
+            </ul>
+        </li>
+        <li class="active"><wicket:message key="searchresultgroups"/></li>
+    </ul>
+    <div class="end"><!-- MSIE fix --></div>
+</div>
+
+<div id="content">
+    <div id="navipath">
+        <ul>
+            <li><a href="#"><wicket:message key="frontpage"/>
+                
+                
+                </a>-</li>
+           
+            
+            <li><wicket:message key="searchresultgroups"/></li>
+        </ul>	
+    </div>
+    <div class="start"><!-- MSIE fix --></div>
+    <div class="data">
+        
+        <h1><wicket:message key="searchresultgroups"/></h1>
+        
+        <div class="data_row">	
+        <div class="pagination">
+                <h4>
+                    
+                </h4>
+                <div class="count_jump">
+                    
+                    <div class="jump">
+                        Siirry:
+                        <select>
+                            <option>1-10</option>
+                            <option>11-20</option>
+                        </select>
+                    </div>
+                </div>	
+                <div class="buttons">
+                    <a wicket:id="previous" href="#"><img src="images/arrow_left_off.gif" alt="Edellinen" title="Edellinen" /></a>|
+                    <a wicket:id="next" href="#"><img src="images/arrow_right.gif" alt="Seuraava" title="Seuraava" /></a>
+                </div>
+            </div>
+        
+         <form>
+                <table class="tbl_list">
+                  
+                    <thead>
+                        <tr>
+                           
+                            <th><wicket:message key="name"/></th>
+                            <th><wicket:message key="congregationname"/></th>
+                            <th><wicket:message key="type"/></th>
+                            <th><wicket:message key="congregationwebsiteurl"/></th>
+     
+                            <th><wicket:message key="action"/></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div wicket:id="groups">  
+                        <tr class="dark">
+                            <td> <a wicket:id="view" href="#"><span wicket:id="name"></span>
+                            </a></td>
+                            <td> <span wicket:id="congregationname"></span></td>
+                            <td wicket:id="type"></td>
+                            <td><a wicket:id="link" href="#"><span wicket:id="congregationwebsiteurl"></span></a></td>
+                            <td>
+                               <input wicket:id="edit" type="image" src="images/btn_Muokkaa.gif" value="Muokkaa" class="button" />
+                               <input wicket:id="delete" type="image" src="images/btn_POISTA.gif" value="Poista" class="button" />
+                            </td>
+                            
+                        </tr> 
+                        
+                    </div>
+                
+                    </tbody>
+                
+                </table>
+            </form>	
+	
+    </div>
+    </div>
+</div>
+  <div wicket:id="bottomPanel" style="width: 100%; height: 400px;"></div>
+</wicket:extend>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:jee="http://www.springframework.org/schema/jee"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd 
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+            
+   <tx:annotation-driven transaction-manager="transactionManager"/>
+    <bean id="placeholderConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:application.properties</value>
+        </property>
+        <property name="systemPropertiesModeName">
+            <value>SYSTEM_PROPERTIES_MODE_OVERRIDE</value>
+        </property>
+    </bean>
+   
+    
+    
+    <bean id="IBibleDataMining" class="fi.passiba.services.biblestudy.datamining.BibleDataMiningImp">
+        <property name="datasourceDAO" ref="BookDatasouceDAO" />
+    </bean>
+    <bean id="IBibleStudyService" class="fi.passiba.biblestudy.restlet.BibleStudyServiceImp">
+        <property name="translationDao" ref="BibletranslationDAO"/>
+        <property name="sectionDao" ref="BooksectionDAO" />
+        <property name="bookDAO" ref="BookDAO" />
+        <property name="chapterDao" ref="ChapterDAO" />
+        <property name="verseDAO" ref="VerseDAO" />
+    </bean>
+        <!-- Quartz sceduling on single method -->
+    <bean id="dailyBibleDataRetrievalJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="IBibleDataMining"/>
+        <property name="targetMethod" value="retrieveBookdata" />
+    </bean>
+        
+     <!--
+            A CronTriggerBean, scheduler to run before mightnight every night
+             cronExpresson=sec_min_hours_dayOfMonth_Month_DayOfWeek
+    -->
+    <bean id="cronBibleBookDataTrigger"
+      class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="dailyBibleDataRetrievalJob"/>
+        
+        <property name="cronExpression" value="0 40 20 * * ?" />
+    </bean>
+
+   <!--
+     A SchedulerFactoryBean to start the cronBibleBookDataTrigger.
+    -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronBibleBookDataTrigger"/>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- A meta-data based assembler, enables metadata specific services exposed as (JMX)managed beans-->
+  <bean id="assembler"
+      class="org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler">
+    <property name="attributeSource" ref="attributeSource" />
+  </bean>
+  
+  <bean id="attributeSource"
+      class="org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource" />
+      
+  <!-- The metadata-driven MBeanExporter-->
+  <bean class="org.springframework.jmx.export.MBeanExporter">
+    <property name="namingStrategy" ref="namingStrategy" />
+ 	  <property name="assembler" ref="assembler" />
+    <property name="autodetectModeName" value="AUTODETECT_ASSEMBLER" />
+  </bean>
+  
+  <!-- A meta-data based naming strategy> -->
+  <bean id="namingStrategy"
+      class="org.springframework.jmx.export.naming.MetadataNamingStrategy">
+    <property name="attributeSource" ref="attributeSource" />
+  </bean>
+  
+  <!--Spring web serice client for retrieval of bible translation -->
+  
+   <bean id="webServiceTemplate" 
+      class="org.springframework.ws.client.core.WebServiceTemplate">
+    <property name="marshaller" ref="marshaller" />
+    <property name="unmarshaller" ref="marshaller" />
+    <property name="defaultUri" value="http://www.gnpcb.org/esv/share/soap/" />
+  </bean>
+  
+  <bean id="marshaller" 
+      class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+  
+        <property name="contextPath" value="fi.passiba.biblestudy.crosswaybible.webservice.client"/>
+        <property name="schema" value="classpath:crossway.bible.xsd"/>  
+   </bean>
+  <bean id="marshallingClient"
+      class="fi.passiba.biblestudy.crosswaybible.webservice.client.BibleVerseClient">
+    <property name="webServiceTemplate" ref="webServiceTemplate" />
+  </bean>
+
+</beans>
