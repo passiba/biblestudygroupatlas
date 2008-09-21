@@ -1,47 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:ns1="http://www.crosswaybibles.org/soap/">
   <xs:import namespace="http://www.crosswaybibles.org/soap/" schemaLocation="ns1.xsd"/>
- 
- <xs:element name="doPassageQuery">
-       <xs:complexType>
-         
-           <xs:attribute name="key" use="required" type="xs:string"/>
-           <xs:attribute name="passage" use="required" type="xs:string"/>
-       </xs:complexType>
- </xs:element>
- <xs:element name="outputOptions">
-     <xs:complexType>  
-         <xs:all>
-             <xs:element name="output-format" type="xs:string"/>
-              <xs:element name="include-passage-references" type="xs:boolean"/>
-             <xs:element name="include-first-verse-numbers" type="xs:boolean"/>
-             <xs:element name="include-verse-numbers" type="xs:boolean"/>
-             <xs:element name="include-footnotes" type="xs:boolean"/>
-             <xs:element name="include-footnote-links" type="xs:boolean"/>
-             <xs:element name="include-headings" type="xs:boolean"/>
-             <xs:element name="include-subheadings" type="xs:boolean"/>
-             <xs:element name="include-surrounding-chapters" type="xs:boolean"/>
-             <xs:element name="include-short-copyright" type="xs:boolean"/>
-           
-             <xs:element name="include-xml-declaration" type="xs:boolean"/>
-             <xs:element name="include-doctype" type="xs:boolean"/>
-             <xs:element name="include-quote-entities" type="xs:boolean"/>
-             <xs:element name="include-simple-entities" type="xs:boolean"/>
-             <xs:element name="include-cross-references" type="xs:boolean"/>
-             <xs:element name="include-line-breaks" type="xs:boolean"/>
-             <xs:element name="include-virtual-attributes" type="xs:boolean"/>
-             <xs:element name="base-element" type="xs:string"/>
-             <xs:element name="include-passage-horizontal-lines" type="xs:boolean"/>
-             <xs:element name="include-heading-horizontal-lines" type="xs:boolean"/>
-             <xs:element name="include-selahs" type="xs:boolean"/>
-             <xs:element name="include-word-ids" type="xs:boolean"/>
-             <xs:element name="include-content-type" type="xs:boolean"/>
-             <xs:element name="line-length" type="xs:integer"/>
-          
-         </xs:all>
-     </xs:complexType>
-     </xs:element>
-      
+
  <xs:element name="doPassageQueryResponse">
     <xs:complexType>
       <xs:sequence>

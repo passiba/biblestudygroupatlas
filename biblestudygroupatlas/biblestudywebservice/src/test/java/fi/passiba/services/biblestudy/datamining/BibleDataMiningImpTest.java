@@ -5,6 +5,7 @@
 
 package fi.passiba.services.biblestudy.datamining;
 
+import fi.passiba.biblestudy.services.datamining.BibleDataMiningImp;
 import fi.passiba.hibernate.HibernateUtility;
 import fi.passiba.services.biblestudy.datamining.dao.BookDatasouceDAO;
 import junit.framework.TestCase;
