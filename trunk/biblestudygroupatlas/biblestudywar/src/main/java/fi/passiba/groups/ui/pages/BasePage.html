@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>BiblegroupsAtlas</title>
+        <wicket:link>
+		<link rel="stylesheet" type="text/css" media="all" href="css/styles.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/content_frontpage.css" />
+		<link rel="stylesheet" type="text/css" media="print" href="css/updates.css" />
+	</wicket:link>
+                 <script language="javascript" type="text/javascript" src="js/scripts.js"></script>
+</head>
+
+<body>
+
+<div id="main">
+	
+	<!-- header -->
+	<div id="header">
+		<div id="logo">
+                     <wicket:link>
+                         <img src="bibleimages/rakas_raamattu_2007.jpg" alt="Rakas raamattu " width="113" height="68"/>
+                     </wicket:link>
+                 </div>
+		<span wicket:id="searchPanel"></span>
+		<div id="top_right">
+			
+                        <span wicket:id="userPanel"></span>
+		</div>
+	</div>
+	<!-- // header -->
+	
+	<!-- navi -->
+	<div id="navi">
+		<div class="start"><!-- MSIE fix --></div>
+		<ul>
+			
+                        
+                        
+                        <li wicket:id="menus">
+                            <a href="" wicket:id="link">
+                                <span wicket:id="caption"></span>
+                            </a>
+                        </li>
+		</ul>
+		<div class="end"><!-- MSIE fix --></div>
+		<span wicket:id="logoutPanel"></span>
+	</div>
+	<!-- // navi -->      
+<!-- content_area -->
+<div id="content_area">
+	 <wicket:child/>
+
+	
+    <!-- footer -->
+        <div id="footer"><wicket:message key="footer_text">Elä elävää elämää - maista elävän lähteen vettä</wicket:message></div>
+         
+        <span wicket:id="feedback" />
+         
+    <!-- // footer -->
+</div>
+</div>
+</body>
+</html>

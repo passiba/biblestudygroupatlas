@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="obligatoryfield">* pakollinen tieto</entry>
+    
+    <entry key="infotitle">Anna Ryhmän  tiedot</entry>
+    <entry key="infodes">Anna ryhmän tiedot ja lisää ryhmän kontakihenkilö olemassa olevista käyttäjistä tai luo uusi käyttäjä kontaktihenkilöksi Admin-roolilla.</entry>
+       
+    <entry key="groupdetails.title">Ryhmän tiedot</entry>
+    <entry key="groupdetails.summary">Anna uuden ryhmän ykstyiskohtaiset tiedot</entry>
+    <entry key="confirmation.title">Vahvistus</entry>
+    <entry key="confirmation.summary">Ole hyvä ja vahvista '${name}' ryhmän luominen</entry>
+    <entry key="confirmation.content">Olet luomassa uutta ryhmöö '${name} ,joka on osana '${congregationname}' seurakunnan pienryhmä toimintaa.
+    
+     Haluatko todella luoda uuden Pienryhmän ? \
+	Paina,Hyväksy kun olet valmis lisäämään uuden pienryhmän.
+    </entry>
+    <entry key="name">Ryhmän nimi</entry>
+    <entry key="congregationemail">Seurakunnan sähköposti</entry>
+    <entry key="congregationname">Seurakunnan nimi</entry>
+    <entry key="congregationwebsiteurl">Seurk. kotisivut</entry>
+    <entry key="assignContacperson">Anna Kontaktihenkilö</entry>
+	 
+    <entry key="grouptype.title">Ryhmän tyyppi</entry>
+    <entry key="grouptype.summary">Ole hyvä ja anna ryhmälle '${name}' ryhmätyyppi</entry>
+  
+	
+    <entry key="grouptypes">Ryhmän tyyppi </entry>
+   
+     <entry key="groupcontacperson.title">Ryhmän kontaktihenkilö</entry>
+     <entry key="groupcontacperson.summary">Ole hyvä ja anna ryhmälle '${name}' kontaktihenkilö</entry>
+     
+     <entry key="contacttile">Yhteyshenkilön haku</entry>
+      <entry key="contactretrievalInfo">Ole hyvä ja kirjoita hakukriteerit: maa ja kaupunki hakukenttiin</entry>
+     <entry key="contactcountry">Hakumaa  </entry>
+     <entry key="contactcity">Hakukaupunki </entry>
+     <entry key="contactperson">Kontakihenkilö</entry> 
+     
+      <entry key="selectedContactPersonAddressInfo">Valitun yhteyshenkilön osoite tiedot</entry>
+     
+	 
+    <entry key="firstName">Etunimi</entry>
+    <entry key="lastName">Sukunimi</entry>
+    <entry key="group">Ryhmä</entry>
+   
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    <entry key="rolesSetName">Roolien nimet</entry>
+    <entry key="roles">Käyttäjälle annetut roolit</entry>
+    
+     <entry key="username">Käyttäjätunnus</entry>
+     <entry key="email">Sähköposti</entry>
+     <entry key="confirmpassword">Vahvista salasana</entry>
+     
+	 
+	 
+	 
+     <entry key="addresstitle">Osoite tiedot</entry>
+     <entry key="address.summary">Lisää ryhmälle '${name}' osoitetiedot</entry>
+     <entry key="phone">Puhelin</entry>
+     <entry key="addr1">Katuosoite</entry>
+     <entry key="addr2">Katuosoite 2</entry>
+     <entry key="city">Kaupunki</entry>
+     <entry key="zip">Postinumero</entry>
+     <entry key="country">Maa</entry>
+         <entry key="selectedCountry">Valittu Maa</entry>
+     <entry key="state">Lääni</entry>
+    
+    
+</properties>

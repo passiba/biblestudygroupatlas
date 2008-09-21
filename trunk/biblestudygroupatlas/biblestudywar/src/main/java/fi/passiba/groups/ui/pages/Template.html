@@ -1,0 +1,88 @@
+<wicket:border>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="fi"/>
+<title>Raamattupiiri - Etusivu</title>
+        <wicket:link>
+		<link rel="stylesheet" type="text/css" media="all" href="css/styles.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/content_frontpage.css" />
+		<link rel="stylesheet" type="text/css" media="print" href="css/updates.css" />
+	</wicket:link>
+                 <script language="javascript" type="text/javascript" src="js/scripts.js"></script>
+</head>
+
+<body>
+
+<div id="main">
+	
+	<!-- header -->
+	<div id="header">
+		<div id="logo">
+                     <wicket:link>
+                         <img src="bibleimages/rakas_raamattu_2007.jpg" alt="Rakas raamattu " width="113" height="68"/>
+                     </wicket:link>
+                 </div>
+		<div id="quicksearch">
+			<h5>Haku</h5>
+			<form wicket:id="searchForm">
+                             <span wicket:id="searchcriteria">
+				<label><input type="radio" class="radio" />Piiri</label>
+				<label><input type="radio" class="radio" />Paikkakunta</label>
+				<label><input type="radio" class="radio"/>Hakusana</label>
+                             </span>
+                                 <input type="text" class="text_long" />
+				<input type="image" src="images/btn_HAE.gif" value="HAE" class="button" />
+				<a href="#">Laajennettu haku &gt;</a><br/>
+			</form>
+		</div>
+		<div id="top_right">
+			<div id="lang">
+				<ul>
+					<li>suomeksi</li>
+					<li>|</li>
+					<li><a href="#">in English</a></li>
+				</ul>
+			</div>
+			<div id="user_info">
+				<span class="bold">Etunimi Sukunimi</span>
+				<span>Espoon leppävaaran raamattupiiri</span>
+			</div>
+		</div>
+	</div>
+	<!-- // header -->
+	
+	<!-- navi -->
+	<div id="navi">
+		<div class="start"><!-- MSIE fix --></div>
+		<ul>
+			<li><a wicket:id="frontPage">Etusivu</a></li>
+			<li><a wicket:id="groupSelection">Piirin valinta</a></li>
+			<li><a wicket:id="groupInfo">Piirin tiedot</a></li>
+			<li><a wicket:id="readBibleverses">Luetut kappaleet</a></li>
+			<li><a wicket:id="users">Käyttäjät</a></li>
+		</ul>
+		<div class="end"><!-- MSIE fix --></div>
+		<div id="logout">
+			<ul>
+				<li><a wicket:id="help">Ohjeet</a></li>
+				<li class="padding_top_5px">|</li>
+				<li><a wicket:id="logout">Kirjaudu ulos</a></li>
+			</ul>
+		</div>	
+	</div>
+	<!-- // navi -->      
+<!-- content_area -->
+<div id="content_area">
+	 <wicket:child/>
+
+	
+    <!-- footer -->
+        <div id="footer">Elä elävää elämää - maista elävän lähteen vettä</div>
+    <!-- // footer -->
+</div>
+</div>
+</body>
+</html>
+</wicket:border>

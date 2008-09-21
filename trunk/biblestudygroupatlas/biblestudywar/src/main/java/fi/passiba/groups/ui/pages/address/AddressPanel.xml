@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+     <entry key="addr1">Katuosoite</entry>
+     <entry key="addr2">Katuosoite 2</entry>
+     <entry key="city">Kaupunki</entry>
+     <entry key="zip">Postinumero</entry>
+     <entry key="country">Maa</entry>
+     <entry key="selectedCountry">Valittu Maa</entry>
+     <entry key="state">Lääni</entry>
+     
+</properties>

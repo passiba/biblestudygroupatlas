@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/biblestudy-1.0.0">
+  <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="common" prefix="localhost_biblestudy_access_log." resolveHosts="false" suffix=".txt"/>
+  <!-- <Valve className="org.apache.catalina.valves.RemoteHostValve" allow="tyomuuli,localhost"/> -->
+</Context>
