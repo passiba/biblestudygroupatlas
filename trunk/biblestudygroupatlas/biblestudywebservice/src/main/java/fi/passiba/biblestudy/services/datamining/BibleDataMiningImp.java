@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package fi.passiba.services.biblestudy.datamining;
+package fi.passiba.biblestudy.services.datamining;
 
 import fi.passiba.services.biblestudy.datamining.dao.IBookDatasouceDAO;
 import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
