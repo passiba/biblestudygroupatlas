@@ -94,17 +94,23 @@
     <property name="defaultUri" value="http://www.gnpcb.org/esv/share/soap/" />
   </bean>-->
   
-  <bean id="marshaller" 
-      class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+  <bean id="messageSender" class="org.springframework.ws.transport.http.HttpUrlConnectionMessageSender">
+      <property name="acceptGzipEncoding" value="true" />
+  </bean>
+  <bean id="marshaller" class="org.springframework.oxm.castor.CastorMarshaller">
   
-        <property name="contextPath" value="fi.passiba.biblestudy.crosswaybible.webservice.client"/>
-        <property name="schema" value="classpath:crossway.bible.xsd"/>  
+        <property name="mappingLocation" value="classpath:mapping.xml" />
+       <!-- <property name="schema" value="classpath:crossway.bible.xsd"/>  -->
    </bean>
    	
   <bean id="templateClient"
       class="fi.passiba.biblestudy.crosswaybible.webservice.client.BibleVerseClient">
     <property name="marshaller" ref="marshaller" />
     <property name="unmarshaller" ref="marshaller" />
+    <property name="messageSender" ref="messageSender"/>
+    <property name="messageFactory">
+            <bean class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory"/>
+    </property>
     <property name="defaultUri" value="http://www.gnpcb.org/esv/share/soap/" />
   </bean>
 

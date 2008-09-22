@@ -62,13 +62,12 @@ public class CrossWayBibleQueryTest extends
       options.setIncludeHeadingHorizontalLines(false);
       options.setIncludeWordIds(false);
       options.setIncludeContentType(true);      
-      options.setLineLength(BigInteger.valueOf(100));
+      options.setLineLength(Integer.valueOf(100));
       requestDetails.setOptions(options);
       CrosswayBible bibleChapter=templateBasedClient.doPassageQuery(requestDetails);
       assertNotNull( bibleChapter);
       assertNotNull( bibleChapter.getPassage());
-      assertNotNull( bibleChapter.getPassage().getReference());
-      assertEquals(bibleChapter.getPassage().getReference(), requestDetails.getPassage());
+    
    }
 
 }
