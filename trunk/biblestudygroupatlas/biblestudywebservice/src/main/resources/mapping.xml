@@ -102,12 +102,12 @@
         ns-uri=
             "http://www.crosswaybibles.org/soap/"
         ns-prefix="tns" />
-        <field name="_return"
+        <!--<field name="_return"
         type="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.Return" required="true">
             <bind-xml name="return" node="element"/>
-        </field>
+        </field>-->
     </class>
-    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.Return">
+   <!-- <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.Return">
        <map-to name="return"/>
         <field name="crosswayBible"
         type="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.CrosswayBible"
@@ -148,6 +148,6 @@
         <field name="versenum" type="integer">
             <bind-xml name="verse-num" node="element" />
         </field>
-    </class>
+    </class>-->
 </mapping>
 
