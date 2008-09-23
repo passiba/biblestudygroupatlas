@@ -6,7 +6,7 @@
 //
 
 
-package fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.request;
+package fi.passiba.biblestudy.crosswaybible.webservice.client.request;
 
 
 /*@XmlAccessorType(XmlAccessType.FIELD)

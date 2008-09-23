@@ -10,7 +10,7 @@
   From Listing 9.4.
  -->
 <mapping xmlns="http://castor.exolab.org/">
-    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.request.doPassageQueryRequest">
+    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.request.doPassageQueryRequest">
         <map-to xml="doPassageQueryRequest"  
             ns-uri=
             "http://www.springinaction.com/poker/schemas" 
@@ -21,11 +21,11 @@
         <field name="passage" type="string" required="true">
             <bind-xml name="passage" node="element"/>
         </field>
-        <field name="options" type="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.request.Options" required="true">
+        <field name="options" type="fi.passiba.biblestudy.crosswaybible.webservice.client.request.Options" required="true">
             <bind-xml name="options" node="element" required="true" />
         </field>
     </class>
-    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.request.Options" required="true">
+    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.request.Options" required="true">
         <map-to name="options"/>
         <field name="outputFormat" type="string">
             <bind-xml name="output-format" node="element"/>
@@ -97,50 +97,50 @@
             <bind-xml name="line-length" node="element"/>
         </field>
     </class>
-    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.DoPassageQueryResponse">
+    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.response.DoPassageQueryResponse">
         <map-to xml="doPassageQueryResponse"  
         ns-uri=
             "http://www.crosswaybibles.org/soap/"
         ns-prefix="tns" />
         <!--<field name="_return"
-        type="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.Return" required="true">
+        type="fi.passiba.biblestudy.crosswaybible.webservice.client.response.Return" required="true">
             <bind-xml name="return" node="element"/>
         </field>-->
     </class>
-   <!-- <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.Return">
+   <!-- <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.response.Return">
        <map-to name="return"/>
         <field name="crosswayBible"
-        type="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.CrosswayBible"
+        type="fi.passiba.biblestudy.crosswaybible.webservice.client.response.CrosswayBible"
         required="true">
             <bind-xml name="crossway-bible" node="element" />
         </field>
     </class>
-    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.CrosswayBible">
+    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.response.CrosswayBible">
        <map-to name="crossway-bible"/>
         <field name="passage"
-        type="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.Passage"
+        type="fi.passiba.biblestudy.crosswaybible.webservice.client.response.Passage"
         required="true">
             <bind-xml name="passage" node="element" />
         </field>
     </class>
-    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.Passage">
+    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.response.Passage">
        <map-to name="passage"/>
         <field name="content"
-        type="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.Content"
+        type="fi.passiba.biblestudy.crosswaybible.webservice.client.response.Content"
         required="true">
             <bind-xml name="content" node="element" />
         </field>
     </class>
-    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.Content">
+    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.response.Content">
        <map-to name="content"/>
         <field name="verseUnit"
         collection="array"
-        type="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.VerseUnit"
+        type="fi.passiba.biblestudy.crosswaybible.webservice.client.response.VerseUnit"
         required="true">
             <bind-xml name="verse-unit" node="element" />
         </field>
     </class>
-    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.VerseUnit">
+    <class name="fi.passiba.biblestudy.crosswaybible.webservice.client.response.VerseUnit">
        <map-to name="verse-unit"/>
         <field name="heading" type="string">
             <bind-xml name="heading" node="element" />

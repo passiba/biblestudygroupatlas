@@ -87,7 +87,7 @@
 					${hibernate.dialect}
                 </prop>
                 <prop key="hibernate.hbm2ddl.auto">
-					create-drop
+					update
                 </prop>
                 <prop key="current_session_context_class">managed 
                 </prop>

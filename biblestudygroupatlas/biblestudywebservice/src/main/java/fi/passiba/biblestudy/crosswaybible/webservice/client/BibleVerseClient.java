@@ -5,9 +5,9 @@
 package fi.passiba.biblestudy.crosswaybible.webservice.client;
 
 import fi.passiba.biblestudy.crosswaybible.webservice.client.domain.RequestDetails;
-import fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.request.doPassageQueryRequest;
-import fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.CrosswayBible;
-import fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.DoPassageQueryResponse;
+import fi.passiba.biblestudy.crosswaybible.webservice.client.request.doPassageQueryRequest;
+import fi.passiba.biblestudy.crosswaybible.webservice.client.response.CrosswayBible;
+import fi.passiba.biblestudy.crosswaybible.webservice.client.response.DoPassageQueryResponse;
 import java.io.IOException;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 

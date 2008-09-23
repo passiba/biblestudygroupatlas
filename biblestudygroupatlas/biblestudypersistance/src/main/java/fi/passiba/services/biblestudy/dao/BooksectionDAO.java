@@ -22,4 +22,10 @@ public class BooksectionDAO extends BaseDaoHibernate<Booksection>  implements IB
         crit.createCriteria("bibletranslation").add(Restrictions.eq("id", bibletranslationid));
         return crit.list();
     }
+
+    public List<Booksection> findBookSectionByBibleTranslationId(long id) {
+        Criteria crit = super.getSessionFactory().getCurrentSession().createCriteria(getQueryClass());
+        crit.createCriteria("bibletranslation").add(Restrictions.eq("id", id));
+        return crit.list();
+    }
 }

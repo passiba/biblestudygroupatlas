@@ -5,9 +5,16 @@
 
 package fi.passiba.biblestudy.services.datamining;
 
+import fi.passiba.services.biblestudy.dao.IBibletranslationDAO;
+import fi.passiba.services.biblestudy.dao.IBooksectionDAO;
+import fi.passiba.services.biblestudy.dao.IBookDAO;
+import fi.passiba.services.biblestudy.dao.IChapterDAO;
 import fi.passiba.services.biblestudy.datamining.dao.IBookDatasouceDAO;
 import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
+import fi.passiba.services.biblestudy.persistance.Bibletranslation;
 import fi.passiba.services.biblestudy.persistance.Book;
+import fi.passiba.services.biblestudy.persistance.Booksection;
+import fi.passiba.services.biblestudy.persistance.Chapter;
 import java.io.FileNotFoundException;
 import java.util.List;
 import org.springframework.jmx.export.annotation.ManagedOperation;
@@ -22,14 +29,51 @@ import org.webharvest.runtime.Scraper;
 @ManagedResource(objectName="biblestudy:name=BibleDataMining")
 public class BibleDataMiningImp implements IBibleDataMining {
     
-      private IBookDatasouceDAO datasourceDAO= null;
-
+    private IBookDatasouceDAO datasourceDAO= null;
+    private IBibletranslationDAO translationDAO=null;
+    
+    private IBooksectionDAO booksectionDAO=null;
+    private IBookDAO bookDAO=null;
+    
+    private IChapterDAO chapterDAO=null;
     public IBookDatasouceDAO getDatasourceDAO() {
         return datasourceDAO;
     }
 
     public void setDatasourceDAO(IBookDatasouceDAO datasourceDAO) {
         this.datasourceDAO = datasourceDAO;
+    }
+
+    public IBibletranslationDAO getTranslationDAO() {
+        return translationDAO;
+    }
+
+    public void setTranslationDAO(IBibletranslationDAO translationDAO) {
+        this.translationDAO = translationDAO;
+    }
+
+    public IBookDAO getBookDAO() {
+        return bookDAO;
+    }
+
+    public void setBookDAO(IBookDAO bookDAO) {
+        this.bookDAO = bookDAO;
+    }
+
+    public IBooksectionDAO getBooksectionDAO() {
+        return booksectionDAO;
+    }
+
+    public void setBooksectionDAO(IBooksectionDAO booksectionDAO) {
+        this.booksectionDAO = booksectionDAO;
+    }
+
+    public IChapterDAO getChapterDAO() {
+        return chapterDAO;
+    }
+
+    public void setChapterDAO(IChapterDAO chapterDAO) {
+        this.chapterDAO = chapterDAO;
     }
     
     @ManagedOperation(description="Retrieve daily new section of books of bible")
@@ -72,6 +116,21 @@ public class BibleDataMiningImp implements IBibleDataMining {
     }
 
     public List<Book> findGAllRetrievedBooksbyTranslation() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    public List<Bibletranslation> findAllBibleTranslations() {
+         return translationDAO.getAll();
+    }
+
+    public List<Booksection> findBookSectionByBibleTranslationId(long id) {
+        return booksectionDAO.findBookSectionByBibleTranslationId(id);
+    }
+
+    public List<Book> findBooksByBooksectionId(long id) {
+       return bookDAO.findBooksByBooksectionId(id);
+    }
+
+    public List<Chapter> findChaptersByBookId(long id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

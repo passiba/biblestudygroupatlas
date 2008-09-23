@@ -4,7 +4,9 @@ package fi.passiba.services.biblestudy.dao;
 import fi.passiba.hibernate.BaseDaoHibernate;
 import fi.passiba.services.biblestudy.persistance.Chapter;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 
 
 
@@ -24,6 +26,12 @@ public class ChapterDAO extends BaseDaoHibernate<Chapter> implements IChapterDAO
       query.setLong("chapterid",  chapterid);
       List<Chapter> result=query.list();
       return result;
+    }
+
+    public List<Chapter> findChaptersByBookId(long id) {
+        Criteria crit = super.getSessionFactory().getCurrentSession().createCriteria(getQueryClass());
+        crit.createCriteria("book").add(Restrictions.eq("id", id));
+        return crit.list();
     }
 
    

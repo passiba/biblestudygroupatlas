@@ -25,28 +25,17 @@
         </property>
     </bean>
     
-    
-    
-   
     <bean id="IAuthenticator" class="fi.passiba.services.authenticate.AuthenticatorImp">
         <property name="personDAO" ref="PersonDAO" />
     </bean>
-    <bean id="IBibleDataMining" class="fi.passiba.services.biblestudy.datamining.BibleDataMiningImp">
-        <property name="datasourceDAO" ref="BookDatasouceDAO" />
-    </bean>
+   
      <bean id="IGroupServices" class="fi.passiba.services.group.GroupServicesImp">
         <property name="groupDAO" ref="GroupsDAO" />
     </bean>
     <bean id="IAddressService" class="fi.passiba.services.address.AddressServiceImp">
         <property name="addressDAO" ref="AddressDAO" />
     </bean>
-    <bean id="IBibleStudyService" class="fi.passiba.biblestudy.restlet.BibleStudyServiceImp">
-        <property name="translationDao" ref="BibletranslationDAO"/>
-        <property name="sectionDao" ref="BooksectionDAO" />
-        <property name="bookDAO" ref="BookDAO" />
-        <property name="chapterDao" ref="ChapterDAO" />
-        <property name="verseDAO" ref="VerseDAO" />
-    </bean>
+  
      
   
   
