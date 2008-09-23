@@ -61,7 +61,9 @@
         <property name="dataSource">
             <ref bean="dataSource" />
         </property>
-       
+        <!-- Configuring automatic schema generation in Spring -->
+        <property name="namingStrategy" ref="namingStrategy" />
+ 
         <property name="annotatedClasses">
             <list>
                 <value>fi.passiba.services.biblestudy.persistance.Booksection</value>
@@ -100,7 +102,7 @@
                  <prop key="hibernate.max_fetch_depth">3
                 </prop>
                 <prop key="hibernate.default_batch_fetch_size">4</prop>
-              
+                
                 
             </props>
         </property>
@@ -108,7 +110,10 @@
             <ref bean="entityAuditInterceptor"/>
         </property>
     </bean>
-    
+     <!-- Configuring automatic schema generation in Spring -->
+     <bean id="namingStrategy" class="org.hibernate.cfg.ImprovedNamingStrategy"/>
+
+
     <bean id="entityAuditInterceptor" class="fi.passiba.hibernate.AuditInterceptor"/>
 	<!-- setup transaction manager	-->
     <bean id="transactionManager"

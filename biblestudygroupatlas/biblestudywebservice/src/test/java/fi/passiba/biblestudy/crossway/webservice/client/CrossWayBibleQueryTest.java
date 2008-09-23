@@ -21,7 +21,7 @@ public class CrossWayBibleQueryTest extends
     
      @Override
    protected String[] getConfigLocations() {
-      return new String[] { "classpath:biblestudy-webservice.xml" };
+      return new String[] { "classpath:META-INF/biblestudy-webservice.xml" };
    }
 
    public void testTemplateBasedClient() throws Exception {
