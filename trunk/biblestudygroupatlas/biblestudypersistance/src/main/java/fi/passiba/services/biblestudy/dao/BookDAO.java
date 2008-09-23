@@ -4,7 +4,9 @@ package fi.passiba.services.biblestudy.dao;
 import fi.passiba.hibernate.BaseDaoHibernate;
 import fi.passiba.services.biblestudy.persistance.Book;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 
 public class BookDAO extends BaseDaoHibernate<Book> implements
         IBookDAO {
@@ -25,6 +27,12 @@ public class BookDAO extends BaseDaoHibernate<Book> implements
       return result;
         
         
+    }
+
+    public List<Book> findBooksByBooksectionId(long id) {
+        Criteria crit = super.getSessionFactory().getCurrentSession().createCriteria(getQueryClass());
+        crit.createCriteria("booksection").add(Restrictions.eq("id", id));
+        return crit.list();
     }
 
     

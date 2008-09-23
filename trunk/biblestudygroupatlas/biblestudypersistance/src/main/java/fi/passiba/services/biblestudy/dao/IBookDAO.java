@@ -15,5 +15,5 @@ import java.util.List;
 public interface IBookDAO  extends  BaseDao<Book>{
     
     public List<Book>  findBooksByBookIDSectionIDandTranslationId( long translationid, long sectionid, long bookid);
-	
+    public List<Book> findBooksByBooksectionId(long id);
 }

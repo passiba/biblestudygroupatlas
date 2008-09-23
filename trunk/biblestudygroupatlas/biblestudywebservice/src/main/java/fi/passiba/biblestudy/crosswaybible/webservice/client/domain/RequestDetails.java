@@ -5,7 +5,7 @@
 
 package fi.passiba.biblestudy.crosswaybible.webservice.client.domain;
 
-import fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.request.Options;
+import fi.passiba.biblestudy.crosswaybible.webservice.client.request.Options;
 
 /**
  *

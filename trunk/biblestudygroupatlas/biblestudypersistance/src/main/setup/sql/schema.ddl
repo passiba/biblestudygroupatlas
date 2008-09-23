@@ -281,3 +281,38 @@
         add constraint FK6AE793514BB75BE 
         foreign key (fk_chapter_id) 
         references chapter (chapter_id);
+
+
+ insert into  bibletranslation(
+             created_by,updated_by,created_on,updated_on, bible_abbrv,bible_name, published_date,publisher_name)
+        values('Admin','Admin',curdate(),curdate(),'ESV','English Standard Version',20010101,'Ministry of Good News Publishers: Crossway bibles');
+
+
+
+insert into  booksection(
+             created_by,updated_by,created_on,updated_on, section,fk_bible_translation_id)
+        values('Admin','Admin',curdate(),curdate(),'New Testament',1);
+
+insert into  booksection(
+             created_by,updated_by,created_on,updated_on, section,fk_bible_translation_id)
+        values('Admin','Admin',curdate(),curdate(),'Old Testament',1);
+
+
+insert into  bibletranslation(
+             created_by,updated_by,created_on,updated_on, bible_abbrv,bible_name, published_date,publisher_name)
+        values('Admin','Admin',curdate(),curdate(),'EVL 1992
+','Suomen evankelis-luterilaisen kirkon vuoden 1992 suomenkielinen raamattu',19920101,'Kirkon keskusrahasto');
+
+
+insert into  booksection(
+             created_by,updated_by,created_on,updated_on, section,fk_bible_translation_id)
+        values('Admin','Admin',curdate(),curdate(),'Uusi Testamentti',2);
+
+insert into  booksection(
+             created_by,updated_by,created_on,updated_on, section,fk_bible_translation_id)
+        values('Admin','Admin',curdate(),curdate(),'Vanha Testamentti',2);
+
+
+
+
+

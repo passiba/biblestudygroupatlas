@@ -6,8 +6,8 @@
 package fi.passiba.biblestudy.crossway.webservice.client;
 import fi.passiba.biblestudy.crosswaybible.webservice.client.BibleVerseClient;
 import fi.passiba.biblestudy.crosswaybible.webservice.client.domain.RequestDetails;
-import fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.request.Options;
-import fi.passiba.biblestudy.crosswaybible.webservice.client.jaxb.response.CrosswayBible;
+import fi.passiba.biblestudy.crosswaybible.webservice.client.request.Options;
+import fi.passiba.biblestudy.crosswaybible.webservice.client.response.CrosswayBible;
 import java.math.BigInteger;
 import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 

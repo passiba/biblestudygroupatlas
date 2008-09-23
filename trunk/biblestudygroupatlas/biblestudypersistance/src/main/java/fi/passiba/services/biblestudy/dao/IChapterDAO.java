@@ -14,5 +14,5 @@ import java.util.List;
 public interface IChapterDAO extends  BaseDao<Chapter> {
     
     public List<Chapter> findChapterByChapterIdBookIdSectionIdBibleVersionID(long translationid, long sectionid, long bookid, long chapterid);
-	
+    public List<Chapter> findChaptersByBookId(long id);
 }

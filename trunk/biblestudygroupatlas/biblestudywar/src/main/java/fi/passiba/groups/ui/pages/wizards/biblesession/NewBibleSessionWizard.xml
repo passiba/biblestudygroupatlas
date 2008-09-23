@@ -9,6 +9,8 @@
      <entry key="sessiontype">Session tyyppi</entry>
      <entry key="sessionweburl">Kappaleen webosoite</entry>
      
+     <entry key="selectedbibletranslation">Raamatun käännös</entry>
+     
     <entry key="infodes">Anna raamattusession tiedot, onko kyseessä ryhmän tai henkilön raamattusessio.</entry>
      
      

@@ -12,7 +12,8 @@
         http://www.springframework.org/schema/tx 
         http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
             
-   <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
+   <tx:annotation-driven transaction-manager="transactionManager"/>
+    <import resource="classpath:META-INF/biblestudy-data-hibernate.xml"/>
     <bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
@@ -25,65 +26,63 @@
    
     
     
-    <!--<bean id="IBibleDataMining" class="fi.passiba.services.biblestudy.datamining.BibleDataMiningImp">
-        <property name="datasourceDAO" ref="BookDatasouceDAO" />
-    </bean>
+   
     <bean id="IBibleStudyService" class="fi.passiba.biblestudy.restlet.BibleStudyServiceImp">
         <property name="translationDao" ref="BibletranslationDAO"/>
         <property name="sectionDao" ref="BooksectionDAO" />
         <property name="bookDAO" ref="BookDAO" />
         <property name="chapterDao" ref="ChapterDAO" />
         <property name="verseDAO" ref="VerseDAO" />
-    </bean>-->
-        <!-- Quartz sceduling on single method
+    </bean>
+        <!-- Quartz sceduling on single method-->
     <bean id="dailyBibleDataRetrievalJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="IBibleDataMining"/>
         <property name="targetMethod" value="retrieveBookdata" />
-    </bean> -->
+    </bean> 
         
      <!--
             A CronTriggerBean, scheduler to run before mightnight every night
-             cronExpresson=sec_min_hours_dayOfMonth_Month_DayOfWeek
+             cronExpresson=sec_min_hours_dayOfMonth_Month_DayOfWeek-->
     
     <bean id="cronBibleBookDataTrigger"
       class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="dailyBibleDataRetrievalJob"/>
         
         <property name="cronExpression" value="0 40 20 * * ?" />
-    </bean>-->
+    </bean>
 
    <!--
      A SchedulerFactoryBean to start the cronBibleBookDataTrigger.
-    
+    -->
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
                 <ref bean="cronBibleBookDataTrigger"/>
             </list>
         </property>
-    </bean>-->
+    </bean>
     
-    <!-- A meta-data based assembler, enables metadata specific services exposed as (JMX)managed beans
+    <!-- A meta-data based assembler, enables metadata specific services exposed as (JMX)managed beans-->
   <bean id="assembler"
       class="org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler">
     <property name="attributeSource" ref="attributeSource" />
   </bean>
   
   <bean id="attributeSource"
-      class="org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource" />-->
+      class="org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource" />
       
-  <!-- The metadata-driven MBeanExporter
+  <!-- The metadata-driven MBeanExporter -->
   <bean class="org.springframework.jmx.export.MBeanExporter">
-    <property name="namingStrategy" ref="namingStrategy" />
+    <property name="namingStrategy" ref="jmxnamingStrategy" />
  	  <property name="assembler" ref="assembler" />
     <property name="autodetectModeName" value="AUTODETECT_ASSEMBLER" />
-  </bean>-->
+  </bean>
   
-  <!-- A meta-data based naming strategy> 
-  <bean id="namingStrategy"
+  <!-- A meta-data based naming strategy>  -->
+  <bean id="jmxnamingStrategy"
       class="org.springframework.jmx.export.naming.MetadataNamingStrategy">
     <property name="attributeSource" ref="attributeSource" />
-  </bean>-->
+  </bean>
   
   <!--Spring web serice client for retrieval of bible translation 
   
@@ -93,7 +92,13 @@
     <property name="unmarshaller" ref="marshaller" />
     <property name="defaultUri" value="http://www.gnpcb.org/esv/share/soap/" />
   </bean>-->
-  
+   <bean id="IBibleDataMining" class="fi.passiba.biblestudy.services.datamining.BibleDataMiningImp">
+        <property name="datasourceDAO" ref="BookDatasouceDAO"/>
+        <property name="translationDAO" ref="BibletranslationDAO"/>
+        <property name="booksectionDAO" ref="BooksectionDAO"/>
+        <property name="bookDAO" ref="BookDAO"/>
+        <property name="chapterDAO" ref="ChapterDAO"/>
+    </bean>
   
   <bean id="marshaller" class="org.springframework.oxm.castor.CastorMarshaller">
   
