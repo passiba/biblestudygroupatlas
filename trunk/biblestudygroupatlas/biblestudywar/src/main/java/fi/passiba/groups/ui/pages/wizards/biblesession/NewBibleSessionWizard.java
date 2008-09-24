@@ -159,7 +159,7 @@ public class NewBibleSessionWizard extends Wizard {
                 sessiontypes.setVisible(true);
                 sessiontypes.add(new DropDownChoice("types", new PropertyModel(bibleSession,
                         "sessiontype"), allSessionTypes).setRequired(true));
-
+                fetchedBibleTranslations = bibleTranslationDataRetrievalService.findAllBibleTranslations();
 
                 final AutoCompleteTextField weburlName = new AutoCompleteTextField("weburlName", new PropertyModel(bibleSession,
                         "weburlName")) {
@@ -171,6 +171,7 @@ public class NewBibleSessionWizard extends Wizard {
                 };
 
                 tree = new ItemTree("itemTree", createTreeModel()) {
+              
 
                     @Override
                     protected MarkupContainer newNodeLink(MarkupContainer parent, String id, TreeNode node) {
@@ -212,24 +213,19 @@ public class NewBibleSessionWizard extends Wizard {
              * 		New instance of tree model.
              */
             protected TreeModel createTreeModel() {
-                return convertToTreeModel();
+                
+                 
+                return convertToTreeModel(fetchedBibleTranslations);
             //return convertToTreeModel(imageUtils.getFolder());
             }
 
-            protected TreeModel convertToTreeModel() {
+            protected TreeModel convertToTreeModel(List<Bibletranslation> fetchedBibleTranslations ) {
 
 
                 TreeModel model = null;
                 DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Versions");
 
-                new LoadableDetachableModel() {
-
-                    @Override
-                    protected Object load() {
-                        fetchedBibleTranslations = bibleTranslationDataRetrievalService.findAllBibleTranslations();
-                        return fetchedBibleTranslations;
-                    }
-                };
+               
                 if (fetchedBibleTranslations != null && !fetchedBibleTranslations.isEmpty()) {
                     addTranslations(rootNode, fetchedBibleTranslations);
                 }
@@ -242,14 +238,10 @@ public class NewBibleSessionWizard extends Wizard {
                     final Bibletranslation trans = transLationIt.next();
                     DefaultMutableTreeNode child = new DefaultMutableTreeNode(trans);
                     parent.add(child);
-                    new LoadableDetachableModel() {
-
-                        @Override
-                        protected Object load() {
-                            sections = bibleTranslationDataRetrievalService.findBookSectionByBibleTranslationId(trans.getId());
-                            return sections;
-                        }
-                    };
+                  
+                    sections = bibleTranslationDataRetrievalService.findBookSectionByBibleTranslationId(trans.getId());
+                           
+                      
                     if (sections != null && !sections.isEmpty()) {
                         addBooksectionSections(child, sections);
                     }
@@ -260,16 +252,8 @@ public class NewBibleSessionWizard extends Wizard {
                 for (Iterator<Booksection> bookSectionIt = sub.iterator(); bookSectionIt.hasNext();) {
                     final Booksection section = bookSectionIt.next();
                     DefaultMutableTreeNode child = new DefaultMutableTreeNode(section);
-                    parent.add(child);
-                    new LoadableDetachableModel() {
-
-                        @Override
-                        protected Object load() {
-                            books = bibleTranslationDataRetrievalService.findBooksByBooksectionId(section.getId());
-                            return books;
-                        }
-                    };
-
+                    parent.add(child);    
+                    books = bibleTranslationDataRetrievalService.findBooksByBooksectionId(section.getId());
                     if (books != null && !books.isEmpty()) {
                         addBooks(child, books);
                     }
@@ -281,15 +265,8 @@ public class NewBibleSessionWizard extends Wizard {
                     final Book book = bookIt.next();
                     DefaultMutableTreeNode child = new DefaultMutableTreeNode(book);
                     parent.add(child);
-
-                    new LoadableDetachableModel() {
-
-                        @Override
-                        protected Object load() {
-                            chapters = bibleTranslationDataRetrievalService.findChaptersByBookId(book.getId());
-                            return chapters;
-                        }
-                    };
+                    chapters = bibleTranslationDataRetrievalService.findChaptersByBookId(book.getId());
+                    
                     if (chapters != null && !chapters.isEmpty()) {
                         addChapters(child, bibleTranslationDataRetrievalService.findChaptersByBookId(book.getId()));
                     }
