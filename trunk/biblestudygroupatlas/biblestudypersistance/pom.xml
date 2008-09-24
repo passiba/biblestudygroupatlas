@@ -97,12 +97,48 @@
            <scope>test</scope>
            
         </dependency>-->
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>1.0.1</version>
-            <scope>compile</scope>
+       <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>persistence-api</artifactId>
+                <version>1.0</version>
         </dependency>
+
+         <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>3.2.1.ga</version>
+         </dependency>
+
+         <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>1.2.4</version>
+          </dependency>
+          <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate</artifactId>
+                <version>3.2.1.ga</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>net.sf.ehcache</groupId>
+                        <artifactId>ehcache</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.transaction</groupId>
+                        <artifactId>jta</artifactId>
+                    </exclusion>
+                </exclusions>
+          </dependency>
+
+         <dependency>
+                <groupId>geronimo-spec</groupId>
+                <artifactId>geronimo-spec-jta</artifactId>
+                <version>1.0.1B-rc4</version>
+          </dependency>
+
+       
+       
+       
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
@@ -120,13 +156,7 @@
         </dependency>
        
         
-        <!--
-            Quartz framework and dependencies-->
-        <dependency>
-            <groupId>opensymphony</groupId>
-            <artifactId>quartz</artifactId>
-            <version>1.6.0</version>
-        </dependency>
+      
     <!-- Quartz 1.6.0 depends on commons collections -->
         <dependency>
             <groupId>commons-collections</groupId>
