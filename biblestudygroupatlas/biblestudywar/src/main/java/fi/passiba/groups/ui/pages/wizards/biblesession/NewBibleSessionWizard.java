@@ -52,8 +52,10 @@ import org.apache.wicket.extensions.markup.html.tree.Tree;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.tree.AbstractTree;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
@@ -73,7 +75,6 @@ public class NewBibleSessionWizard extends Wizard {
 
     @SpringBean
     private IBibleDataMining bibleTranslationDataRetrievalService;
-   
     private static final List<String> allSessionTypes = Arrays.asList(new String[]{"Ryhmä", "Henkilö"});
     private BibleSession bibleSession = new BibleSession();
 
@@ -126,8 +127,7 @@ public class NewBibleSessionWizard extends Wizard {
      * The BibleSession initialization step.
      */
     private final class SessionInitializationStep extends WizardStep {
-        
-         private List<Bibletranslation> fetchedBibleTranslations;
+
         /**
          * Construct.
          */
@@ -136,13 +136,16 @@ public class NewBibleSessionWizard extends Wizard {
             setSummaryModel(new StringResourceModel("session.summary", this, new Model(bibleSession)));
             sessionForm form = new sessionForm("sessionform");
             add(form);
-            fetchedBibleTranslations = bibleTranslationDataRetrievalService.findAllBibleTranslations();
 
         }
 
         private class sessionForm extends Form {
 
+            private List<Bibletranslation> fetchedBibleTranslations;
             private Tree tree;
+            private List<Booksection> sections;
+            private List<Book> books;
+            private List<Chapter> chapters;
 
             private sessionForm(String id) {
                 super(id);
@@ -182,7 +185,7 @@ public class NewBibleSessionWizard extends Wizard {
 
 
                 weburlName.setOutputMarkupId(true);
-               
+
                 add(weburlName);
                 final Label selectedBibleChapterVerses = new Label("selectedChapterText", new PropertyModel(bibleSession, "bibleChapterText"));
                 selectedBibleChapterVerses.setOutputMarkupId(true);
@@ -209,15 +212,25 @@ public class NewBibleSessionWizard extends Wizard {
              * 		New instance of tree model.
              */
             protected TreeModel createTreeModel() {
-                return convertToTreeModel(fetchedBibleTranslations);
+                return convertToTreeModel();
             //return convertToTreeModel(imageUtils.getFolder());
             }
 
-            protected TreeModel convertToTreeModel(List<Bibletranslation> fetchedBibleTranslations) {
+            protected TreeModel convertToTreeModel() {
+
+
                 TreeModel model = null;
                 DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Versions");
-                if(fetchedBibleTranslations!=null && !fetchedBibleTranslations.isEmpty())
-                {
+
+                new LoadableDetachableModel() {
+
+                    @Override
+                    protected Object load() {
+                        fetchedBibleTranslations = bibleTranslationDataRetrievalService.findAllBibleTranslations();
+                        return fetchedBibleTranslations;
+                    }
+                };
+                if (fetchedBibleTranslations != null && !fetchedBibleTranslations.isEmpty()) {
                     addTranslations(rootNode, fetchedBibleTranslations);
                 }
                 model = new DefaultTreeModel(rootNode);
@@ -226,58 +239,86 @@ public class NewBibleSessionWizard extends Wizard {
 
             private void addTranslations(DefaultMutableTreeNode parent, List<Bibletranslation> sub) {
                 for (Iterator<Bibletranslation> transLationIt = sub.iterator(); transLationIt.hasNext();) {
-                    Bibletranslation trans =transLationIt.next();
+                    final Bibletranslation trans = transLationIt.next();
                     DefaultMutableTreeNode child = new DefaultMutableTreeNode(trans);
                     parent.add(child);
-                    List<Booksection> sections=bibleTranslationDataRetrievalService.findBookSectionByBibleTranslationId(trans.getId());
-                    if (sections!= null && ! sections.isEmpty()) {
-                        addBooksectionSections(child,sections);
+                    new LoadableDetachableModel() {
+
+                        @Override
+                        protected Object load() {
+                            sections = bibleTranslationDataRetrievalService.findBookSectionByBibleTranslationId(trans.getId());
+                            return sections;
+                        }
+                    };
+                    if (sections != null && !sections.isEmpty()) {
+                        addBooksectionSections(child, sections);
                     }
                 }
             }
+
             private void addBooksectionSections(DefaultMutableTreeNode parent, List<Booksection> sub) {
                 for (Iterator<Booksection> bookSectionIt = sub.iterator(); bookSectionIt.hasNext();) {
-                    Booksection section =bookSectionIt.next();
+                    final Booksection section = bookSectionIt.next();
                     DefaultMutableTreeNode child = new DefaultMutableTreeNode(section);
                     parent.add(child);
-                      List<Book> books=bibleTranslationDataRetrievalService.findBooksByBooksectionId(section.getId());
-                    if ( books!= null &&  ! books.isEmpty()) {
+                    new LoadableDetachableModel() {
+
+                        @Override
+                        protected Object load() {
+                            books = bibleTranslationDataRetrievalService.findBooksByBooksectionId(section.getId());
+                            return books;
+                        }
+                    };
+
+                    if (books != null && !books.isEmpty()) {
                         addBooks(child, books);
                     }
                 }
             }
+
             private void addBooks(DefaultMutableTreeNode parent, List<Book> sub) {
                 for (Iterator<Book> bookIt = sub.iterator(); bookIt.hasNext();) {
-                    Book book =bookIt.next();
+                    final Book book = bookIt.next();
                     DefaultMutableTreeNode child = new DefaultMutableTreeNode(book);
                     parent.add(child);
-                    List<Chapter> chapters=bibleTranslationDataRetrievalService.findChaptersByBookId(book.getId());
-                    if (chapters!= null && !chapters.isEmpty()) {
+
+                    new LoadableDetachableModel() {
+
+                        @Override
+                        protected Object load() {
+                            chapters = bibleTranslationDataRetrievalService.findChaptersByBookId(book.getId());
+                            return chapters;
+                        }
+                    };
+                    if (chapters != null && !chapters.isEmpty()) {
                         addChapters(child, bibleTranslationDataRetrievalService.findChaptersByBookId(book.getId()));
                     }
                 }
             }
+
             private void addChapters(DefaultMutableTreeNode parent, List<Chapter> sub) {
                 for (Iterator<Chapter> chapterIt = sub.iterator(); chapterIt.hasNext();) {
                     Chapter chapter = chapterIt.next();
                     DefaultMutableTreeNode child = new DefaultMutableTreeNode(chapter);
                     parent.add(child);
-                    /*if (book.getChapters()!= null) {
-                        
-                    }*/
+                /*if (book.getChapters()!= null) {
+                
+                }*/
                 }
             }
-            
-            public MarkupContainer newNodeLink(MarkupContainer parent, String id, TreeNode node) {		
-		PageParameters params = new PageParameters();
-		//Folder folder = (Folder)((DefaultMutableTreeNode)node).getUserObject();
-		BookmarkablePageLink nodeLink = new BookmarkablePageLink(id, Main.class, params);
-		//params.add("uri", imageUtils.getRelativePath(folder.getFile()));
-		return nodeLink;
-	}
 
+            public MarkupContainer newNodeLink(MarkupContainer parent, String id, TreeNode node) {
+                PageParameters params = new PageParameters();
+                //Folder folder = (Folder)((DefaultMutableTreeNode)node).getUserObject();
+                BookmarkablePageLink nodeLink = new BookmarkablePageLink(id, Main.class, params);
+                //params.add("uri", imageUtils.getRelativePath(folder.getFile()));
+                return nodeLink;
+            }
+
+            protected AbstractTree getTree() {
+                return tree;
+            }
         }
-        
     }
 
     /**
@@ -304,7 +345,7 @@ public class NewBibleSessionWizard extends Wizard {
      * @see org.apache.wicket.extensions.wizard.Wizard#onCancel()
      */
     public void onCancel() {
-        setResponsePage(Home.class);
+        setResponsePage(Main.class);
     }
 
     /**
@@ -316,7 +357,7 @@ public class NewBibleSessionWizard extends Wizard {
 
 
 
-        setResponsePage(Home.class);
+        setResponsePage(Main.class);
     }
 
     private String getSelectedBibleVerseText(String biblechapterWebRUL) {
