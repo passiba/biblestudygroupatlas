@@ -110,7 +110,7 @@
         
               
         
-        <!--Quartz framework and dependencies-->
+        <!--Quartz framework and dependencies -->
         <dependency>
             <groupId>opensymphony</groupId>
             <artifactId>quartz</artifactId>
@@ -133,6 +133,18 @@
             <version>2.4</version>
             <scope>provided</scope>
         </dependency>
+        <!--apache ActiveMQ dependency -->
+        <dependency>
+            <artifactId>activemq-all</artifactId> 
+            <groupId>org.apache.activemq</groupId> 
+            <version>5.1.0</version> 
+         </dependency>
+         
+         
+         
+         
+         
+         
          
                <!--Spring Jersey module dependency for creating Restful web services 
        <dependency>
