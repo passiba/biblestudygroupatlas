@@ -17,7 +17,6 @@
 package fi.passiba.groups.ui.pages.wizards.biblesession;
 
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
-import fi.passiba.groups.ui.pages.Home;
 import fi.passiba.groups.ui.pages.Main;
 import fi.passiba.services.biblestudy.persistance.Bibletranslation;
 
@@ -55,7 +54,6 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.tree.AbstractTree;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
@@ -75,6 +73,9 @@ public class NewBibleSessionWizard extends Wizard {
 
     @SpringBean
     private IBibleDataMining bibleTranslationDataRetrievalService;
+    
+    @SpringBean
+    
     private static final List<String> allSessionTypes = Arrays.asList(new String[]{"Ryhmä", "Henkilö"});
     private BibleSession bibleSession = new BibleSession();
 

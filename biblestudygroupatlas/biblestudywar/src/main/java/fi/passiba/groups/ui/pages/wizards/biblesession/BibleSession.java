@@ -28,6 +28,8 @@ public final class BibleSession implements IClusterable {
 
    private Date sessionDate= new Date();
    
+   private String status;
+   private String createdBy;
    private String sessiontype;
    private String weburlName;
    private String bibleChapterText;
@@ -63,6 +65,23 @@ public final class BibleSession implements IClusterable {
     public void setBibleChapterText(String bibleChapterText) {
         this.bibleChapterText = bibleChapterText;
     }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     
     
 }

@@ -15,6 +15,7 @@
    <tx:annotation-driven transaction-manager="transactionManager"/>
    <import resource="classpath:META-INF/biblestudy-data-hibernate.xml"/>
    <import resource="classpath:META-INF/biblestudy-webservice.xml"/>
+   <import resource="classpath:META-INF/biblestudy-jmsservice.xml"/>
    <bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
@@ -35,7 +36,10 @@
     <bean id="IAddressService" class="fi.passiba.services.address.AddressServiceImp">
         <property name="addressDAO" ref="AddressDAO" />
     </bean>
-  
+    
+    <bean id="biblesessionProcessingGageway" class="fi.passiba.groups.ui.pages.wizards.biblesession.dataprocessing.BibleBookdDataProcessingImp">
+        <property name="jmsTemplate" ref="jmsTemplate"/>
+    </bean>
      
   
   
