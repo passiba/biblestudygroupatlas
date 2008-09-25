@@ -24,21 +24,20 @@ public class Bookdatasource extends AuditableEntity {
 
     // Fields
     private String weburlName;
-    private Book book;
-    private Status status;
+    private String status;
 
     // Constructors
     /** default constructor */
     public Bookdatasource() {
     }
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_status_id", referencedColumnName = "status_id")
-    public Status getStatus() {
+   
+    @Column(name = "status", unique = false, nullable = false, insertable = true, updatable = true, length = 50)
+    public String getStatus() {
         return this.status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
