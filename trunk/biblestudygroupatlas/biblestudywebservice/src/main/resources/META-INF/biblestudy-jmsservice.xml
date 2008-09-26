@@ -13,8 +13,8 @@
         http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
             
    <tx:annotation-driven transaction-manager="transactionManager"/>
+ 
    
-   <import resource="classpath:META-INF/biblestudy-webservice.xml"/>
   <!--JMS Messaging specific beans -->
   
   <bean id="jmsConntectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"/>
@@ -38,9 +38,5 @@
       <property name="messageListener" ref="bibleBookDataListner"/>
   </bean>
   
-  <bean id="bibleBookDataListner" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
-        <property name="delegate" ref="IBibleDataMining"/>
-        <property name="defaultListenerMethod" value="addBookDatasource"/>
-        <property name="messageConverter" ref="bibleBookDataConverter"/>
-  </bean>
+ 
 </beans>

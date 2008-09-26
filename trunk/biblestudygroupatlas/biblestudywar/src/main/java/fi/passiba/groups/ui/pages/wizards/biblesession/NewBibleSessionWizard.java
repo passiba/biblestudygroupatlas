@@ -74,7 +74,6 @@ public class NewBibleSessionWizard extends Wizard {
     @SpringBean
     private IBibleDataMining bibleTranslationDataRetrievalService;
     
-    @SpringBean
     
     private static final List<String> allSessionTypes = Arrays.asList(new String[]{"Ryhmä", "Henkilö"});
     private BibleSession bibleSession = new BibleSession();
