@@ -15,7 +15,6 @@
    <tx:annotation-driven transaction-manager="transactionManager"/>
    <import resource="classpath:META-INF/biblestudy-data-hibernate.xml"/>
    <import resource="classpath:META-INF/biblestudy-webservice.xml"/>
-   <import resource="classpath:META-INF/biblestudy-jmsservice.xml"/>
    <bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
