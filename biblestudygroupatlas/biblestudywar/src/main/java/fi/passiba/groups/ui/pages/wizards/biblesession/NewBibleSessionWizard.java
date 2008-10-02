@@ -18,6 +18,7 @@ package fi.passiba.groups.ui.pages.wizards.biblesession;
 
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.groups.ui.pages.Main;
+import fi.passiba.groups.ui.pages.biblesession.BibleSessionPage;
 import fi.passiba.groups.ui.pages.wizards.biblesession.dataprocessing.IBibleBookdDataProcessing;
 import fi.passiba.services.biblestudy.persistance.Bibletranslation;
 
@@ -288,9 +289,10 @@ public class NewBibleSessionWizard extends Wizard {
 
             public MarkupContainer newNodeLink(MarkupContainer parent, String id, TreeNode node) {
                 PageParameters params = new PageParameters();
-                //Folder folder = (Folder)((DefaultMutableTreeNode)node).getUserObject();
-                BookmarkablePageLink nodeLink = new BookmarkablePageLink(id, Main.class, params);
-                //params.add("uri", imageUtils.getRelativePath(folder.getFile()));
+      
+                Object obj=(Object)((DefaultMutableTreeNode)node).getUserObject();
+                BookmarkablePageLink nodeLink = new BookmarkablePageLink(id, BibleSessionPage.class, params);
+                params.put("viewObject",obj);
                 return nodeLink;
             }
 
