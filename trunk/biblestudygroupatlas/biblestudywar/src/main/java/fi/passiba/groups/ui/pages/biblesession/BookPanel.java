@@ -44,7 +44,7 @@ public class BookPanel extends Panel {
             }
         };
         
-        add(new Label("booksection", new PropertyModel(booksection, "publishedDate")));
+        add(new Label("booksection", new PropertyModel(booksection, "section")));
         
       
     }
