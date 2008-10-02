@@ -28,12 +28,13 @@ public interface IBibleDataMining {
 
     public Bookdatasource updateBookDatasource(Bookdatasource datasource); 
     public void deleteBookDatasource(Bookdatasource datasource); 
-    @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
-    public List<Book> findGAllRetrievedBooksbyTranslation();
+
     @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
     public List<Bibletranslation> findAllBibleTranslations();
     @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
     public List<Booksection> findBookSectionByBibleTranslationId(long id);
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
+    public Booksection findBookSectionById(long id);
     @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
     public List<Book> findBooksByBooksectionId(long id);
     @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)

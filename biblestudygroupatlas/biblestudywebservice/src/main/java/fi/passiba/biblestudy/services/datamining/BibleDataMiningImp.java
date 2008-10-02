@@ -115,9 +115,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public List<Book> findGAllRetrievedBooksbyTranslation() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+   
     public List<Bibletranslation> findAllBibleTranslations() {
          return translationDAO.getAll();
     }
@@ -131,7 +129,11 @@ public class BibleDataMiningImp implements IBibleDataMining {
     }
 
     public List<Chapter> findChaptersByBookId(long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+           return chapterDAO.findChaptersByBookId(id);
+    }
+
+   public Booksection findBookSectionById(long id) {
+        return booksectionDAO.getById(id);
     }
 
 }
