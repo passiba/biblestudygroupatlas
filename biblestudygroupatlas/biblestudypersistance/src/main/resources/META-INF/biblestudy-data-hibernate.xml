@@ -17,13 +17,8 @@
         <property name="location" value="classpath:application.properties"/>
         <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
     </bean>
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="driverClass" value="${jdbc.driver}"/>
-        <property name="jdbcUrl" value="${jdbc.url}"/>
-        <property name="user" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-    </bean>
-    <!--<bean id="dataSource"
+
+    <bean id="dataSource"
 		class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass">
             <value>${jdbc.driver}</value>
@@ -59,7 +54,7 @@
         <property name="automaticTestTable">
             <value>${c3p0.automaticTestTable}</value>
         </property>
-    </bean>-->
+    </bean>
     <bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
