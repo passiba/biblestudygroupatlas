@@ -19,8 +19,7 @@ public class PersonDAO extends BaseDaoHibernate<Person> implements IPersonDAO {
       Query query=super.getSessionFactory().getCurrentSession().createQuery("select distinct p from Person p join p.fk_userid u where u.username=:user");
       query.setMaxResults(1);
       query.setString("user", username);
-      List<Person> result=query.list();
-      return result;
+      return query.list();
     }
 
     public List<Person> findPersonByUserRole(String rolename,String country,String city) {

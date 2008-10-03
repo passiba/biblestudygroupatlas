@@ -20,7 +20,6 @@ public class VerseDAO extends BaseDaoHibernate<Verse> implements IVerseDAO {
       query.setLong("bookid", bookid);
       query.setLong("chapterid",  chapterid);
        query.setLong("chapterid",  verseid);
-      List<Verse> result=query.list();
-      return result;
+      return query.list();
     }
 }

@@ -23,8 +23,7 @@ public class BookDAO extends BaseDaoHibernate<Book> implements
       query.setLong("translationid", translationid);
       query.setLong("sectionid", sectionid);
       query.setLong("bookid", bookid);
-      List<Book> result=query.list();
-      return result;
+      return query.list();
         
         
     }

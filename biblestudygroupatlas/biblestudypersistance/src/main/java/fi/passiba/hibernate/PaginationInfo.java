@@ -5,8 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 
 public class PaginationInfo implements Serializable{
-    
-    private  Criteria crit;
+
     private String sortColumn;
     private boolean sortAsc;
     private int firstRow;
@@ -21,7 +20,6 @@ public class PaginationInfo implements Serializable{
     }
     public PaginationInfo(Criteria crit,int firstRow,int maxResult)
     {
-        this.crit=crit;
         this.firstRow=firstRow;
         this.maxResult=maxResult;
         results=crit.setFirstResult(firstRow*maxResult).setMaxResults(maxResult+1).list();
