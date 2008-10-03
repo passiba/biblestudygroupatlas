@@ -35,10 +35,10 @@
     <bean id="IAddressService" class="fi.passiba.services.address.AddressServiceImp">
         <property name="addressDAO" ref="AddressDAO" />
     </bean>
-    
+      <!--
     <bean id="biblesessionProcessingGageway" class="fi.passiba.groups.ui.pages.wizards.biblesession.dataprocessing.BibleBookdDataProcessingImp">
         <property name="jmsTemplate" ref="jmsTemplate"/>
-    </bean>
+    </bean>  -->
      
   
   
