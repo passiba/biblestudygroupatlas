@@ -24,8 +24,7 @@ public class ChapterDAO extends BaseDaoHibernate<Chapter> implements IChapterDAO
       query.setLong("sectionid", sectionid);
       query.setLong("bookid", bookid);
       query.setLong("chapterid",  chapterid);
-      List<Chapter> result=query.list();
-      return result;
+      return query.list();
     }
 
     public List<Chapter> findChaptersByBookId(long id) {

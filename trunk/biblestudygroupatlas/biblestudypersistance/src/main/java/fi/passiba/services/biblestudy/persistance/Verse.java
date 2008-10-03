@@ -27,7 +27,7 @@ public class Verse extends AuditableEntity {
     private Chapter chapter;
     private Integer verseNum;
     private String verseText;
-    Biblesession session;
+    private Biblesession session;
 
     
 

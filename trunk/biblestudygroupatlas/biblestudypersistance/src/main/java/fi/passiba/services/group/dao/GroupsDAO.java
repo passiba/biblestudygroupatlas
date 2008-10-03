@@ -34,8 +34,7 @@ public class GroupsDAO extends BaseDaoHibernate<Groups> implements IGroupsDAO {
         Query query = super.getSessionFactory().getCurrentSession().createQuery("select distinct p from Person p join p.groups g where g.id=:id");
 
         query.setLong("id", id);
-        List<Person> result = query.list();
-        return result;
+        return query.list();
     }
 
 
