@@ -17,11 +17,10 @@
 package fi.passiba.groups.ui.pages.wizards.biblesession;
 
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
+import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
 import fi.passiba.groups.ui.pages.Main;
 import fi.passiba.groups.ui.pages.biblesession.BibleSessionPage;
-import fi.passiba.groups.ui.pages.wizards.biblesession.dataprocessing.IBibleBookdDataProcessing;
 import fi.passiba.services.biblestudy.persistance.Bibletranslation;
-
 import fi.passiba.services.biblestudy.persistance.Book;
 import fi.passiba.services.biblestudy.persistance.Booksection;
 import fi.passiba.services.biblestudy.persistance.Chapter;
@@ -77,7 +76,7 @@ public class NewBibleSessionWizard extends Wizard {
     private IBibleDataMining bibleTranslationDataRetrievalService;
     
     @SpringBean
-    private IBibleBookdDataProcessing bibleDataBooksourceService;
+    private IBibleDataMining bibleDatamining;
     private static final List<String> allSessionTypes = Arrays.asList(new String[]{"Ryhmä", "Henkilö"});
     private BibleSession bibleSession = new BibleSession();
 
@@ -336,7 +335,13 @@ public class NewBibleSessionWizard extends Wizard {
         
         if(bibleSession!=null)
         {
-            bibleDataBooksourceService.sendBibleBookDataForProcessing(bibleSession);
+
+             Bookdatasource bookSource= new Bookdatasource();
+
+            bookSource.setWeburlName(bibleSession.getWeburlName());
+            bookSource.setCreatedBy(bibleSession.getCreatedBy());
+            bookSource.setStatus(bibleSession.getStatus());
+            bibleDatamining.addBookDatasource(bookSource);
         }
         setResponsePage(Main.class);
     }

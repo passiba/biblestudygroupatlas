@@ -19,8 +19,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
-import org.webharvest.definition.ScraperConfiguration;
-import org.webharvest.runtime.Scraper;
+//import org.webharvest.definition.ScraperConfiguration;
+//import org.webharvest.runtime.Scraper;
 
 /**
  *
@@ -79,7 +79,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
     @ManagedOperation(description="Retrieve daily new section of books of bible")
     public void retrieveBookdata() {
        
-         try {
+        /* try {
             ScraperConfiguration config =
                     new ScraperConfiguration("C:/java/projects/biblestudy/src/main/resources/bible.xml");
             Scraper scraper = new Scraper(config, "c:/temp/");
@@ -95,7 +95,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
           //  System.out.println(article.toString())
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
-        }
+        }  */
 
     }
 
