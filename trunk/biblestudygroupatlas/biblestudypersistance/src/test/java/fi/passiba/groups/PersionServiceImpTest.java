@@ -1,120 +1,124 @@
 package fi.passiba.groups;
-/*import fi.passiba.services.persistance.Adress;
-import fi.passiba.services.persistance.Person;
-import fi.passiba.services.persistance.Status;
-import fi.passiba.services.persistance.UserRole;
-import fi.passiba.services.persistance.Users;*/
 import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;
-import fi.passiba.services.persistance.Status;
+import fi.passiba.services.dao.IPersonDAO;
 import fi.passiba.services.persistance.Users;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
+import java.util.List;
 
-public final class PersionServiceImpTest implements InitializingBean,
-    ApplicationContextAware {
+import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
-	private SessionFactory sessionFactory;
+public final class PersionServiceImpTest  extends AbstractDependencyInjectionSpringContextTests {
 
-  private ApplicationContext context;
+  private String username="passiba";
 
-  public PersionServiceImpTest() {
+   @Override
+      protected String[] getConfigLocations() {
+         return new String[] { "classpath:META-INF/biblestudy-data-hibernate.xml"};
+   }
+
+  private Person addPerson(Person person)throws Exception
+  {
+      IPersonDAO personDAO = (IPersonDAO) applicationContext.getBean("PersonDAO");
+      if (person == null) {
+          Adress ad = new Adress();
+          ad.setAddr1("Testikuja 1 b");
+          ad.setAddr2("PL 39");
+          ad.setCity("Helsinki");
+          ad.setCountry("Finland");
+          ad.setPhone("0505555555");
+          ad.setState("Uusimaa");
+          ad.setZip("01000");
+
+
+          person = new Person();
+          person.setAdress(ad);
+
+          person.setEmail("testuser@hotmail.com");
+          person.setFirstname("paul");
+          person.setLastname("Geronimo");
+          person.setDateofbirth(new Date());
+
+
+          Users regularUser = new Users();
+          regularUser.setUsername(username);
+          regularUser.setPassword("leppis");
+          regularUser.setRolename("User");
+          regularUser.setStatus("Aktiivinen");
+          person.setFk_userid(regularUser);
+      }
+
+      personDAO.save(person);
+      return person;
+  }
+  public void testAddingNewPerson() throws Exception
+  {
+
+       IPersonDAO personDAO = (IPersonDAO) applicationContext.getBean("PersonDAO");
+
+
+        Person  person=addPerson(null);
+        List<Person> persons=   personDAO.findPersonByUsername(username);
+        Person fetchUser=null;
+        for(Person per:persons)
+        {
+             fetchUser=person;
+        }
+        assert(person.getFk_userid().getUsername().equals(fetchUser.getFk_userid().getUsername()));
   }
 
-  public void afterPropertiesSet() throws Exception {
+   public void testUpdatingPerson() throws Exception
+  {
+       IPersonDAO personDAO = (IPersonDAO) applicationContext.getBean("PersonDAO");
 
-    // setup database
-    LocalSessionFactoryBean sessionFactoryBean = findSessionFactoryBean(context);
-    sessionFactoryBean.createDatabaseSchema();
+        Person per=null;
+        Adress ad= new Adress();
+        ad.setAddr1("Testikuja 1 b");
+        ad.setAddr2("PL 39");
+        ad.setCity("Espoo");
+        ad.setCountry("Finland");
+        ad.setPhone("0505555555");
+        ad.setState("Uusimaa");
+         ad.setZip("01000");
+        List<Person> persons=   personDAO.findPersonByUsername(username);
 
-    Session session = null;
-    Transaction tx = null;
-    try {
+        for(Person person:persons)
+        {
+             per=person;
+        }
+        if(persons==null || persons.isEmpty())
+        {
+             per=addPerson(null);
+        }
+        per.setAdress(ad);
 
-      session = sessionFactory.openSession();
-      tx = session.beginTransaction();
-
-     /// fill with test data
-     Status stat = new Status();
-      stat.setStatusname("Aktiivinen");
-      session.save(stat);
-
-      Status stat2 = new Status();
-      stat2.setStatusname("Ei Aktiivinen");
-      session.save(stat2);
-      Adress ad= new Adress();
-      ad.setAddr1("Testikuja 1 b");
-      ad.setAddr2("PL 39");
-      ad.setCity("Helsinki");
-      ad.setCountry("Finland");
-      ad.setPhone("0505555555");
-      ad.setState("Uusimaa");
-      
-     
-   
-      
-      Person person= new Person();
-      person.setAdress(ad);
-     
-      person.setEmail("testuser@hotmail.com");
-      person.setFirstname("paul");
-      person.setLastname("Geronimo");
-      person.setDateofbirth(new Date());
-      
-      
-      Users regularUser = new Users();
-      regularUser.setUsername("passiba");
-      regularUser.setPassword("leppis");
-      regularUser.setRolename("User");
-      regularUser.setStatus("Aktiivinen");
-      person.setFk_userid(regularUser);
-      session.save(person);
-      
-      //session.save(regularUser);
-
-
-      tx.commit();
-
-    } catch (Exception e) {
-      tx.rollback();
-    } finally {
-      session.close();
-    }
+        personDAO.saveOrUpdate(per);
+        persons=   personDAO.findPersonByUsername(username);
+        Person fetchUser=null;
+        for(Person person:persons)
+        {
+             fetchUser=person;
+        }
+        assert(per.getAdress().getCity().equals(fetchUser.getAdress().getCity()));
   }
 
-  public SessionFactory getSessionFactory() {
-    return sessionFactory;
-  }
+  public void testDeletingPerson() throws Exception
+  {
+     IPersonDAO personDAO = (IPersonDAO) applicationContext.getBean("PersonDAO");
+      Person per=null;
+      List<Person> persons=   personDAO.findPersonByUsername(username);
 
-  public void setSessionFactory(SessionFactory sessionFactory) {
-    this.sessionFactory = sessionFactory;
+      for(Person person:persons)
+      {
+             per=person;
+      }
+      if(persons==null || persons.isEmpty())
+      {
+             per=addPerson(null);
+      }
+      personDAO.delete(per);
+      persons= personDAO.findPersonByUsername(username);
+      assertEquals(0, persons.size());
   }
-
-  public void setApplicationContext(
-      ApplicationContext applicationContext) throws BeansException {
-    this.context = applicationContext;
-  }
-
-  private LocalSessionFactoryBean findSessionFactoryBean(
-      ApplicationContext context) {
-    Map beans = context.getBeansOfType(LocalSessionFactoryBean.class);
-    if (beans.size() > 1) {
-      throw new IllegalStateException(
-          "more than one local session factory bean found");
-    } else if (beans.size() == 0) {
-      throw new IllegalStateException(
-          "session factory bean not found");
-    }
-    return (LocalSessionFactoryBean) beans.values().iterator().next();
-  }
+  
 }
