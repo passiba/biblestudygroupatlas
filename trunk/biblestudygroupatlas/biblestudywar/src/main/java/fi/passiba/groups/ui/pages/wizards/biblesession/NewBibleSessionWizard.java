@@ -16,9 +16,11 @@
  */
 package fi.passiba.groups.ui.pages.wizards.biblesession;
 
+import fi.passiba.groups.ui.pages.biblesession.ItemTree;
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
 import fi.passiba.groups.ui.pages.Main;
+import fi.passiba.groups.ui.pages.biblesession.BibleDataTreePanel;
 import fi.passiba.groups.ui.pages.biblesession.BibleSessionPage;
 import fi.passiba.services.biblestudy.persistance.Bibletranslation;
 import fi.passiba.services.biblestudy.persistance.Book;
@@ -72,9 +74,7 @@ import org.wicketstuff.dojo.markup.html.form.DojoDatePicker;
  */
 public class NewBibleSessionWizard extends Wizard {
 
-    @SpringBean
-    private IBibleDataMining bibleTranslationDataRetrievalService;
-    
+     
     @SpringBean
     private IBibleDataMining bibleDatamining;
     private static final List<String> allSessionTypes = Arrays.asList(new String[]{"Ryhmä", "Henkilö"});
@@ -143,12 +143,7 @@ public class NewBibleSessionWizard extends Wizard {
 
         private class sessionForm extends Form {
 
-            private List<Bibletranslation> fetchedBibleTranslations;
-            private Tree tree;
-            private List<Booksection> sections;
-            private List<Book> books;
-            private List<Chapter> chapters;
-
+           
             private sessionForm(String id) {
                 super(id);
 
@@ -161,8 +156,7 @@ public class NewBibleSessionWizard extends Wizard {
                 sessiontypes.setVisible(true);
                 sessiontypes.add(new DropDownChoice("types", new PropertyModel(bibleSession,
                         "sessiontype"), allSessionTypes).setRequired(true));
-                fetchedBibleTranslations = bibleTranslationDataRetrievalService.findAllBibleTranslations();
-
+          
                 final AutoCompleteTextField weburlName = new AutoCompleteTextField("weburlName", new PropertyModel(bibleSession,
                         "weburlName")) {
 
@@ -172,24 +166,10 @@ public class NewBibleSessionWizard extends Wizard {
                     }
                 };
 
-                tree = new ItemTree("itemTree", createTreeModel()) {
-              
-
-                    @Override
-                    protected MarkupContainer newNodeLink(MarkupContainer parent, String id, TreeNode node) {
-                        return sessionForm.this.newNodeLink(parent, id, node);
-
-                    }
-                };
-                add(tree);
-
-
-
-
-
                 weburlName.setOutputMarkupId(true);
 
                 add(weburlName);
+                add(new BibleDataTreePanel("bibleDataTree"));
                 final Label selectedBibleChapterVerses = new Label("selectedChapterText", new PropertyModel(bibleSession, "bibleChapterText"));
                 selectedBibleChapterVerses.setOutputMarkupId(true);
                 add(selectedBibleChapterVerses);
@@ -207,96 +187,6 @@ public class NewBibleSessionWizard extends Wizard {
                     }
                 });
 
-            }
-
-            /**
-             * Creates the model that feeds the tree.
-             * @return
-             * 		New instance of tree model.
-             */
-            protected TreeModel createTreeModel() {
-                
-                 
-                return convertToTreeModel(fetchedBibleTranslations);
-            //return convertToTreeModel(imageUtils.getFolder());
-            }
-
-            protected TreeModel convertToTreeModel(List<Bibletranslation> fetchedBibleTranslations ) {
-
-
-                TreeModel model = null;
-                DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Versions");
-
-               
-                if (fetchedBibleTranslations != null && !fetchedBibleTranslations.isEmpty()) {
-                    addTranslations(rootNode, fetchedBibleTranslations);
-                }
-                model = new DefaultTreeModel(rootNode);
-                return model;
-            }
-
-            private void addTranslations(DefaultMutableTreeNode parent, List<Bibletranslation> sub) {
-                for (Iterator<Bibletranslation> transLationIt = sub.iterator(); transLationIt.hasNext();) {
-                    final Bibletranslation trans = transLationIt.next();
-                    DefaultMutableTreeNode child = new DefaultMutableTreeNode(trans);
-                    parent.add(child);
-                  
-                    sections = bibleTranslationDataRetrievalService.findBookSectionByBibleTranslationId(trans.getId());
-                           
-                      
-                    if (sections != null && !sections.isEmpty()) {
-                        addBooksectionSections(child, sections);
-                    }
-                }
-            }
-
-            private void addBooksectionSections(DefaultMutableTreeNode parent, List<Booksection> sub) {
-                for (Iterator<Booksection> bookSectionIt = sub.iterator(); bookSectionIt.hasNext();) {
-                    final Booksection section = bookSectionIt.next();
-                    DefaultMutableTreeNode child = new DefaultMutableTreeNode(section);
-                    parent.add(child);    
-                    books = bibleTranslationDataRetrievalService.findBooksByBooksectionId(section.getId());
-                    if (books != null && !books.isEmpty()) {
-                        addBooks(child, books);
-                    }
-                }
-            }
-
-            private void addBooks(DefaultMutableTreeNode parent, List<Book> sub) {
-                for (Iterator<Book> bookIt = sub.iterator(); bookIt.hasNext();) {
-                    final Book book = bookIt.next();
-                    DefaultMutableTreeNode child = new DefaultMutableTreeNode(book);
-                    parent.add(child);
-                    chapters = bibleTranslationDataRetrievalService.findChaptersByBookId(book.getId());
-                    
-                    if (chapters != null && !chapters.isEmpty()) {
-                        addChapters(child, bibleTranslationDataRetrievalService.findChaptersByBookId(book.getId()));
-                    }
-                }
-            }
-
-            private void addChapters(DefaultMutableTreeNode parent, List<Chapter> sub) {
-                for (Iterator<Chapter> chapterIt = sub.iterator(); chapterIt.hasNext();) {
-                    Chapter chapter = chapterIt.next();
-                    DefaultMutableTreeNode child = new DefaultMutableTreeNode(chapter);
-                    parent.add(child);
-                /*if (book.getChapters()!= null) {
-                
-                }*/
-                }
-            }
-
-            public MarkupContainer newNodeLink(MarkupContainer parent, String id, TreeNode node) {
-                PageParameters params = new PageParameters();
-      
-                Object obj=(Object)((DefaultMutableTreeNode)node).getUserObject();
-                BookmarkablePageLink nodeLink = new BookmarkablePageLink(id, BibleSessionPage.class, params);
-                params.put("viewObject",obj);
-                return nodeLink;
-            }
-
-            protected AbstractTree getTree() {
-                return tree;
             }
         }
     }
