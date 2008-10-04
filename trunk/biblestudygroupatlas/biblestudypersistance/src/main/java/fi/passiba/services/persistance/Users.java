@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class Users  extends  AuditableEntity {
     private static final long serialVersionUID = 1L;
     
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false,unique=true)
     private String username;
     
     @Column(name = "password", nullable = false)
