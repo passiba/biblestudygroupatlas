@@ -21,6 +21,10 @@ public class BibleSessionPanel extends Panel {
 
     void  setContentPanel(Object obj) {
         
+        if(obj==null)
+        {
+            add(new BibleDataTreePanel("bibleSessionpanel"));
+        }
         
        if(obj!=null && obj instanceof Bibletranslation)
        {
