@@ -16,16 +16,13 @@
  */
 package fi.passiba.groups.ui.pages.wizards.biblesession;
 
-import fi.passiba.groups.ui.pages.biblesession.ItemTree;
+import fi.passiba.biblestudy.BibleStudySession;
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
 import fi.passiba.groups.ui.pages.Main;
 import fi.passiba.groups.ui.pages.biblesession.BibleDataTreePanel;
-import fi.passiba.groups.ui.pages.biblesession.BibleSessionPage;
-import fi.passiba.services.biblestudy.persistance.Bibletranslation;
-import fi.passiba.services.biblestudy.persistance.Book;
-import fi.passiba.services.biblestudy.persistance.Booksection;
-import fi.passiba.services.biblestudy.persistance.Chapter;
+import fi.passiba.services.biblesession.IBibleSessionServices;
+import fi.passiba.services.biblestudy.persistance.Biblesession;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -34,12 +31,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreeNode;
-import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.extensions.wizard.StaticContentStep;
@@ -50,11 +41,8 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
-import org.apache.wicket.extensions.markup.html.tree.Tree;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.tree.AbstractTree;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -77,6 +65,8 @@ public class NewBibleSessionWizard extends Wizard {
      
     @SpringBean
     private IBibleDataMining bibleDatamining;
+    @SpringBean
+    private IBibleSessionServices sessionServices;
     private static final List<String> allSessionTypes = Arrays.asList(new String[]{"Ryhmä", "Henkilö"});
     private BibleSession bibleSession = new BibleSession();
 
@@ -225,13 +215,29 @@ public class NewBibleSessionWizard extends Wizard {
         
         if(bibleSession!=null)
         {
+            
+            
+            if(bibleSession.getWeburlName()!=null || ! bibleSession.getWeburlName().trim().isEmpty())
+            {
+                Bookdatasource bookSource= new Bookdatasource();
 
-             Bookdatasource bookSource= new Bookdatasource();
-
-            bookSource.setWeburlName(bibleSession.getWeburlName());
-            bookSource.setCreatedBy(bibleSession.getCreatedBy());
-            bookSource.setStatus(bibleSession.getStatus());
-            bibleDatamining.addBookDatasource(bookSource);
+                bookSource.setWeburlName(bibleSession.getWeburlName());
+                bookSource.setCreatedBy(bibleSession.getCreatedBy());
+                bookSource.setStatus(bibleSession.getStatus());
+                bibleDatamining.addBookDatasource(bookSource);
+            }
+            
+            Biblesession session=new Biblesession();
+            session.setSessiontime(bibleSession.getSessionDate());
+            Object sessionOwner=null;
+            if(bibleSession.getSessiontype().equals("Henkilö"))
+            {
+                  sessionOwner=BibleStudySession.get().getPerson();
+            }else
+            {
+                
+            }
+            sessionServices.addBibleSession(session,sessionOwner);
         }
         setResponsePage(Main.class);
     }

@@ -35,6 +35,13 @@
     <bean id="IAddressService" class="fi.passiba.services.address.AddressServiceImp">
         <property name="addressDAO" ref="AddressDAO" />
     </bean>
+    
+    <bean id="BibleSessionServices" class="fi.passiba.services.biblesession.BibleSessionServicesImp">
+    
+        <property name="biblesessionDAO" ref="BiblesessionDAO" />
+        <property name="groupDAO" ref="GroupsDAO" />
+        <property name="personDAO" ref="PersonDAO" />
+    </bean>
       <!--
     <bean id="biblesessionProcessingGageway" class="fi.passiba.groups.ui.pages.wizards.biblesession.dataprocessing.BibleBookdDataProcessingImp">
         <property name="jmsTemplate" ref="jmsTemplate"/>
