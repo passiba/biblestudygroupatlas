@@ -99,20 +99,19 @@ public class BibleDataMiningImp implements IBibleDataMining {
 
     }
 
-    public void registerBookDatasource(String bookdatasourceURL) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    
 
     public void addBookDatasource(Bookdatasource datasource) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        datasourceDAO.save(datasource);
     }
 
     public Bookdatasource updateBookDatasource(Bookdatasource datasource) {
-        throw new UnsupportedOperationException("Not supported yet.");
+       datasourceDAO.saveOrUpdate(datasource);
+       return datasource;
     }
 
     public void deleteBookDatasource(Bookdatasource datasource) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        datasourceDAO.delete(datasource);
     }
 
    
