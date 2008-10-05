@@ -5,6 +5,7 @@ package fi.passiba.services.group.dao;
 
 import fi.passiba.hibernate.BaseDaoHibernate;
 import fi.passiba.hibernate.PaginationInfo;
+import fi.passiba.services.biblestudy.persistance.Biblesession;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Person;
 import fi.passiba.services.persistance.Adress;
@@ -51,4 +52,12 @@ public class GroupsDAO extends BaseDaoHibernate<Groups> implements IGroupsDAO {
         pageInfo.setMaxResult(maxResult);
         return pageInfo;
     }
+
+    public List<Biblesession> findBibleSessionsByGroupId(long groupid) {
+       Query query = super.getSessionFactory().getCurrentSession().createQuery("select distinct b from Biblesession b join Groups g where g.id=:id");
+       query.setLong("id", groupid);
+       return query.list();
+    }
+
+   
 }

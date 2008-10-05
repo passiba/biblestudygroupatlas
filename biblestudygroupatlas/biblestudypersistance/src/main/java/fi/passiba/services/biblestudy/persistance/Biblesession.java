@@ -42,7 +42,7 @@ public class Biblesession extends AuditableEntity {
     }
 
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "session")
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST}, fetch = FetchType.LAZY, mappedBy = "session")
     public Set<Verse> getVerses() {
         return this.verses;
     }

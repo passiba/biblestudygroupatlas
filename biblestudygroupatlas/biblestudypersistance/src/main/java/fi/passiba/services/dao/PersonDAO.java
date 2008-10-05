@@ -3,6 +3,7 @@ package fi.passiba.services.dao;
 
 
 import fi.passiba.hibernate.BaseDaoHibernate;
+import fi.passiba.services.biblestudy.persistance.Biblesession;
 import fi.passiba.services.persistance.Person;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -34,6 +35,12 @@ public class PersonDAO extends BaseDaoHibernate<Person> implements IPersonDAO {
         crit.createCriteria("adress").add(Restrictions.eq("country", country)).add(Restrictions.eq("city", city));
         return crit.list();
 
+    }
+
+    public List<Biblesession> findBibleSessionsByPersonId(long personid) {
+       Query query = super.getSessionFactory().getCurrentSession().createQuery("select distinct b from Biblesession b join Person p where p.id=:id");
+       query.setLong("id", personid);
+       return query.list();
     }
 
   
