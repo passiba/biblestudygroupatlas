@@ -22,8 +22,7 @@ public interface IBibleDataMining {
     
     @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
     public void retrieveBookdata();
-    public void registerBookDatasource(String bookdatasourceURL);
-    
+     
     public void addBookDatasource(Bookdatasource datasource);
 
     public Bookdatasource updateBookDatasource(Bookdatasource datasource); 
