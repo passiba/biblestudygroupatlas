@@ -199,4 +199,8 @@
 <bean id="BookDatasouceDAO" class="fi.passiba.services.biblestudy.datamining.dao.BookDatasouceDAO">
     <property name="sessionFactory" ref="sessionFactory" />
 </bean>
+<bean id="BiblesessionDAO" class="fi.passiba.services.biblestudy.dao.BiblesessionDAO">
+    
+    <property name="sessionFactory" ref="sessionFactory" />
+</bean>
 </beans>
