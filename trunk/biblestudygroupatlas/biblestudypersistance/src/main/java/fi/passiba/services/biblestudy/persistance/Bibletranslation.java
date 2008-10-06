@@ -61,7 +61,7 @@ public class Bibletranslation extends AuditableEntity {
     }
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "published_date", unique = false, nullable = false, insertable = true, updatable = true, length = 0)
+    @Column(name = "published_date", unique = false, nullable = true, insertable = true, updatable = true, length = 0)
     public Date getPublishedDate() {
         return this.publishedDate;
     }
