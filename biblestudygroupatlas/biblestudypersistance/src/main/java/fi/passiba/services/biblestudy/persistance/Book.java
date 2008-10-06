@@ -54,7 +54,7 @@ public class Book extends AuditableEntity {
         this.booksection = booksection;
     }
 
-    @Column(name = "bookNum", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "bookNum", unique = false, nullable = true, insertable = true, updatable = true)
     public Integer getBookNum() {
         return this.bookNum;
     }

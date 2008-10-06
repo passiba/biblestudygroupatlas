@@ -1,5 +1,4 @@
-
-    create table adress (
+create table adress (
         adress_id bigint not null auto_increment,
         created_by varchar(255),
         created_on datetime,
@@ -35,7 +34,7 @@
         updated_on datetime,
         bible_abbrv varchar(70) not null,
         bible_name varchar(200) not null,
-        published_date date not null,
+        published_date date,
         publisher_name varchar(100) not null,
         primary key (bible_translation_id)
     ) type=InnoDB;
@@ -46,7 +45,7 @@
         created_on datetime,
         updated_by varchar(255),
         updated_on datetime,
-        book_num integer not null,
+        book_num integer,
         book_text varchar(200) not null,
         fk_section_id bigint not null,
         fk_bookdatasource_id bigint,
@@ -59,8 +58,8 @@
         created_on datetime,
         updated_by varchar(255),
         updated_on datetime,
+        status varchar(50) not null,
         weburlname varchar(50) not null,
-        status varchar(10) not null,
         primary key (bookdatasource_id)
     ) type=InnoDB;
 
@@ -137,8 +136,8 @@
         email varchar(80) not null,
         firstname varchar(80) not null,
         lastname varchar(80) not null,
-        fk_userid bigint,
         fk_address_id bigint,
+        fk_userid bigint,
         primary key (person_id)
     ) type=InnoDB;
 
@@ -175,8 +174,8 @@
         updated_on datetime,
         verse_num integer not null,
         verse_text text not null,
-        fk_biblesessionid bigint,
         fk_chapter_id bigint not null,
+        fk_biblesessionid bigint,
         primary key (verse_id)
     ) type=InnoDB;
 
@@ -191,12 +190,6 @@
         add constraint FK2E3AE96F79E6B5 
         foreign key (fk_section_id) 
         references booksection (section_id);
-
-    alter table bookdatasource 
-        add index FKF5C7DBEE741363F9 (fk_status_id), 
-        add constraint FKF5C7DBEE741363F9 
-        foreign key (fk_status_id) 
-        references status (status_id);
 
     alter table booksection 
         add index FK159DDBDC31C41AE1 (fk_bible_translation_id), 
@@ -281,6 +274,7 @@
         add constraint FK6AE793514BB75BE 
         foreign key (fk_chapter_id) 
         references chapter (chapter_id);
+
 
 
  insert into  bibletranslation(
