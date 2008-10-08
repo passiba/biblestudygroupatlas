@@ -1,6 +1,5 @@
 package fi.passiba.groups.ui.pages.biblesession;
 
-import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.services.biblestudy.persistance.Bibletranslation;
 import fi.passiba.services.biblestudy.persistance.Book;
 import fi.passiba.services.biblestudy.persistance.Booksection;
@@ -18,20 +17,16 @@ import org.apache.wicket.PageParameters;
 import org.apache.wicket.extensions.markup.html.tree.Tree;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.html.tree.AbstractTree;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
  * Panel displaying the different bibletranslation,booksection,chapter and verse information
  * @author haverinen
  *
  */
-public class BibleDataTreePanel extends Panel {
+public class BibleDataTreePanel extends AbstractDataPanel  {
 
-    @SpringBean
-    private IBibleDataMining bibleTranslationDataRetrievalService;
-
+  
     /**
      * There isn't any model because model is auto binded using {@link FolderProvider}
      * @param id
@@ -82,14 +77,39 @@ public class BibleDataTreePanel extends Panel {
         }
 
         public MarkupContainer newNodeLink(MarkupContainer parent, String id, TreeNode node) {
-            PageParameters params = new PageParameters();
+           
 
             Object obj = (Object) ((DefaultMutableTreeNode) node).getUserObject();
-            BookmarkablePageLink nodeLink = new BookmarkablePageLink(id, BibleSessionPage.class, params);
-            params.put("viewObject", obj);
+            BookmarkablePageLink nodeLink = new BookmarkablePageLink(id, BibleSessionPage.class, getItemTypeAndId(obj));
+           
             return nodeLink;
         }
+        
+        private PageParameters getItemTypeAndId(Object obj) {
+            PageParameters params = new PageParameters();
+            if (obj != null && obj instanceof Bibletranslation) {
+                Bibletranslation bibletranslation = (Bibletranslation) obj;
+                params.put("type", DataType.BIBLETRANSLATION);
+                params.put("id", bibletranslation.getId());
 
+            }
+
+            if (obj != null && obj instanceof Book) {
+                Book book = (Book) obj;
+                params.put("type", DataType.BOOK);
+                params.put("id", book.getId());
+            }
+            if (obj != null && obj instanceof Chapter) {
+                 Chapter chapter = (Chapter) obj;
+                 params.put("type", DataType.CHAPTER);
+                 params.put("id", chapter.getId());
+                
+            }
+            return params;
+        }
+                
+                
+           
         protected TreeModel convertToTreeModel(List<Bibletranslation> fetchedBibleTranslations) {
 
 

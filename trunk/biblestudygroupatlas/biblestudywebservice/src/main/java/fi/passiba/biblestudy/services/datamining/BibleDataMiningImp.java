@@ -15,7 +15,6 @@ import fi.passiba.services.biblestudy.persistance.Bibletranslation;
 import fi.passiba.services.biblestudy.persistance.Book;
 import fi.passiba.services.biblestudy.persistance.Booksection;
 import fi.passiba.services.biblestudy.persistance.Chapter;
-import java.io.FileNotFoundException;
 import java.util.List;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
@@ -133,6 +132,18 @@ public class BibleDataMiningImp implements IBibleDataMining {
 
    public Booksection findBookSectionById(long id) {
         return booksectionDAO.getById(id);
+    }
+
+    public Bibletranslation findBibleTranslationById(long id) {
+        return translationDAO.getById(id);
+    }
+
+    public Book findBookById(long id) {
+        return bookDAO.getById(id);
+    }
+
+    public Chapter findChapterById(long id) {
+        return chapterDAO.getById(id);
     }
 
 }

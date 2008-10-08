@@ -1,42 +1,39 @@
 package fi.passiba.groups.ui.pages.biblesession;
 
 import fi.passiba.biblestudy.BibleStudySession;
-import fi.passiba.services.biblestudy.persistance.Bibletranslation;
-import fi.passiba.services.biblestudy.persistance.Book;
-import fi.passiba.services.biblestudy.persistance.Chapter;
-import org.apache.wicket.markup.html.panel.Panel;
+import java.util.EnumSet;
 
-public class BibleSessionPanel extends Panel {
+public class BibleSessionPanel extends AbstractDataPanel  {
 
     /**
      * Constructor
      */
-    public BibleSessionPanel(String id,Object obj) {
+    public BibleSessionPanel(String id,
+            String type,long itemid) {
         super(id);
-
-        setContentPanel(obj);
+        setContentPanel(DataType.valueOf(type),itemid);
 
 
     }
 
-    void  setContentPanel(Object obj) {
+    void  setContentPanel(DataType type,long itemId) {
         
-        if(obj==null)
+        if(type==null)
         {
             add(new BibleDataTreePanel("bibleSessionpanel"));
         }
         
-       if(obj!=null && obj instanceof Bibletranslation)
+       if(EnumSet.of(DataType.BIBLETRANSLATION).contains(type))
        {
-            addOrReplace(new BibleTranslationPanel("bibleSessionpanel",(Bibletranslation)obj));
+            addOrReplace(new BibleTranslationPanel("bibleSessionpanel",itemId));
        }
-       if(obj!=null && obj instanceof Book)
+       if(EnumSet.of(DataType.BOOK).contains(type))
        {
-            addOrReplace(new BookPanel("bibleSessionpanel",(Book)obj));
+            addOrReplace(new BookPanel("bibleSessionpanel",itemId));
        }
-       if(obj!=null && obj instanceof Chapter)
+       if(EnumSet.of(DataType.CHAPTER).contains(type))
        {
-            addOrReplace(new ChapterPanel("bibleSessionpanel",(Chapter)obj));
+            addOrReplace(new ChapterPanel("bibleSessionpanel",itemId));
        }
        
     }
