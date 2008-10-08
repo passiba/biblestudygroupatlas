@@ -25,7 +25,11 @@ public class Bookdatasource extends AuditableEntity {
     // Fields
     private String weburlName;
     private String status;
-
+    private String scraperConfigFile;
+    private String configFileDir;
+    private String outputDir;
+    private String outputSubDir;
+    private String outputFileName;
     // Constructors
     /** default constructor */
     public Bookdatasource() {
@@ -49,7 +53,47 @@ public class Bookdatasource extends AuditableEntity {
     public void setWeburlName(String weburlName) {
         this.weburlName = weburlName;
     }
+    @Column(name = "configfiledir", unique = false, nullable = true, insertable = true, updatable = true, length = 50)
+    public String getConfigFileDir() {
+        return configFileDir;
+    }
 
+    public void setConfigFileDir(String configFileDir) {
+        this.configFileDir = configFileDir;
+    }
+    @Column(name = "configfile", unique = false, nullable = true, insertable = true, updatable = true, length = 15)
+    public String getScraperConfigFile() {
+        return scraperConfigFile;
+    }
+
+    public void setScraperConfigFile(String scraperConfigFile) {
+        this.scraperConfigFile = scraperConfigFile;
+    }
+    @Column(name = "outputdir", unique = false, nullable = true, insertable = true, updatable = true, length = 20)
+    public String getOutputDir() {
+        return outputDir;
+    }
+
+    public void setOutputDir(String outputDir) {
+        this.outputDir = outputDir;
+    }
+     @Column(name = "outputfilename", unique = false, nullable = true, insertable = true, updatable = true, length = 15)
+    public String getOutputFileName() {
+        return outputFileName;
+    }
+
+    public void setOutputFileName(String outputFileName) {
+        this.outputFileName = outputFileName;
+    }
+     @Column(name = "outputsubdir", unique = false, nullable = true, insertable = true, updatable = true, length = 15)
+    public String getOutputSubDir() {
+        return outputSubDir;
+    }
+
+    public void setOutputSubDir(String outputSubDir) {
+        this.outputSubDir = outputSubDir;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

@@ -20,13 +20,17 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface IBibleDataMining {
     
-    @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
+    @Transactional(propagation = Propagation.REQUIRED)
     public void retrieveBookdata();
-     
+    @Transactional(propagation = Propagation.REQUIRED)
     public void addBookDatasource(Bookdatasource datasource);
-
+    @Transactional(propagation = Propagation.REQUIRED)
     public Bookdatasource updateBookDatasource(Bookdatasource datasource); 
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteBookDatasource(Bookdatasource datasource); 
+    
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
+    public List<Bookdatasource> findBookDataSourcesByStatus(String status);
 
     @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
     public List<Bibletranslation> findAllBibleTranslations();
