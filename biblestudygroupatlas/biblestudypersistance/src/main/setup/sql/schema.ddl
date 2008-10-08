@@ -502,14 +502,14 @@ insert into  book (created_by ,
         updated_by ,
         updated_on,
         book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Ensimmäinen kirje korinttilaisille',3,7);
+ values('Admin',curdate(),'Admin',curdate(),'1. kirje korinttilaisille',3,7);
 
 insert into  book (created_by ,
         created_on,
         updated_by ,
         updated_on,
         book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Toinen kirje korinttilaisille',3,8);
+ values('Admin',curdate(),'Admin',curdate(),'2. kirje korinttilaisille',3,8);
 
 insert into  book (created_by ,
         created_on,

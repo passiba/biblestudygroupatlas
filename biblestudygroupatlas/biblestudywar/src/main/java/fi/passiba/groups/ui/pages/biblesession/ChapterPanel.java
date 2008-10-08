@@ -2,30 +2,26 @@ package fi.passiba.groups.ui.pages.biblesession;
 
 
 import fi.passiba.biblestudy.BibleStudySession;
-import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.services.biblestudy.persistance.Chapter;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
 
-public class ChapterPanel extends Panel {
+public class ChapterPanel extends AbstractDataPanel {
     
     
-    @SpringBean
-    private IBibleDataMining bibleTranslationDataRetrievalService;
-    public ChapterPanel(String id,final Chapter chapter) {
+   
+    public ChapterPanel(String id,final long chapterid) {
         
         super(id);
            
         setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
             public Object load() {
-                return chapter;
+                return  bibleTranslationDataRetrievalService.findChapterById(chapterid);
             }
         }));
 

@@ -2,25 +2,23 @@ package fi.passiba.groups.ui.pages.biblesession;
 
 
 import fi.passiba.biblestudy.BibleStudySession;
-import fi.passiba.services.biblestudy.persistance.Bibletranslation;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
 
 
-public class BibleTranslationPanel extends Panel {
+public class BibleTranslationPanel extends AbstractDataPanel {
     
     
 
-    public BibleTranslationPanel(String id,final Bibletranslation bibletranslation) {
+    public BibleTranslationPanel(String id,final long translationid) {
         super(id);
            
         setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
             public Object load() {
-                return bibletranslation;
+               return  bibleTranslationDataRetrievalService.findBibleTranslationById(translationid);
             }
         }));
 

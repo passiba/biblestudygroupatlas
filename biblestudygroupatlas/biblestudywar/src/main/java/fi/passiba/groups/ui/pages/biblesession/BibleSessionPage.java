@@ -7,19 +7,12 @@ import org.apache.wicket.PageParameters;
 public class BibleSessionPage extends BasePage {
 
    
-    private Object obj;
+   
     
     public BibleSessionPage(PageParameters parameters) {
-		initPage(parameters);
-		add(new BibleSessionPanel("bibleSessionViewpanel",obj));
+        
+                String type= (String)parameters.get("type");
+                Long itemid=Long.parseLong((String)parameters.get("id"));
+		add(new BibleSessionPanel("bibleSessionViewpanel",type,itemid));
 	}
-	protected void initPage(PageParameters parameters) {
-		obj=parameters.get("viewObject");
-	}
-    
-       
-
-    
-
-   
 }
