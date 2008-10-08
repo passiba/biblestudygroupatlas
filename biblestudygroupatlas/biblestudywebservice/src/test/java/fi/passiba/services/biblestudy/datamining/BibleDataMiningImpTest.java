@@ -5,72 +5,46 @@
 
 package fi.passiba.services.biblestudy.datamining;
 
-import fi.passiba.biblestudy.services.datamining.BibleDataMiningImp;
-import fi.passiba.hibernate.HibernateUtility;
-import fi.passiba.services.biblestudy.datamining.dao.BookDatasouceDAO;
-import junit.framework.TestCase;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
+import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
+import java.util.List;
+import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
 /**
  *
  * @author haverinen
+ {
+    
+    
  */
-public class BibleDataMiningImpTest extends TestCase {
-    
-    
-    private SessionFactory sessionFactory;
-    private BibleDataMiningImp service = null;
-    private BookDatasouceDAO dao = null;
-    
-    private Session session = null;
-    
-    public BibleDataMiningImpTest(String testName) {
-        super(testName);
-    }            
-    
-    protected void setUp() throws Exception {
-        try {
-            sessionFactory = HibernateUtility.getSessionFactory();
-            dao = new BookDatasouceDAO();
-            dao.setSessionFactory(sessionFactory);
-
-            service = new BibleDataMiningImp();
-            service.setDatasourceDAO(dao);
-            session=sessionFactory.openSession();
-        }
-        finally {
-            session.beginTransaction();
-           // sessionFactory.getCurrentSession().beginTransaction();
-        }
-    }
-
+public class BibleDataMiningImpTest extends   AbstractDependencyInjectionSpringContextTests 
+{
+   private IBibleDataMining dataminingService = null;
    
-    protected void tearDown() throws Exception {
-         try {
-            dao = null;
-            service = null;
-            
+    public enum StatusType {
+        ACTIVE("Aktiivinen"), NOTACTIVE("Ei Aktiivinen"),PARSED("Parsittu");
+        private String status;
+        private StatusType(String status) {
+            this.status = status;
         }
-        finally {
-           /* Session session = sessionFactory.getCurrentSession();
-            session.close();*/
-            session.getTransaction().commit();
-            session.close();
-        }
-    }
-    
-    protected void flushSession() {
-        sessionFactory.getCurrentSession().flush();
-    }
 
-    protected void clearSession() {
-        sessionFactory.getCurrentSession().clear();
+        public String getStatus() {
+            return status;
+        }
+       
     }
+   
     
+   @Override
+   protected String[] getConfigLocations() {
+      return new String[] { "classpath:META-INF/biblestudy-webservice.xml" };
+   }
+
     
-    public void testRetrieveBibleData() {
-        service.retrieveBookdata();
+    public void testRetrieveBibleData() throws Exception{
+        dataminingService = (IBibleDataMining) applicationContext.getBean("IBibleDataMining");
+        dataminingService.retrieveBookdata();
+      
     }
 
     
