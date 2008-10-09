@@ -68,7 +68,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Matt.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -79,7 +79,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Mark.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -90,7 +90,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Luuk.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -101,7 +101,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>John.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -112,7 +112,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Apt.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -123,7 +123,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Room.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -134,7 +134,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>1Kor.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -145,7 +145,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>2Kor.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -156,7 +156,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
              <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Gal.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -167,7 +167,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Ef.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -178,7 +178,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Fil.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -189,7 +189,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
              <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Kol.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -200,7 +200,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Tit.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -211,7 +211,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>1Tess.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -222,7 +222,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>2Tess.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -233,7 +233,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>1Tim.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -244,7 +244,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>2Tim.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -255,7 +255,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Filem.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -266,7 +266,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Hepr.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -277,7 +277,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Jaak.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -288,7 +288,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>1Piet.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -299,7 +299,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>2Piet.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -310,7 +310,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>1Joh.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -321,7 +321,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>2Joh.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -332,7 +332,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>3Joh.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -343,7 +343,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
             <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Juud.xml</value>
             <value>Aktiivinen</value>
         </row>
@@ -354,7 +354,7 @@
             <value>c:/temp/</value>
             <value>bible.xml</value>
              <value>c:/temp/</value>
-            <value>bible/chapters</value>
+            <value>bible/chapters/</value>
             <value>Ilm.xml</value>
             <value>Aktiivinen</value>
         </row>

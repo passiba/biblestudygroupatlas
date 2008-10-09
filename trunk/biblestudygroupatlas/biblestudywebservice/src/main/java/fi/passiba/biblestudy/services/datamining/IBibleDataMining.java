@@ -29,6 +29,8 @@ public interface IBibleDataMining {
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteBookDatasource(Bookdatasource datasource); 
     
+     @Transactional(propagation = Propagation.REQUIRED)
+    public void parseBookXMLData(List<Bookdatasource> datasources ,String ouputDir);
     @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
     public List<Bookdatasource> findBookDataSourcesByStatus(String status);
 
