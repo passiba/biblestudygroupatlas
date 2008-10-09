@@ -14,10 +14,14 @@ import fi.passiba.services.biblestudy.persistance.Bibletranslation;
 import fi.passiba.services.biblestudy.persistance.Book;
 import fi.passiba.services.biblestudy.persistance.Booksection;
 import fi.passiba.services.biblestudy.persistance.Chapter;
+import fi.passiba.biblestudy.datamining.ParserHelper;
+import fi.passiba.biblestudy.datamining.ChapterInfo;
+import fi.passiba.biblestudy.datamining.VerseInfo;
 import java.io.FileNotFoundException;
 import java.util.List;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
+
 import org.webharvest.definition.ScraperConfiguration;
 import org.webharvest.runtime.Scraper;
 
@@ -34,7 +38,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
     private IBookDAO bookDAO = null;
     private IChapterDAO chapterDAO = null;
     private String configFile;
-    
+
     
     public enum StatusType {
         ACTIVE("Aktiivinen"), NOTACTIVE("Ei Aktiivinen"),PARSED("Parsittu");
@@ -105,24 +109,28 @@ public class BibleDataMiningImp implements IBibleDataMining {
             Scraper scraper = null;
 
             List<Bookdatasource> datasources = datasourceDAO.findBookDataSourcesByStatus(StatusType.ACTIVE.getStatus());
-
+            String outputDir="";
             for (Bookdatasource datasource : datasources) {
                 
                 if(config==null && scraper==null)
                 {
                     config =new ScraperConfiguration(datasource.getConfigFileDir()+ datasource.getScraperConfigFile());
+                    outputDir=datasource.getOutputDir();
                     scraper=new Scraper(config, datasource.getOutputDir());
+                    outputDir+= datasource.getOutputSubDir();
                 
                 }
                // int begingIndex = datasource.getWeburlName().indexOf("1992/"), endIndex = datasource.getWeburlName().length() - 1;
                // String filename = datasource.getWeburlName().substring(begingIndex, endIndex);
                 scraper.addVariableToContext("startUrl", datasource.getWeburlName());
                 scraper.addVariableToContext("outputSubDir", datasource.getOutputSubDir());
+               
                 scraper.addVariableToContext("filename", datasource.getOutputFileName());
                 scraper.setDebug(true);
                 scraper.execute();
              
             }
+             parseBookXMLData(datasources, outputDir);
 
         // takes variable created during execution
         //   Variable article =  (Variable) scraper.getContext().getVar("article");
@@ -134,7 +142,14 @@ public class BibleDataMiningImp implements IBibleDataMining {
         }
 
     }
-
+    public void parseBookXMLData(List<Bookdatasource> datasources ,String ouputDir) {
+        
+         ParserHelper parseHelper= new ParserHelper();
+         for (Bookdatasource datasource : datasources) {
+              List<ChapterInfo> chapters= parseHelper.readParesdBookDataSources(ouputDir+datasource.getOutputFileName());
+         }
+        
+    }
     public void addBookDatasource(Bookdatasource datasource) {
         datasourceDAO.save(datasource);
     }
@@ -183,4 +198,6 @@ public class BibleDataMiningImp implements IBibleDataMining {
     public List<Bookdatasource> findBookDataSourcesByStatus(String status) {
        return datasourceDAO.findBookDataSourcesByStatus(status);
     }
+
+   
 }

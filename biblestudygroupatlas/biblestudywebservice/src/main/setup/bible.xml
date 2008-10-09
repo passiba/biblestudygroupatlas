@@ -7,7 +7,7 @@
         <template>
             <![CDATA[
             <?xml version="1.0" encoding="UTF-8"?>
-             <chapter date="${sys.datetime("dd.MM.yyyy")}"> ]]>
+             <chapters date="${sys.datetime("dd.MM.yyyy")}"> ]]>
         </template>
         
         <loop item="articleUrl" index="i">
@@ -55,7 +55,7 @@
         
         
         
-        <![CDATA[ </chapter> ]]>
+        <![CDATA[ </chapters> ]]>
     </file>
     
 </config>
