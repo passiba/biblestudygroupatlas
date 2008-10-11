@@ -1,6 +1,5 @@
 package fi.passiba.services.biblestudy.dao;
 
-
 import fi.passiba.hibernate.BaseDaoHibernate;
 import fi.passiba.services.biblestudy.persistance.Book;
 import java.util.List;
@@ -12,20 +11,20 @@ public class BookDAO extends BaseDaoHibernate<Book> implements
         IBookDAO {
 
     public BookDAO() {
-         setQueryClass(Book.class);
+        setQueryClass(Book.class);
     }
 
-    public List<Book>  findBooksByBookIDSectionIDandTranslationId(long translationid, long sectionid, long bookid) {
-       
-        
-      Query query=super.getSessionFactory().getCurrentSession().createQuery("select distinct b from Book b join b.booksection s join s.bibletranslation t where t.id=:translationid and s.id=:sectionid and b.id=:bookid");
-      query.setMaxResults(1);
-      query.setLong("translationid", translationid);
-      query.setLong("sectionid", sectionid);
-      query.setLong("bookid", bookid);
-      return query.list();
-        
-        
+    public List<Book> findBooksByBookIDSectionIDandTranslationId(long translationid, long sectionid, long bookid) {
+
+
+        Query query = super.getSessionFactory().getCurrentSession().createQuery("select distinct b from Book b join b.booksection s join s.bibletranslation t where t.id=:translationid and s.id=:sectionid and b.id=:bookid");
+        query.setMaxResults(1);
+        query.setLong("translationid", translationid);
+        query.setLong("sectionid", sectionid);
+        query.setLong("bookid", bookid);
+        return query.list();
+
+
     }
 
     public List<Book> findBooksByBooksectionId(long id) {
@@ -34,5 +33,16 @@ public class BookDAO extends BaseDaoHibernate<Book> implements
         return crit.list();
     }
 
-    
+    public Book findBooksByBookDataSourcId(long bookDatasourceid) {
+        Book book = new Book();
+        Criteria crit = super.getSessionFactory().getCurrentSession().createCriteria(getQueryClass());
+        crit.createCriteria("source").add(Restrictions.eq("id", bookDatasourceid));
+        
+        List<Book> result = crit.list();
+        if (result != null && !result.isEmpty()) {
+            book = result.get(0);
+        }
+        return book;
+
+    }
 }

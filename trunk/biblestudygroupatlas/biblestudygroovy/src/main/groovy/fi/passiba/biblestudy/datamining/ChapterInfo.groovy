@@ -12,5 +12,23 @@ class ChapterInfo {
     {
       verses = new ArrayList()
     }
+    public List getVerses()
+    {
+       return verses
+    }
+    public String getText()
+    {
+       return text
+    }
+    public String getSubTitle()
+    {
+
+       return subtitle
+    }
+    public String getNumber()
+    {
+       return number
+    }
+     
 
 }

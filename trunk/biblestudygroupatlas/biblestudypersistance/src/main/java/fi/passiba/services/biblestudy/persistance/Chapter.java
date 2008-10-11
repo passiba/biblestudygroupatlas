@@ -44,7 +44,7 @@ public class Chapter extends AuditableEntity {
         this.book = book;
     }
 
-    @Column(name = "chapterNum", unique = false, nullable = false, insertable = true, updatable = true)
+    @Column(name = "chapterNum", unique = false, nullable = true, insertable = true, updatable = true)
     public Integer getChapterNum() {
         return this.chapterNum;
     }
