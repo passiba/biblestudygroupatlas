@@ -14,11 +14,16 @@ import fi.passiba.services.biblestudy.persistance.Bibletranslation;
 import fi.passiba.services.biblestudy.persistance.Book;
 import fi.passiba.services.biblestudy.persistance.Booksection;
 import fi.passiba.services.biblestudy.persistance.Chapter;
+import fi.passiba.services.biblestudy.persistance.Verse;
 import fi.passiba.biblestudy.datamining.ParserHelper;
 import fi.passiba.biblestudy.datamining.ChapterInfo;
 import fi.passiba.biblestudy.datamining.VerseInfo;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
@@ -41,7 +46,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
 
     
     public enum StatusType {
-        ACTIVE("Aktiivinen"), NOTACTIVE("Ei Aktiivinen"),PARSED("Parsittu");
+        ACTIVE("Aktiivinen"), NOTACTIVE("Ei Aktiivinen"),PARSED("Parsittu"),FLAWED("Virheellinen");
         private String status;
         private StatusType(String status) {
             this.status = status;
@@ -142,11 +147,59 @@ public class BibleDataMiningImp implements IBibleDataMining {
         }
 
     }
+    private Chapter addVerses(Chapter chap,List<VerseInfo> versesInfos)
+    {
+        
+        Set<Verse> verses = new HashSet<Verse>(0);
+        for(VerseInfo verseInfo: versesInfos)
+        {
+            Verse verse=new Verse();
+            verse.setVerseNum(verseInfo.getNumber());
+            verse.setChapter(chap);
+            verse.setVerseText(verseInfo.getText());
+            verses.add(verse);
+        }
+        
+        chap.setVerses(verses);
+        return chap;
+    }
     public void parseBookXMLData(List<Bookdatasource> datasources ,String ouputDir) {
         
          ParserHelper parseHelper= new ParserHelper();
          for (Bookdatasource datasource : datasources) {
-              List<ChapterInfo> chapters= parseHelper.readParesdBookDataSources(ouputDir+datasource.getOutputFileName());
+              List<ChapterInfo> chapters= parseHelper.readParsedBookDataSources(ouputDir+datasource.getOutputFileName());
+              Book book=bookDAO.findBooksByBookDataSourcId(datasource.getId());
+              Set<Chapter> chprs = new HashSet<Chapter>(0);
+              for(ChapterInfo chapterInfo:chapters)
+              {
+                  
+                  Chapter chapter=new  Chapter();
+                  chapter.setBook(book);
+                  
+                  chapter.setChapterTitle(chapterInfo.getSubTitle());
+               
+                  List<Integer>verseNumbers=new ArrayList();
+                  int i=1;
+                  StringTokenizer st = new StringTokenizer(chapterInfo.getNumber());
+                  while (st.hasMoreTokens()) {
+                        
+                        Integer verseNum=Integer.valueOf(st.nextToken());
+                        if(i!=verseNum.intValue())
+                        {
+                            datasource.setStatus(StatusType.FLAWED.getStatus());
+                        }
+                        verseNumbers.add(verseNum);
+                        i+=1;
+                  }
+                  chapter=addVerses(chapter,chapterInfo.getVerses());
+                  chprs.add(chapter);
+              }
+              book.setChapters(chprs);
+              book.setSource(datasource);
+              datasourceDAO.update(datasource);
+              //datasourceDAO.update(datasource);
+              bookDAO.update(book);
+         
          }
         
     }

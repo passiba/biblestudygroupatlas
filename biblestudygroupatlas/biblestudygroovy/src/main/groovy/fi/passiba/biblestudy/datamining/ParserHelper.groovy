@@ -9,7 +9,7 @@ class ParserHelper {
       chapters = new ArrayList()
    }
 
-    List  readParesdBookDataSources(outPutFile) 
+    List  readParsedBookDataSources(outPutFile) 
     {
        def currentFile = new File(outPutFile)
        //def files = basedir.listFiles().grep(~/.*xml$/)
