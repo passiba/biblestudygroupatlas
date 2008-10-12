@@ -97,6 +97,7 @@
             </prop>
             <prop key="hibernate.max_fetch_depth">3
             </prop>
+            <prop key="hibernate.jdbc.batch_size">50</prop>
                <!-- <prop key="hibernate.default_batch_fetch_size">4</prop>-->
         </props>
     </property>

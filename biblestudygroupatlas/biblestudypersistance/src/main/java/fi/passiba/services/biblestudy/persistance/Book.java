@@ -31,18 +31,8 @@ public class Book extends AuditableEntity {
     private Integer bookNum;
     private String bookText;
     private Set<Chapter> chapters = new HashSet<Chapter>(0);
-    private Bookdatasource source;
-
+    
    
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_bookdatasource_id", unique = false, nullable = false, insertable = true, updatable = true)
-    public Bookdatasource getsource() {
-        return this.source;
-    }
-
-    public void setSource(Bookdatasource source) {
-        this.source = source;
-    }
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_section_id", unique = false, nullable = false, insertable = true, updatable = true)

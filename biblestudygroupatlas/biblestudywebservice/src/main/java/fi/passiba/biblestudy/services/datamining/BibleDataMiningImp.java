@@ -163,13 +163,19 @@ public class BibleDataMiningImp implements IBibleDataMining {
         chap.setVerses(verses);
         return chap;
     }
-    public void parseBookXMLData(List<Bookdatasource> datasources ,String ouputDir) {
-        
+    public void parseBookXMLData(List<Bookdatasource> datasources,String ouputDir) {
+        //List<Bookdatasource> datasources = datasourceDAO.findBookDataSourcesByStatus(StatusType.ACTIVE.getStatus());
          ParserHelper parseHelper= new ParserHelper();
+         List<Book> books= new ArrayList();
          for (Bookdatasource datasource : datasources) {
               List<ChapterInfo> chapters= parseHelper.readParsedBookDataSources(ouputDir+datasource.getOutputFileName());
-              Book book=bookDAO.findBooksByBookDataSourcId(datasource.getId());
+              Book book=new Book();
+              Booksection booksection= booksectionDAO.getById(new Long(3));
+             
+              book.setBooksection( booksection);
+              book.setBookText(datasource.getOutputFileName().substring(0, datasource.getOutputFileName().indexOf(".")));
               Set<Chapter> chprs = new HashSet<Chapter>(0);
+              String status="";
               for(ChapterInfo chapterInfo:chapters)
               {
                   
@@ -186,7 +192,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
                         Integer verseNum=Integer.valueOf(st.nextToken());
                         if(i!=verseNum.intValue())
                         {
-                            datasource.setStatus(StatusType.FLAWED.getStatus());
+                            status=StatusType.FLAWED.getStatus();
                         }
                         verseNumbers.add(verseNum);
                         i+=1;
@@ -195,13 +201,19 @@ public class BibleDataMiningImp implements IBibleDataMining {
                   chprs.add(chapter);
               }
               book.setChapters(chprs);
-              book.setSource(datasource);
-              datasourceDAO.update(datasource);
-              //datasourceDAO.update(datasource);
-              bookDAO.update(book);
+           
+            // datasourceDAO.update(datasource);
+             //datasource=datasourceDAO.getById(datasource.getId())
+             bookDAO.save(book);
+             datasource.setBook(book);
+             datasource.setStatus(status);
+             //datasourceDAO.update(datasource);
+          
+            // books.add(book);
+            
          
          }
-        
+         //bookDAO.updateBooksinBatch(books);
     }
     public void addBookDatasource(Bookdatasource datasource) {
         datasourceDAO.save(datasource);
