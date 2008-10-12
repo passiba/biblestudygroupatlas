@@ -33,16 +33,21 @@ public class BookDAO extends BaseDaoHibernate<Book> implements
         return crit.list();
     }
 
-    public Book findBooksByBookDataSourcId(long bookDatasourceid) {
-        Book book = new Book();
-        Criteria crit = super.getSessionFactory().getCurrentSession().createCriteria(getQueryClass());
-        crit.createCriteria("source").add(Restrictions.eq("id", bookDatasourceid));
-        
-        List<Book> result = crit.list();
-        if (result != null && !result.isEmpty()) {
-            book = result.get(0);
-        }
-        return book;
 
+    public void updateBooksinBatch(List<Book> books) {
+       
+        int index=0;
+        for(Book book:books)
+        {
+            this.update(book);
+             if (((index++)%15) == 0)
+            {
+                
+               super.getSessionFactory().getCurrentSession().flush();
+               super.getSessionFactory().getCurrentSession().clear();
+            }
+        }
+        
+        
     }
 }

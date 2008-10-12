@@ -21,6 +21,7 @@ public interface IBookDAO  extends  BaseDao<Book>{
     public List<Book>  findBooksByBookIDSectionIDandTranslationId( long translationid, long sectionid, long bookid);
     @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
     public List<Book> findBooksByBooksectionId(long id);
-    @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
-    public Book findBooksByBookDataSourcId(long bookDatasourceid);
+  
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateBooksinBatch(List<Book> books);
 }

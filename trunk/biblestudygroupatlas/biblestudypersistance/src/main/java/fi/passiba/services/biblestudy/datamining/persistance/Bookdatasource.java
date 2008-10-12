@@ -30,12 +30,23 @@ public class Bookdatasource extends AuditableEntity {
     private String outputDir;
     private String outputSubDir;
     private String outputFileName;
+    
+    private Book book;
     // Constructors
     /** default constructor */
     public Bookdatasource() {
     }
 
    
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_book_id", referencedColumnName = "book_id",nullable = true)
+    public Book getBook() {
+        return this.book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
     @Column(name = "status", unique = false, nullable = false, insertable = true, updatable = true, length = 50)
     public String getStatus() {
         return this.status;
