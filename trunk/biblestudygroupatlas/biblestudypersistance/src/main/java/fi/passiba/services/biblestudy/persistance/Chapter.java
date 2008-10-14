@@ -53,7 +53,7 @@ public class Chapter extends AuditableEntity {
         this.chapterNum = chapterNum;
     }
 
-    @Column(name = "chapter_title", unique = false, nullable = false, insertable = true, updatable = true, length = 200)
+    @Column(name = "chapter_title", unique = false, nullable = false, insertable = true, updatable = true, length = 5000)
     public String getChapterTitle() {
         return this.chapterTitle;
     }

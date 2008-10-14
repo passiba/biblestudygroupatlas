@@ -55,7 +55,7 @@ public class GoogleMapsPage extends WebPage {
 
                         @Override
                         public void renderHead(IHeaderResponse response) {
-                                // TODO Auto-generated method stub
+                                
                                 super.renderHead(response);
                                 
                                 String fn = "function updateInfoWindow(marker) { " + getCallbackScript() + "};";
