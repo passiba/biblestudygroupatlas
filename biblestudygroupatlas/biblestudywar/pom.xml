@@ -176,38 +176,29 @@
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
-                <configuration>
-                    <container>
-                        <containerId>tomcat6x</containerId>
-                        <type>remote</type>
-                        <zipUrlInstaller>
-                            <url>http://www.nic.funet.fi/pub/mirrors/apache.org/tomcat/tomcat-6/v6.0.16/bin/apache-tomcat-6.0.16.zip</url>
-                            <installDir>${installDir}</installDir>
-                        </zipUrlInstaller>
-                    </container>
-                    <configuration>
-                        <home>C:/java/tools/apache-tomcat-6.0.16</home>
-                        <type>runtime</type>
-                        <properties>
-                            <cargo.hostname>localhost</cargo.hostname>
-                            <cargo.servlet.port>8080</cargo.servlet.port>
-                            <cargo.remote.username>admin</cargo.remote.username>
-                            <cargo.remote.password>admin</cargo.remote.password>
-                        </properties>
-                    </configuration>
-                </configuration>
+                <executions>
+                    <execution>
+                        <id>tomcat-execution</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <wait>true</wait>
+                            <container>
+                                <containerId>tomcat6x</containerId>
+                                <zipUrlInstaller>
+                                    <url>http://www.nic.funet.fi/pub/mirrors/apache.org/tomcat/tomcat-6/v6.0.18/bin/apache-tomcat-6.0.18.zip</url>
+                                    <installDir>${installDir}</installDir>
+                                </zipUrlInstaller>
+                            </container>
+                            <!--<configuration>
+                                <dir>${project.build.directory}/tomcat6x/</dir>
+                            </configuration>-->
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin>
-            
-           
-      
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -269,10 +260,8 @@
                     <skip>${maven.test.skip}</skip>
                     <src>${originalDataSetFile}</src>
                     <supportBatchStatement>true</supportBatchStatement>
-
                 </configuration>
                 <executions>
-                    
                     <execution>
                         <id>insert</id>
                         <phase>test</phase>
@@ -347,7 +336,6 @@
                     </execution>-->
                 </executions>
             </plugin>
-     
         </plugins>
         <resources>
             <resource>
@@ -360,7 +348,6 @@
                 </includes>
                 <excludes>
                     <exclude>**/*.java</exclude>
-               
                     <exclude>**/hibernate.cfg.xml</exclude>
                 </excludes>
             </resource>
@@ -422,7 +409,7 @@
         </profile>
     </profiles>
     <properties>
-        <installDir>C:/java/tools/SUN/Apache Tomcat 6.0.16</installDir>
+        <installDir>C:/java/tools/sun/tomcat6</installDir>
         <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
         <wicket.version>1.3.4</wicket.version>
          <!-- <wicket.version>1.4-m3</wicket.version>-->
@@ -430,7 +417,6 @@
         <spring.version>2.0.8</spring.version>
         <spring.ws.version>1.0.4</spring.ws.version>
         <spring.modules.version>0.8a</spring.modules.version>
-        
         <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
         <jdbc.url>jdbc:mysql://localhost:3306/biblestudy?autoReconnect=true</jdbc.url>
         <jdbc.username>bibleuser</jdbc.username>

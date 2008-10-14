@@ -3,7 +3,9 @@ package fi.passiba.services.biblestudy.datamining.dao;
 
 import fi.passiba.hibernate.BaseDaoHibernate;
 import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
+import fi.passiba.services.biblestudy.persistance.Book;
 import java.util.List;
+import javax.management.Query;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -19,4 +21,5 @@ public class BookDatasouceDAO extends BaseDaoHibernate<Bookdatasource> implement
         crit.add(Restrictions.eq("status", status));
         return crit.list();
     }
+
 }

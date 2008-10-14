@@ -176,38 +176,46 @@ public class BibleDataMiningImp implements IBibleDataMining {
               book.setBookText(datasource.getOutputFileName().substring(0, datasource.getOutputFileName().indexOf(".")));
               Set<Chapter> chprs = new HashSet<Chapter>(0);
               String status="";
+              int i=1;
               for(ChapterInfo chapterInfo:chapters)
               {
                   
                   Chapter chapter=new  Chapter();
                   chapter.setBook(book);
+                  System.out.println("kappale "+i +"" +chapterInfo.getSubTitle());
+                  String title=chapterInfo.getSubTitle();
+                 /* if (title.length()>2000)
+                  {
+                    chapter.setChapterTitle(title.substring(0,1999).trim());
+                  }else*/
                   
-                  chapter.setChapterTitle(chapterInfo.getSubTitle());
-               
+                      chapter.setChapterTitle(title.trim());
+                  
                   List<Integer>verseNumbers=new ArrayList();
-                  int i=1;
+                  int j=1;
                   StringTokenizer st = new StringTokenizer(chapterInfo.getNumber());
                   while (st.hasMoreTokens()) {
                         
                         Integer verseNum=Integer.valueOf(st.nextToken());
-                        if(i!=verseNum.intValue())
+                        if(j!=verseNum.intValue())
                         {
                             status=StatusType.FLAWED.getStatus();
                         }
                         verseNumbers.add(verseNum);
-                        i+=1;
+                        j+=1;
                   }
-                  chapter=addVerses(chapter,chapterInfo.getVerses());
+                  //chapter=addVerses(chapter,chapterInfo.getVerses());
                   chprs.add(chapter);
+                  i+=1;
               }
               book.setChapters(chprs);
            
             // datasourceDAO.update(datasource);
              //datasource=datasourceDAO.getById(datasource.getId())
              bookDAO.save(book);
-             datasource.setBook(book);
-             datasource.setStatus(status);
-             //datasourceDAO.update(datasource);
+            // datasource.setBook(book);
+            // datasource.setStatus(status);
+            // datasourceDAO.update(datasource);
           
             // books.add(book);
             
