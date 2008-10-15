@@ -30,7 +30,7 @@ public class Book extends AuditableEntity {
     private Booksection booksection;
     private Integer bookNum;
     private String bookText;
-    private Set<Chapter> chapters = new HashSet<Chapter>(0);
+    private Set<Chapter> chapters = new HashSet();
     
    
 

@@ -18,12 +18,20 @@ import fi.passiba.services.biblestudy.persistance.Verse;
 import fi.passiba.biblestudy.datamining.ParserHelper;
 import fi.passiba.biblestudy.datamining.ChapterInfo;
 import fi.passiba.biblestudy.datamining.VerseInfo;
+import fi.passiba.hibernate.HibernateUtility;
+import fi.passiba.services.biblestudy.dao.BookDAO;
+import fi.passiba.services.biblestudy.dao.BooksectionDAO;
+import fi.passiba.services.biblestudy.dao.ChapterDAO;
+import fi.passiba.services.biblestudy.datamining.dao.BookDatasouceDAO;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
@@ -43,11 +51,21 @@ public class BibleDataMiningImp implements IBibleDataMining {
     private IBookDAO bookDAO = null;
     private IChapterDAO chapterDAO = null;
     private String configFile;
+    private SessionFactory sessionFactory;
 
-    
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     public enum StatusType {
-        ACTIVE("Aktiivinen"), NOTACTIVE("Ei Aktiivinen"),PARSED("Parsittu"),FLAWED("Virheellinen");
+
+        ACTIVE("Aktiivinen"), NOTACTIVE("Ei Aktiivinen"), PARSED("Parsittu"), FLAWED("Virheellinen");
         private String status;
+
         private StatusType(String status) {
             this.status = status;
         }
@@ -55,7 +73,6 @@ public class BibleDataMiningImp implements IBibleDataMining {
         public String getStatus() {
             return status;
         }
-       
     }
 
     public IBookDatasouceDAO getDatasourceDAO() {
@@ -110,32 +127,32 @@ public class BibleDataMiningImp implements IBibleDataMining {
     public void retrieveBookdata() {
 
         try {
-            ScraperConfiguration config =null;        
+            ScraperConfiguration config = null;
             Scraper scraper = null;
 
             List<Bookdatasource> datasources = datasourceDAO.findBookDataSourcesByStatus(StatusType.ACTIVE.getStatus());
-            String outputDir="";
+            String outputDir = "";
             for (Bookdatasource datasource : datasources) {
-                
-                if(config==null && scraper==null)
-                {
-                    config =new ScraperConfiguration(datasource.getConfigFileDir()+ datasource.getScraperConfigFile());
-                    outputDir=datasource.getOutputDir();
-                    scraper=new Scraper(config, datasource.getOutputDir());
-                    outputDir+= datasource.getOutputSubDir();
-                
+
+                if (config == null && scraper == null) {
+                    config = new ScraperConfiguration(datasource.getConfigFileDir() + datasource.getScraperConfigFile());
+                    outputDir = datasource.getOutputDir();
+                    scraper = new Scraper(config, datasource.getOutputDir());
+                    outputDir += datasource.getOutputSubDir();
+
                 }
-               // int begingIndex = datasource.getWeburlName().indexOf("1992/"), endIndex = datasource.getWeburlName().length() - 1;
-               // String filename = datasource.getWeburlName().substring(begingIndex, endIndex);
+                // int begingIndex = datasource.getWeburlName().indexOf("1992/"), endIndex = datasource.getWeburlName().length() - 1;
+                // String filename = datasource.getWeburlName().substring(begingIndex, endIndex);
                 scraper.addVariableToContext("startUrl", datasource.getWeburlName());
                 scraper.addVariableToContext("outputSubDir", datasource.getOutputSubDir());
-               
+
                 scraper.addVariableToContext("filename", datasource.getOutputFileName());
                 scraper.setDebug(true);
                 scraper.execute();
-             
+                parseBookXMLData(datasource, outputDir);
+
             }
-             parseBookXMLData(datasources, outputDir);
+
 
         // takes variable created during execution
         //   Variable article =  (Variable) scraper.getContext().getVar("article");
@@ -147,82 +164,91 @@ public class BibleDataMiningImp implements IBibleDataMining {
         }
 
     }
-    private Chapter addVerses(Chapter chap,List<VerseInfo> versesInfos)
-    {
-        
+
+    private Chapter addVerses(Chapter chap, List<VerseInfo> versesInfos) {
+
         Set<Verse> verses = new HashSet<Verse>(0);
-        for(VerseInfo verseInfo: versesInfos)
-        {
-            Verse verse=new Verse();
+        for (VerseInfo verseInfo : versesInfos) {
+            Verse verse = new Verse();
             verse.setVerseNum(verseInfo.getNumber());
             verse.setChapter(chap);
             verse.setVerseText(verseInfo.getText());
             verses.add(verse);
         }
-        
+
         chap.setVerses(verses);
         return chap;
     }
-    public void parseBookXMLData(List<Bookdatasource> datasources,String ouputDir) {
-        //List<Bookdatasource> datasources = datasourceDAO.findBookDataSourcesByStatus(StatusType.ACTIVE.getStatus());
-         ParserHelper parseHelper= new ParserHelper();
-         List<Book> books= new ArrayList();
-         for (Bookdatasource datasource : datasources) {
-              List<ChapterInfo> chapters= parseHelper.readParsedBookDataSources(ouputDir+datasource.getOutputFileName());
-              Book book=new Book();
-              Booksection booksection= booksectionDAO.getById(new Long(3));
-             
-              book.setBooksection( booksection);
-              book.setBookText(datasource.getOutputFileName().substring(0, datasource.getOutputFileName().indexOf(".")));
-              Set<Chapter> chprs = new HashSet<Chapter>(0);
-              String status="";
-              int i=1;
-              for(ChapterInfo chapterInfo:chapters)
-              {
-                  
-                  Chapter chapter=new  Chapter();
-                  chapter.setBook(book);
-                  System.out.println("kappale "+i +"" +chapterInfo.getSubTitle());
-                  String title=chapterInfo.getSubTitle();
-                 /* if (title.length()>2000)
-                  {
-                    chapter.setChapterTitle(title.substring(0,1999).trim());
-                  }else*/
-                  
-                      chapter.setChapterTitle(title.trim());
-                  
-                  List<Integer>verseNumbers=new ArrayList();
-                  int j=1;
-                  StringTokenizer st = new StringTokenizer(chapterInfo.getNumber());
-                  while (st.hasMoreTokens()) {
-                        
-                        Integer verseNum=Integer.valueOf(st.nextToken());
-                        if(j!=verseNum.intValue())
-                        {
-                            status=StatusType.FLAWED.getStatus();
-                        }
-                        verseNumbers.add(verseNum);
-                        j+=1;
-                  }
-                  //chapter=addVerses(chapter,chapterInfo.getVerses());
-                  chprs.add(chapter);
-                  i+=1;
-              }
-              book.setChapters(chprs);
-           
-            // datasourceDAO.update(datasource);
-             //datasource=datasourceDAO.getById(datasource.getId())
-             bookDAO.save(book);
-            // datasource.setBook(book);
-            // datasource.setStatus(status);
-            // datasourceDAO.update(datasource);
-          
-            // books.add(book);
-            
-         
-         }
-         //bookDAO.updateBooksinBatch(books);
+
+    public void parseBookXMLData(Bookdatasource datasource, String ouputDir) {
+
+        Transaction tx = null;
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            BookDAO bookDao = new BookDAO();
+            bookDao.setSessionFactory(sessionFactory);
+            BookDatasouceDAO datasourceDao = new BookDatasouceDAO();
+            datasourceDao.setSessionFactory(sessionFactory);
+            BooksectionDAO booksectionDao = new BooksectionDAO();
+            booksectionDao.setSessionFactory(sessionFactory);
+            ChapterDAO chapterDao = new ChapterDAO();
+            chapterDao.setSessionFactory(sessionFactory);
+            ParserHelper parseHelper = new ParserHelper();
+            List<Book> books = new ArrayList();
+            Booksection booksection = booksectionDao.getById(new Long(3));
+            int index = 0;
+
+            //datasources = datasourceDao.findBookDataSourcesByStatus(StatusType.ACTIVE.getStatus());
+            //for (Bookdatasource datasource : datasources) {
+            List<ChapterInfo> chapters = parseHelper.readParsedBookDataSources(ouputDir + datasource.getOutputFileName());
+            Book book = new Book();
+
+
+            book.setBooksection(booksection);
+            book.setBookText(datasource.getOutputFileName().substring(0, datasource.getOutputFileName().indexOf(".")));
+            bookDao.save(book);
+            String status = "";
+            int i = 1;
+            List<Chapter> chaps = new ArrayList();
+            for (ChapterInfo chapterInfo : chapters) {
+
+                Chapter chapter = new Chapter();
+                chapter.setBook(book);
+                String title = chapterInfo.getSubTitle();
+                chapter.setChapterTitle(title.trim());
+                chaps.add(chapter);
+
+                i += 1;
+            }
+            for (Chapter chp : chaps) {
+                chapterDao.save(chp);
+
+            }
+            bookDao.update(book);
+            datasource.setBook(book);
+            //datasource.setStatus(status);
+            datasourceDao.update(datasource);
+
+            if (((index++) % 15) == 0) {
+
+                sessionFactory.getCurrentSession().flush();
+                sessionFactory.getCurrentSession().clear();
+            }
+
+            tx.commit();
+
+        } catch (Exception e) {
+            tx.rollback();
+        } finally {
+
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
     }
+
     public void addBookDatasource(Bookdatasource datasource) {
         datasourceDAO.save(datasource);
     }
@@ -269,8 +295,6 @@ public class BibleDataMiningImp implements IBibleDataMining {
     }
 
     public List<Bookdatasource> findBookDataSourcesByStatus(String status) {
-       return datasourceDAO.findBookDataSourcesByStatus(status);
+        return datasourceDAO.findBookDataSourcesByStatus(status);
     }
-
-   
 }
