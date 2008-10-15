@@ -40,7 +40,14 @@
             <artifactId>groovy-all</artifactId>
             <version>1.5.6</version>
         </dependency>
+         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+    
     <build>
         <finalName>groovy</finalName>
         <plugins>
@@ -73,6 +80,25 @@
                             <goal>run</goal>
                         </goals>
                     </execution>
+                     <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <configuration>
+                            <tasks>
+                                <taskdef name='groovyc' classname='org.codehaus.groovy.ant.Groovyc'>
+                                    <classpath refid='maven.compile.classpath'/>
+                                </taskdef>
+                                <groovyc destdir='${project.build.outputDirectory}'
+                                    srcdir='${basedir}/src/test/groovy/' listfiles='true'>
+                                    <classpath refid='maven.compile.classpath'/>
+                                </groovyc>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+
                 </executions>
             </plugin>
         </plugins>
@@ -92,7 +118,7 @@
         </resources>
         <testResources>
             <testResource>
-                <directory>src/test/java</directory>
+                <directory>src/test/groovy</directory>
                 <includes>
                     <include>**</include>
                 </includes>
