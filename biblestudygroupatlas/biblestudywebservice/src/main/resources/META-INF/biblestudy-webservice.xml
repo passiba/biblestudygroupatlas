@@ -98,6 +98,7 @@
         <property name="booksectionDAO" ref="BooksectionDAO"/>
         <property name="bookDAO" ref="BookDAO"/>
         <property name="chapterDAO" ref="ChapterDAO"/>
+        <property name="verseDAO" ref="VerseDAO" />
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
   

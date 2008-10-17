@@ -3,4 +3,6 @@
 <properties>
         <entry key="chapterTitle">Luku</entry>
         <entry key="chapterNum">Luvun nro</entry>
+        <entry key="verseNum">Jae nro</entry>
+        <entry key="verseText">Jae Teksti</entry>
 </properties>
