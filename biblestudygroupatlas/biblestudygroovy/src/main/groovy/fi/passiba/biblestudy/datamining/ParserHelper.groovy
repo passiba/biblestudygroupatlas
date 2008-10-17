@@ -11,7 +11,7 @@ class ParserHelper {
     {
        
        List chapters =new ArrayList()
-       List verses=new ArrayList()
+      
        def currentFile = new File(outPutFile)
        //def files = basedir.listFiles().grep(~/.*xml$/)
       // for (currentFile in files) 
@@ -19,13 +19,11 @@ class ParserHelper {
             def chapteXmlr=new XmlSlurper().parse(currentFile)
             chapteXmlr.chapter.each 
             {
-                verses=new ArrayList()
+               
                 def chapterinfo = new ChapterInfo()
                 chapterinfo.subtitle = it.subtitle.text()
                 chapterinfo.number = it.number.text()
                 chapterinfo.text = it.text.text()
-                
-               
                 chapters.add(chapterinfo)
             }
             
