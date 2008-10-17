@@ -4,7 +4,10 @@ package fi.passiba.services.biblestudy.dao;
 import fi.passiba.hibernate.BaseDaoHibernate;
 import fi.passiba.services.biblestudy.persistance.Verse;
 import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 
 
 public class VerseDAO extends BaseDaoHibernate<Verse> implements IVerseDAO {
@@ -22,4 +25,10 @@ public class VerseDAO extends BaseDaoHibernate<Verse> implements IVerseDAO {
        query.setLong("chapterid",  verseid);
       return query.list();
     }
+
+	public List<Verse> findVersesByChapterId(long id) {
+		 Criteria crit = super.getSessionFactory().getCurrentSession().createCriteria(getQueryClass());
+	     crit.createCriteria("chapter").add(Restrictions.eq("id", id));
+	     return crit.list();
+	}
 }

@@ -8,6 +8,7 @@ import fi.passiba.services.biblestudy.dao.IBibletranslationDAO;
 import fi.passiba.services.biblestudy.dao.IBooksectionDAO;
 import fi.passiba.services.biblestudy.dao.IBookDAO;
 import fi.passiba.services.biblestudy.dao.IChapterDAO;
+import fi.passiba.services.biblestudy.dao.IVerseDAO;
 import fi.passiba.services.biblestudy.dao.VerseDAO;
 import fi.passiba.services.biblestudy.datamining.dao.IBookDatasouceDAO;
 import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
@@ -52,7 +53,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
     private IBooksectionDAO booksectionDAO = null;
     private IBookDAO bookDAO = null;
     private IChapterDAO chapterDAO = null;
-    private String configFile;
+    private IVerseDAO verseDAO=null;
     private SessionFactory sessionFactory;
 
     public SessionFactory getSessionFactory() {
@@ -116,16 +117,18 @@ public class BibleDataMiningImp implements IBibleDataMining {
     public void setChapterDAO(IChapterDAO chapterDAO) {
         this.chapterDAO = chapterDAO;
     }
+    
+   
 
-    public String getConfigFile() {
-        return configFile;
-    }
+    public IVerseDAO getVerseDAO() {
+		return verseDAO;
+	}
 
-    public void setConfigFile(String configFile) {
-        this.configFile = configFile;
-    }
+	public void setVerseDAO(IVerseDAO verseDAO) {
+		this.verseDAO = verseDAO;
+	}
 
-    //@ManagedOperation(description = "Retrieve daily new section of books of bible")
+	//@ManagedOperation(description = "Retrieve daily new section of books of bible")
     public void retrieveBookdata() {
 
         try {
@@ -335,4 +338,8 @@ public class BibleDataMiningImp implements IBibleDataMining {
     public List<Bookdatasource> findBookDataSourcesByStatus(String status) {
         return datasourceDAO.findBookDataSourcesByStatus(status);
     }
+
+	public List<Verse> findVersesByChapterId(long id) {
+		return verseDAO.findVersesByChapterId(id);
+	}
 }

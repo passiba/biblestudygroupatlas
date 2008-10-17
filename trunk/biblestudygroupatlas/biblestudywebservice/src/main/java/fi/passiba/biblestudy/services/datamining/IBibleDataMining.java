@@ -10,6 +10,8 @@ import fi.passiba.services.biblestudy.persistance.Bibletranslation;
 import fi.passiba.services.biblestudy.persistance.Book;
 import fi.passiba.services.biblestudy.persistance.Booksection;
 import fi.passiba.services.biblestudy.persistance.Chapter;
+import fi.passiba.services.biblestudy.persistance.Verse;
+
 import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,5 +52,8 @@ public interface IBibleDataMining {
     public List<Chapter> findChaptersByBookId(long id);
     @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
     public Chapter findChapterById(long id);
+    
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
+    public List<Verse> findVersesByChapterId(long id);
 
 }

@@ -19,6 +19,29 @@
                  :</td>
             <td> <span wicket:id="chapterNum"/></td>
         </tr>
+        
+        <form>
+                <table class="tbl_list">
+                  
+                    <thead>
+                        <tr>
+                            <th><wicket:message key="verseNum"/></th>
+                            <th><wicket:message key="verseText"/></th>
+                        </tr>
+                    </thead>
+                 <div wicket:id="bibleVerses">  
+                    <tbody>
+                        <tr class="dark">
+                           
+                            <td> <span wicket:id="verseNum"></span></td>
+                            <td ><span wicket:id="verseText"/></td>
+                            
+                        </tr> 
+                    </tbody>
+                
+                </div>
+                </table>
+            </form>	
     </table>
 </div>
 <div class="buttons">
