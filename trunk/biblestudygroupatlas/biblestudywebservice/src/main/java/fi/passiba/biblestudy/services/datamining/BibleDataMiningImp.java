@@ -171,28 +171,32 @@ public class BibleDataMiningImp implements IBibleDataMining {
 
      
        System.out.println("number "+ numbers);
-       System.out.println("text "+ numbers);
+       System.out.println("text "+ Text);
        StringTokenizer numbersplit=new StringTokenizer(numbers);
-       
+       System.out.println("numbersplit.countTokens() "+ numbersplit.countTokens());
        List<Verse>verses=new ArrayList();
-       String [] number=numbers.split(" ");
-       
-        for(int i=0;i<number.length;i++)
+       int count=numbersplit.countTokens();
+       List<String>num=new ArrayList();
+       for(;numbersplit.hasMoreElements();)
+       {
+          num.add(numbersplit.nextToken());
+       }
+        for(int i=0;i<num.size();i++)
         {
             String verseText="";
             
-            if(i+1<number.length)
+            if(i+1<num.size())
             {
-                 verseText=Text.substring(Text.indexOf(number[i]+1), Text.indexOf(number[i+1]));
+                 verseText=Text.substring(Text.indexOf(num.get(i)+1), Text.indexOf(num.get(i+1)));
             }else
             {
-                verseText=Text.substring(Text.indexOf(number[i]+1), Text.length()-1);
+                verseText=Text.substring(Text.indexOf(num.get(i)+1), Text.length()-1);
             }
             Verse verse = new Verse();
-            verse.setVerseNum(Integer.valueOf(number[i]));
+            verse.setVerseNum(Integer.valueOf(num.get(i)));
             verse.setChapter(chap);
             verse.setVerseText(verseText);
-            System.out.println("verse nro "+number[i]);
+            System.out.println("verse nro "+num.get(i));
             System.out.println("verse text "+verseText);
             verses.add(verse);
         }
@@ -243,15 +247,15 @@ public class BibleDataMiningImp implements IBibleDataMining {
                 chapter.setBook(book);
                 String title = chapterInfo.getSubTitle();
                 chapter.setChapterTitle(title.trim());
-                System.out.println("verse nros "+chapterInfo.getNumber());
-                System.out.println("chapter text "+chapterInfo.getText());
-                verses=addVersesData(chapter,chapterInfo.getText(),chapterInfo.getNumber());
-                chapterDao.save( chapter);
+               // System.out.println("verse nros "+chapterInfo.getNumber());
+               // System.out.println("chapter text "+chapterInfo.getText());
+               verses=addVersesData(chapter,chapterInfo.getText(),chapterInfo.getNumber());
+               chapterDao.save( chapter);
                 for (Verse verse : verses) {
                        verseDao.save(verse);
                   
                 }
-                chapterDao.update(chapter);
+               chapterDao.update(chapter);
                 chaps.add(chapter);
 
                 i += 1;
