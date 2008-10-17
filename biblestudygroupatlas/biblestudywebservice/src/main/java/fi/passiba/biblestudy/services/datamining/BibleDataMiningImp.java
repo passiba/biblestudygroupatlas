@@ -8,6 +8,7 @@ import fi.passiba.services.biblestudy.dao.IBibletranslationDAO;
 import fi.passiba.services.biblestudy.dao.IBooksectionDAO;
 import fi.passiba.services.biblestudy.dao.IBookDAO;
 import fi.passiba.services.biblestudy.dao.IChapterDAO;
+import fi.passiba.services.biblestudy.dao.VerseDAO;
 import fi.passiba.services.biblestudy.datamining.dao.IBookDatasouceDAO;
 import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
 import fi.passiba.services.biblestudy.persistance.Bibletranslation;
@@ -26,6 +27,7 @@ import fi.passiba.services.biblestudy.datamining.dao.BookDatasouceDAO;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -165,20 +167,38 @@ public class BibleDataMiningImp implements IBibleDataMining {
 
     }
 
-    private Chapter addVerses(Chapter chap, List<VerseInfo> versesInfos) {
+   private List<Verse> addVersesData(Chapter chap, String Text,String numbers) {
 
-        Set<Verse> verses = new HashSet<Verse>(0);
-        for (VerseInfo verseInfo : versesInfos) {
+     
+       System.out.println("number "+ numbers);
+       System.out.println("text "+ numbers);
+       StringTokenizer numbersplit=new StringTokenizer(numbers);
+       
+       List<Verse>verses=new ArrayList();
+       String [] number=numbers.split(" ");
+       
+        for(int i=0;i<number.length;i++)
+        {
+            String verseText="";
+            
+            if(i+1<number.length)
+            {
+                 verseText=Text.substring(Text.indexOf(number[i]+1), Text.indexOf(number[i+1]));
+            }else
+            {
+                verseText=Text.substring(Text.indexOf(number[i]+1), Text.length()-1);
+            }
             Verse verse = new Verse();
-            verse.setVerseNum(verseInfo.getNumber());
+            verse.setVerseNum(Integer.valueOf(number[i]));
             verse.setChapter(chap);
-            verse.setVerseText(verseInfo.getText());
+            verse.setVerseText(verseText);
+            System.out.println("verse nro "+number[i]);
+            System.out.println("verse text "+verseText);
             verses.add(verse);
         }
-
-        chap.setVerses(verses);
-        return chap;
+        return verses;
     }
+
 
     public void parseBookXMLData(Bookdatasource datasource, String ouputDir) {
 
@@ -195,6 +215,10 @@ public class BibleDataMiningImp implements IBibleDataMining {
             booksectionDao.setSessionFactory(sessionFactory);
             ChapterDAO chapterDao = new ChapterDAO();
             chapterDao.setSessionFactory(sessionFactory);
+            
+            VerseDAO verseDao= new VerseDAO();
+            verseDao.setSessionFactory(sessionFactory);
+
             ParserHelper parseHelper = new ParserHelper();
             List<Book> books = new ArrayList();
             Booksection booksection = booksectionDao.getById(new Long(3));
@@ -213,23 +237,33 @@ public class BibleDataMiningImp implements IBibleDataMining {
             int i = 1;
             List<Chapter> chaps = new ArrayList();
             for (ChapterInfo chapterInfo : chapters) {
-
+                
+                List <Verse>verses=new ArrayList();
                 Chapter chapter = new Chapter();
                 chapter.setBook(book);
                 String title = chapterInfo.getSubTitle();
                 chapter.setChapterTitle(title.trim());
+                System.out.println("verse nros "+chapterInfo.getNumber());
+                System.out.println("chapter text "+chapterInfo.getText());
+                verses=addVersesData(chapter,chapterInfo.getText(),chapterInfo.getNumber());
+                chapterDao.save( chapter);
+                for (Verse verse : verses) {
+                       verseDao.save(verse);
+                  
+                }
+                chapterDao.update(chapter);
                 chaps.add(chapter);
 
                 i += 1;
             }
-            for (Chapter chp : chaps) {
+           /* for (Chapter chp : chaps) {
                 chapterDao.save(chp);
 
-            }
+            }*/
             bookDao.update(book);
-            datasource.setBook(book);
+            //datasource.setBook(book);
             //datasource.setStatus(status);
-            datasourceDao.update(datasource);
+            //datasourceDao.update(datasource);
 
             if (((index++) % 15) == 0) {
 
