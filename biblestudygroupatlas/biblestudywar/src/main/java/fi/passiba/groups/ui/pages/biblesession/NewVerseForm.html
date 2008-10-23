@@ -1,0 +1,25 @@
+<wicket:panel>
+ <div class="data_row">
+  <table>
+    <form wicket:id="form">
+      <tbody>
+
+         <tr>
+            <td class="header"><wicket:message key="verseNum"/>     *:</td>
+            <td> <input wicket:id="verseNum" type="text" size="40" class="text"/></td>
+         </tr>
+        <tr>
+           <td class="header"><wicket:message key="verseText"/>     *:</td>
+           <td> <input wicket:id="verseText" type="textarea"  class="text"/></td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <input type="submit" wicket:id="cancelButton" value="cancel" />
+            <input type="submit" wicket:id="saveButton" value="save" />
+          </td>
+        </tr>
+      </tbody>
+    </form>
+  </table>
+ </div>
+</wicket:panel>

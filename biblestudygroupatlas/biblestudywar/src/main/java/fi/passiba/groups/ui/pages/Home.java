@@ -55,13 +55,13 @@ public class Home extends WebPage {
             add(new PasswordTextField("password"));
             add(new FeedbackPanel("feedback"));
             add(new WizardLink("newUserWizardLink", NewUserWizard.class));
-            add(new Link("map") {
+           /* add(new Link("map") {
 
                 @Override
                 public void onClick() {
                    setResponsePage(GetMarkersPage.class);
                 }
-            });
+            });*/
         //add(new BookmarkablePageLink("register", Register.class));
         // add(new FeedbackPanel("messages"));
         }

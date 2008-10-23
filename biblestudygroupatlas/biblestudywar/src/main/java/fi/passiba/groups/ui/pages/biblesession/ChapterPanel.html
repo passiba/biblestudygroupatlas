@@ -1,9 +1,10 @@
 <wicket:panel>
+    
   <div class="start"><!-- MSIE fix --></div>
     <div class="data">
     
- <form>
- <div class="data_row">
+ 
+ 
     <h3><wicket:message key="chapterTitle"/></h3>
  
     <table>
@@ -20,35 +21,41 @@
             <td> <span wicket:id="chapterNum"/></td>
         </tr>
         
-        <form>
+         <form wicket:id="form">
                 <table class="tbl_list">
-                  
-                    <thead>
+
+                <thead>
                         <tr>
                             <th><wicket:message key="verseNum"/></th>
                             <th><wicket:message key="verseText"/></th>
                         </tr>
-                    </thead>
-                 <div wicket:id="bibleVerses">  
+                 </thead>
+                 <div wicket:id="bibleVerses">
                     <tbody>
                         <tr class="dark">
-                           
-                            <td> <span wicket:id="verseNum"></span></td>
-                            <td ><span wicket:id="verseText"/></td>
-                            
-                        </tr> 
+
+                            <td> <input type="text" wicket:id="verseNum"  class="text"/></td>
+                            <td><input type="text" wicket:id="verseText" ></td>
+
+                        </tr>
+
                     </tbody>
-                
+
                 </div>
+                 <tr>
+                            <td colspan="4">
+                                <input type="submit" wicket:id="newButton" value="new" />
+                                <input type="submit" wicket:id="saveButton" value="save" />
+                             </td>
+                 </tr>
                 </table>
-            </form>	
+            </form>
     </table>
 </div>
 <div class="buttons">
     
 </div>
-</form>
-</div>
+
 <div class="end"><!-- MSIE fix --></div>
 
 </wicket:panel>
