@@ -21,12 +21,18 @@ public final class NewVerseForm extends AbstractDataPanel {
     public NewVerseForm(String id, Chapter chapter) {
 
         super(id);
-
         verse.setVerseText("Jakeen teksti");
 
         IModel model = new CompoundPropertyModel(verse);
         setModel(model);
         init(chapter);
+    }
+    public NewVerseForm(String id,Verse verse) {
+
+        super(id);
+        IModel model = new CompoundPropertyModel(verse);
+        setModel(model);
+        init(verse.getChapter());
     }
 
     private void init(Chapter chapter) {
@@ -76,7 +82,7 @@ public final class NewVerseForm extends AbstractDataPanel {
                 verse = (Verse) getForm().getModelObject();
                 verse.setVerseText(NewVerseForm.this.dojoInlineEditBox.getModelObjectAsString());
                 verse.setChapter(chapter);
-                bibleTranslationDataRetrievalService.addVerse(verse);
+                bibleTranslationDataRetrievalService.updateVerse(verse);
                 NewVerseForm.this.replaceWith(new ChapterPanel("bibleSessionpanel",chapter.getId()).setOutputMarkupId(true));
             }
         }

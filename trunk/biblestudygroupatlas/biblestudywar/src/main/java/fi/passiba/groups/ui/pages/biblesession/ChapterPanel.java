@@ -15,6 +15,7 @@ import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
@@ -119,11 +120,18 @@ public class ChapterPanel extends AbstractDataPanel {
                 @Override
                 protected void populateItem(Item item) {
 
-                    item.add(new Label("verseNum",
+                Link editview = new Link("editView", item.getModel()) {
+                    public void onClick() {
+                        Verse verse = (Verse) getModelObject();
+                        ChapterPanel.this.replaceWith(new NewVerseForm("bibleSessionpanel", verse).setOutputMarkupId(true));
+
+                    }
+                };
+                editview.add(new Label("verseNum",
                             new PropertyModel(item.getModel(), "verseNum")));
+                item.add(editview);
 
-
-                    item.add(new MultiLineLabel("verseText",
+                item.add(new MultiLineLabel("verseText",
                             new PropertyModel(item.getModel(), "verseText")));
                 }
             };
