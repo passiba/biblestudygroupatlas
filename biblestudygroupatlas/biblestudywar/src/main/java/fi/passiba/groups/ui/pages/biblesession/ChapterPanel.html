@@ -3,7 +3,7 @@
   <div class="start"><!-- MSIE fix --></div>
     <div class="data">
     
- 
+ <div class="data_row">
  
     <h3><wicket:message key="chapterTitle"/></h3>
  
@@ -34,8 +34,8 @@
                     <tbody>
                         <tr class="dark">
 
-                            <td> <input type="text" wicket:id="verseNum"  class="text"/></td>
-                            <td><input type="text" wicket:id="verseText" ></td>
+                            <td> <span type="text" wicket:id="verseNum" /></td>
+                            <td><span wicket:id="verseText" /></td>
 
                         </tr>
 
@@ -43,19 +43,17 @@
 
                 </div>
                  <tr>
-                            <td colspan="4">
-                                <input type="submit" wicket:id="newButton" value="new" />
-                                <input type="submit" wicket:id="saveButton" value="save" />
-                             </td>
+                    <td>
+                                <input type="image" src="images/btn_LISAA_UUSI.gif"  class="button" wicket:id="newButton"/>
+                                <input type="image" src="images/btn_TALLENNA.gif"  class="button" wicket:id="saveButton"  />
+                    </td>
                  </tr>
                 </table>
             </form>
     </table>
 </div>
-<div class="buttons">
-    
-</div>
 
+</div>
 <div class="end"><!-- MSIE fix --></div>
 
 </wicket:panel>
