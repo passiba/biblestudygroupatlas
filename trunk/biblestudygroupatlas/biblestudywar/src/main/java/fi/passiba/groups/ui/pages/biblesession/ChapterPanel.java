@@ -1,6 +1,5 @@
 package fi.passiba.groups.ui.pages.biblesession;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,98 +22,112 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
 
-
 public class ChapterPanel extends AbstractDataPanel {
-    
-    
- 
-    public ChapterPanel(String id,final long chapterid) {
+
+    public ChapterPanel(String id, final long chapterid) {
 
 
         super(id);
-           
-        setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
+
+        IModel model = new CompoundPropertyModel(new LoadableDetachableModel() {
 
             public Object load() {
                 return bibleTranslationDataRetrievalService.findChapterById(chapterid);
             }
-        }));
+        });
 
+        setModel(model);
+        init(chapterid);
         add(new Label("chapterTitle", new PropertyModel(getModel(), "chapterTitle")));
         add(new Label("chapterNum", new PropertyModel(getModel(), "chapterNum")));
-    
-        Form form = new Form("form");
-        add(form);
-        form.add(new Button("newButton") {
 
-            @Override
-            public void onSubmit() {
-              //  ChapterPanel.this.replaceWith(new NewVerseForm(
-                //        "bibleSessionpanel", (Chapter)getModel().getObject()).setOutputMarkupId(true));
-            }
-        });
-        form.add(new Button("saveButton") {
-
-            @Override
-            public void onSubmit() {
-                bibleTranslationDataRetrievalService.updateChapter((Chapter)getModel().getObject());
-
-                // ChapterPanel.this.replaceWith(new ChapterPanel("bibleSessionpanel",chapterid).setOutputMarkupId(true));
-                //info("chapter updated");
-            }
-        });
-
-
-        RefreshingView verses=populateBibleVerses(chapterid);
-        verses.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
-
-        form.add(verses);
-        
-      
     }
-     
-   
-    @Override
-  public boolean isVisible() 
-  {
-      return BibleStudySession.get().isAuthenticated();
-  }
-    
-  
-   private RefreshingView populateBibleVerses(final long chapterid)
-  {
+
+    private void init(long chapterid) {
+
+        add(new VersesForm("form", getModel(), chapterid));
+    }
+
+    private class VersesForm extends Form {
+
+        public VersesForm(String id, IModel m, long chapterid) {
+            super(id, m);
+
+            RefreshingView verses = populateBibleVerses(chapterid);
+            verses.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
+            add(verses);
+            add(new NewButton("newButton"));
+            add(new SaveButton("saveButton"));
+        }
+
+        @Override
+        public boolean isVisible() {
+            return BibleStudySession.get().isAuthenticated();
+        }
+
+        private final class SaveButton extends Button {
+
+            private SaveButton(String id) {
+                super(id);
+            }
+
+            @Override
+            public void onSubmit() {
+                Chapter chapter = (Chapter) getForm().getModelObject();
+                bibleTranslationDataRetrievalService.updateChapter(chapter);
+            // setResponsePage(ListContacts.class);
+            //setResponsePage(EditPersonContact.this.backPage);
+            }
+        }
+
+        private final class NewButton extends Button {
+
+            private NewButton(String id) {
+                super(id);
+            }
+
+            @Override
+            public void onSubmit() {
+                Chapter chapter = (Chapter) getForm().getModelObject();
+                ChapterPanel.this.replaceWith(new NewVerseForm("bibleSessionpanel", chapter).setOutputMarkupId(true));
+            }
+        }
+
+        private RefreshingView populateBibleVerses(final long chapterid) {
             RefreshingView bibleVerses = new RefreshingView("bibleVerses") {
 
-            List<Verse> result = new ArrayList<Verse>(0);
+                List<Verse> result = new ArrayList<Verse>(0);
+
+                @Override
+                protected Iterator getItemModels() {
+
+                    result = bibleTranslationDataRetrievalService.findVersesByChapterId(chapterid);
 
 
-            @Override
-            protected Iterator getItemModels() {
+                    return new DomainModelIteratorAdaptor<Verse>(result.iterator()) {
 
-                  result = bibleTranslationDataRetrievalService.findVersesByChapterId(chapterid);
+                        @Override
+                        protected IModel model(final Object object) {
 
+                            return new HashcodeEnabledCompoundPropertyModel((Verse) object);
+                        }
+                    };
+                }
 
-                return new DomainModelIteratorAdaptor<Verse>(result.iterator()) {
+                @Override
+                protected void populateItem(Item item) {
 
-                    @Override
-                    protected IModel model(final Object object) {
-
-                      return new HashcodeEnabledCompoundPropertyModel((Verse) object);
-                    }
-                };
-            }
-            @Override
-            protected void populateItem(Item item) {
-
-                item.add(new TextField("verseNum",
-                        new PropertyModel(item.getModel(), "verseNum")));
+                    item.add(new TextField("verseNum",
+                            new PropertyModel(item.getModel(), "verseNum")));
 
 
-                item.add(new  TextField("verseText",
-                        new PropertyModel(item.getModel(), "verseText")));
-            }
-        };
-        return   bibleVerses;
+                    item.add(new TextField("verseText",
+                            new PropertyModel(item.getModel(), "verseText")));
+                }
+            };
+            return bibleVerses;
+        }
     }
-
 }
+
+
