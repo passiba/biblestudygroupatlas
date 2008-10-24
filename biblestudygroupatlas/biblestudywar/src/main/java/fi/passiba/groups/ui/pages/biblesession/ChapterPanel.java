@@ -11,6 +11,7 @@ import fi.passiba.services.biblestudy.persistance.Chapter;
 import fi.passiba.services.biblestudy.persistance.Verse;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -42,13 +43,17 @@ public class ChapterPanel extends AbstractDataPanel {
         add(new Label("chapterNum", new PropertyModel(getModel(), "chapterNum")));
 
     }
-
+    @Override
+    public boolean isVisible()
+    {
+       return BibleStudySession.get().isAuthenticated();
+    }
     private void init(long chapterid) {
 
         add(new VersesForm("form", getModel(), chapterid));
     }
 
-    private class VersesForm extends Form {
+    private final class VersesForm extends Form {
 
         public VersesForm(String id, IModel m, long chapterid) {
             super(id, m);
@@ -60,10 +65,7 @@ public class ChapterPanel extends AbstractDataPanel {
             add(new SaveButton("saveButton"));
         }
 
-        @Override
-        public boolean isVisible() {
-            return BibleStudySession.get().isAuthenticated();
-        }
+       
 
         private final class SaveButton extends Button {
 
@@ -117,11 +119,11 @@ public class ChapterPanel extends AbstractDataPanel {
                 @Override
                 protected void populateItem(Item item) {
 
-                    item.add(new TextField("verseNum",
+                    item.add(new Label("verseNum",
                             new PropertyModel(item.getModel(), "verseNum")));
 
 
-                    item.add(new TextField("verseText",
+                    item.add(new MultiLineLabel("verseText",
                             new PropertyModel(item.getModel(), "verseText")));
                 }
             };
