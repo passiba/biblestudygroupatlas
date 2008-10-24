@@ -27,10 +27,20 @@ public final class NewVerseForm extends AbstractDataPanel {
         setModel(model);
         init(chapter);
     }
-    public NewVerseForm(String id,Verse verse) {
+    public NewVerseForm(String id,final Verse verse) {
 
         super(id);
-        IModel model = new CompoundPropertyModel(verse);
+        IModel model = new CompoundPropertyModel(new LoadableDetachableModel()
+
+        {
+            @Override
+            protected Object load() {
+              return verse;
+            }
+        }
+
+
+                );
         setModel(model);
         init(verse.getChapter());
     }
