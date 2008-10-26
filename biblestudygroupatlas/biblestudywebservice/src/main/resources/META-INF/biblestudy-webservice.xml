@@ -99,6 +99,7 @@
         <property name="bookDAO" ref="BookDAO"/>
         <property name="chapterDAO" ref="ChapterDAO"/>
         <property name="verseDAO" ref="VerseDAO" />
+        <property name="chapterVotingDAO" ref="ChapterVotingDAO" />
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
   

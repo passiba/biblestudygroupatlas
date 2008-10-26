@@ -10,6 +10,7 @@ import fi.passiba.services.biblestudy.persistance.Bibletranslation;
 import fi.passiba.services.biblestudy.persistance.Book;
 import fi.passiba.services.biblestudy.persistance.Booksection;
 import fi.passiba.services.biblestudy.persistance.Chapter;
+import fi.passiba.services.biblestudy.persistance.ChapterVoting;
 import fi.passiba.services.biblestudy.persistance.Verse;
 
 import java.util.List;
@@ -55,5 +56,18 @@ public interface IBibleDataMining {
     
     @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
     public List<Verse> findVersesByChapterId(long id);
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addVerse(Verse verse);
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Verse updateVerse(Verse verse);
+    
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Chapter updateChapter(Chapter chapter);
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateChapterVoting(ChapterVoting chaptervoting);
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
+    public ChapterVoting findRatingByChapterid(long id);
 
 }
