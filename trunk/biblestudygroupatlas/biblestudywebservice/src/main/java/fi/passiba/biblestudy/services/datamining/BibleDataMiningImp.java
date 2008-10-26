@@ -16,26 +16,22 @@ import fi.passiba.services.biblestudy.persistance.Bibletranslation;
 import fi.passiba.services.biblestudy.persistance.Book;
 import fi.passiba.services.biblestudy.persistance.Booksection;
 import fi.passiba.services.biblestudy.persistance.Chapter;
+import fi.passiba.services.biblestudy.persistance.ChapterVoting;
 import fi.passiba.services.biblestudy.persistance.Verse;
 import fi.passiba.biblestudy.datamining.ParserHelper;
 import fi.passiba.biblestudy.datamining.ChapterInfo;
-import fi.passiba.biblestudy.datamining.VerseInfo;
-import fi.passiba.hibernate.HibernateUtility;
 import fi.passiba.services.biblestudy.dao.BookDAO;
 import fi.passiba.services.biblestudy.dao.BooksectionDAO;
 import fi.passiba.services.biblestudy.dao.ChapterDAO;
+import fi.passiba.services.biblestudy.dao.IChapterVotingDAO;
 import fi.passiba.services.biblestudy.datamining.dao.BookDatasouceDAO;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.StringTokenizer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 import org.webharvest.definition.ScraperConfiguration;
@@ -54,6 +50,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
     private IBookDAO bookDAO = null;
     private IChapterDAO chapterDAO = null;
     private IVerseDAO verseDAO=null;
+    private IChapterVotingDAO chapterVotingDAO=null;
     private SessionFactory sessionFactory;
 
     public SessionFactory getSessionFactory() {
@@ -63,6 +60,13 @@ public class BibleDataMiningImp implements IBibleDataMining {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
+
+
+    
+
+  
+
 
     public enum StatusType {
 
@@ -127,6 +131,28 @@ public class BibleDataMiningImp implements IBibleDataMining {
 	public void setVerseDAO(IVerseDAO verseDAO) {
 		this.verseDAO = verseDAO;
 	}
+
+    public IChapterVotingDAO getChapterVotingDAO() {
+        return chapterVotingDAO;
+    }
+
+    public void setChapterVotingDAO(IChapterVotingDAO chapterVotingDAO) {
+        this.chapterVotingDAO = chapterVotingDAO;
+    }
+
+    public void addVerse(Verse verse) {
+         verseDAO.save(verse);
+    }
+
+    public Verse updateVerse(Verse verse) {
+        verseDAO.saveOrUpdate(verse);
+        return verse;
+    }
+    public Chapter updateChapter(Chapter chapter) {
+      chapterDAO.update(chapter);
+      return chapter;
+    }
+
 
 	//@ManagedOperation(description = "Retrieve daily new section of books of bible")
     public void retrieveBookdata() {
@@ -342,4 +368,11 @@ public class BibleDataMiningImp implements IBibleDataMining {
 	public List<Verse> findVersesByChapterId(long id) {
 		return verseDAO.findVersesByChapterId(id);
 	}
+    public void updateChapterVoting(ChapterVoting rating) {
+        chapterVotingDAO.saveOrUpdate(rating);
+    }
+
+    public ChapterVoting findRatingByChapterid(long id) {
+        return chapterVotingDAO.findRatingByChapterid(id);
+    }
 }

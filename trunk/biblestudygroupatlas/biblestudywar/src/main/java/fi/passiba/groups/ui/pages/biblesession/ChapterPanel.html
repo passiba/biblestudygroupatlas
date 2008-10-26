@@ -1,59 +1,74 @@
 <wicket:panel>
-    
-  <div class="start"><!-- MSIE fix --></div>
-    <div class="data">
-    
- <div class="data_row">
- 
-    <h3><wicket:message key="chapterTitle"/></h3>
- 
-    <table>
-        <tr>
-            <td> <wicket:message key="chapterTitle"/>
-                
-               :</td>
-            <td><span wicket:id="chapterTitle"/></td>
-        </tr>
-        <tr>
-            <td class="header">
-                <wicket:message key="chapterNum"/>
-                 :</td>
-            <td> <span wicket:id="chapterNum"/></td>
-        </tr>
-        
-         <form wicket:id="form">
-                <table class="tbl_list">
 
-                <thead>
+    <div class="start"><!-- MSIE fix --></div>
+    <div class="data">
+
+        <div class="data_row">
+
+            <h3><wicket:message key="chapterTitle"/></h3>
+            <form wicket:id="form">
+                <table>
+                    <tr>
+                        <td class="header"> <wicket:message key="chapterTitle"/>
+
+                        :</td>
+                        <td><span wicket:id="chapterTitle"/></td>
+                    </tr>
+                    <tr>
+                        <td class="header">
+                            <wicket:message key="chapterNum"/>
+                        :</td>
+                        <td> <span wicket:id="chapterNum"/></td>
+                    </tr>
+
+               
+                <table class="tbl_list">
+                    <tr>
+
+                        <td ><wicket:message key="raiting"/>  :</td>
+                        <td><span wicket:id="rating"></span></td>
+
+
+                    </tr>
+                    <tr>
+
+                        <td> </td>
+                        <td><a href="#" wicket:id="reset"><wicket:message key="reset"/></a></td>
+
+
+                    </tr>
+                    <thead>
                         <tr>
                             <th><wicket:message key="verseNum"/></th>
                             <th><wicket:message key="verseText"/></th>
                         </tr>
-                 </thead>
-                 <div wicket:id="bibleVerses">
-                    <tbody>
-                        <tr class="dark">
+                    </thead>
+                    <div wicket:id="bibleVerses">
+                        <tbody>
+                            <tr class="dark">
 
-                            <td>  <a wicket:id="editView" href="#"><span wicket:id="verseNum" /></a></td>
-                            <td><span wicket:id="verseText" /></td>
+                                <td>  <a wicket:id="editView" href="#"><span wicket:id="verseNum" /></a></td>
+                                <td><span wicket:id="verseText" /></td>
 
-                        </tr>
+                            </tr>
 
-                    </tbody>
+                        </tbody>
 
-                </div>
-                 <tr>
-                    <td>
-                                <input type="image" src="images/btn_LISAA_UUSI.gif"  class="button" wicket:id="newButton"/>
-                                <input type="image" src="images/btn_TALLENNA.gif"  class="button" wicket:id="saveButton"  />
-                    </td>
-                 </tr>
+                    </div>
+
+                    <tr>
+                        <td>
+                            <input type="image" src="images/btn_LISAA_UUSI.gif"  class="button" wicket:id="newButton"/>
+                            <input type="image" src="images/btn_TALLENNA.gif"  class="button" wicket:id="saveButton"  />
+                        </td>
+                    </tr>
                 </table>
-            </form>
-    </table>
-</div>
 
-</div>
-<div class="end"><!-- MSIE fix --></div>
+            </table>
+            </form>
+        </div>
+
+    </div>
+    <div class="end"><!-- MSIE fix --></div>
 
 </wicket:panel>

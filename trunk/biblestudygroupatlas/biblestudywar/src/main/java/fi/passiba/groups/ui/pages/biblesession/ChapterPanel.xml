@@ -5,4 +5,7 @@
         <entry key="chapterNum">Luvun nro</entry>
         <entry key="verseNum">Jae nro</entry>
         <entry key="verseText">Jae Teksti</entry>
+        <entry key="raiting">Anna Ristejä</entry>
+        <entry key="reset">Resetoi</entry>
+
 </properties>

@@ -173,7 +173,7 @@
     <build>
         <finalName>biblestudy</finalName>
         <plugins>
-            <plugin>
+           <!--<plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
                 <executions>
@@ -192,19 +192,19 @@
                                     <installDir>${installDir}</installDir>
                                 </zipUrlInstaller>
                             </container>
-                            <!--<configuration>
+                            <configuration>
                                 <dir>${project.build.directory}/tomcat6x/</dir>
-                            </configuration>-->
+                            </configuration>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                 </configuration>
             </plugin>
             <!--this pluging generates the database schema creation sql script -->
@@ -422,7 +422,7 @@
     <properties>
         <installDir>C:/java/tools/sun/tomcat6</installDir>
         <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
-        <wicket.version>1.3.4</wicket.version>
+        <wicket.version>1.3.5</wicket.version>
          <!-- <wicket.version>1.4-m3</wicket.version>-->
         <slf4j.version>1.4.3</slf4j.version>
         <spring.version>2.0.8</spring.version>
@@ -432,7 +432,7 @@
         <jdbc.url>jdbc:mysql://localhost:3306/biblestudy?autoReconnect=true</jdbc.url>
         <jdbc.username>bibleuser</jdbc.username>
         <jdbc.password>b8bl47s4r</jdbc.password>
-        <maven.test.skip>false</maven.test.skip>
+        <maven.test.skip>true</maven.test.skip>
         <originalDataSetFile>./src/test/data/sample-data.xml</originalDataSetFile>
     </properties>
 </project>

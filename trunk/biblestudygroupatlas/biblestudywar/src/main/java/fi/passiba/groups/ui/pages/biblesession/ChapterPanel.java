@@ -8,8 +8,12 @@ import fi.passiba.biblestudy.BibleStudySession;
 import fi.passiba.groups.ui.model.DomainModelIteratorAdaptor;
 import fi.passiba.groups.ui.model.HashcodeEnabledCompoundPropertyModel;
 import fi.passiba.services.biblestudy.persistance.Chapter;
+import fi.passiba.services.biblestudy.persistance.ChapterVoting;
 import fi.passiba.services.biblestudy.persistance.Verse;
 
+import org.apache.wicket.ResourceReference;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.extensions.rating.RatingPanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.form.Button;
@@ -22,9 +26,25 @@ import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 public class ChapterPanel extends AbstractDataPanel {
+
+
+
+	private static final ResourceReference RATINGIMAGE= new ResourceReference(ChapterPanel.class,
+			"groups.png");
+    private static final ResourceReference RATINGIMAGE2= new ResourceReference(ChapterPanel.class,
+			"groups2.png");
+
+    public static RatingModel rating = new RatingModel();
+
+    /**
+	 * keeps track whether the user has already voted on this page, comes typically from the
+	 * database, or is stored in a cookie on the client side.
+	 */
+	private Boolean hasVoted = Boolean.FALSE;
 
     public ChapterPanel(String id, final long chapterid) {
 
@@ -40,8 +60,7 @@ public class ChapterPanel extends AbstractDataPanel {
 
         setModel(model);
         init(chapterid);
-        add(new Label("chapterTitle", new PropertyModel(getModel(), "chapterTitle")));
-        add(new Label("chapterNum", new PropertyModel(getModel(), "chapterNum")));
+      
 
     }
     @Override
@@ -62,8 +81,24 @@ public class ChapterPanel extends AbstractDataPanel {
             RefreshingView verses = populateBibleVerses(chapterid);
             verses.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
             add(verses);
+
+
+            add(new Label("chapterTitle", new PropertyModel(getModel(), "chapterTitle")));
+            add(new Label("chapterNum", new PropertyModel(getModel(), "chapterNum")));
+            add(new ChapterRating("rating", new PropertyModel(rating, "rating"), 5, new PropertyModel(
+			rating, "nrOfVotes"), true));
+
+
+            /*add(new ChapterRating("rating", new PropertyModel(rating, "rating"),
+							new Model(5), new PropertyModel(rating, "nrOfVotes"),
+							new PropertyModel(this, "hasVoted"), true));*/
+
+            add(new ResetRatingLink("reset", new Model(rating)));
+            
             add(new NewButton("newButton"));
             add(new SaveButton("saveButton"));
+            
+            
         }
 
        
@@ -77,7 +112,16 @@ public class ChapterPanel extends AbstractDataPanel {
             @Override
             public void onSubmit() {
                 Chapter chapter = (Chapter) getForm().getModelObject();
-                bibleTranslationDataRetrievalService.updateChapter(chapter);
+                ChapterVoting rating=bibleTranslationDataRetrievalService.findRatingByChapterid(chapter.getId());
+                if(rating==null)
+                {
+                    rating=new ChapterVoting ();
+                }
+                rating.setNumberofvotes(ChapterPanel.rating.getNrOfVotes());
+                rating.setTotalscore(ChapterPanel.rating.getSumOfRatings());
+                rating.setChapter(chapter);
+                bibleTranslationDataRetrievalService.updateChapterVoting(rating);
+               // bibleTranslationDataRetrievalService.updateChapter(chapter);
             // setResponsePage(ListContacts.class);
             //setResponsePage(EditPersonContact.this.backPage);
             }
@@ -96,6 +140,72 @@ public class ChapterPanel extends AbstractDataPanel {
             }
         }
 
+        private final class ChapterRating extends RatingPanel
+        {
+
+            
+            private ChapterRating(java.lang.String id, IModel rating, int nrOfStars, IModel nrOfVotes, boolean addDefaultCssStyle)
+            {
+                super(id,rating, nrOfStars,nrOfVotes,addDefaultCssStyle);
+            }
+                  
+            /*private ChapterRating(java.lang.String id, IModel rating, IModel nrOfStars, IModel nrOfVotes, IModel hasVoted, boolean addDefaultCssStyle)
+            {
+                  super(id, rating,nrOfStars,nrOfVotes,hasVoted,addDefaultCssStyle) ;
+            }*/
+            @Override
+            protected String getActiveStarUrl(int iteration)
+			{
+				return getRequestCycle().urlFor(RATINGIMAGE2).toString();
+			}
+            @Override
+			protected String getInactiveStarUrl(int iteration)
+			{
+				return getRequestCycle().urlFor(RATINGIMAGE).toString();
+			}
+            @Override
+            protected boolean onIsStarActive(int star) {
+                 return ChapterPanel.rating.isActive(star);
+            }
+
+            @Override
+            protected void onRated(int rating, AjaxRequestTarget arg1) {
+                 if(ChapterPanel.this.hasVoted != Boolean.TRUE);
+                 {
+                    ChapterPanel.rating.addRating(rating);
+                 }
+                 ChapterPanel.this.hasVoted = Boolean.TRUE;
+            }
+
+        }
+        private final class ResetRatingLink extends Link {
+
+            /** For serialization. */
+            private static final long serialVersionUID = 1L;
+
+            /**
+             * Constructor.
+             * 
+             * @param id.
+             *            component id
+             * @param object
+             *            the model to reset.
+             */
+            public ResetRatingLink(String id, IModel object) {
+                super(id, object);
+            }
+
+            /**
+             * @see Link#onClick()
+             */
+            public void onClick() {
+
+               ChapterPanel.this.hasVoted = Boolean.FALSE;
+               ChapterPanel.rating.setRating(0);
+               ChapterPanel.rating.setNrOfVotes(0);
+               ChapterPanel.rating.setSumOfRatings(0);
+            }
+        }
         private RefreshingView populateBibleVerses(final long chapterid) {
             RefreshingView bibleVerses = new RefreshingView("bibleVerses") {
 
@@ -138,6 +248,10 @@ public class ChapterPanel extends AbstractDataPanel {
             return bibleVerses;
         }
     }
+    public Boolean getHasVoted()
+	{
+		return ChapterPanel.this.hasVoted;
+	}
 }
 
 

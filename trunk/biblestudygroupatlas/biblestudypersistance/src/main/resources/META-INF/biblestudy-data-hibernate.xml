@@ -68,6 +68,7 @@
                 <value>fi.passiba.services.biblestudy.persistance.Chapter</value>
                 <value>fi.passiba.services.biblestudy.persistance.Book</value>
                 <value>fi.passiba.services.biblestudy.persistance.Biblesession</value>
+                <value>fi.passiba.services.biblestudy.persistance.ChapterVoting</value>
                 <value>fi.passiba.services.group.persistance.Groupservice</value>
                 <value>fi.passiba.services.group.persistance.Groups</value>
                 <value>fi.passiba.services.persistance.Status</value>
@@ -75,6 +76,7 @@
                 <value>fi.passiba.services.persistance.Adress</value>
                 <value>fi.passiba.services.persistance.Users</value>
                 <value>fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource</value>
+
             </list>
         </property>
         <property name="hibernateProperties">
@@ -95,7 +97,7 @@
             </prop>
             <prop key="hibernate.format_sql">true
             </prop>
-            <prop key="hibernate.max_fetch_depth">4
+            <prop key="hibernate.max_fetch_depth">3
             </prop>
             <prop key="hibernate.jdbc.batch_size">50</prop>
             <prop key="hibernate.default_batch_fetch_size">50</prop>
@@ -202,6 +204,10 @@
 </bean>
 <bean id="BiblesessionDAO" class="fi.passiba.services.biblestudy.dao.BiblesessionDAO">
     
+    <property name="sessionFactory" ref="sessionFactory" />
+</bean>
+<bean id="ChapterVotingDAO" class="fi.passiba.services.biblestudy.dao.ChapterVotingDAO">
+
     <property name="sessionFactory" ref="sessionFactory" />
 </bean>
 </beans>
