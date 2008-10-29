@@ -3,11 +3,8 @@ package fi.passiba.groups.ui.pages;
 
 import fi.passiba.biblestudy.BibleStudySession;
 
-import fi.passiba.groups.ui.pages.googlemap.GetMarkersPage;
 import fi.passiba.groups.ui.pages.wizards.WizardPage;
 import fi.passiba.groups.ui.pages.wizards.userCreation.NewUserWizard;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.PasswordTextField;
@@ -16,7 +13,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import fi.passiba.services.authenticate.IAuthenticator;
 import fi.passiba.services.authenticate.PasswordService;
 import fi.passiba.services.persistance.Person;
-import java.util.Iterator;
 import java.util.List;
 import org.apache.wicket.extensions.wizard.Wizard;
 import org.apache.wicket.markup.html.form.StatelessForm;

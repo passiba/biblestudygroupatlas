@@ -1,8 +1,10 @@
 package fi.passiba.biblestudy;
 
+import fi.passiba.biblestudy.authorization.BibleStudyAuthorizationStrategy;
 import fi.passiba.biblestudy.authorization.BibleStudyFaceBookAuthorizationStrategy;
 
 
+import fi.passiba.groups.ui.pages.Home;
 import fi.passiba.groups.ui.pages.Main;
 import org.apache.wicket.Request;
 import org.apache.wicket.Response;
@@ -36,7 +38,7 @@ public class BibleStudyApplication extends WebApplication implements Application
    
 
     public Class getHomePage() {
-        return Main.class;
+        return Home.class;
     }
     private ApplicationContext getContext() {
         return WebApplicationContextUtils
@@ -46,8 +48,8 @@ public class BibleStudyApplication extends WebApplication implements Application
        
     @Override
     public Session newSession(Request request, Response response) {
-       // return new BibleStudySession(request);
-        return new  BibleStudyFaceBookSession(request);
+        return new BibleStudySession(request);
+        //return new  BibleStudyFaceBookSession(request);
     }        
     public static BibleStudyApplication get() {
         return (BibleStudyApplication) WebApplication.get();
@@ -59,8 +61,8 @@ public class BibleStudyApplication extends WebApplication implements Application
                 this));
         
         //authorization settings
-        //BibleStudyAuthorizationStrategy authStrat = new BibleStudyAuthorizationStrategy();
-        BibleStudyFaceBookAuthorizationStrategy  authStrat= new BibleStudyFaceBookAuthorizationStrategy ();
+        BibleStudyAuthorizationStrategy authStrat = new BibleStudyAuthorizationStrategy();
+        //BibleStudyFaceBookAuthorizationStrategy  authStrat= new BibleStudyFaceBookAuthorizationStrategy ();
         ISecuritySettings securitySettings = getSecuritySettings();
         securitySettings.setAuthorizationStrategy(authStrat);
         securitySettings.setUnauthorizedComponentInstantiationListener(authStrat);
