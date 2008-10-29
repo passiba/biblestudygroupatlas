@@ -1,8 +1,9 @@
 package fi.passiba.biblestudy;
 
-import fi.passiba.biblestudy.authorization.BibleStudyAuthorizationStrategy;
-import fi.passiba.groups.ui.pages.Home;
+import fi.passiba.biblestudy.authorization.BibleStudyFaceBookAuthorizationStrategy;
 
+
+import fi.passiba.groups.ui.pages.Main;
 import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.Session;
@@ -31,8 +32,11 @@ public class BibleStudyApplication extends WebApplication implements Application
     private static final String GOOGLE_MAPS_API_KEY_PARAM = "GoogleMapsAPIkey";
     private ApplicationContext ctx;
 
+
+   
+
     public Class getHomePage() {
-        return Home.class;
+        return Main.class;
     }
     private ApplicationContext getContext() {
         return WebApplicationContextUtils
@@ -42,7 +46,8 @@ public class BibleStudyApplication extends WebApplication implements Application
        
     @Override
     public Session newSession(Request request, Response response) {
-        return new BibleStudySession(request);
+       // return new BibleStudySession(request);
+        return new  BibleStudyFaceBookSession(request);
     }        
     public static BibleStudyApplication get() {
         return (BibleStudyApplication) WebApplication.get();
@@ -54,7 +59,8 @@ public class BibleStudyApplication extends WebApplication implements Application
                 this));
         
         //authorization settings
-        BibleStudyAuthorizationStrategy authStrat = new BibleStudyAuthorizationStrategy();
+        //BibleStudyAuthorizationStrategy authStrat = new BibleStudyAuthorizationStrategy();
+        BibleStudyFaceBookAuthorizationStrategy  authStrat= new BibleStudyFaceBookAuthorizationStrategy ();
         ISecuritySettings securitySettings = getSecuritySettings();
         securitySettings.setAuthorizationStrategy(authStrat);
         securitySettings.setUnauthorizedComponentInstantiationListener(authStrat);
@@ -112,6 +118,7 @@ public class BibleStudyApplication extends WebApplication implements Application
             }
         };
     }
+
 
     
 }
