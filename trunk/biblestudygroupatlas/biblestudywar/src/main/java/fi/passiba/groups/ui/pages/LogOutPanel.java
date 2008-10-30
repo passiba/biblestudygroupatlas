@@ -1,12 +1,12 @@
 package fi.passiba.groups.ui.pages;
 
+import fi.passiba.biblestudy.BibleStudyApplication;
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
-import fi.passiba.biblestudy.BibleStudySession;
 import org.apache.wicket.Page;
-import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.request.target.basic.RedirectRequestTarget;
 
 
 
@@ -25,15 +25,16 @@ public class LogOutPanel extends Panel {
       @Override
       public void onClick() {
        BibleStudyFaceBookSession.get().invalidate();
-           setResponsePage(Home.class);
+          Logout(this.getPage());
       }
     });
     add(new Link("signin") {
 
       @Override
       public void onClick() {
-        throw new RestartResponseAtInterceptPageException(
-            Home.class);
+        //throw new RestartResponseAtInterceptPageException(
+           // Home.class);
+          Logout(this.getPage());
       }
 
       @Override
@@ -43,5 +44,12 @@ public class LogOutPanel extends Panel {
       }
     });
     add(new BookmarkablePageLink("help", Main.class));
+
+
+  }
+  private void Logout(Page page) {
+
+        page.getRequestCycle().setRequestTarget(new RedirectRequestTarget("http://www.facebook.com/login.php?api_key=" + BibleStudyApplication.get().getFaceBookAPIkey() + "&v=1.0"));
+
   }
 }

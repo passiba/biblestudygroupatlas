@@ -123,6 +123,8 @@ public class BibleStudyApplication extends WebApplication implements Application
 		}
 		return facebookAPIkey;
 	}
+
+    
      /**
 	 * Gets the init parameter 'facebookSecretkey' of the filter, or throws a
 	 * WicketRuntimeException, if it is not set.

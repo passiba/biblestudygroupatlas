@@ -7,6 +7,7 @@ package fi.passiba.biblestudy.authorization.facebook;
 
 import  com.google.code.facebookapi.FacebookParam;
 import com.google.code.facebookapi.FacebookRestClient;
+import java.util.Map;
 import javax.security.auth.login.FailedLoginException;
 import org.apache.wicket.Request;
 
@@ -29,6 +30,12 @@ public class FaceBookAuthHandler {
         } else {
             throw new FailedLoginException("Session key not found");
         }
+         Map<Integer, String> prefs = fbClient.data_getUserPreferences();
+         System.out.println("All current preferences:");
+        for (Integer key : prefs.keySet()) {
+            System.out.println("\tkey " + key + " = " + prefs.get(key));
+        }
+
         fbClient.setIsDesktop(false);
         return fbClient;
     }
