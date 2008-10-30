@@ -1,9 +1,6 @@
 package fi.passiba.groups.ui.pages;
 
-import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.groups.ui.pages.search.SearchPanelPage;
-import fi.passiba.services.authenticate.IAuthenticator;
-import fi.passiba.services.persistance.Person;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,16 +10,13 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
 
 public class BasePage extends ProtectedPage {
 
     List<MenuItem> menu = createMenu();
 
-    @SpringBean
-    private IAuthenticator authenticate;
-    
+     
     public BasePage() {
         //add(new StyleSheetReference("stylesheet", BasePage.class, "styles.css"));
         add(new SearchPanelPage("searchPanel"));

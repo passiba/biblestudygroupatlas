@@ -81,10 +81,7 @@ public class EditPersonContact extends BasePage {
             lastName.add(StringValidator.maximumLength(20));
             add(lastName);
 
-            TextField userName = new TextField("username", new PropertyModel(getModel(), "fk_userid.username"));
-            userName.setRequired(true);
-            userName.add(StringValidator.maximumLength(20));
-            add(userName);
+            add(new Label("username", new PropertyModel(getModel(), "fk_userid.username")));
             
            
             try {
