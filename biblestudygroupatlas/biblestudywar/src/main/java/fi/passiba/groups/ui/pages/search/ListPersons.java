@@ -1,6 +1,6 @@
 package fi.passiba.groups.ui.pages.search;
 
-import fi.passiba.biblestudy.BibleStudySession;
+import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.groups.ui.model.DomainModelIteratorAdaptor;
 import fi.passiba.groups.ui.model.HashcodeEnabledCompoundPropertyModel;
 import java.util.Iterator;
@@ -145,13 +145,13 @@ public class ListPersons extends BasePage {
                     if (searchCriteria.equals("Käyttäjänimi")) {
                         result = authenticate.findPerson(searchString);
                     } else if (searchCriteria.equals("Rooli")) {
-                        String city = BibleStudySession.get().getPerson().getAdress().getCity();
-                        String country = BibleStudySession.get().getPerson().getAdress().getCountry();
+                        String city = BibleStudyFaceBookSession.get().getPerson().getAdress().getCity();
+                        String country = BibleStudyFaceBookSession.get().getPerson().getAdress().getCountry();
 
                         result = authenticate.findPersonByRolename(searchString, country, city);
                     } else {
-                        String rolename = BibleStudySession.get().getPerson().getFk_userid().getRolename();
-                        String country = BibleStudySession.get().getPerson().getAdress().getCountry();
+                        String rolename = BibleStudyFaceBookSession.get().getPerson().getFk_userid().getRolename();
+                        String country = BibleStudyFaceBookSession.get().getPerson().getAdress().getCountry();
                         result = authenticate.findPersonByRolename(rolename, country, searchString);
                     }
                 }

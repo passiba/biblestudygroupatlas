@@ -16,7 +16,7 @@
  */
 package fi.passiba.groups.ui.pages.wizards.biblesession;
 
-import fi.passiba.biblestudy.BibleStudySession;
+import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
 import fi.passiba.groups.ui.pages.Main;
@@ -232,7 +232,7 @@ public class NewBibleSessionWizard extends Wizard {
             Object sessionOwner=null;
             if(bibleSession.getSessiontype().equals("Henkilö"))
             {
-                  sessionOwner=BibleStudySession.get().getPerson();
+                  sessionOwner=BibleStudyFaceBookSession.get().getPerson();
             }else
             {
                 

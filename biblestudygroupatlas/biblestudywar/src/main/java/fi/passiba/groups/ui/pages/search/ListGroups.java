@@ -1,7 +1,7 @@
 package fi.passiba.groups.ui.pages.search;
 
 import fi.passiba.biblestudy.BibleStudyApplication;
-import fi.passiba.biblestudy.BibleStudySession;
+import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.groups.ui.model.DomainModelIteratorAdaptor;
 import fi.passiba.groups.ui.model.HashcodeEnabledCompoundPropertyModel;
 import java.util.Iterator;
@@ -59,12 +59,12 @@ public class ListGroups extends BasePage {
         if (searchCriteria != null && searchString != null) {
             if (searchCriteria.equals("Ryhmätyyppi")) {
 
-                String city = BibleStudySession.get().getPerson().getAdress().getCity();
-                String country = BibleStudySession.get().getPerson().getAdress().getCountry();
+                String city =   BibleStudyFaceBookSession.get().getPerson().getAdress().getCity();
+                String country = BibleStudyFaceBookSession.get().getPerson().getAdress().getCountry();
 
                 results = groupService.findGroupsByLocation(country, city, searchCriteria);
             } else if (searchCriteria.equals("Kaupunki")) {
-                String country = BibleStudySession.get().getPerson().getAdress().getCountry();
+                String country = BibleStudyFaceBookSession.get().getPerson().getAdress().getCountry();
                 results = groupService.findGroupsByLocation(country, searchCriteria, searchCriteria);
             } else {
 

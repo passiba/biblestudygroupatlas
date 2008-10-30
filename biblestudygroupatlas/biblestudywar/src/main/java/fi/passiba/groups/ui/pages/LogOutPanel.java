@@ -1,5 +1,6 @@
 package fi.passiba.groups.ui.pages;
 
+import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.biblestudy.BibleStudySession;
 import org.apache.wicket.Page;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
@@ -18,11 +19,12 @@ public class LogOutPanel extends Panel {
     add(new Link("signout") {
       @Override
       public boolean isVisible() {
-        return BibleStudySession.get().isAuthenticated();
+       // return BibleStudySession.get().isAuthenticated();
+           return BibleStudyFaceBookSession.get().isAuthenticated();
       }
       @Override
       public void onClick() {
-        BibleStudySession.get().invalidate();
+       BibleStudyFaceBookSession.get().invalidate();
            setResponsePage(Home.class);
       }
     });
@@ -36,7 +38,8 @@ public class LogOutPanel extends Panel {
 
       @Override
       public boolean isVisible() {
-        return !BibleStudySession.get().isAuthenticated();
+       // return !BibleStudySession.get().isAuthenticated();
+           return ! BibleStudyFaceBookSession.get().isAuthenticated();
       }
     });
     add(new BookmarkablePageLink("help", Main.class));

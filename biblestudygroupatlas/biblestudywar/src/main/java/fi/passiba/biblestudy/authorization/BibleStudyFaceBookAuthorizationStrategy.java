@@ -1,8 +1,8 @@
 package fi.passiba.biblestudy.authorization;
 
 import com.google.code.facebookapi.FacebookRestClient;
+import fi.passiba.biblestudy.BibleStudyApplication;
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
-import fi.passiba.biblestudy.BibleStudySession;
 import fi.passiba.biblestudy.authorization.facebook.FaceBookAuthHandler;
 import fi.passiba.groups.ui.pages.ProtectedPage;
 
@@ -22,13 +22,11 @@ public final class BibleStudyFaceBookAuthorizationStrategy implements
 
     public static final String CLIENT = "auth.client";
 
-    private String _apiKey = ""; //replace this
-    private String _secretKey = ""; //replace this
-
+    
 
   public boolean isActionAuthorized(Component component, Action action) {
 
-    if (action.equals(Component.RENDER)) {
+    /*if (action.equals(Component.RENDER)) {
       Class<? extends Component> c = component.getClass();
       AdminOnly adminOnly = c.getAnnotation(AdminOnly.class);
       if (adminOnly != null) {
@@ -40,7 +38,7 @@ public final class BibleStudyFaceBookAuthorizationStrategy implements
                 && role !=null 
                 && (role.equals("Admin"))||role.equals("User"));
       }
-    }
+    }*/
     return true;
   }
 
@@ -66,7 +64,7 @@ public final class BibleStudyFaceBookAuthorizationStrategy implements
 
             BibleStudyFaceBookSession session = ( BibleStudyFaceBookSession) page.getSession();
             try {
-                FacebookRestClient authClient = FaceBookAuthHandler.getAuthenticatedClient(page.getRequest(), _apiKey, _secretKey);
+                FacebookRestClient authClient = FaceBookAuthHandler.getAuthenticatedClient(page.getRequest(), BibleStudyApplication.get().getFaceBookAPIkey(), BibleStudyApplication.get().getFaceBookSecretkey());
                 session.setClient(authClient);
             } catch (FailedLoginException fle) {
                 //user not logged in
@@ -82,7 +80,7 @@ public final class BibleStudyFaceBookAuthorizationStrategy implements
   }
   private void forceLogin(Page page) {
 
-        page.getRequestCycle().setRequestTarget(new RedirectRequestTarget("http://www.facebook.com/login.php?api_key=" + _apiKey + "&v=1.0"));
+        page.getRequestCycle().setRequestTarget(new RedirectRequestTarget("http://www.facebook.com/login.php?api_key=" + BibleStudyApplication.get().getFaceBookAPIkey() + "&v=1.0"));
 
     }
 
