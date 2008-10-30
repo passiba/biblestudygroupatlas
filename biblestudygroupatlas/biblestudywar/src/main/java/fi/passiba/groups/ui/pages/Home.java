@@ -1,7 +1,7 @@
 
 package fi.passiba.groups.ui.pages;
 
-import fi.passiba.biblestudy.BibleStudySession;
+import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 
 import fi.passiba.groups.ui.pages.wizards.WizardPage;
 import fi.passiba.groups.ui.pages.wizards.userCreation.NewUserWizard;
@@ -86,10 +86,11 @@ public class Home extends WebPage {
                     try {
 
 
-                        if (PasswordService.decrypt(username.toCharArray(), per.getFk_userid().getPassword()).equals(password)) {
-                            BibleStudySession.get().setPerson(per);
+                        /*if (PasswordService.decrypt(username.toCharArray(), per.getFk_userid().getPassword()).equals(password)) {
+                            BibleStudyFaceBookSession.get().setPerson(per);
                             return true;
-                        }
+                        }*/
+                        return true;
                     } catch (Exception ex) {
                         return false;
                         //Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);

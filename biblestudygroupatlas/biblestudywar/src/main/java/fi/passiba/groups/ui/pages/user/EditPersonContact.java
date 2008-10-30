@@ -2,12 +2,9 @@ package fi.passiba.groups.ui.pages.user;
 
 import fi.passiba.groups.ui.pages.*;
 import fi.passiba.groups.ui.pages.address.AddressPanel;
-import fi.passiba.groups.ui.pages.search.ListPersons;
 
 import fi.passiba.groups.ui.pages.wizards.WizardPage;
 import fi.passiba.groups.ui.pages.wizards.biblesession.NewBibleSessionWizard;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.TextField;
@@ -18,7 +15,6 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 import fi.passiba.services.authenticate.IAuthenticator;
-import fi.passiba.services.authenticate.PasswordService;
 import fi.passiba.services.group.IGroupServices;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Adress;
@@ -30,13 +26,10 @@ import java.util.List;
 import org.apache.wicket.Page;
 import org.apache.wicket.extensions.wizard.Wizard;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.PasswordTextField;
 
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -96,14 +89,14 @@ public class EditPersonContact extends BasePage {
            
             try {
                 Users user=(Users)new PropertyModel(getModel(), "fk_userid").getObject();
-                String passwd = PasswordService.decrypt(user.getUsername().toCharArray(), user.getPassword());
-                user.setPassword(passwd);
+               /* String passwd = PasswordService.decrypt(user.getUsername().toCharArray(), user.getPassword());
+                user.setPassword(passwd);*/
                 Person person=(Person)getModel().getObject();
                 person.setFk_userid(user);
             } catch (Exception ex) {
               
             }
-            PasswordTextField password = new PasswordTextField("password", new PropertyModel(getModel(), "fk_userid.password"));
+           /* PasswordTextField password = new PasswordTextField("password", new PropertyModel(getModel(), "fk_userid.password"));
             password.setRequired(true);
             password.setResetPassword(false);
             password.add(StringValidator.maximumLength(20));
@@ -120,7 +113,7 @@ public class EditPersonContact extends BasePage {
 
             add(new EqualPasswordInputValidator(password, confirmpassword));
 
-
+            */
             TextField email = new TextField("email", new PropertyModel(getModel(), "email"));
             email.add(StringValidator.maximumLength(150));
             email.add(EmailAddressValidator.getInstance());
@@ -207,10 +200,10 @@ public class EditPersonContact extends BasePage {
             person.setAdress(this.addressPanel.getAddress());
 
             Users user = person.getFk_userid();
-            try {
+            /*try {
                 user.setPassword(PasswordService.encrypt(user.getUsername().toCharArray(), user.getPassword()));
             } catch (Exception ex) {
-            }
+            }*/
             person.setFk_userid(user);
             authenticate.updatePerson(person);
             // setResponsePage(ListContacts.class);

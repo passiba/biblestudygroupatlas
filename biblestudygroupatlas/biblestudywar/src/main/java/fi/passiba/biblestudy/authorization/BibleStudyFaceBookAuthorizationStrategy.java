@@ -20,6 +20,8 @@ public final class BibleStudyFaceBookAuthorizationStrategy implements
     IUnauthorizedComponentInstantiationListener {
 
 
+
+
     public static final String CLIENT = "auth.client";
 
     
@@ -54,7 +56,6 @@ public final class BibleStudyFaceBookAuthorizationStrategy implements
   public void onUnauthorizedInstantiation(Component component) {
    // throw new RestartResponseAtInterceptPageException(
      //   Home.class);
-
       if (component instanceof Page) {
             Page page = (Page) component;
 
@@ -65,6 +66,7 @@ public final class BibleStudyFaceBookAuthorizationStrategy implements
             BibleStudyFaceBookSession session = ( BibleStudyFaceBookSession) page.getSession();
             try {
                 FacebookRestClient authClient = FaceBookAuthHandler.getAuthenticatedClient(page.getRequest(), BibleStudyApplication.get().getFaceBookAPIkey(), BibleStudyApplication.get().getFaceBookSecretkey());
+               
                 session.setClient(authClient);
             } catch (FailedLoginException fle) {
                 //user not logged in
