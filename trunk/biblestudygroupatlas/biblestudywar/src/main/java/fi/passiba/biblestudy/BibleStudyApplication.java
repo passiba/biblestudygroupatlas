@@ -1,6 +1,5 @@
 package fi.passiba.biblestudy;
 
-import fi.passiba.biblestudy.authorization.BibleStudyAuthorizationStrategy;
 import fi.passiba.biblestudy.authorization.BibleStudyFaceBookAuthorizationStrategy;
 
 
@@ -32,13 +31,15 @@ public class BibleStudyApplication extends WebApplication implements Application
     
     
     private static final String GOOGLE_MAPS_API_KEY_PARAM = "GoogleMapsAPIkey";
+    private static final String FACEBOOK_API_KEY_PARAM = "facebookAPIkey";
+    private static final String FACEBOOK_SECRET_KEY_PARAM = "facebookSecretkey";
     private ApplicationContext ctx;
 
 
    
 
     public Class getHomePage() {
-        return Home.class;
+        return Main.class;
     }
     private ApplicationContext getContext() {
         return WebApplicationContextUtils
@@ -48,8 +49,8 @@ public class BibleStudyApplication extends WebApplication implements Application
        
     @Override
     public Session newSession(Request request, Response response) {
-        return new BibleStudySession(request);
-        //return new  BibleStudyFaceBookSession(request);
+       // return new BibleStudySession(request);
+        return new  BibleStudyFaceBookSession(request);
     }        
     public static BibleStudyApplication get() {
         return (BibleStudyApplication) WebApplication.get();
@@ -61,8 +62,8 @@ public class BibleStudyApplication extends WebApplication implements Application
                 this));
         
         //authorization settings
-        BibleStudyAuthorizationStrategy authStrat = new BibleStudyAuthorizationStrategy();
-        //BibleStudyFaceBookAuthorizationStrategy  authStrat= new BibleStudyFaceBookAuthorizationStrategy ();
+        //BibleStudyAuthorizationStrategy authStrat = new BibleStudyAuthorizationStrategy();
+        BibleStudyFaceBookAuthorizationStrategy  authStrat= new BibleStudyFaceBookAuthorizationStrategy ();
         ISecuritySettings securitySettings = getSecuritySettings();
         securitySettings.setAuthorizationStrategy(authStrat);
         securitySettings.setUnauthorizedComponentInstantiationListener(authStrat);
@@ -105,7 +106,40 @@ public class BibleStudyApplication extends WebApplication implements Application
 		}
 		return googleMapsAPIkey;
 	}
-
+          /**
+	 * Gets the init parameter 'facebookAPIkey' of the filter, or throws a
+	 * WicketRuntimeException, if it is not set.
+	 *
+	 *
+	 * @return String - facebook Api key
+	 */
+	public String getFaceBookAPIkey()
+	{
+		String facebookAPIkey = getInitParameter(FACEBOOK_API_KEY_PARAM);
+		if (facebookAPIkey == null)
+		{
+			throw new WicketRuntimeException("There is no Facebook API key configured in the "
+					+ "deployment descriptor of this application.");
+		}
+		return facebookAPIkey;
+	}
+     /**
+	 * Gets the init parameter 'facebookSecretkey' of the filter, or throws a
+	 * WicketRuntimeException, if it is not set.
+	 *
+	 *
+	 * @return String - facebook secret key
+	 */
+	public String getFaceBookSecretkey()
+	{
+		String facebookSecretkey = getInitParameter(FACEBOOK_SECRET_KEY_PARAM );
+		if (facebookSecretkey == null)
+		{
+			throw new WicketRuntimeException("There is no Facebook Secret key configured in the "
+					+ "deployment descriptor of this application.");
+		}
+		return facebookSecretkey;
+	}
     public void setApplicationContext(ApplicationContext arg) throws BeansException {
         this.ctx=arg;
     }
