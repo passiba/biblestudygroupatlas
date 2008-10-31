@@ -4,7 +4,7 @@
 package fi.passiba.biblestudy;
 
 import com.google.code.facebookapi.FacebookException;
-import com.google.code.facebookapi.FacebookRestClient;
+import com.google.code.facebookapi.FacebookXmlRestClient;
 import com.google.code.facebookapi.ProfileField;
 import fi.passiba.services.persistance.Person;
 import java.io.IOException;
@@ -23,7 +23,7 @@ import org.w3c.dom.Document;
  */
 public class BibleStudyFaceBookSession extends WebSession {
 
-    private FacebookRestClient client;
+    private FacebookXmlRestClient client;
     private Person person;
 
     public BibleStudyFaceBookSession(Request request) {
@@ -35,11 +35,11 @@ public class BibleStudyFaceBookSession extends WebSession {
         return (BibleStudyFaceBookSession) Session.get();
     }
 
-    public synchronized FacebookRestClient getClient() {
+    public synchronized FacebookXmlRestClient getClient() {
         return client;
     }
 
-    public synchronized void setClient(FacebookRestClient client) {
+    public synchronized void setClient(FacebookXmlRestClient client) {
         this.client = client;
     }
 
@@ -60,7 +60,9 @@ public class BibleStudyFaceBookSession extends WebSession {
         long userID = 0;
         String name = "";
         if (BibleStudyFaceBookSession.get().getClient() != null) {
-            userID = this.getClient()._getUserId();
+            
+            try {
+            userID = this.getClient().users_getLoggedInUser();
             EnumSet<ProfileField> fields = EnumSet.of(
                     ProfileField.NAME,
                     ProfileField.PIC);
@@ -69,16 +71,14 @@ public class BibleStudyFaceBookSession extends WebSession {
             users.add(userID);
 
             Document d = null;
-            try {
-                d = this.getClient().users_getInfo(users, fields);
+            
+                d = (Document) this.getClient().users_getInfo(users, fields);
+               name =d.getElementsByTagName("name").item(0).getTextContent();
             } catch (FacebookException ex) {
                 // Logger.getLogger(UserPanel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 // Logger.getLogger(UserPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
-            name =
-                    d.getElementsByTagName("name").item(0).getTextContent();
-
         }
         return name;
     }
