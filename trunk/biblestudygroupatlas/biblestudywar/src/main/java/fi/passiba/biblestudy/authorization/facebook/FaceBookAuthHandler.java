@@ -6,7 +6,8 @@ package fi.passiba.biblestudy.authorization.facebook;
 
 
 import  com.google.code.facebookapi.FacebookParam;
-import com.google.code.facebookapi.FacebookRestClient;
+
+import com.google.code.facebookapi.FacebookXmlRestClient;
 import java.util.Map;
 import javax.security.auth.login.FailedLoginException;
 import org.apache.wicket.Request;
@@ -17,24 +18,24 @@ import org.apache.wicket.Request;
  */
 public class FaceBookAuthHandler {
 
-    public static FacebookRestClient getAuthenticatedClient(Request request, String apiKey, String secretKey) throws Exception {
+    public static FacebookXmlRestClient getAuthenticatedClient(Request request, String apiKey, String secretKey) throws Exception {
         String authToken = request.getParameter("auth_token");
         String sessionKey = request.getParameter(FacebookParam.SESSION_KEY.toString());
-        FacebookRestClient fbClient = null;
+        FacebookXmlRestClient fbClient = null;
         if (sessionKey != null) {
-            fbClient = new FacebookRestClient(apiKey, secretKey, sessionKey);
+            fbClient = new FacebookXmlRestClient(apiKey, secretKey, sessionKey);
         } else if (authToken != null) {
-            fbClient = new FacebookRestClient(apiKey, secretKey);
+            fbClient = new FacebookXmlRestClient(apiKey, secretKey);
             //establish session
             fbClient.auth_getSession(authToken);
         } else {
             throw new FailedLoginException("Session key not found");
         }
-         Map<Integer, String> prefs = fbClient.data_getUserPreferences();
+       /*  Map<Integer, String> prefs = fbClient.data_getUserPreferences();
          System.out.println("All current preferences:");
         for (Integer key : prefs.keySet()) {
             System.out.println("\tkey " + key + " = " + prefs.get(key));
-        }
+        }*/
 
         fbClient.setIsDesktop(false);
         return fbClient;

@@ -1,11 +1,10 @@
 package fi.passiba.biblestudy.authorization;
 
-import com.google.code.facebookapi.FacebookRestClient;
 import fi.passiba.biblestudy.BibleStudyApplication;
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.biblestudy.authorization.facebook.FaceBookAuthHandler;
 import fi.passiba.groups.ui.pages.ProtectedPage;
-
+import com.google.code.facebookapi.FacebookXmlRestClient;
 import javax.security.auth.login.FailedLoginException;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
@@ -65,7 +64,7 @@ public final class BibleStudyFaceBookAuthorizationStrategy implements
 
             BibleStudyFaceBookSession session = ( BibleStudyFaceBookSession) page.getSession();
             try {
-                FacebookRestClient authClient = FaceBookAuthHandler.getAuthenticatedClient(page.getRequest(), BibleStudyApplication.get().getFaceBookAPIkey(), BibleStudyApplication.get().getFaceBookSecretkey());
+              FacebookXmlRestClient authClient = FaceBookAuthHandler.getAuthenticatedClient(page.getRequest(), BibleStudyApplication.get().getFaceBookAPIkey(), BibleStudyApplication.get().getFaceBookSecretkey());
                
                 session.setClient(authClient);
             } catch (FailedLoginException fle) {
