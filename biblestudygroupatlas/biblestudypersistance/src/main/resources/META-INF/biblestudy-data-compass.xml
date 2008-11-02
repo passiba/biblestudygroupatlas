@@ -24,6 +24,7 @@
                 <value>fi.passiba.services.persistance.Person</value>
                 <value>fi.passiba.services.persistance.Adress</value>
                 <value>fi.passiba.services.persistance.Users</value>
+                <value>fi.passiba.hibernate.BaseEntity</value>
              
             </list>
         </property>
