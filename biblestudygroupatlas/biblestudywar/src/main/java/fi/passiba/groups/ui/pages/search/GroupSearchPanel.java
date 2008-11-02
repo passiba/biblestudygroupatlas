@@ -16,12 +16,15 @@ import org.apache.wicket.util.value.ValueMap;
 
 public class GroupSearchPanel extends Panel {
     
-    
+  
+
     private final ValueMap properties = new ValueMap();
 
     public GroupSearchPanel(String id) {
         super(id);
         add(new SearchForm("groupsearchForm"));
+       
+
     }
      private class SearchForm extends Form {
 
@@ -54,5 +57,8 @@ public class GroupSearchPanel extends Panel {
      // return BibleStudySession.get().isAuthenticated();
       return BibleStudyFaceBookSession.get().isAuthenticated();
   }
+
+  
+
 
 }

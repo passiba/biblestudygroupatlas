@@ -22,6 +22,11 @@ import javax.persistence.TemporalType;
 import javax.persistence.OneToOne;
 import javax.persistence.Version;
 import javax.persistence.Transient;
+import org.compass.annotations.Cascade;
+import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableMetaData;
+import org.compass.annotations.SearchableProperty;
+import org.compass.annotations.SearchableReference;
 
 /**
  * Person entity.
@@ -31,19 +36,28 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "person")
 @AttributeOverride(name = "id", column = @Column(name = "person_id"))
+@Searchable
 public class Person extends AuditableEntity {
 
     // Fields
     //private Integer personId;
+    @SearchableReference(cascade=Cascade.ALL)
     private Users fk_userid;
+    @SearchableReference(cascade=Cascade.ALL)
     private Adress adress;
+    @SearchableProperty(name="personal_email")
+    @SearchableMetaData(name = "personemail")
     private String email;
+    @SearchableProperty(name="firstname")
     private String firstname;
+    @SearchableProperty(name="lastname")
     private String lastname;
     private String fullname;
     private String groupFirstName;
     private Date dateofbirth;
+    @SearchableReference(cascade={Cascade.CREATE,Cascade.SAVE})
     private Set<Groups> groups = new HashSet<Groups>(0);
+    @SearchableReference(cascade=Cascade.ALL)
     private Set<Biblesession> bibleSessions = new HashSet<Biblesession>(0);
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

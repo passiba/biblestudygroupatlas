@@ -13,22 +13,37 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.compass.annotations.Cascade;
+import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableMetaData;
+import org.compass.annotations.SearchableProperty;
+import org.compass.annotations.SearchableReference;
 
 /**
  * Bibletranslation entity.
  * 
- * @author MyEclipse Persistence Tools
+ * @author haverinen
  */
 @Entity
 @Table(name = "bibletranslation")
 @AttributeOverride(name = "id", column = @Column(name = "bible_translation_id"))
+@Searchable
 public class Bibletranslation extends AuditableEntity {
 
     // Fields
+    @SearchableProperty(name = "bibleAbbrv")
+    @SearchableMetaData(name = "abbreviation")
     private String bibleAbbrv;
+    @SearchableProperty(name = "biblename")
+    @SearchableMetaData(name = "bible")
     private String bibleName;
+    @SearchableProperty(name = "publisher")
+    @SearchableMetaData(name = "publishername")
     private String publisherName;
+
+    @SearchableProperty(name = "publisheddate")
     private Date publishedDate;
+    @SearchableReference(cascade={Cascade.ALL})
     private Set<Booksection> booksections = new HashSet<Booksection>(0);
 
    

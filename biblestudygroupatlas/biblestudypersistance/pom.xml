@@ -45,6 +45,10 @@
             <id>java.net</id>
             <url>http://download.java.net/maven/2</url>
         </repository>
+        <repository>
+            <id>compass</id>
+            <url>http://repo.compass-project.org</url>
+        </repository>
     </repositories>
     <dependencies>
              
@@ -96,9 +100,10 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
-            <version>3.2.1.ga</version>
+            <version>3.2.6.ga</version>
         </dependency>
 
+       
         <!--
         
        
@@ -180,7 +185,37 @@
             <version>1.0.1B</version>
         </dependency>
 
-      
+        <!--compass searh integration -->
+        <dependency>
+            <groupId>org.compass-project</groupId>
+            <artifactId>compass</artifactId>
+            <version>${compass.version}</version>
+        </dependency>
+     <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-core</artifactId>
+          <version>${lucene.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-analyzers</artifactId>
+          <version>${lucene.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-highlighter</artifactId>
+          <version>${lucene.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-queries</artifactId>
+          <version>${lucene.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-snowball</artifactId>
+          <version>${lucene.version}</version>
+      </dependency>
        <!--
         <dependency>
             <groupId>org.restlet</groupId>
@@ -275,5 +310,8 @@
         <jdbc.password>b8bl47s4r</jdbc.password>
         <maven.test.skip>false</maven.test.skip>
         <originalDataSetFile>./src/test/data/sample-data.xml</originalDataSetFile>
+        <!-- Compass Settings -->
+        <compass.version>2.0.1</compass.version>
+        <lucene.version>2.3.2</lucene.version>
     </properties>
 </project>

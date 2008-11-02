@@ -10,27 +10,37 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableMetaData;
+import org.compass.annotations.SearchableProperty;
 /**
  *
  * @author haverinen
  */
 @Entity
 @Table(name = "users")
+@Searchable
 @AttributeOverride( name="id", column = @Column(name="userid") )
 public class Users  extends  AuditableEntity {
     private static final long serialVersionUID = 1L;
     
+
+
+    @SearchableProperty(name="username")
+    @SearchableMetaData(name = "userid")
     @Column(name = "username", nullable = false,unique=true)
     private String username;
     
    /* @Column(name = "password", nullable = false)
     private String password;*/
    
-  
+    @SearchableProperty
+    @SearchableMetaData(name = "userstatus")
     @Column(name="status")
     private String status;
       
-     
+    @SearchableProperty(name="rolename")
+    @SearchableMetaData(name = "role")
     @Column(name = "rolename")
     private String rolename;
 

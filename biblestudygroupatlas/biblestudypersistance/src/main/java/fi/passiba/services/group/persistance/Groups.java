@@ -21,29 +21,51 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import org.compass.annotations.Cascade;
+import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableConstant;
+import org.compass.annotations.SearchableMetaData;
+import org.compass.annotations.SearchableProperty;
+import org.compass.annotations.SearchableReference;
 
 /**
  * Groups entity.
  * 
- * @author MyEclipse Persistence Tools
+ * @author haverinen
  */
 @Entity
 @Table(name = "groups")
 @AttributeOverride(name = "id", column = @Column(name = "group_id"))
+@Searchable
+@SearchableConstant(name = "type", values = {"group", "groups"})
+
 public class Groups extends AuditableEntity {
 
     // Fields
     // private Integer groupId;
+    @SearchableReference(cascade=Cascade.ALL)
     private Adress adress;
     // private Status status;
+    @SearchableProperty(name = "groupname")
+    @SearchableMetaData(name = "group")
     private String name;
+    @SearchableProperty(name = "congregationname")
+    @SearchableMetaData(name = "congregation")
     private String congregationname;
+    @SearchableProperty(name = "congregationwebsiteurl")
+    @SearchableMetaData(name = "website")
     private String congregationwebsiteurl;
+    @SearchableProperty(name = "congregationemail")
+    @SearchableMetaData(name = "groupemail")
     private String congregatiolistemailaddress;
     private String description;
+    @SearchableReference(cascade={Cascade.CREATE,Cascade.SAVE})
     private Set<Person> grouppersons = new HashSet<Person>(0);
+    @SearchableReference(cascade={Cascade.CREATE,Cascade.SAVE})
     private Set<Biblesession> bibleSessions = new HashSet<Biblesession>(0);
+    @SearchableProperty(name = "grouptype")
     private String grouptypename;
+    @SearchableProperty(name = "groupstatus")
     private String status;
 
     @Column(name = "grouptypename", unique = false, nullable = false, insertable = true, updatable = true, length = 50)

@@ -24,7 +24,7 @@ public class UserPanel extends Panel {
     @SpringBean
     private IAuthenticator authenticate;
 
-    private Person per=per = null;
+    private Person per = null;
     public UserPanel(String id) {
 
         super(id);
