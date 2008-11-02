@@ -44,7 +44,7 @@
 
     </bean>
 	
-	<!--
+	
     <bean id="hibernateGpsDevice" class="org.compass.gps.device.hibernate.HibernateGpsDevice">
         <property name="name">
             <value>hibernateDevice</value>
@@ -66,7 +66,7 @@
             </list>
         </property>
     </bean>
-    <bean id="compassTemplate" class="org.compass.core.CompassTemplate">
+    <!--<bean id="compassTemplate" class="org.compass.core.CompassTemplate">
 <property name="compass" ref="compass" />
 </bean>-->
 
