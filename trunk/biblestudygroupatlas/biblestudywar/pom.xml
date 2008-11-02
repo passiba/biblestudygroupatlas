@@ -187,11 +187,6 @@
             <artifactId>compass</artifactId>
             <version>${compass.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.compass</groupId>
-            <artifactId>compass</artifactId>
-            <version>1.1</version>
-        </dependency>
     </dependencies>
     <build>
         <finalName>biblestudy</finalName>
