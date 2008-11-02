@@ -1,8 +1,6 @@
 package fi.passiba.services.biblestudy.persistance;
 
 import fi.passiba.hibernate.AuditableEntity;
-import fi.passiba.hibernate.BaseEntity;
-import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
@@ -13,23 +11,34 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.compass.annotations.Cascade;
+import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableMetaData;
+import org.compass.annotations.SearchableProperty;
+import org.compass.annotations.SearchableReference;
 
 /**
  * Book entity.
  * 
- * @author MyEclipse Persistence Tools
+ * @author haverinen
  */
 @Entity
 @Table(name = "book")
 @AttributeOverride(name = "id", column = @Column(name = "book_id"))
+@Searchable
 public class Book extends AuditableEntity {
 
     // Fields
+    @SearchableReference(cascade={Cascade.CREATE,Cascade.SAVE})
     private Booksection booksection;
+    @SearchableProperty(name = "bookNum")
+    @SearchableMetaData(name = "booknumber")
     private Integer bookNum;
+    @SearchableProperty(name = "bookname")
+    @SearchableMetaData(name = "booktitle")
     private String bookText;
+    @SearchableReference(cascade={Cascade.ALL})
     private Set<Chapter> chapters = new HashSet();
     
    

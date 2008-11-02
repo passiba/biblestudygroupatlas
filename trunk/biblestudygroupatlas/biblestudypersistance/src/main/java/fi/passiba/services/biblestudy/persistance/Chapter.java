@@ -13,25 +13,46 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.compass.annotations.Cascade;
+import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableMetaData;
+import org.compass.annotations.SearchableProperty;
+import org.compass.annotations.SearchableReference;
 
 /**
  * Chapter entity.
  * 
- * @author MyEclipse Persistence Tools
+ * @author haverinen
  */
 @Entity
 @Table(name = "chapter")
 @AttributeOverride(name = "id", column = @Column(name = "chapter_id"))
+@Searchable
 public class Chapter extends AuditableEntity {
 
     // Fields
-
+    @SearchableReference(cascade={Cascade.CREATE,Cascade.SAVE})
     private Book book;
+    @SearchableProperty(name = "chapternum")
+    @SearchableMetaData(name = "chapternumber")
     private Integer chapterNum;
+    @SearchableProperty(name = "chaptertitle")
+    @SearchableMetaData(name = "chaptername")
     private String chapterTitle;
+    @SearchableReference(cascade={Cascade.ALL})
     private Set<Verse> verses = new HashSet();
 
+    private Biblesession session;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_biblesessionid", unique = false, nullable = true, insertable = true, updatable = true)
+    public Biblesession getSession() {
+        return session;
+    }
+
+    public void setSession(Biblesession session) {
+        this.session = session;
+    }
     
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)

@@ -55,6 +55,14 @@ org.springframework.orm.hibernate3.support.OpenSessionInViewFilter
             <param-name>GoogleMapsAPIkey</param-name>
             <param-value>ABQIAAAApaHagsODSCLCv9FgsEXTwxT7sirunokky8rCdCDn6xIzPBys6hTuurTBTZGSp8CewL2i6InR2APaKA</param-value>
         </init-param>
+        <init-param>
+            <param-name>facebookAPIkey</param-name>
+            <param-value>47e06f634a21ed596e05b5148de47d7d</param-value>
+        </init-param>
+         <init-param>
+            <param-name>facebookSecretkey</param-name>
+            <param-value>1fc2a6ea39613af228605f267c625ca7</param-value>
+        </init-param>
     </filter>
    <!-- <filter-mapping>
         <filter-name>opensessioninview</filter-name>

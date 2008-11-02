@@ -17,6 +17,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.OneToMany;
+import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableMetaData;
+import org.compass.annotations.SearchableProperty;
+import org.compass.annotations.SearchableReference;
 
 /**
  *
@@ -25,11 +29,17 @@ import javax.persistence.OneToMany;
 @Entity
 @Table(name = "biblesession")
 @AttributeOverride(name = "id", column = @Column(name = "biblesessionid"))
+@Searchable
 public class Biblesession extends AuditableEntity {
 
     private static final long serialVersionUID = 1L;
+
+    @SearchableProperty(name="sessiontime")
+    @SearchableMetaData(name = "biblesessiontime")
     private Date sessiontime;
-    private Set<Verse> verses = new HashSet<Verse>(0);
+
+    @SearchableReference
+    private Set<Chapter> chapters = new HashSet<Chapter>(0);
 
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "sessiontime", nullable = false)
@@ -40,16 +50,17 @@ public class Biblesession extends AuditableEntity {
     public void setSessiontime(Date sessiontime) {
         this.sessiontime = sessiontime;
     }
-
-
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST}, fetch = FetchType.LAZY, mappedBy = "session")
-    public Set<Verse> getVerses() {
-        return this.verses;
+    public Set<Chapter> getChapters() {
+        return chapters;
     }
 
-    public void setVerses(Set<Verse> verses) {
-        this.verses = verses;
+    public void setChapters(Set<Chapter> chapters) {
+        this.chapters = chapters;
     }
+
+
+    
 
     @Override
     public boolean equals(Object obj) {

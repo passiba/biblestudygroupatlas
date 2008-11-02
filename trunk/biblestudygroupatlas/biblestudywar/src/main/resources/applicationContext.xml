@@ -14,7 +14,9 @@
             
    <tx:annotation-driven transaction-manager="transactionManager"/>
    <import resource="classpath:META-INF/biblestudy-data-hibernate.xml"/>
+   <import resource="classpath:META-INF/biblestudy-data-compass.xml"/>
    <import resource="classpath:META-INF/biblestudy-webservice.xml"/>
+
    <bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
@@ -42,7 +44,20 @@
         <property name="groupDAO" ref="GroupsDAO" />
         <property name="personDAO" ref="PersonDAO" />
     </bean>
-      <!--
+    <bean id="CompassSearchUtil" class="fi.passiba.groups.ui.pages.search.compassSearchUtil">
+        <property name="compass" ref="compass"/>
+       <!-- <property name="compassGPS" ref="compassGps"/>
+        <property name="mirrorGPS" ref="hibernateGpsDevice"/>-->
+    </bean>
+
+    <!-- <bean id="searchService" class="com.apress.progwt.server.service.impl.SearchServiceImpl">
+        <property name="compass" ref="compass" />
+        <property name="compassGPS" ref="compassGps"/>
+        <property name="mirrorGPS" ref="hibernateGpsDevice" />
+        <property name="userService" ref="userService" />
+    </bean>
+
+     
     <bean id="biblesessionProcessingGageway" class="fi.passiba.groups.ui.pages.wizards.biblesession.dataprocessing.BibleBookdDataProcessingImp">
         <property name="jmsTemplate" ref="jmsTemplate"/>
     </bean>  -->

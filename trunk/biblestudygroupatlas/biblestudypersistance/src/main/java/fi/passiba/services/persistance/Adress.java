@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 
 
 import javax.persistence.Table;
+import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableMetaData;
+import org.compass.annotations.SearchableProperty;
 
 /**
  * Adress entity.
@@ -15,17 +18,35 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "adress")
+@Searchable
 @AttributeOverride(name = "id", column = @Column(name = "adress_id"))
 public class Adress extends AuditableEntity {
 
+    @SearchableProperty(name="addr1")
+    @SearchableMetaData(name = "Address 1")
     private String addr1;
+    @SearchableProperty(name="addr2")
+    @SearchableMetaData(name = "Address 2")
     private String addr2;
+    @SearchableProperty(name="city")
+    @SearchableMetaData(name = "town")
     private String city;
+    @SearchableProperty(name="state")
     private String state;
+    @SearchableProperty(name="zip")
+    @SearchableMetaData(name = "zip code")
     private String zip;
+
+    @SearchableProperty(name="country")
     private String country;
+
+    @SearchableProperty(name="phone")
+    @SearchableMetaData(name = "phonenumber")
     private String phone;
+
+    @SearchableProperty(name="location_lat")
     private double location_lat;
+    @SearchableProperty(name="location_lng")
     private double location_lng;
 
    

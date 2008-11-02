@@ -1,7 +1,6 @@
 package fi.passiba.services.biblestudy.persistance;
 
 import fi.passiba.hibernate.AuditableEntity;
-import fi.passiba.hibernate.BaseEntity;
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,36 +9,35 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.compass.annotations.Cascade;
+import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableMetaData;
+import org.compass.annotations.SearchableProperty;
+import org.compass.annotations.SearchableReference;
 
 /**
  * Verse entity.
  * 
- * @author MyEclipse Persistence Tools
+ * @author haverinen
  */
 @Entity
 @Table(name = "verse")
 @AttributeOverride(name = "id", column = @Column(name = "verse_id"))
+@Searchable
 public class Verse extends AuditableEntity {
 
     // Fields
 
-   
+    @SearchableReference(cascade={Cascade.CREATE,Cascade.SAVE})
     private Chapter chapter;
+    @SearchableProperty(name="versenumber")
+    @SearchableMetaData(name = "versenum")
     private Integer verseNum;
+
+    @SearchableProperty(name="versetext")
+    @SearchableMetaData(name = "text")
     private String verseText;
-    private Biblesession session;
-
-    
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_biblesessionid", unique = false, nullable = true, insertable = true, updatable = true)
-    public Biblesession getSession() {
-        return session;
-    }
-
-    public void setSession(Biblesession session) {
-        this.session = session;
-    }
+   
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_chapter_id", unique = false, nullable = false, insertable = true, updatable = true)
