@@ -15,7 +15,9 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -23,50 +25,49 @@ public class UserPanel extends Panel {
 
     @SpringBean
     private IAuthenticator authenticate;
-
-    private Person per = null;
+   
+    
     public UserPanel(String id) {
 
         super(id);
+      
+        init();
+    }
+    private void init()
+    {
+         final List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
+         long personid=0;
+         if (persons!=null && !persons.isEmpty()) {
+              personid=persons.get(0).getId();
 
-        setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
+         }
 
-            protected Object load() {
+         IModel model = new CompoundPropertyModel(new LoadableDetachableModel() {
 
-                List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
-               
+            @Override
+            public Object load() {
+
                 // Person person =  populateperson(username,password);
                 for (Person person : persons) {
-                    per = person;
+                   return person;
+
                 }
-                return per;
+                return null;
             }
-        }));
-
-
-
-
-
-
+        });
+        setModel(model);
+        
         add(new Label("groups", new PropertyModel(getModel(),
                 "groupFirstName")));
-
         add(new LocaleDropDown("localeSelect", Arrays.asList(new Locale[]{Locale.ENGLISH, new Locale("fi")})));
-
-
-        Link edit = new Link("edit", new PropertyModel(getModel(),
-                "fullname")) {
-
-            public void onClick() {
-               
-                setResponsePage(new EditPersonContact(getPage(), per.getId()));
-            }
-        };
+       
+       
+        EditPerson edit =new EditPerson("edit", model, personid);
+           
         edit.add(new Label("fullname", new PropertyModel(getModel(),
                 "fullname")));
-
         WizardLink userWisard = new WizardLink("newUserWizardLink", NewUserWizard.class);
-        if (getModel() == null) {
+        if (persons ==null || persons.isEmpty()) {
             edit.setVisible(false);
             userWisard.setVisible(true);
         }else
@@ -75,6 +76,21 @@ public class UserPanel extends Panel {
         }
         add(edit);
         add(userWisard);
+
+    }
+    private static final class EditPerson extends Link
+    {
+        private long personid;
+        
+        private EditPerson(String id,IModel m,long personid) {
+                super(id,m);
+                this.personid=personid;
+            }
+
+        @Override
+        public void onClick() {
+                setResponsePage(new EditPersonContact(getPage(),personid));
+            }
     }
 
     /**
