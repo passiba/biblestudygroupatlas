@@ -1,21 +1,17 @@
 package fi.passiba.groups;
 
+import fi.passiba.AbstractDependencyInjectionSpringContextTest;
 import fi.passiba.services.group.IGroupServices;
 import fi.passiba.services.persistance.Adress;
-import fi.passiba.services.group.dao.IGroupsDAO;
 import fi.passiba.services.group.persistance.Groups;
 import java.util.List;
 
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
-public final class GroupServiceImpTest extends AbstractDependencyInjectionSpringContextTests {
+public final class GroupServiceImpTest extends AbstractDependencyInjectionSpringContextTest {
 
     private String groupType = "Miestenpiiri",  city = "Espoo",  country = "Finland";
 
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[]{"classpath:applicationContext.xml"};
-    }
+   
 
     private Groups addGroup(Groups group) throws Exception {
         IGroupServices groupServices = (IGroupServices) applicationContext.getBean("IGroupServices");

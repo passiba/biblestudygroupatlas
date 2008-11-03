@@ -44,20 +44,13 @@
         <property name="groupDAO" ref="GroupsDAO" />
         <property name="personDAO" ref="PersonDAO" />
     </bean>
-    <bean id="CompassSearchUtil" class="fi.passiba.groups.ui.pages.search.compassSearchUtil">
+    
+    <bean id="SearchService" class="fi.passiba.services.search.SearchServiceImp">
         <property name="compass" ref="compass"/>
-       <!-- <property name="compassGPS" ref="compassGps"/>
-        <property name="mirrorGPS" ref="hibernateGpsDevice"/>-->
-    </bean>
-
-    <!-- <bean id="searchService" class="com.apress.progwt.server.service.impl.SearchServiceImpl">
-        <property name="compass" ref="compass" />
         <property name="compassGPS" ref="compassGps"/>
-        <property name="mirrorGPS" ref="hibernateGpsDevice" />
-        <property name="userService" ref="userService" />
+        <property name="mirrorGPS" ref="hibernateGpsDevice"/>
     </bean>
-
-     
+     <!--
     <bean id="biblesessionProcessingGageway" class="fi.passiba.groups.ui.pages.wizards.biblesession.dataprocessing.BibleBookdDataProcessingImp">
         <property name="jmsTemplate" ref="jmsTemplate"/>
     </bean>  -->
