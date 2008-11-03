@@ -16,6 +16,7 @@ import fi.passiba.groups.ui.pages.user.ViewPersonContact;
 import fi.passiba.services.authenticate.IAuthenticator;
 import fi.passiba.services.persistance.Person;
 
+import fi.passiba.services.search.ISearchService;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.wicket.markup.repeater.RefreshingView;
@@ -27,11 +28,27 @@ public class ListPersons extends BasePage {
     @SpringBean
     private IAuthenticator authenticate;
 
+    @SpringBean
+    private ISearchService searchService;
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
     public ListPersons(PageParameters params) {
 
-        final String searchCriteria = params.getString("searchcriteria");
-        final String searchString = params.getString("searchString");
-
+    final String searchCriteria = params.getString("searchcriteria");
+    final String searchString = params.getString("searchString");
 
 
 
@@ -143,12 +160,14 @@ public class ListPersons extends BasePage {
             protected Iterator getItemModels() {
                 if (searchCriteria != null && searchString != null) {
                     if (searchCriteria.equals("Käyttäjänimi")) {
-                        result = authenticate.findPerson(searchString);
+
+                        result = searchService.findPersonByUserName(searchString, 0, 20);
+                               // authenticate.findPerson(searchString);
                     } else if (searchCriteria.equals("Rooli")) {
                         String city = BibleStudyFaceBookSession.get().getPerson().getAdress().getCity();
                         String country = BibleStudyFaceBookSession.get().getPerson().getAdress().getCountry();
-
-                        result = authenticate.findPersonByRolename(searchString, country, city);
+                        result = searchService.findPersonByRolenameWithLocation(searchString, country, city);
+                        //result = authenticate.findPersonByRolename(searchString, country, city);
                     } else {
                         String rolename = BibleStudyFaceBookSession.get().getPerson().getFk_userid().getRolename();
                         String country = BibleStudyFaceBookSession.get().getPerson().getAdress().getCountry();

@@ -1,4 +1,5 @@
 package fi.passiba.groups;
+import fi.passiba.AbstractDependencyInjectionSpringContextTest;
 import fi.passiba.services.authenticate.IAuthenticator;
 import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;
@@ -6,16 +7,10 @@ import fi.passiba.services.persistance.Users;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 
-public final class PersionServiceImpTest  extends AbstractDependencyInjectionSpringContextTests {
+public final class PersionServiceImpTest extends AbstractDependencyInjectionSpringContextTest{
 
   private String username="passiba";
-
-   @Override
-      protected String[] getConfigLocations() {
-         return new String[] { "classpath:applicationContext.xml"};
-   }
 
   private Person addPerson(Person person)throws Exception
   {
@@ -42,7 +37,6 @@ public final class PersionServiceImpTest  extends AbstractDependencyInjectionSpr
 
           Users regularUser = new Users();
           regularUser.setUsername(username);
-          regularUser.setPassword("leppis");
           regularUser.setRolename("User");
           regularUser.setStatus("Aktiivinen");
           person.setFk_userid(regularUser);
