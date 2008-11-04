@@ -10,7 +10,8 @@ import org.compass.annotations.SearchableId;
 
 
 @MappedSuperclass
-@Searchable(root=false)
+//@Searchable(root=false)
+@Searchable(poly = true,root=false)
 public class BaseEntity implements DomainObject,Identifiable{
 	private Long id;
     @SearchableId

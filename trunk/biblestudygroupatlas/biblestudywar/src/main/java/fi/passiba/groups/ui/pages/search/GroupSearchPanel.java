@@ -18,7 +18,7 @@ public class GroupSearchPanel extends Panel {
     
   
 
-    private final ValueMap properties = new ValueMap();
+    private  ValueMap properties = new ValueMap();
 
     public GroupSearchPanel(String id) {
         super(id);
@@ -44,6 +44,7 @@ public class GroupSearchPanel extends Panel {
             PageParameters params = new PageParameters();
             params.add("searchcriteria",  properties.getString("searchcriteria"));
             params.add("searchString",  properties.getString("searchString"));
+            properties = new ValueMap();
             setResponsePage(ListGroups.class, params);
         }
        

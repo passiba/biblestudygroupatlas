@@ -27,16 +27,14 @@ import org.compass.annotations.SearchableReference;
 @Entity
 @Table(name = "booksection")
 @AttributeOverride(name = "id", column = @Column(name = "section_id"))
-@Searchable
+
 public class Booksection extends AuditableEntity {
 
     // Fields
-    @SearchableReference(cascade={Cascade.CREATE,Cascade.SAVE})
+   
     private Bibletranslation bibletranslation;
-    @SearchableProperty(name = "biblesection")
-    @SearchableMetaData(name = "section")
+   
     private String section;
-    @SearchableReference(cascade={Cascade.ALL})
     private Set<Book> books = new HashSet<Book>(0);
 
     

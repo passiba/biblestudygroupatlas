@@ -17,10 +17,14 @@ import org.apache.wicket.util.value.ValueMap;
 public class UserSearchPanel extends Panel {
     
     
-    private final ValueMap properties = new ValueMap();
+    private ValueMap properties = new ValueMap();
 
     public UserSearchPanel(String id) {
         super(id);
+        init();
+    }
+    private void init()
+    {
         add(new SearchForm("searchForm"));
     }
      private class SearchForm extends Form {
@@ -41,6 +45,7 @@ public class UserSearchPanel extends Panel {
             PageParameters params = new PageParameters();
             params.add("searchcriteria",  properties.getString("searchcriteria"));
             params.add("searchString",  properties.getString("searchString"));
+            properties = new ValueMap();
             setResponsePage(ListPersons.class, params);
         }
        

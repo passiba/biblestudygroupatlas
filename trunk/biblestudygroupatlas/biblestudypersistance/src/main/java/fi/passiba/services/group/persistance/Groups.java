@@ -1,9 +1,8 @@
 package fi.passiba.services.group.persistance;
 
-import fi.passiba.hibernate.AuditableEntity;
+import fi.passiba.hibernate.DomainObject;
+import fi.passiba.hibernate.Identifiable;
 import fi.passiba.services.biblestudy.persistance.Biblesession;
-import fi.passiba.services.persistance.Status;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -12,18 +11,19 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;
-import javax.persistence.AttributeOverride;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import org.compass.annotations.Cascade;
 import org.compass.annotations.Searchable;
 import org.compass.annotations.SearchableConstant;
+import org.compass.annotations.SearchableId;
 import org.compass.annotations.SearchableMetaData;
 import org.compass.annotations.SearchableProperty;
 import org.compass.annotations.SearchableReference;
@@ -35,14 +35,26 @@ import org.compass.annotations.SearchableReference;
  */
 @Entity
 @Table(name = "groups")
-@AttributeOverride(name = "id", column = @Column(name = "group_id"))
+//@AttributeOverride(name = "id", column = @Column(name = "group_id"))
 @Searchable
 @SearchableConstant(name = "type", values = {"group", "groups"})
 
-public class Groups extends AuditableEntity {
+public class Groups implements DomainObject,Identifiable   {
 
     // Fields
-    // private Integer groupId;
+
+    private Long id;
+    @SearchableId
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "group_id")
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     @SearchableReference(cascade=Cascade.ALL)
     private Adress adress;
     // private Status status;
@@ -61,7 +73,6 @@ public class Groups extends AuditableEntity {
     private String description;
     @SearchableReference(cascade={Cascade.CREATE,Cascade.SAVE})
     private Set<Person> grouppersons = new HashSet<Person>(0);
-    @SearchableReference(cascade={Cascade.CREATE,Cascade.SAVE})
     private Set<Biblesession> bibleSessions = new HashSet<Biblesession>(0);
     @SearchableProperty(name = "grouptype")
     private String grouptypename;
