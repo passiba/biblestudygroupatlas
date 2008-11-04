@@ -1,16 +1,23 @@
 package fi.passiba.services.biblestudy.persistance;
 
 import fi.passiba.hibernate.AuditableEntity;
+import fi.passiba.hibernate.BaseEntity;
+import fi.passiba.hibernate.DomainObject;
+import fi.passiba.hibernate.Identifiable;
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.compass.annotations.Cascade;
 import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableId;
 import org.compass.annotations.SearchableMetaData;
 import org.compass.annotations.SearchableProperty;
 import org.compass.annotations.SearchableReference;
@@ -22,13 +29,25 @@ import org.compass.annotations.SearchableReference;
  */
 @Entity
 @Table(name = "verse")
-@AttributeOverride(name = "id", column = @Column(name = "verse_id"))
+//@AttributeOverride(name = "id", column = @Column(name = "verse_id"))
 @Searchable
-public class Verse extends AuditableEntity {
+public class Verse implements DomainObject,Identifiable  {
 
     // Fields
+    @Id
+    @SearchableId
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "verse_id")
+    private Long id;
 
-    @SearchableReference(cascade={Cascade.CREATE,Cascade.SAVE})
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     private Chapter chapter;
     @SearchableProperty(name="versenumber")
     @SearchableMetaData(name = "versenum")

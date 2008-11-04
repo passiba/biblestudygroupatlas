@@ -12,11 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.compass.annotations.Cascade;
-import org.compass.annotations.Searchable;
-import org.compass.annotations.SearchableMetaData;
-import org.compass.annotations.SearchableProperty;
-import org.compass.annotations.SearchableReference;
 
 /**
  * Book entity.
@@ -26,19 +21,12 @@ import org.compass.annotations.SearchableReference;
 @Entity
 @Table(name = "book")
 @AttributeOverride(name = "id", column = @Column(name = "book_id"))
-@Searchable
-public class Book extends AuditableEntity {
 
-    // Fields
-    @SearchableReference(cascade={Cascade.CREATE,Cascade.SAVE})
+public class Book extends AuditableEntity {
+    
     private Booksection booksection;
-    @SearchableProperty(name = "bookNum")
-    @SearchableMetaData(name = "booknumber")
     private Integer bookNum;
-    @SearchableProperty(name = "bookname")
-    @SearchableMetaData(name = "booktitle")
     private String bookText;
-    @SearchableReference(cascade={Cascade.ALL})
     private Set<Chapter> chapters = new HashSet();
     
    

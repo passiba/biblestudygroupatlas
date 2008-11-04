@@ -17,10 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.OneToMany;
-import org.compass.annotations.Searchable;
-import org.compass.annotations.SearchableMetaData;
-import org.compass.annotations.SearchableProperty;
-import org.compass.annotations.SearchableReference;
 
 /**
  *
@@ -29,16 +25,14 @@ import org.compass.annotations.SearchableReference;
 @Entity
 @Table(name = "biblesession")
 @AttributeOverride(name = "id", column = @Column(name = "biblesessionid"))
-@Searchable
+
 public class Biblesession extends AuditableEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @SearchableProperty(name="sessiontime")
-    @SearchableMetaData(name = "biblesessiontime")
+  
     private Date sessiontime;
 
-    @SearchableReference
     private Set<Chapter> chapters = new HashSet<Chapter>(0);
 
     @Temporal(value = TemporalType.TIMESTAMP)

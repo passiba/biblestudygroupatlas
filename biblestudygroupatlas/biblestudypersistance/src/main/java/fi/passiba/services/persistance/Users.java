@@ -6,11 +6,18 @@
 package fi.passiba.services.persistance;
 
 import fi.passiba.hibernate.AuditableEntity;
+import fi.passiba.hibernate.BaseEntity;
+import fi.passiba.hibernate.DomainObject;
+import fi.passiba.hibernate.Identifiable;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableId;
 import org.compass.annotations.SearchableMetaData;
 import org.compass.annotations.SearchableProperty;
 /**
@@ -20,11 +27,22 @@ import org.compass.annotations.SearchableProperty;
 @Entity
 @Table(name = "users")
 @Searchable
-@AttributeOverride( name="id", column = @Column(name="userid") )
-public class Users  extends  AuditableEntity {
+//@AttributeOverride( name="id", column = @Column(name="userid") )
+public class Users  implements DomainObject,Identifiable  {
     private static final long serialVersionUID = 1L;
     
+    private Long id;
+    @SearchableId
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "userid")
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @SearchableProperty(name="username")
     @SearchableMetaData(name = "userid")
