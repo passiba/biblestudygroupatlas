@@ -45,9 +45,13 @@
             <id>java.net</id>
             <url>http://download.java.net/maven/2</url>
         </repository>
-        <repository>
+       <!-- <repository>
             <id>compass</id>
             <url>http://repo.compass-project.org</url>
+        </repository>-->
+        <repository>
+            <id>jboss repository</id>
+            <url>http://repository.jboss.org/maven2</url>
         </repository>
     </repositories>
     <dependencies>
@@ -191,12 +195,18 @@
             <artifactId>compass</artifactId>
             <version>${compass.version}</version>
         </dependency>
+
      <dependency>
           <groupId>org.apache.lucene</groupId>
           <artifactId>lucene-core</artifactId>
           <version>${lucene.version}</version>
       </dependency>
       <dependency>
+         <groupId>org.hibernate</groupId>
+         <artifactId>hibernate-search</artifactId>
+         <version>3.0.1.GA</version>
+      </dependency>
+     <!-- <dependency>
           <groupId>org.apache.lucene</groupId>
           <artifactId>lucene-analyzers</artifactId>
           <version>${lucene.version}</version>
@@ -215,7 +225,7 @@
           <groupId>org.apache.lucene</groupId>
           <artifactId>lucene-snowball</artifactId>
           <version>${lucene.version}</version>
-      </dependency>
+      </dependency>-->
        <!--
         <dependency>
             <groupId>org.restlet</groupId>
@@ -235,7 +245,7 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
-            <!--this pluging generates the database schema creation sql script -->
+            <!--this pluging generates the database schema creation sql script  -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>hibernate3-maven-plugin</artifactId>
@@ -269,7 +279,7 @@
                     </componentProperties>
                 </configuration>
             </plugin>
- 
+           
         </plugins>
         <resources>
             <resource>
@@ -311,7 +321,7 @@
         <maven.test.skip>false</maven.test.skip>
         <originalDataSetFile>./src/test/data/sample-data.xml</originalDataSetFile>
         <!-- Compass Settings -->
-        <compass.version>2.0.1</compass.version>
+        <compass.version>2.1.0</compass.version>
         <lucene.version>2.3.2</lucene.version>
     </properties>
 </project>

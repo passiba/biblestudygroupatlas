@@ -13,11 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.compass.annotations.Cascade;
-import org.compass.annotations.Searchable;
-import org.compass.annotations.SearchableMetaData;
-import org.compass.annotations.SearchableProperty;
-import org.compass.annotations.SearchableReference;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 
 /**
  * Booksection entity.
@@ -27,7 +28,7 @@ import org.compass.annotations.SearchableReference;
 @Entity
 @Table(name = "booksection")
 @AttributeOverride(name = "id", column = @Column(name = "section_id"))
-
+@Indexed
 public class Booksection extends AuditableEntity {
 
     // Fields
@@ -48,7 +49,7 @@ public class Booksection extends AuditableEntity {
     public void setBibletranslation(Bibletranslation bibletranslation) {
         this.bibletranslation = bibletranslation;
     }
-
+    @Field(index = Index.UN_TOKENIZED)
     @Column(name = "section", unique = false, nullable = false, insertable = true, updatable = true, length = 40)
     public String getSection() {
         return this.section;
@@ -57,7 +58,8 @@ public class Booksection extends AuditableEntity {
     public void setSection(String section) {
         this.section = section;
     }
-
+    //@ContainedIn
+    @IndexedEmbedded
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "booksection")
     public Set<Book> getBooks() {
         return this.books;

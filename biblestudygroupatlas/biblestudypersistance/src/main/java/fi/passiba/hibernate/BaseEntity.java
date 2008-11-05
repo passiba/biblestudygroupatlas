@@ -4,17 +4,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import org.compass.annotations.Searchable;
-import org.compass.annotations.SearchableId;
-
+import org.hibernate.search.annotations.DocumentId;
 
 
 @MappedSuperclass
-//@Searchable(root=false)
-@Searchable(poly = true,root=false)
 public class BaseEntity implements DomainObject,Identifiable{
 	private Long id;
-    @SearchableId
+    @DocumentId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {

@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import org.compass.annotations.Searchable;
+
 
 @MappedSuperclass
 public class AuditableEntity extends BaseEntity implements Auditable{

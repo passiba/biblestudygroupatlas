@@ -14,7 +14,6 @@
             
    <tx:annotation-driven transaction-manager="transactionManager"/>
    <import resource="classpath:META-INF/biblestudy-data-hibernate.xml"/>
-   <import resource="classpath:META-INF/biblestudy-data-compass.xml"/>
    <import resource="classpath:META-INF/biblestudy-webservice.xml"/>
 
    <bean id="placeholderConfig"
@@ -46,9 +45,7 @@
     </bean>
     
     <bean id="SearchService" class="fi.passiba.services.search.SearchServiceImp">
-        <property name="compass" ref="compass"/>
-        <property name="compassGPS" ref="compassGps"/>
-        <property name="mirrorGPS" ref="hibernateGpsDevice"/>
+         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
      <!--
     <bean id="biblesessionProcessingGageway" class="fi.passiba.groups.ui.pages.wizards.biblesession.dataprocessing.BibleBookdDataProcessingImp">

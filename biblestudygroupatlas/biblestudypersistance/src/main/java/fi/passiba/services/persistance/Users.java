@@ -6,59 +6,37 @@
 package fi.passiba.services.persistance;
 
 import fi.passiba.hibernate.AuditableEntity;
-import fi.passiba.hibernate.BaseEntity;
-import fi.passiba.hibernate.DomainObject;
-import fi.passiba.hibernate.Identifiable;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import org.compass.annotations.Searchable;
-import org.compass.annotations.SearchableId;
-import org.compass.annotations.SearchableMetaData;
-import org.compass.annotations.SearchableProperty;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+
 /**
  *
  * @author haverinen
  */
 @Entity
 @Table(name = "users")
-@Searchable
-//@AttributeOverride( name="id", column = @Column(name="userid") )
-public class Users  implements DomainObject,Identifiable  {
+
+@AttributeOverride( name="id", column = @Column(name="userid") )
+public class Users  extends AuditableEntity  {
     private static final long serialVersionUID = 1L;
+
     
-    private Long id;
-    @SearchableId
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "userid")
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @SearchableProperty(name="username")
-    @SearchableMetaData(name = "userid")
+    @Field(index = Index.TOKENIZED)
     @Column(name = "username", nullable = false,unique=true)
     private String username;
     
    /* @Column(name = "password", nullable = false)
     private String password;*/
    
-    @SearchableProperty
-    @SearchableMetaData(name = "userstatus")
+   
     @Column(name="status")
     private String status;
       
-    @SearchableProperty(name="rolename")
-    @SearchableMetaData(name = "role")
+    @Field(index=Index.UN_TOKENIZED)
     @Column(name = "rolename")
     private String rolename;
 

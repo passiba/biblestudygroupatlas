@@ -15,12 +15,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.compass.annotations.Cascade;
-import org.compass.annotations.Searchable;
-import org.compass.annotations.SearchableId;
-import org.compass.annotations.SearchableMetaData;
-import org.compass.annotations.SearchableProperty;
-import org.compass.annotations.SearchableReference;
+import org.hibernate.search.annotations.Boost;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 
 /**
  * Verse entity.
@@ -29,35 +31,18 @@ import org.compass.annotations.SearchableReference;
  */
 @Entity
 @Table(name = "verse")
-//@AttributeOverride(name = "id", column = @Column(name = "verse_id"))
-@Searchable
-public class Verse implements DomainObject,Identifiable  {
+@AttributeOverride(name = "id", column = @Column(name = "verse_id"))
+@Indexed
+public class Verse extends AuditableEntity  {
 
-    // Fields
-    @Id
-    @SearchableId
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "verse_id")
-    private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    
     private Chapter chapter;
-    @SearchableProperty(name="versenumber")
-    @SearchableMetaData(name = "versenum")
+    
     private Integer verseNum;
 
-    @SearchableProperty(name="versetext")
-    @SearchableMetaData(name = "text")
     private String verseText;
    
-
+    @ContainedIn
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_chapter_id", unique = false, nullable = false, insertable = true, updatable = true)
     public Chapter getChapter() {
@@ -67,7 +52,7 @@ public class Verse implements DomainObject,Identifiable  {
     public void setChapter(Chapter chapter) {
         this.chapter = chapter;
     }
-
+    @Field(index=Index.UN_TOKENIZED)
     @Column(name = "verse_num", unique = false, nullable = false, insertable = true, updatable = true)
     public Integer getVerseNum() {
         return this.verseNum;
@@ -76,7 +61,8 @@ public class Verse implements DomainObject,Identifiable  {
     public void setVerseNum(Integer verseNum) {
         this.verseNum = verseNum;
     }
-
+    @Boost(2.0f)
+    @Field(index = Index.TOKENIZED)
     @Column(name = "verse_text", unique = false, nullable = false, insertable = true, updatable = true, length = 9000)
     public String getVerseText() {
         return this.verseText;

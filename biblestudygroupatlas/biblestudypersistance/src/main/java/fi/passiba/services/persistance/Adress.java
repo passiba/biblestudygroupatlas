@@ -1,72 +1,48 @@
 package fi.passiba.services.persistance;
 
 import fi.passiba.hibernate.AuditableEntity;
-import fi.passiba.hibernate.BaseEntity;
-import fi.passiba.hibernate.DomainObject;
-import fi.passiba.hibernate.Identifiable;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import org.compass.annotations.Searchable;
-import org.compass.annotations.SearchableId;
-import org.compass.annotations.SearchableMetaData;
-import org.compass.annotations.SearchableProperty;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+
 
 /**
  * Adress entity.
  * 
- * @author MyEclipse Persistence Tools
+ * @author haverinen
  */
 @Entity
 @Table(name = "adress")
-@Searchable
-//@AttributeOverride(name = "id", column = @Column(name = "adress_id"))
-public class Adress implements DomainObject,Identifiable  {
+@AttributeOverride(name = "id", column = @Column(name = "adress_id"))
+public class Adress extends AuditableEntity  {
 
-    private Long id;
-    @SearchableId
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "adress_id")
-    public Long getId() {
-        return id;
-    }
+ 
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @SearchableProperty(name="addr1")
-    @SearchableMetaData(name = "Address 1")
+    @Field(index = Index.TOKENIZED)
     private String addr1;
-    @SearchableProperty(name="addr2")
-    @SearchableMetaData(name = "Address 2")
+    @Field(index = Index.TOKENIZED)
     private String addr2;
-    @SearchableProperty(name="city")
-    @SearchableMetaData(name = "town")
+    @Field(index = Index.TOKENIZED)
     private String city;
-    @SearchableProperty(name="state")
+    @Field(index = Index.TOKENIZED)
     private String state;
-    @SearchableProperty(name="zip")
-    @SearchableMetaData(name = "zip code")
+    @Field(index=Index.UN_TOKENIZED)
     private String zip;
 
-    @SearchableProperty(name="country")
+    @Field(index = Index.TOKENIZED)
     private String country;
 
-    @SearchableProperty(name="phone")
-    @SearchableMetaData(name = "phonenumber")
+    @Field(index=Index.UN_TOKENIZED)
     private String phone;
 
-    @SearchableProperty(name="location_lat")
+    @Field(index=Index.TOKENIZED)
     private double location_lat;
-    @SearchableProperty(name="location_lng")
+    @Field(index=Index.TOKENIZED)
     private double location_lng;
 
    

@@ -13,11 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.compass.annotations.Cascade;
-import org.compass.annotations.Searchable;
-import org.compass.annotations.SearchableMetaData;
-import org.compass.annotations.SearchableProperty;
-import org.compass.annotations.SearchableReference;
+import org.hibernate.search.annotations.Boost;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 
 /**
  * Chapter entity.
@@ -27,7 +29,7 @@ import org.compass.annotations.SearchableReference;
 @Entity
 @Table(name = "chapter")
 @AttributeOverride(name = "id", column = @Column(name = "chapter_id"))
-
+@Indexed
 public class Chapter extends AuditableEntity {
 
     
@@ -41,6 +43,8 @@ public class Chapter extends AuditableEntity {
 
     private Biblesession session;
 
+
+    @ContainedIn
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_biblesessionid", unique = false, nullable = true, insertable = true, updatable = true)
     public Biblesession getSession() {
@@ -51,7 +55,7 @@ public class Chapter extends AuditableEntity {
         this.session = session;
     }
     
-
+    @ContainedIn
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_book_id", unique = false, nullable = false, insertable = true, updatable = true)
     public Book getBook() {
@@ -61,7 +65,7 @@ public class Chapter extends AuditableEntity {
     public void setBook(Book book) {
         this.book = book;
     }
-
+    @Field(index=Index.UN_TOKENIZED)
     @Column(name = "chapterNum", unique = false, nullable = true, insertable = true, updatable = true)
     public Integer getChapterNum() {
         return this.chapterNum;
@@ -70,7 +74,8 @@ public class Chapter extends AuditableEntity {
     public void setChapterNum(Integer chapterNum) {
         this.chapterNum = chapterNum;
     }
-
+    @Boost(1.0f)
+    @Field(index = Index.TOKENIZED)
     @Column(name = "chapter_title", unique = false, nullable = false, insertable = true, updatable = true, length = 5000)
     public String getChapterTitle() {
         return this.chapterTitle;
@@ -79,7 +84,8 @@ public class Chapter extends AuditableEntity {
     public void setChapterTitle(String chapterTitle) {
         this.chapterTitle = chapterTitle;
     }
-
+   // @ContainedIn
+    @IndexedEmbedded
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "chapter")
     public Set<Verse> getVerses() {
         return this.verses;

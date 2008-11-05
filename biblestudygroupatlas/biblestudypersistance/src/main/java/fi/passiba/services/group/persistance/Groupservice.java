@@ -2,7 +2,6 @@ package fi.passiba.services.group.persistance;
 
 import fi.passiba.hibernate.AuditableEntity;
 import fi.passiba.services.persistance.Status;
-import java.util.Date;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,14 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
 
 /**
  * Groupservice entity.
  * 
- * @author MyEclipse Persistence Tools
+ * extends AuditableEntity
  */
 @Entity
 @Table(name = "groupservice")

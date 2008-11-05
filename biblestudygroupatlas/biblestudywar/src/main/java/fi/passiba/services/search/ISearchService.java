@@ -7,6 +7,7 @@ package fi.passiba.services.search;
 
 import fi.passiba.services.persistance.Person;
 import java.util.List;
+import org.apache.lucene.queryParser.ParseException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ISearchService {
 
      
-     public List<Person>  findPersonByUserName(String username, int startNum,int maxNum);
-     public List<Person>  findPersonByRolenameWithLocation(String rolename,String country,String city);
+     public List<Person>  findPersonByUserName(String username, int startNum,int maxNum) throws ParseException;
+     public List<Person>  findPersonByRolenameWithLocation(String rolename,String country,String city) throws ParseException;
 
     public void reindex();
 
