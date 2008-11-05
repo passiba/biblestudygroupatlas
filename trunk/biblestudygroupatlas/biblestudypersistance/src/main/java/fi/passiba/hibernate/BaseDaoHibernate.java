@@ -9,6 +9,9 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 
 import java.util.List;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.SearchFactory;
 
 public class BaseDaoHibernate<B extends Identifiable> implements BaseDao<B> {
     private SessionFactory sessionFactory;
@@ -171,4 +174,5 @@ public class BaseDaoHibernate<B extends Identifiable> implements BaseDao<B> {
     public void setDefaultOrderAsc(boolean defaultOrderAsc) {
         this.defaultOrderAsc = defaultOrderAsc;
     }
+    
 }

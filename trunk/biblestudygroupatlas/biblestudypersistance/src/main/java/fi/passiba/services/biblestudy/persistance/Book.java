@@ -12,6 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.search.annotations.Boost;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  * Book entity.
@@ -21,7 +27,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "book")
 @AttributeOverride(name = "id", column = @Column(name = "book_id"))
-
+@Indexed
 public class Book extends AuditableEntity {
     
     private Booksection booksection;
@@ -30,7 +36,7 @@ public class Book extends AuditableEntity {
     private Set<Chapter> chapters = new HashSet();
     
    
-
+    @ContainedIn
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_section_id", unique = false, nullable = false, insertable = true, updatable = true)
     public Booksection getBooksection() {
@@ -40,7 +46,7 @@ public class Book extends AuditableEntity {
     public void setBooksection(Booksection booksection) {
         this.booksection = booksection;
     }
-
+    @Field(index=Index.UN_TOKENIZED)
     @Column(name = "bookNum", unique = false, nullable = true, insertable = true, updatable = true)
     public Integer getBookNum() {
         return this.bookNum;
@@ -49,7 +55,8 @@ public class Book extends AuditableEntity {
     public void setBookNum(Integer bookNum) {
         this.bookNum = bookNum;
     }
-
+    @Boost(2.0f)
+    @Field(index = Index.TOKENIZED)
     @Column(name = "book_text", unique = false, nullable = false, insertable = true, updatable = true, length = 200)
     public String getBookText() {
         return this.bookText;
@@ -58,7 +65,8 @@ public class Book extends AuditableEntity {
     public void setBookText(String bookText) {
         this.bookText = bookText;
     }
-
+   // @ContainedIn
+    @IndexedEmbedded
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "book")
     public Set<Chapter> getChapters() {
         return this.chapters;

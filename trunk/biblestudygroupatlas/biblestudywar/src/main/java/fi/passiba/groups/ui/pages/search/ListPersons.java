@@ -4,6 +4,9 @@ import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.groups.ui.model.DomainModelIteratorAdaptor;
 import fi.passiba.groups.ui.model.HashcodeEnabledCompoundPropertyModel;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.lucene.queryParser.ParseException;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -19,10 +22,10 @@ import fi.passiba.services.persistance.Person;
 import fi.passiba.services.search.ISearchService;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-
 public class ListPersons extends BasePage {
 
     @SpringBean
@@ -160,13 +163,22 @@ public class ListPersons extends BasePage {
             protected Iterator getItemModels() {
                 if (searchCriteria != null && searchString != null) {
                     if (searchCriteria.equals("Käyttäjänimi")) {
-
-                        result = searchService.findPersonByUserName(searchString, 0, 20);
+                        try {
+                            result = searchService.findPersonByUserName(searchString, 0, 20);
+                            // authenticate.findPerson(searchString);
+                        } catch (ParseException ex) {
+                             throw new WicketRuntimeException(ex);
+                        }
                                // authenticate.findPerson(searchString);
                     } else if (searchCriteria.equals("Rooli")) {
                         String city = BibleStudyFaceBookSession.get().getPerson().getAdress().getCity();
                         String country = BibleStudyFaceBookSession.get().getPerson().getAdress().getCountry();
-                        result = searchService.findPersonByRolenameWithLocation(searchString, country, city);
+                        try {
+                            result = searchService.findPersonByRolenameWithLocation(searchString, country, city);
+                            //result = authenticate.findPersonByRolename(searchString, country, city);
+                        } catch (ParseException ex) {
+                            throw new WicketRuntimeException(ex);
+                        }
                         //result = authenticate.findPersonByRolename(searchString, country, city);
                     } else {
                         String rolename = BibleStudyFaceBookSession.get().getPerson().getFk_userid().getRolename();

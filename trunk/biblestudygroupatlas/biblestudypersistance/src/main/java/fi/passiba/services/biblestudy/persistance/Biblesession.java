@@ -17,6 +17,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.OneToMany;
+import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Resolution;
 
 /**
  *
@@ -25,7 +31,7 @@ import javax.persistence.OneToMany;
 @Entity
 @Table(name = "biblesession")
 @AttributeOverride(name = "id", column = @Column(name = "biblesessionid"))
-
+@Indexed
 public class Biblesession extends AuditableEntity {
 
     private static final long serialVersionUID = 1L;
@@ -34,7 +40,8 @@ public class Biblesession extends AuditableEntity {
     private Date sessiontime;
 
     private Set<Chapter> chapters = new HashSet<Chapter>(0);
-
+    @DateBridge( resolution = Resolution.DAY )
+    @Field(index = Index.TOKENIZED)
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "sessiontime", nullable = false)
     public Date getSessiontime() {
@@ -44,6 +51,7 @@ public class Biblesession extends AuditableEntity {
     public void setSessiontime(Date sessiontime) {
         this.sessiontime = sessiontime;
     }
+    @IndexedEmbedded
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST}, fetch = FetchType.LAZY, mappedBy = "session")
     public Set<Chapter> getChapters() {
         return chapters;

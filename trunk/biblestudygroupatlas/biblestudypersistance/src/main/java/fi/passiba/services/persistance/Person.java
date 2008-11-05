@@ -1,5 +1,6 @@
 package fi.passiba.services.persistance;
 
+import fi.passiba.hibernate.AuditableEntity;
 import fi.passiba.hibernate.DomainObject;
 import fi.passiba.hibernate.Identifiable;
 import fi.passiba.services.biblestudy.persistance.Biblesession;
@@ -7,6 +8,7 @@ import fi.passiba.services.group.persistance.Groups;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,55 +25,42 @@ import javax.persistence.TemporalType;
 
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
-import org.compass.annotations.Cascade;
-import org.compass.annotations.Searchable;
-import org.compass.annotations.SearchableId;
-import org.compass.annotations.SearchableMetaData;
-import org.compass.annotations.SearchableProperty;
-import org.compass.annotations.SearchableReference;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 
 /**
  * Person entity.
  * 
- * @author MyEclipse Persistence Tools
+ * @author haverinen
  */
 @Entity
 @Table(name = "person")
-//@AttributeOverride(name = "id", column = @Column(name = "person_id"))
-@Searchable
-public class Person implements DomainObject,Identifiable {
+@Indexed
+@AttributeOverride(name = "id", column = @Column(name = "person_id"))
+@BatchSize(size = 20)
+public class Person  extends AuditableEntity {
 
-    // Fields
-    //private Integer personId;
-    
-    private Long id;
-    @SearchableId
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "person_id")
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @SearchableReference(cascade=Cascade.ALL)
+    @IndexedEmbedded
     private Users fk_userid;
-    @SearchableReference(cascade=Cascade.ALL)
+    
     private Adress adress;
-    @SearchableProperty(name="personal_email")
-    @SearchableMetaData(name = "personemail")
+    @Field(index = Index.TOKENIZED)
     private String email;
-    @SearchableProperty(name="firstname")
+    @Field(index = Index.TOKENIZED)
     private String firstname;
-    @SearchableProperty(name="lastname")
+    @Field(index = Index.TOKENIZED)
     private String lastname;
     private String fullname;
     private String groupFirstName;
     private Date dateofbirth;
-    @SearchableReference(cascade={Cascade.CREATE,Cascade.SAVE})
+
+   
     private Set<Groups> groups = new HashSet<Groups>(0);
     private Set<Biblesession> bibleSessions = new HashSet<Biblesession>(0);
 
@@ -84,7 +73,7 @@ public class Person implements DomainObject,Identifiable {
     public void setFk_userid(Users fk_userid) {
         this.fk_userid = fk_userid;
     }
-
+    @ContainedIn
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "groupperson",
     joinColumns = @JoinColumn(name = "fk_person_id", referencedColumnName = "person_id"),
@@ -96,7 +85,7 @@ public class Person implements DomainObject,Identifiable {
     public void setGroups(Set<Groups> groups) {
         this.groups = groups;
     }
-
+    @IndexedEmbedded
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "personsession",
     joinColumns = @JoinColumn(name = "fk_person_id", referencedColumnName = "person_id"),
@@ -127,7 +116,7 @@ public class Person implements DomainObject,Identifiable {
     public String getFullname() {
         return this.firstname + " " + this.lastname;
     }
-
+    @IndexedEmbedded
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_address_id", referencedColumnName = "adress_id")
     public Adress getAdress() {

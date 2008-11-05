@@ -10,7 +10,7 @@ import javax.persistence.Table;
 /**
  * Status entity.
  * 
- * @author MyEclipse Persistence Tools
+ * @author haverinen
  */
 @Entity
 @Table(name = "status")
@@ -20,12 +20,7 @@ public class Status  extends  BaseEntity  {
 	// Fields
 	private String statusname;
 	
-	// Constructors
-
-	/** default constructor */
-	public Status() {
-	}
-
+	
 	
 	
 
