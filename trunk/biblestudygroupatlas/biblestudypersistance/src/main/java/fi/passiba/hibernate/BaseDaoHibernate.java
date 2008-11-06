@@ -9,6 +9,11 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 
 import java.util.List;
+import org.hibernate.CacheMode;
+import org.hibernate.FlushMode;
+import org.hibernate.ScrollMode;
+import org.hibernate.ScrollableResults;
+import org.hibernate.Transaction;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.SearchFactory;
@@ -18,7 +23,7 @@ public class BaseDaoHibernate<B extends Identifiable> implements BaseDao<B> {
     private Class<B> queryClass;
     private String defaultOrder = "id";
     private boolean defaultOrderAsc = true;
-
+    private static final int BATCH_SIZE=20;
     protected Session getSession() {
         return getSessionFactory().getCurrentSession();
     }
@@ -173,6 +178,27 @@ public class BaseDaoHibernate<B extends Identifiable> implements BaseDao<B> {
 
     public void setDefaultOrderAsc(boolean defaultOrderAsc) {
         this.defaultOrderAsc = defaultOrderAsc;
+    }
+    protected FullTextSession getFullTextSession() {
+        return Search.createFullTextSession(getSession());
+    }
+
+    public void reIndex() {
+        FullTextSession session=getFullTextSession();
+        session.setFlushMode(FlushMode.MANUAL);
+        session.setCacheMode(CacheMode.IGNORE);
+
+        Transaction tx=session.beginTransaction();
+        
+        ScrollableResults results = session.createCriteria( getQueryClass() ).scroll( ScrollMode.FORWARD_ONLY );
+        int index = 0;
+        while( results.next() ) {
+            index++;
+            session.index( results.get(0) ); //index each element
+            if (index % BATCH_SIZE == 0) session.clear(); //clear every batchSize since the queue is processed
+         }
+        tx.commit();
+        session.close();
     }
     
 }

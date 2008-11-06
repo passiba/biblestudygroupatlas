@@ -103,9 +103,11 @@
             <prop key="hibernate.default_batch_fetch_size">50</prop>
             <prop key="hibernate.search.default.indexBase">c:/temp/biblestudy
             </prop>
-            <!--optional parameters -->
-            <prop key="hibernate.search.default.directory_provider">fi.passiba.hibernate.TerracottaDirectoryProvider</prop>
-                     
+            <!--optional parameters
+            <prop key="hibernate.search.default.directory_provider">fi.passiba.hibernate.TerracottaDirectoryProvider</prop>-->
+              <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
+            
+
             <prop key="hibernate.search.analyzer">org.apache.lucene.analysis.standard.StandardAnalyzer</prop>
             <prop key="hibernate.worker.buffer_queue.max">1000</prop>
             <prop key="hibernate.search.worker.batch_size">1000</prop>

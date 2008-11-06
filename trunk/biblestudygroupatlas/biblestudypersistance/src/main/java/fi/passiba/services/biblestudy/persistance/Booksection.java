@@ -2,6 +2,8 @@ package fi.passiba.services.biblestudy.persistance;
 
 import fi.passiba.hibernate.AuditableEntity;
 import fi.passiba.hibernate.BaseEntity;
+import fi.passiba.hibernate.DomainObject;
+import fi.passiba.hibernate.Identifiable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
@@ -9,11 +11,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
@@ -23,16 +29,28 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 /**
  * Booksection entity.
  * 
- * @author MyEclipse Persistence Tools
+ * @author haverinen
  */
 @Entity
 @Table(name = "booksection")
-@AttributeOverride(name = "id", column = @Column(name = "section_id"))
+//@AttributeOverride(name = "id", column = @Column(name = "section_id"))
 @Indexed
-public class Booksection extends AuditableEntity {
+public class Booksection implements DomainObject,Identifiable {
 
     // Fields
-   
+    private Long id;
+
+    @Id
+    @DocumentId
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "section_id")
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     private Bibletranslation bibletranslation;
    
     private String section;

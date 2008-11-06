@@ -5,6 +5,8 @@
 package fi.passiba.services.biblestudy.persistance;
 
 import fi.passiba.hibernate.AuditableEntity;
+import fi.passiba.hibernate.DomainObject;
+import fi.passiba.hibernate.Identifiable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,11 +15,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.OneToMany;
 import org.hibernate.search.annotations.DateBridge;
+import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
@@ -30,12 +36,24 @@ import org.hibernate.search.annotations.Resolution;
  */
 @Entity
 @Table(name = "biblesession")
-@AttributeOverride(name = "id", column = @Column(name = "biblesessionid"))
+//@AttributeOverride(name = "id", column = @Column(name = "biblesessionid"))
 @Indexed
-public class Biblesession extends AuditableEntity {
+public class Biblesession implements DomainObject,Identifiable {
 
     private static final long serialVersionUID = 1L;
+    private Long id;
 
+    @Id
+    @DocumentId
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "biblesessionid")
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
   
     private Date sessiontime;
 

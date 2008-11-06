@@ -27,6 +27,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
@@ -41,9 +42,25 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Entity
 @Table(name = "person")
 @Indexed
-@AttributeOverride(name = "id", column = @Column(name = "person_id"))
+//@AttributeOverride(name = "id", column = @Column(name = "person_id"))
 @BatchSize(size = 20)
-public class Person  extends AuditableEntity {
+public class Person implements DomainObject,Identifiable {
+
+    // Fields
+    //private Integer personId;
+   
+    private Long id;
+    @DocumentId
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "person_id")
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
 
     @IndexedEmbedded
