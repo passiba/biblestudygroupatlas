@@ -31,10 +31,24 @@ import org.hibernate.search.annotations.IndexedEmbedded;
  */
 @Entity
 @Table(name = "verse")
-@AttributeOverride(name = "id", column = @Column(name = "verse_id"))
+//@AttributeOverride(name = "id", column = @Column(name = "verse_id"))
 @Indexed
-public class Verse extends AuditableEntity  {
+public class Verse implements DomainObject,Identifiable  {
 
+    // Fields
+    @Id
+    @DocumentId
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "verse_id")
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     
     private Chapter chapter;
     

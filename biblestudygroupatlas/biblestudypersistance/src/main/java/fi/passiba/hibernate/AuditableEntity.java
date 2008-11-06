@@ -26,8 +26,8 @@ public class AuditableEntity extends BaseEntity implements Auditable{
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-        @Version
-        @Temporal(value = TemporalType.TIMESTAMP)
+    @Version
+    @Temporal(value = TemporalType.TIMESTAMP)
 	public Date getCreatedOn() {
 		return createdOn;
 	}

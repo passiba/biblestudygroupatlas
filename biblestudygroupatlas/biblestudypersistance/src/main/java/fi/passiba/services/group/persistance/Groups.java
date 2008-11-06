@@ -1,6 +1,8 @@
 package fi.passiba.services.group.persistance;
 
 import fi.passiba.hibernate.AuditableEntity;
+import fi.passiba.hibernate.DomainObject;
+import fi.passiba.hibernate.Identifiable;
 import fi.passiba.services.biblestudy.persistance.Biblesession;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,11 +16,15 @@ import javax.persistence.Table;
 import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;
 import javax.persistence.AttributeOverride;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.search.annotations.Boost;
+import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
@@ -32,12 +38,28 @@ import org.hibernate.search.annotations.IndexedEmbedded;
  */
 @Entity
 @Table(name = "groups")
-@AttributeOverride(name = "id", column = @Column(name = "group_id"))
+//@AttributeOverride(name = "id", column = @Column(name = "group_id"))
 @Indexed
 @BatchSize(size = 20)
-public class Groups extends AuditableEntity  {
 
-   
+
+
+public class Groups implements DomainObject,Identifiable   {
+
+    // Fields
+
+    private Long id;
+    @DocumentId
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "group_id")
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     private Adress adress;
     // private Status status;
   

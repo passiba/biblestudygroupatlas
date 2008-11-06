@@ -1,6 +1,8 @@
 package fi.passiba.groups.ui.pages;
 
+import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.groups.ui.pages.search.SearchPanelPage;
+import fi.passiba.services.persistance.Person;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,6 +125,7 @@ public class BasePage extends ProtectedPage {
         menu.add(item);
         return menu;
     }
+    
 }
 
 

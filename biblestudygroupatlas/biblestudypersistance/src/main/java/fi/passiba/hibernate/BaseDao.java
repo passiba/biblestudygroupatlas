@@ -31,4 +31,7 @@ public interface BaseDao<B extends Identifiable> {
     List<B> getPageOfDataByExample(B example, PaginationInfo pageInfo);
     //@Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
     List<B> getByExample(B example);
+
+    void reIndex();
+
 }

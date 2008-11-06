@@ -35,126 +35,26 @@ public class ListPersons extends BasePage {
     private ISearchService searchService;
 
 
-   
-
-
-
-
-
-
-
-
-
-
-
-
     public ListPersons(PageParameters params) {
 
-    final String searchCriteria = params.getString("searchcriteria");
-    final String searchString = params.getString("searchString");
+        final String searchCriteria = params.getString("searchcriteria");
+        final String searchString = params.getString("searchString");
 
-
-
-        
-            /*@AdminOnly
-    private class UserLink extends Link {
-    
-    UserLink(String id) {
-    super(id);
-    }
-    
-    @Override
-    public void onClick() {
-    inEditMode = !inEditMode;
-    setContentPanel();
-    }
-    }
-    private boolean inEditMode = false;
-    void setContentPanel() {
-    if (inEditMode) {
-    addOrReplace(new DiscountsEditList("content"));
-    } else {
-    addOrReplace(new DiscountsList("content"));
-    }
-    }*/
-
-        /*
-        
-        
-        IModel contactsModel = new LoadableDetachableModel() {
-        protected Object load() {
-        List<Person> searchresult = new ArrayList<Person>(0);
-        
-        if (searchCriteria != null && searchString != null) {
-        if (searchCriteria.equals("Käyttäjänimi")) {
-        searchresult = authenticate.findPerson(searchString);
-        } else if (searchCriteria.equals("Rooli")) {
-        String city = BibleStudySession.get().getPerson().getAdress().getCity();
-        String country = BibleStudySession.get().getPerson().getAdress().getCountry();
-        
-        searchresult = authenticate.findPersonByRolename(searchString, country, city);
-        } else {
-        String rolename = BibleStudySession.get().getPerson().getFk_userid().getRolename();
-        String country = BibleStudySession.get().getPerson().getAdress().getCountry();
-        searchresult = authenticate.findPersonByRolename(rolename, country, searchString);
-        }
-        }
-        return searchresult;
-        }
-        };
-        
-        
-        
-        
-        
-        
-        
-        ListView contacts = new ListView("contacts", contactsModel) 
+        final List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
+        Person currentLogInPerson=null;
+        if(persons!=null && ! persons.isEmpty())
         {
-        protected void populateItem(ListItem item) {
-        Link linkview = new Link("view", item.getModel()) {
-        public void onClick() {
-        Person p = (Person ) getModelObject();
-        setResponsePage(new ViewContact(p.getId()));
+                currentLogInPerson=persons.get(0);
         }
-        };
-        linkview.add(new Label("firstName",
-        new PropertyModel(item.getModel(), "firstname")));
-        linkview.add(new Label("lastName",
-        new PropertyModel(item.getModel(), "lastname")));
-        item.add(linkview);
-        
-        item.add(new Label("phone",
-        new PropertyModel(item.getModel(), "adress.phone")));
-        
-        
-        item.add(new Label("email",
-        new PropertyModel(item.getModel(), "email")));
-        
-        item.add(new Label("role",
-        new PropertyModel(item.getModel(), "fk_userid.rolename")));
-        
-        item.add(new Link("edit", item.getModel()) {
-        public void onClick() {
-        Person p = (Person ) getModelObject();
-        setResponsePage(new EditPersonContact(p.getId()));
-        }
-        });
-        item.add(new Link("delete", item.getModel()) {
-        public void onClick() {
-        Person p = (Person ) getModelObject();
-        authenticate.deletePerson(p);
-        setResponsePage(ListPersons.class);
-        }
-        });
-        }
-        };*/
-        RefreshingView contacts=populateSearchResult(searchCriteria,searchString);
+        RefreshingView contacts=populateSearchResult(searchCriteria,searchString,currentLogInPerson);
         contacts.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
         add(contacts);
     }
-    private RefreshingView populateSearchResult(final String searchCriteria,final String searchString)
+    private RefreshingView populateSearchResult(final String searchCriteria,final String searchString,final Person currentLogInPerson)
     {
+
+
+
             RefreshingView contacts = new RefreshingView("contacts") {
 
             List<Person> result = new ArrayList<Person>(0);
@@ -171,8 +71,8 @@ public class ListPersons extends BasePage {
                         }
                                // authenticate.findPerson(searchString);
                     } else if (searchCriteria.equals("Rooli")) {
-                        String city = BibleStudyFaceBookSession.get().getPerson().getAdress().getCity();
-                        String country = BibleStudyFaceBookSession.get().getPerson().getAdress().getCountry();
+                        String city = currentLogInPerson.getAdress().getCity();
+                        String country = currentLogInPerson.getAdress().getCountry();
                         try {
                             result = searchService.findPersonByRolenameWithLocation(searchString, country, city);
                             //result = authenticate.findPersonByRolename(searchString, country, city);
@@ -181,8 +81,8 @@ public class ListPersons extends BasePage {
                         }
                         //result = authenticate.findPersonByRolename(searchString, country, city);
                     } else {
-                        String rolename = BibleStudyFaceBookSession.get().getPerson().getFk_userid().getRolename();
-                        String country = BibleStudyFaceBookSession.get().getPerson().getAdress().getCountry();
+                        String rolename = currentLogInPerson.getFk_userid().getRolename();
+                        String country = currentLogInPerson.getAdress().getCountry();
                         result = authenticate.findPersonByRolename(rolename, country, searchString);
                     }
                 }

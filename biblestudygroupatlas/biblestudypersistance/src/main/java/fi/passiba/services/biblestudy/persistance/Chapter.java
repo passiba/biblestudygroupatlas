@@ -2,6 +2,8 @@ package fi.passiba.services.biblestudy.persistance;
 
 import fi.passiba.hibernate.AuditableEntity;
 import fi.passiba.hibernate.BaseEntity;
+import fi.passiba.hibernate.DomainObject;
+import fi.passiba.hibernate.Identifiable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
@@ -9,12 +11,16 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.search.annotations.Boost;
 import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
@@ -28,11 +34,26 @@ import org.hibernate.search.annotations.IndexedEmbedded;
  */
 @Entity
 @Table(name = "chapter")
-@AttributeOverride(name = "id", column = @Column(name = "chapter_id"))
+//@AttributeOverride(name = "id", column = @Column(name = "chapter_id"))
 @Indexed
-public class Chapter extends AuditableEntity {
+public class Chapter implements DomainObject,Identifiable {
 
-    
+     // Fields
+
+    private Long id;
+
+    @Id
+    @DocumentId
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "chapter_id")
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     private Book book;
    
     private Integer chapterNum;

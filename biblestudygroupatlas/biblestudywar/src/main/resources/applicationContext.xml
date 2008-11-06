@@ -46,6 +46,7 @@
     
     <bean id="SearchService" class="fi.passiba.services.search.SearchServiceImp">
          <property name="sessionFactory" ref="sessionFactory"/>
+         <property name="personDAO" ref="PersonDAO" />
     </bean>
      <!--
     <bean id="biblesessionProcessingGageway" class="fi.passiba.groups.ui.pages.wizards.biblesession.dataprocessing.BibleBookdDataProcessingImp">

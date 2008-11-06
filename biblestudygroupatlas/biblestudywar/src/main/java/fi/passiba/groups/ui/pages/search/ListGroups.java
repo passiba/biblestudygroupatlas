@@ -5,6 +5,9 @@ import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.groups.ui.model.DomainModelIteratorAdaptor;
 import fi.passiba.groups.ui.model.HashcodeEnabledCompoundPropertyModel;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.lucene.queryParser.ParseException;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -16,12 +19,16 @@ import fi.passiba.groups.ui.pages.group.EditGroupInfo;
 import fi.passiba.groups.ui.pages.group.ViewGroupInfo;
 import fi.passiba.hibernate.PaginationInfo;
 import fi.passiba.services.address.IAddressService;
+import fi.passiba.services.authenticate.IAuthenticator;
 import fi.passiba.services.group.IGroupServices;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Adress;
+import fi.passiba.services.persistance.Person;
+import fi.passiba.services.search.ISearchService;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.wicket.ResourceReference;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
@@ -48,24 +55,45 @@ public class ListGroups extends BasePage {
     private IGroupServices groupService;
     @SpringBean
     private IAddressService addressservice;
+
+    @SpringBean
+    private ISearchService searchService;
+
+    @SpringBean
+    private IAuthenticator authenticate;
+
+
+
+
+
     private PaginationInfo pageInfo;
     private List<Groups> results = new ArrayList<Groups>(0);
+
 
     public ListGroups(PageParameters params) {
 
         final String searchCriteria = params.getString("searchcriteria");
         final String searchString = params.getString("searchString");
+        final Person loggedInPerson=getLoggInPerson();
+         String country="",city="";
+        if( loggedInPerson !=null)
+        {
+               city =   loggedInPerson.getAdress().getCity();
+               country = loggedInPerson.getAdress().getCountry();
+        }
 
         if (searchCriteria != null && searchString != null) {
             if (searchCriteria.equals("Ryhmätyyppi")) {
 
-                String city =   BibleStudyFaceBookSession.get().getPerson().getAdress().getCity();
-                String country = BibleStudyFaceBookSession.get().getPerson().getAdress().getCountry();
 
-                results = groupService.findGroupsByLocation(country, city, searchCriteria);
             } else if (searchCriteria.equals("Kaupunki")) {
-                String country = BibleStudyFaceBookSession.get().getPerson().getAdress().getCountry();
-                results = groupService.findGroupsByLocation(country, searchCriteria, searchCriteria);
+
+                try {
+                   // results = groupService.findGroupsByLocation(country, city, searchCriteria);
+                    results = searchService.findGroupsByLocation(country, city, searchCriteria);
+                } catch (ParseException ex) {
+                    throw new WicketRuntimeException(ex);
+                }
             } else {
 
                 pageInfo = groupService.findPagingInfoForGroups(10);
@@ -136,7 +164,16 @@ public class ListGroups extends BasePage {
         add(createSearchResultMap(results));
         
     }
-
+    private Person getLoggInPerson()
+    {
+        List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
+        Person currentLogInPerson=null;
+        if(persons!=null && ! persons.isEmpty())
+        {
+                currentLogInPerson=persons.get(0);
+        }
+        return currentLogInPerson;
+    }
     private GOverlay createOverlay(String title, GLatLng latLng, String image,
             String shadow) {
         GIcon icon = new GIcon(urlFor(

@@ -2,7 +2,6 @@ package fi.passiba.groups.ui.pages.search;
 
 
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
-import fi.passiba.biblestudy.BibleStudySession;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.wicket.PageParameters;
@@ -16,7 +15,7 @@ import org.apache.wicket.util.value.ValueMap;
 
 public class GroupSearchPanel extends Panel {
     
-  
+
 
     private  ValueMap properties = new ValueMap();
 

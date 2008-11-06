@@ -21,8 +21,10 @@ import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
 import fi.passiba.groups.ui.pages.Main;
 import fi.passiba.groups.ui.pages.biblesession.BibleDataTreePanel;
+import fi.passiba.services.authenticate.IAuthenticator;
 import fi.passiba.services.biblesession.IBibleSessionServices;
 import fi.passiba.services.biblestudy.persistance.Biblesession;
+import fi.passiba.services.persistance.Person;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -67,6 +69,10 @@ public class NewBibleSessionWizard extends Wizard {
     private IBibleDataMining bibleDatamining;
     @SpringBean
     private IBibleSessionServices sessionServices;
+
+    @SpringBean
+    private IAuthenticator authenticate;
+
     private static final List<String> allSessionTypes = Arrays.asList(new String[]{"Ryhmä", "Henkilö"});
     private BibleSession bibleSession = new BibleSession();
 
@@ -232,7 +238,7 @@ public class NewBibleSessionWizard extends Wizard {
             Object sessionOwner=null;
             if(bibleSession.getSessiontype().equals("Henkilö"))
             {
-                  sessionOwner=BibleStudyFaceBookSession.get().getPerson();
+                  sessionOwner=getLoggInPerson();
             }else
             {
                 
@@ -241,7 +247,16 @@ public class NewBibleSessionWizard extends Wizard {
         }
         setResponsePage(Main.class);
     }
-
+     private Person getLoggInPerson()
+    {
+        List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
+        Person currentLogInPerson=null;
+        if(persons!=null && ! persons.isEmpty())
+        {
+                currentLogInPerson=persons.get(0);
+        }
+        return currentLogInPerson;
+    }
     private String getSelectedBibleVerseText(String biblechapterWebRUL) {
 
 

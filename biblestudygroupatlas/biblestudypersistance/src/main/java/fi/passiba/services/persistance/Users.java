@@ -6,10 +6,16 @@
 package fi.passiba.services.persistance;
 
 import fi.passiba.hibernate.AuditableEntity;
+import fi.passiba.hibernate.DomainObject;
+import fi.passiba.hibernate.Identifiable;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 
@@ -20,10 +26,22 @@ import org.hibernate.search.annotations.Index;
 @Entity
 @Table(name = "users")
 
-@AttributeOverride( name="id", column = @Column(name="userid") )
-public class Users  extends AuditableEntity  {
+//@AttributeOverride( name="id", column = @Column(name="userid") )
+public class Users  implements DomainObject,Identifiable  {
     private static final long serialVersionUID = 1L;
 
+    private Long id;
+  
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "userid")
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     
     @Field(index = Index.TOKENIZED)
     @Column(name = "username", nullable = false,unique=true)
