@@ -52,9 +52,7 @@ public class ListPersons extends BasePage {
     }
     private RefreshingView populateSearchResult(final String searchCriteria,final String searchString,final Person currentLogInPerson)
     {
-
-
-
+          
             RefreshingView contacts = new RefreshingView("contacts") {
 
             List<Person> result = new ArrayList<Person>(0);

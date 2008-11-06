@@ -72,6 +72,13 @@ public class ListGroups extends BasePage {
 
     public ListGroups(PageParameters params) {
 
+        init(params);
+       
+    }
+
+    private void init(PageParameters params)
+    {
+
         final String searchCriteria = params.getString("searchcriteria");
         final String searchString = params.getString("searchString");
         final Person loggedInPerson=getLoggInPerson();
@@ -84,7 +91,11 @@ public class ListGroups extends BasePage {
 
         if (searchCriteria != null && searchString != null) {
             if (searchCriteria.equals("Ryhmätyyppi")) {
-
+                try {
+                        results = searchService.findGroupsByType(country, searchCriteria);
+                    } catch (ParseException ex) {
+                    throw new WicketRuntimeException(ex);
+                }
 
             } else if (searchCriteria.equals("Kaupunki")) {
 
@@ -102,7 +113,7 @@ public class ListGroups extends BasePage {
             }
         }
         add( populateSearchResult(results));
-        
+
         IModel linkModel = new CompoundPropertyModel(new LoadableDetachableModel() {
 
             protected Object load() {
@@ -140,11 +151,11 @@ public class ListGroups extends BasePage {
 
         /*@AdminOnly
         private class UserLink extends Link {
-        
+
         UserLink(String id) {
         super(id);
         }
-        
+
         @Override
         public void onClick() {
         inEditMode = !inEditMode;
@@ -160,9 +171,10 @@ public class ListGroups extends BasePage {
         }
         }*/
 
-        
+
         add(createSearchResultMap(results));
-        
+
+
     }
     private Person getLoggInPerson()
     {
