@@ -90,7 +90,7 @@ public class ListGroups extends BasePage {
 
                 try {
                    // results = groupService.findGroupsByLocation(country, city, searchCriteria);
-                    results = searchService.findGroupsByLocation(country, city, searchCriteria);
+                    results = searchService.findGroupsByLocation(country, searchCriteria);
                 } catch (ParseException ex) {
                     throw new WicketRuntimeException(ex);
                 }

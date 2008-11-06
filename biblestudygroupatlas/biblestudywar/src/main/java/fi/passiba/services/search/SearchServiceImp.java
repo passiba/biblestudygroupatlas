@@ -8,6 +8,7 @@ package fi.passiba.services.search;
 import fi.passiba.services.dao.IPersonDAO;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Person;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -134,20 +135,54 @@ public class SearchServiceImp implements ISearchService{
 
     @Override
     public void reindex() {
-       personDAO.reIndex();
+       
        
     }
 
     @Override
-    public List<Groups> findGroupsByLocation(String country, String city, String grouptype) throws ParseException{
-
-          final String[] fields = { "adress.city" };
+    public List<Groups> findGroupsByLocation(String country, String city) throws ParseException{
+        List<Groups> results=new ArrayList();
+        final String[] fields = { "adress.city" };
 
         Map<String, Float> boostPerField = new HashMap<String, Float>(4);
         boostPerField.put("adress.city", (float) 5);
         boostPerField.put("adress.country", (float) .5);
-        return  searchGroups(city,fields,boostPerField);
+
+        List<Groups> groups= searchGroups(city,fields,boostPerField);
+        for(Groups group:groups)
+        {
+           if(group.getAdress().getCountry().equals(country))
+           {
+                results.add(group);
+           }
+        }
+        return  results;
         
+    }
+
+    @Override
+    public List<Groups> findGroupsByType(String country, String type) throws ParseException {
+
+        List<Groups> results=new ArrayList();
+        final String[] fields = { "grouptypename" };
+
+        Map<String, Float> boostPerField = new HashMap<String, Float>(4);
+       
+        boostPerField.put("grouptypename", (float) 3);
+        boostPerField.put("adress.city", (float) 3);
+        boostPerField.put("adress.country", (float) .3);
+
+        List<Groups> groups= searchGroups(type,fields,boostPerField);
+        for(Groups group:groups)
+        {
+           if(group.getAdress().getCountry().equals(country))
+           {
+                results.add(group);
+           }
+        }
+        return  results;
+
+
     }
 
    

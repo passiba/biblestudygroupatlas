@@ -58,14 +58,6 @@ public class UserSearchPanel extends Panel {
 
                     }
             });
-            add(new Button("Index") {
-
-                    public void onSubmit() {
-                       searchService.reindex();
-
-
-                    }
-            });
         }
 
         /*public void onSubmit() {
