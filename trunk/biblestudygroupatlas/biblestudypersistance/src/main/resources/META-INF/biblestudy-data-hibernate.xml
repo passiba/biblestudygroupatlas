@@ -104,8 +104,9 @@
             <prop key="hibernate.search.default.indexBase">c:/temp/biblestudy
             </prop>
             <!--optional parameters
-            <prop key="hibernate.search.default.directory_provider">fi.passiba.hibernate.TerracottaDirectoryProvider</prop>-->
-              <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
+               <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>-->
+            <prop key="hibernate.search.default.directory_provider">fi.passiba.hibernate.TerracottaDirectoryProvider</prop>
+           
             
 
             <prop key="hibernate.search.analyzer">org.apache.lucene.analysis.standard.StandardAnalyzer</prop>
