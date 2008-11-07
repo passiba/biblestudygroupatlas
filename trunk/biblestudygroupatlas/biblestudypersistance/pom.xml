@@ -53,6 +53,10 @@
             <id>jboss repository</id>
             <url>http://repository.jboss.org/maven2</url>
         </repository>
+         <repository>
+            <id>compass</id>
+            <url>http://repo.compass-project.org</url>
+        </repository>
     </repositories>
     <dependencies>
              

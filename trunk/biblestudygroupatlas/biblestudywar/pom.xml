@@ -39,6 +39,10 @@
             <id>maven</id>
             <url>http://repo1.maven.org/maven2</url>
         </repository>
+         <repository>
+            <id>compass</id>
+            <url>http://repo.compass-project.org</url>
+        </repository>
         <repository>
             <!--  found at https://maven-repository.dev.java.net  -->
             <id>java.net</id>
@@ -216,7 +220,7 @@
     <build>
         <finalName>biblestudy</finalName>
         <plugins>
-           <!--<plugin>
+           <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
                 <executions>
@@ -235,13 +239,13 @@
                                     <installDir>${installDir}</installDir>
                                 </zipUrlInstaller>
                             </container>
-                            <configuration>
+                          <!--  <configuration>
                                 <dir>${project.build.directory}/tomcat6x/</dir>
-                            </configuration>
+                            </configuration>-->
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
