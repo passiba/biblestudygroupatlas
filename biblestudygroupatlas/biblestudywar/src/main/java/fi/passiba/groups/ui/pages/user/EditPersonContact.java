@@ -3,6 +3,7 @@ package fi.passiba.groups.ui.pages.user;
 import fi.passiba.groups.ui.pages.*;
 import fi.passiba.groups.ui.pages.address.AddressPanel;
 
+import fi.passiba.groups.ui.pages.group.EditGroupInfo;
 import fi.passiba.groups.ui.pages.wizards.WizardPage;
 import fi.passiba.groups.ui.pages.wizards.biblesession.NewBibleSessionWizard;
 import org.apache.wicket.markup.html.form.Button;
@@ -39,21 +40,19 @@ public class EditPersonContact extends BasePage {
     private IAuthenticator authenticate;
     @SpringBean
     private IGroupServices groupservice;
-    
     private final Page backPage;
-
     /** cheap roles database. */
     private static final List<String> allRoles = Arrays.asList(new String[]{"Admin", "User"});
 
-    public EditPersonContact(Page backPage,final Long contactId) {
-        
+    public EditPersonContact(Page backPage, final Long contactId) {
+
         this.backPage = backPage;
         setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
             protected Object load() {
 
                 return authenticate.findPersonByPersonID(contactId);
-               
+
             }
         }));
         init();
@@ -63,7 +62,7 @@ public class EditPersonContact extends BasePage {
 
         add(new ContactForm("form", getModel()));
 
-         
+
 
     }
 
@@ -82,18 +81,17 @@ public class EditPersonContact extends BasePage {
             add(lastName);
 
             add(new Label("username", new PropertyModel(getModel(), "fk_userid.username")));
-            
-           
+
+
             try {
-                Users user=(Users)new PropertyModel(getModel(), "fk_userid").getObject();
-               /* String passwd = PasswordService.decrypt(user.getUsername().toCharArray(), user.getPassword());
+                Users user = (Users) new PropertyModel(getModel(), "fk_userid").getObject();
+                /* String passwd = PasswordService.decrypt(user.getUsername().toCharArray(), user.getPassword());
                 user.setPassword(passwd);*/
-                Person person=(Person)getModel().getObject();
+                Person person = (Person) getModel().getObject();
                 person.setFk_userid(user);
             } catch (Exception ex) {
-              
             }
-           /* PasswordTextField password = new PasswordTextField("password", new PropertyModel(getModel(), "fk_userid.password"));
+            /* PasswordTextField password = new PasswordTextField("password", new PropertyModel(getModel(), "fk_userid.password"));
             password.setRequired(true);
             password.setResetPassword(false);
             password.add(StringValidator.maximumLength(20));
@@ -110,7 +108,7 @@ public class EditPersonContact extends BasePage {
 
             add(new EqualPasswordInputValidator(password, confirmpassword));
 
-            */
+             */
             TextField email = new TextField("email", new PropertyModel(getModel(), "email"));
             email.add(StringValidator.maximumLength(150));
             email.add(EmailAddressValidator.getInstance());
@@ -136,44 +134,44 @@ public class EditPersonContact extends BasePage {
                 protected void populateItem(ListItem item) {
 
 
-                    item.add(new Label("group",
+
+
+                    Link editView = new Link("edit", item.getModel()) {
+
+                        public void onClick() {
+                            Groups g = (Groups) getModelObject();
+                            setResponsePage(new EditGroupInfo(getPage(), g.getId()));
+                        }
+                    };
+
+                    editView.add(new Label("group",
                             new PropertyModel(item.getModel(), "name")));
 
+                    item.add(editView);
 
-                /*item.add(new Link("edit", item.getModel()) {
-                public void onClick() {
-                Person p = (Person ) getModelObject();
-                setResponsePage(new EditPersonContact(p.getId()));
-                }
-                });
-                item.add(new Link("delete", item.getModel()) {
-                public void onClick() {
-                Person p = (Person ) getModelObject();
-                authenticate.deletePerson(p);
-                setResponsePage(ListPersons.class);
-                }
-                });*/
                 }
             };
-          
+
             add(groups);
-           
-            Adress address=(Adress)new PropertyModel(getModel(), "adress").getObject();
+
+            Adress address = (Adress) new PropertyModel(getModel(), "adress").getObject();
             long addressid = address.getId();
-            final AddressPanel addressPanel= new AddressPanel("addressPanel",addressid);
-            
+            final AddressPanel addressPanel = new AddressPanel("addressPanel", addressid);
+
             add(addressPanel);
             add(new WizardLink("newBibleSessionLink", NewBibleSessionWizard.class));
-            add(new SaveButton ("save",addressPanel));
+            add(new SaveButton("save", addressPanel));
             add(new CancelButton("cancel"));
         }
     }
+
     private final class CancelButton extends Button {
 
         private static final long serialVersionUID = 1L;
+
         private CancelButton(String id) {
             super(id);
-        
+
             setDefaultFormProcessing(false);
         }
 
@@ -182,13 +180,15 @@ public class EditPersonContact extends BasePage {
             setResponsePage(EditPersonContact.this.backPage);
         }
     }
+
     private final class SaveButton extends Button {
-        
+
         private AddressPanel addressPanel;
+
         private SaveButton(String id, AddressPanel addressPanel) {
             super(id);
-            this.addressPanel=addressPanel;
-    
+            this.addressPanel = addressPanel;
+
         }
 
         @Override
@@ -198,7 +198,7 @@ public class EditPersonContact extends BasePage {
 
             Users user = person.getFk_userid();
             /*try {
-                user.setPassword(PasswordService.encrypt(user.getUsername().toCharArray(), user.getPassword()));
+            user.setPassword(PasswordService.encrypt(user.getUsername().toCharArray(), user.getPassword()));
             } catch (Exception ex) {
             }*/
             person.setFk_userid(user);
@@ -207,18 +207,17 @@ public class EditPersonContact extends BasePage {
             setResponsePage(EditPersonContact.this.backPage);
         }
     }
-     
-     /**
-* Link to the wizard. It's an internal link instead of a bookmarkable page to help us with
-* backbutton surpression. Wizards by default do not partipcate in versioning, which has the
-* effect that whenever a button is clicked in the wizard, it will never result in a change of
-* the redirection url. However, though that'll work just fine when you are already in the
-* wizard, there is still the first access to the wizard. But if you link to the page that
-* renders it using and internal link, you'll circumvent that.
-*/
 
-	private static final class WizardLink extends Link
-    {
+    /**
+     * Link to the wizard. It's an internal link instead of a bookmarkable page to help us with
+     * backbutton surpression. Wizards by default do not partipcate in versioning, which has the
+     * effect that whenever a button is clicked in the wizard, it will never result in a change of
+     * the redirection url. However, though that'll work just fine when you are already in the
+     * wizard, there is still the first access to the wizard. But if you link to the page that
+     * renders it using and internal link, you'll circumvent that.
+     */
+    private static final class WizardLink extends Link {
+
         private final Class<? extends Wizard> wizardClass;
 
         /**
@@ -231,8 +230,7 @@ public class EditPersonContact extends BasePage {
          * @param wizardClass
          *            Class of the wizard to instantiate
          */
-        public <C extends Wizard> WizardLink(String id, Class<C> wizardClass)
-        {
+        public <C extends Wizard> WizardLink(String id, Class<C> wizardClass) {
             super(id);
             this.wizardClass = wizardClass;
         }
@@ -241,10 +239,8 @@ public class EditPersonContact extends BasePage {
          * @see org.apache.wicket.markup.html.link.Link#onClick()
          */
         @Override
-        public void onClick()
-        {
+        public void onClick() {
             setResponsePage(new WizardPage(wizardClass));
         }
     }
-
 }
