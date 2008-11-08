@@ -29,7 +29,7 @@ public class GroupSearchPanel extends Panel {
 
          
        private List<String> searchoptions = Arrays
-			.asList("Ryhmätyyppi","Kaupunki","Kaikki");
+			.asList("Ryhmätyyppi","Kaupunki","Nimi");
         
         public SearchForm(String id) {
             super(id);

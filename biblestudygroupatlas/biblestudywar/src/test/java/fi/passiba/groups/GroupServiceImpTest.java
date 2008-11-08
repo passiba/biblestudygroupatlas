@@ -36,8 +36,8 @@ public final class GroupServiceImpTest extends AbstractDependencyInjectionSpring
             group.setDescription("Kristillisten miesten kasvuryhmä");
             group.setStatus("Aktiivinen");
             group.setName("Miehet muutoksessa");
-            group.setCreatedBy("Admin");
-            group.setCreatedBy("Admin");
+           // group.setCreatedBy("Admin");
+           // group.setCreatedBy("Admin");
 
         }
 

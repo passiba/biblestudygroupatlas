@@ -26,14 +26,13 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+
 public class ListPersons extends BasePage {
 
     @SpringBean
     private IAuthenticator authenticate;
-
     @SpringBean
     private ISearchService searchService;
-
 
     public ListPersons(PageParameters params) {
 
@@ -41,57 +40,66 @@ public class ListPersons extends BasePage {
         final String searchString = params.getString("searchString");
 
         final List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
-        Person currentLogInPerson=null;
-        if(persons!=null && ! persons.isEmpty())
-        {
-                currentLogInPerson=persons.get(0);
+        Person currentLogInPerson = null;
+        if (persons != null && !persons.isEmpty()) {
+            currentLogInPerson = persons.get(0);
         }
-        RefreshingView contacts=populateSearchResult(searchCriteria,searchString,currentLogInPerson);
+        RefreshingView contacts = populateSearchResult(searchCriteria, searchString, currentLogInPerson);
         contacts.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
         add(contacts);
     }
-    private RefreshingView populateSearchResult(final String searchCriteria,final String searchString,final Person currentLogInPerson)
-    {
-          
-            RefreshingView contacts = new RefreshingView("contacts") {
+
+    private RefreshingView populateSearchResult(final String searchCriteria, final String searchString, final Person currentLogInPerson) {
+
+        RefreshingView contacts = new RefreshingView("contacts") {
 
             List<Person> result = new ArrayList<Person>(0);
 
             @Override
             protected Iterator getItemModels() {
-                if (searchCriteria != null && searchString != null) {
-                    if (searchCriteria.equals("Käyttäjänimi")) {
-                        try {
-                            result = searchService.findPersonByUserName(searchString, 0, 20);
-                            // authenticate.findPerson(searchString);
-                        } catch (ParseException ex) {
-                             throw new WicketRuntimeException(ex);
-                        }
-                               // authenticate.findPerson(searchString);
-                    } else if (searchCriteria.equals("Rooli")) {
-                        String city = currentLogInPerson.getAdress().getCity();
-                        String country = currentLogInPerson.getAdress().getCountry();
-                        try {
-                            result = searchService.findPersonByRolenameWithLocation(searchString, country, city);
-                            //result = authenticate.findPersonByRolename(searchString, country, city);
-                        } catch (ParseException ex) {
-                            throw new WicketRuntimeException(ex);
-                        }
-                        //result = authenticate.findPersonByRolename(searchString, country, city);
-                    } else {
-                        String rolename = currentLogInPerson.getFk_userid().getRolename();
-                        String country = currentLogInPerson.getAdress().getCountry();
-                        result = authenticate.findPersonByRolename(rolename, country, searchString);
-                    }
-                }
-                return new DomainModelIteratorAdaptor<Person>(result.iterator()) {
 
-                    @Override
-                    protected IModel model(final Object object) {
-                        
-                      return new HashcodeEnabledCompoundPropertyModel((Person) object);
+                try {
+                    if (searchCriteria != null && searchString != null) {
+                        if (searchCriteria.equals("Käyttäjänimi")) {
+
+                            result = searchService.findPersonByUserName(searchString, 0, 20);
+                        // authenticate.findPerson(searchString);
+
+                        // authenticate.findPerson(searchString);
+                        } else if (searchCriteria.equals("Rooli")) {
+                            String city = "";
+                            String country = "";
+                            if (currentLogInPerson != null) {
+                                city = currentLogInPerson.getAdress().getCity();
+                                country = currentLogInPerson.getAdress().getCountry();
+                            }
+
+                            result = searchService.findPersonByRolenameWithLocation(searchString, country, city);
+                        //result = authenticate.findPersonByRolename(searchString, country, city);
+
+                        //result = authenticate.findPersonByRolename(searchString, country, city);
+                        } else {
+
+                            String country = "", city = "";
+                            if (currentLogInPerson != null) {
+                                city = currentLogInPerson.getAdress().getCity();
+                                country = currentLogInPerson.getAdress().getCountry();
+                            }
+                            result = searchService.findPersonByLocation(country, city);
+                        }
+
                     }
-                };
+                    return new DomainModelIteratorAdaptor<Person>(result.iterator()) {
+
+                        @Override
+                        protected IModel model(final Object object) {
+
+                            return new HashcodeEnabledCompoundPropertyModel((Person) object);
+                        }
+                    };
+                } catch (ParseException ex) {
+                    throw new WicketRuntimeException(ex);
+                }
             }
 
             @Override
@@ -101,7 +109,7 @@ public class ListPersons extends BasePage {
 
                     public void onClick() {
                         Person p = (Person) getModelObject();
-                        setResponsePage(new ViewPersonContact(getPage(),p.getId()));
+                        setResponsePage(new ViewPersonContact(getPage(), p.getId()));
                     }
                 };
                 linkview.add(new Label("firstName",
@@ -124,7 +132,7 @@ public class ListPersons extends BasePage {
 
                     public void onClick() {
                         Person p = (Person) getModelObject();
-                        setResponsePage(new EditPersonContact(getPage(),p.getId()));
+                        setResponsePage(new EditPersonContact(getPage(), p.getId()));
                     }
                 });
                 item.add(new Link("delete", item.getModel()) {
@@ -137,6 +145,6 @@ public class ListPersons extends BasePage {
                 });
             }
         };
-        return  contacts;
+        return contacts;
     }
 }

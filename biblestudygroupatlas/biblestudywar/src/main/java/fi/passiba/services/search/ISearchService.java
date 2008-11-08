@@ -22,11 +22,12 @@ public interface ISearchService {
      
      public List<Person>  findPersonByUserName(String username, int startNum,int maxNum) throws ParseException;
      public List<Person>  findPersonByRolenameWithLocation(String rolename,String country,String city) throws ParseException;
-
+     public List<Person>  findPersonByLocation(String country,String city) throws ParseException;
      public List<Groups> findGroupsByLocation(String country,String city) throws ParseException;
      public List<Groups> findGroupsByType(String country,String type) throws ParseException;
 
-     @Transactional(propagation = Propagation.REQUIRED)
+     public List<Groups> findGroupsByName(String goupName, int startNum,int maxNum) throws ParseException;
+
      public void reindex();
 
 }

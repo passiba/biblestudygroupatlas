@@ -55,64 +55,54 @@ public class ListGroups extends BasePage {
     private IGroupServices groupService;
     @SpringBean
     private IAddressService addressservice;
-
     @SpringBean
     private ISearchService searchService;
-
     @SpringBean
     private IAuthenticator authenticate;
-
-
-
-
-
     private PaginationInfo pageInfo;
     private List<Groups> results = new ArrayList<Groups>(0);
-
 
     public ListGroups(PageParameters params) {
 
         init(params);
-       
+
     }
 
-    private void init(PageParameters params)
-    {
+    private void init(PageParameters params) {
 
         final String searchCriteria = params.getString("searchcriteria");
         final String searchString = params.getString("searchString");
-        final Person loggedInPerson=getLoggInPerson();
-         String country="",city="";
-        if( loggedInPerson !=null)
-        {
-               city =   loggedInPerson.getAdress().getCity();
-               country = loggedInPerson.getAdress().getCountry();
+        final Person loggedInPerson = getLoggInPerson();
+        String country = "", city = "";
+        if (loggedInPerson != null) {
+            city = loggedInPerson.getAdress().getCity();
+            country = loggedInPerson.getAdress().getCountry();
         }
 
         if (searchCriteria != null && searchString != null) {
-            if (searchCriteria.equals("Ryhmätyyppi")) {
-                try {
-                        results = searchService.findGroupsByType(country, searchCriteria);
-                    } catch (ParseException ex) {
-                    throw new WicketRuntimeException(ex);
+            try {
+                if (searchCriteria.equals("Ryhmätyyppi")) {
+
+                    results = searchService.findGroupsByType(country, searchString);
+
+
+                } else if (searchCriteria.equals("Kaupunki")) {
+
+
+                    // results = groupService.findGroupsByLocation(country, city, searchCriteria);
+                    results = searchService.findGroupsByLocation(country, searchString);
+
+                } else {
+                    results = searchService.findGroupsByName(searchString, 0, 20);
+                // pageInfo = groupService.findPagingInfoForGroups(10);
+                //pageInfo.setFirstRow(0);
+                // results = groupService.findGroupsWithPaging(pageInfo);
                 }
-
-            } else if (searchCriteria.equals("Kaupunki")) {
-
-                try {
-                   // results = groupService.findGroupsByLocation(country, city, searchCriteria);
-                    results = searchService.findGroupsByLocation(country, searchCriteria);
-                } catch (ParseException ex) {
-                    throw new WicketRuntimeException(ex);
-                }
-            } else {
-
-                pageInfo = groupService.findPagingInfoForGroups(10);
-                pageInfo.setFirstRow(0);
-                results = groupService.findGroupsWithPaging(pageInfo);
+            } catch (ParseException ex) {
+                throw new WicketRuntimeException(ex);
             }
         }
-        add( populateSearchResult(results));
+        add(populateSearchResult(results));
 
         IModel linkModel = new CompoundPropertyModel(new LoadableDetachableModel() {
 
@@ -176,16 +166,16 @@ public class ListGroups extends BasePage {
 
 
     }
-    private Person getLoggInPerson()
-    {
+
+    private Person getLoggInPerson() {
         List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
-        Person currentLogInPerson=null;
-        if(persons!=null && ! persons.isEmpty())
-        {
-                currentLogInPerson=persons.get(0);
+        Person currentLogInPerson = null;
+        if (persons != null && !persons.isEmpty()) {
+            currentLogInPerson = persons.get(0);
         }
         return currentLogInPerson;
     }
+
     private GOverlay createOverlay(String title, GLatLng latLng, String image,
             String shadow) {
         GIcon icon = new GIcon(urlFor(
@@ -193,9 +183,9 @@ public class ListGroups extends BasePage {
                 new ResourceReference(ListGroups.class, shadow)).toString()).iconSize(new GSize(64, 64)).shadowSize(new GSize(64, 64)).iconAnchor(new GPoint(19, 40)).infoWindowAnchor(new GPoint(9, 2)).infoShadowAnchor(new GPoint(18, 25));
         return new GMarker(latLng, new GMarkerOptions(title, icon));
     }
-    private RefreshingView populateSearchResult(final List<Groups> results)
-    {
-        
+
+    private RefreshingView populateSearchResult(final List<Groups> results) {
+
         RefreshingView groups = new RefreshingView("groups") {
 
             @Override
@@ -218,7 +208,7 @@ public class ListGroups extends BasePage {
 
                     public void onClick() {
                         Groups g = (Groups) getModelObject();
-                        setResponsePage(new ViewGroupInfo(getPage(),g.getId()));
+                        setResponsePage(new ViewGroupInfo(getPage(), g.getId()));
                     }
                 };
                 linkview.add(new Label("name",
@@ -238,7 +228,7 @@ public class ListGroups extends BasePage {
 
                     public void onClick() {
                         Groups g = (Groups) getModelObject();
-                        setResponsePage(new EditGroupInfo(getPage(),g.getId()));
+                        setResponsePage(new EditGroupInfo(getPage(), g.getId()));
                     }
                 });
                 item.add(new Link("delete", item.getModel()) {
@@ -254,11 +244,11 @@ public class ListGroups extends BasePage {
         };
         groups.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
         return groups;
-        
+
     }
-    private GMap2 createSearchResultMap(List<Groups> results)
-    {
-         GMap2 bottomMap = new GMap2("bottomPanel",
+
+    private GMap2 createSearchResultMap(List<Groups> results) {
+        GMap2 bottomMap = new GMap2("bottomPanel",
                 new GMapHeaderContributor(BibleStudyApplication.get().getGoogleMapsAPIkey()));
 
         bottomMap.setOutputMarkupId(true);
@@ -270,16 +260,16 @@ public class ListGroups extends BasePage {
 
         for (Groups group : results) {
 
-           long address_id=group.getAdress().getId();
-           Adress address= addressservice.findAddressByAddressId(address_id);
-           bottomMap.addOverlay(createOverlay(group.getName(), new GLatLng(address.getLocation_lat(),
+            long address_id = group.getAdress().getId();
+            Adress address = addressservice.findAddressByAddressId(address_id);
+            bottomMap.addOverlay(createOverlay(group.getName(), new GLatLng(address.getLocation_lat(),
                     address.getLocation_lng()), "groups.png", "shadow.png"));
 
         }
 
         ///bottomMap.setOverlays(overlays);
-        
-        return  bottomMap;
-        
+
+        return bottomMap;
+
     }
 }
