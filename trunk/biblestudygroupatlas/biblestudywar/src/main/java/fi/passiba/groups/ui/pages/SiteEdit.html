@@ -1,0 +1,57 @@
+
+<wicket:extend>
+    <div class="start"><!-- MSIE fix --></div>
+    <div class="data">
+        
+        <form wicket:id="siteform">
+            <div class="data_row">
+                <h3><wicket:message key="editsite"/></h3>
+                
+                <table>
+                    <tr>
+                        <td class="header">
+                            <wicket:message key="sitename"/>
+                        :</td>
+                        <td> <span wicket:id="sitename" /></td>
+                    </tr>
+                    <tr>
+                        <td class="header">
+                            <wicket:message key="host"/>
+                        :</td>
+                        <td> <input wicket:id="host" type="text" class="text"/></td>
+                    </tr>
+                    <tr>
+                        <td> <wicket:message key="catalogDir"/>
+                            
+                        :</td>
+                        <td><input wicket:id="catalogDir" type="text" class="text"/></td>
+                    </tr>
+                    <tr>
+                        <td><wicket:message key="packageDir"/> :</td>
+                        <td><input wicket:id="packagegDir" type="text"  class="text"/></td>
+                    </tr>
+
+                    <tr>
+                        <td><wicket:message key="proxyHost"/> :</td>
+                        <td><input wicket:id="proxyHost" type="text"  class="text"/></td>
+                    </tr>
+
+                    <tr>
+                        <td><wicket:message key="packageDir"/> :</td>
+                        <td><input wicket:id="packagegDir" type="text"  class="text"/></td>
+                    </tr>
+                    
+                    
+                </table>
+            </div>
+           
+            <div class="buttons">
+                 <input type="image" src="images/btn_PERUUTA.gif"  class="button" wicket:id="cancel"  />
+                <input type="image" src="images/btn_TALLENNA.gif"  class="button" wicket:id="save"  />
+                
+            </div>
+        </form>
+    </div>
+    <div class="end"><!-- MSIE fix --></div>
+    
+</wicket:extend>

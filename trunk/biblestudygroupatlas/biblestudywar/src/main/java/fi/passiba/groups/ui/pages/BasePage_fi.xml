@@ -7,6 +7,7 @@
         <entry key="navigation_groups_page">Piirin valinta</entry>
         <entry key="navigation_groupinfo_page">Piirin tiedot</entry>
         <entry key="navigation_readverses_page">Luetut kappaleet</entry>
+         <entry key="navigation_installed_bibledatasites">Raammattu tietopäivitykset</entry>
         <entry key="navigation_users_page">Käyttäjät</entry>
         <entry key="footer_text">Elä elävää elämää - maista elävän lähteen vettä</entry>      
 </properties>

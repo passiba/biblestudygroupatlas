@@ -13,14 +13,27 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * Book entity.
+ * Bookdatasource entity....storing the information about the retreival of different
+ * bible translation,installenr configuration with JSWord Integration
  * 
- * @author MyEclipse Persistence Tools
+ * @author haverinen
  */
 @Entity
 @Table(name = "bookdatasource")
 @AttributeOverride(name = "id", column = @Column(name = "bookdatasource_id"))
 public class Bookdatasource extends AuditableEntity {
+
+
+     
+     
+   
+    //jsword specific variables
+    private String sitename;
+    private String hostname;
+    private String catalogDir;
+    private String packageDir;
+    private String proxyHost;
+    private String proxyPort;
 
     // Fields
     private String weburlName;
@@ -32,12 +45,63 @@ public class Bookdatasource extends AuditableEntity {
     private String outputFileName;
     
     private Book book;
-    // Constructors
-    /** default constructor */
-    public Bookdatasource() {
+    
+    
+    @Column(name = "sitename", unique = false, nullable = false, insertable = true, updatable = true, length = 50)
+    public String getSitename() {
+        return sitename;
     }
 
-   
+    public void setSitename(String sitename) {
+        this.sitename = sitename;
+    }
+    // Constructors
+    /** default constructor */
+
+
+    @Column(name = "catalogDir", unique = false, nullable = false, insertable = true, updatable = true, length = 50)
+    public String getCatalogDir() {
+        return catalogDir;
+    }
+
+    public void setCatalogDir(String catalogDir) {
+        this.catalogDir = catalogDir;
+    }
+    @Column(name = "hostname", unique = false, nullable = false, insertable = true, updatable = true, length = 50)
+
+
+    public String getHostname() {
+        return hostname;
+    }
+
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
+    @Column(name = "packageDir", unique = false, nullable = false, insertable = true, updatable = true, length = 50)
+    public String getPackageDir() {
+        return packageDir;
+    }
+
+    public void setPackageDir(String packageDir) {
+        this.packageDir = packageDir;
+    }
+    @Column(name = "proxyHost", unique = false, nullable = false, insertable = true, updatable = true, length = 50)
+    public String getProxyHost() {
+        return proxyHost;
+    }
+
+    public void setProxyHost(String proxyHost) {
+        this.proxyHost = proxyHost;
+    }
+    @Column(name = "proxyPort", unique = false, nullable = false, insertable = true, updatable = true, length = 10)
+    public String getProxyPort() {
+        return proxyPort;
+    }
+
+    public void setProxyPort(String proxyPort) {
+        this.proxyPort = proxyPort;
+    }
+
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_book_id", referencedColumnName = "book_id",nullable = true)
     public Book getBook() {
@@ -104,6 +168,8 @@ public class Bookdatasource extends AuditableEntity {
     public void setOutputSubDir(String outputSubDir) {
         this.outputSubDir = outputSubDir;
     }
+
+
     
     @Override
     public boolean equals(Object obj) {
