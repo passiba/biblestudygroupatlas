@@ -36,7 +36,7 @@ public class SiteEdit extends BasePage implements SiteEditor{
      /**
      * The model that we are providing a view/controller for
      */
-    private InstallManager imanager;
+    private static InstallManager imanager;
     private  AbstractSwordInstaller installer;
     private String port,host,catalogDir,packageDir,proxyHost,proxyPort;
 
@@ -79,7 +79,10 @@ public class SiteEdit extends BasePage implements SiteEditor{
 
     private  void init() {
 
-        imanager = new InstallManager();
+        if(imanager ==null)
+        {
+           imanager  = new InstallManager();
+        }
         installers = imanager.getInstallers();
         names.clear();
         names.addAll(imanager.getInstallers().keySet());
