@@ -1,7 +1,6 @@
 package fi.passiba.groups.ui.pages;
 
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
-import fi.passiba.groups.ui.pages.SiteEdit;
 import fi.passiba.groups.ui.pages.search.SearchPanelPage;
 import fi.passiba.services.persistance.Person;
 import java.io.Serializable;

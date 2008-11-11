@@ -48,6 +48,9 @@
          <property name="sessionFactory" ref="sessionFactory"/>
          <property name="personDAO" ref="PersonDAO" />
     </bean>
+
+     <bean id="BibleDataService" class="fi.passiba.services.bibledata.SiteDataService">
+    </bean>
      <!--
     <bean id="biblesessionProcessingGageway" class="fi.passiba.groups.ui.pages.wizards.biblesession.dataprocessing.BibleBookdDataProcessingImp">
         <property name="jmsTemplate" ref="jmsTemplate"/>
