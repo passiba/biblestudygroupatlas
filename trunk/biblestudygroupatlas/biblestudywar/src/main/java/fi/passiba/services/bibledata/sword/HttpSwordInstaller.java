@@ -24,7 +24,6 @@ package fi.passiba.services.bibledata.sword;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.crosswire.common.progress.Progress;
 import org.crosswire.common.util.LucidException;
 import org.crosswire.common.util.NetUtil;
 import org.crosswire.common.util.WebResource;
@@ -77,7 +76,7 @@ public class HttpSwordInstaller extends AbstractSwordInstaller
      * @see org.crosswire.jsword.book.install.sword.AbstractSwordInstaller#download(java.lang.String, java.lang.String, java.net.URI)
      */
     /* @Override */
-    protected void download(Progress job, String dir, String file, URI dest) throws InstallException
+    protected void download(String processStatus, String dir, String file, URI dest) throws InstallException
     {
         URI uri;
         try
@@ -91,7 +90,7 @@ public class HttpSwordInstaller extends AbstractSwordInstaller
 
         try
         {
-            copy(job, uri, dest);
+            copy(processStatus, uri, dest);
         }
         catch (LucidException ex)
         {
@@ -105,12 +104,8 @@ public class HttpSwordInstaller extends AbstractSwordInstaller
      * @param dest
      * @throws LucidException
      */
-    private void copy(Progress job, URI uri, URI dest) throws LucidException
+    private void copy(String processStatus, URI uri, URI dest) throws LucidException
     {
-        if (job != null)
-        {
-         //   job.setSectionName(UserMsg.JOB_DOWNLOADING.toString());
-        }
 
         WebResource wr = new WebResource(uri, proxyHost, proxyPort);
         wr.copy(dest);
