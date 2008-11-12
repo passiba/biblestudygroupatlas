@@ -32,17 +32,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-import org.crosswire.common.progress.JobManager;
 import org.crosswire.common.progress.Progress;
 import org.crosswire.common.util.CWProject;
 import org.crosswire.common.util.CollectionUtil;
 import org.crosswire.common.util.IOUtil;
 import org.crosswire.common.util.Logger;
 import org.crosswire.common.util.NetUtil;
-import org.crosswire.common.util.Reporter;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookDriver;
-import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookFilter;
 import org.crosswire.jsword.book.BookFilterIterator;
 import org.crosswire.jsword.book.BookMetaData;
@@ -59,6 +56,8 @@ import org.crosswire.jsword.book.sword.SwordConstants;
 
 import com.ice.tar.TarEntry;
 import com.ice.tar.TarInputStream;
+import org.crosswire.common.util.Reporter;
+import org.crosswire.jsword.book.BookException;
 
 /**
  * .
@@ -70,6 +69,32 @@ import com.ice.tar.TarInputStream;
  */
 public abstract class AbstractSwordInstaller extends AbstractBookList implements Installer, Comparable
 {
+
+
+
+    public enum ProcessStatus {
+
+        INIT("INITIALIZING"),DOWNLOADING("BIBLEDATADOWNLOADING"), INSTALLING("BIBLEBOOKDATAINSTALLING");
+        private String type;
+
+        private ProcessStatus(String type) {
+            this.type = type;
+        }
+
+        public String getType() {
+            return type;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
     /**
      * Utility to download a file from a remote site
      * @param job The way of noting progress
@@ -77,7 +102,7 @@ public abstract class AbstractSwordInstaller extends AbstractBookList implements
      * @param file The file to download
      * @throws InstallException
      */
-    protected abstract void download(Progress job, String dir, String file, URI dest) throws InstallException;
+    protected abstract void download(String processStatus, String dir, String file, URI dest) throws InstallException;
 
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.install.Installer#getInstallerDefinition()
@@ -153,7 +178,7 @@ public abstract class AbstractSwordInstaller extends AbstractBookList implements
     /* (non-Javadoc)
      * @see org.crosswire.jsword.book.BookList#getBook(java.lang.String)
      */
-    public synchronized Book getBook(String name)
+    public Book getBook(String name)
     {
         // Check name first
         // First check for exact matches
@@ -218,65 +243,40 @@ public abstract class AbstractSwordInstaller extends AbstractBookList implements
      */
     public void install(Book book)
     {
-//        // Is the book already installed? Then nothing to do.
-//        if (Books.installed().getBook(book.getName()) != null)
-//        {
-//            return;
-//        }
-//
+
         final SwordBookMetaData sbmd = (SwordBookMetaData) book.getBookMetaData();
 
-        // So now we know what we want to install - all we need to do
-        // is installer.install(name) however we are doing it in the
-        // background so we create a job for it.
-        //final Thread worker = new Thread("DisplayPreLoader") //$NON-NLS-1$
-       // {
-            /* (non-Javadoc)
-             * @see java.lang.Runnable#run()
-             */
-            /* @Override */
-           // public void run()
-           // {
-                URI predictURI = CWProject.instance().getWritablePropertiesURI("sword-install"); //$NON-NLS-1$
-               // Progress job = JobManager.createJob(UserMsg.INSTALLING.toString(sbmd.getName()), predictURI, this, true);
-
-              //  yield();
-
+               URI predictURI = CWProject.instance().getWritablePropertiesURI("sword-install"); //$NON-NLS-1$
                 try
                 {
                    // job.setSectionName(UserMsg.JOB_INIT.toString());
 
                     URI temp = NetUtil.getTemporaryURI("swd", ZIP_SUFFIX); //$NON-NLS-1$
 
-                    download(null, packageDirectory, sbmd.getInitials() + ZIP_SUFFIX, temp);
+                    download(ProcessStatus.INIT.getType(), packageDirectory, sbmd.getInitials() + ZIP_SUFFIX, temp);
 
                     // Once the unzipping is started, we need to continue
-                 /*   job.setCancelable(false);
-                    if (!job.isFinished())
-                    {
-                        File dldir = SwordBookPath.getSwordDownloadDir();
-                        IOUtil.unpackZip(NetUtil.getAsFile(temp), dldir);
-                        job.setSectionName(UserMsg.JOB_CONFIG.toString());
-                        sbmd.setLibrary(NetUtil.getURI(dldir));
-                        SwordBookDriver.registerNewBook(sbmd);
-                    }*/
+                    File dldir = SwordBookPath.getSwordDownloadDir();
+                    IOUtil.unpackZip(NetUtil.getAsFile(temp), dldir);
+                    sbmd.setLibrary(NetUtil.getURI(dldir));
+                    SwordBookDriver.registerNewBook(sbmd);
 
                 }
                 catch (IOException e)
                 {
-                   // Reporter.informUser(this, e);
+                   e.printStackTrace();
                    // job.cancel();
                 }
                 catch (InstallException e)
                 {
-                   // Reporter.informUser(this, e);
+                     e.printStackTrace();
                    // job.cancel();
                 }
-                /*catch (BookException e)
+                catch (BookException e)
                 {
-                    Reporter.informUser(this, e);
+                    e.printStackTrace();
                    // job.cancel();
-                }*/
+                }
                 finally
                 {
                    // job.done();
@@ -294,17 +294,16 @@ public abstract class AbstractSwordInstaller extends AbstractBookList implements
      */
     public void reloadBookList() throws InstallException
     {
-        //Progress job = JobManager.createJob(UserMsg.JOB_DOWNLOADING.toString(), Thread.currentThread(), false);
-
+        
         try
         {
             URI scratchfile = getCachedIndexFile();
-            //download(job, catalogDirectory, FILE_LIST_GZ, scratchfile);
+            download(ProcessStatus.DOWNLOADING.getType(), catalogDirectory, FILE_LIST_GZ, scratchfile);
             loaded = false;
         }
         catch (InstallException ex)
         {
-           // job.cancel();
+          
             throw ex;
         }
         finally
@@ -322,7 +321,7 @@ public abstract class AbstractSwordInstaller extends AbstractBookList implements
 
         try
         {
-          //  download(job, packageDirectory + '/' + SEARCH_DIR, book.getInitials() + ZIP_SUFFIX, localDest);
+          download(ProcessStatus.DOWNLOADING.getType(), packageDirectory + '/' + SEARCH_DIR, book.getInitials() + ZIP_SUFFIX, localDest);
         }
        
         finally
