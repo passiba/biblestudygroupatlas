@@ -70,4 +70,7 @@ public interface IBibleDataMining {
     @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
     public ChapterVoting findRatingByChapterid(long id);
 
+    @Transactional(propagation = Propagation.REQUIRED)
+     public void addBibleData(org.crosswire.jsword.book.Book book);
+
 }

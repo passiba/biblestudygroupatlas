@@ -7,6 +7,7 @@ package fi.passiba.groups.ui.pages;
 
 import fi.passiba.groups.ui.pages.BasePage;
 
+import fi.passiba.services.bibledata.IBibleBookDataProcessing;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +26,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.apache.wicket.Page;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookList;
@@ -50,6 +52,10 @@ public class SiteBooks extends BasePage{
      /**
      * The model that we are providing a view/controller for
      */
+
+
+    @SpringBean
+    private IBibleBookDataProcessing bibleDataBooksourceService;
     private transient InstallManager imanager;
     private transient AbstractSwordInstaller installer;
     private String port,host,catalogDir,packageDir,proxyHost,proxyPort;
