@@ -27,11 +27,23 @@ import fi.passiba.services.biblestudy.dao.IChapterVotingDAO;
 import fi.passiba.services.biblestudy.datamining.dao.BookDatasouceDAO;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.jms.MapMessage;
+import org.crosswire.jsword.book.BookCategory;
+import org.crosswire.jsword.book.BookData;
+import org.crosswire.jsword.book.BookException;
+import org.crosswire.jsword.book.Books;
+import org.crosswire.jsword.book.OSISUtil;
+import org.crosswire.jsword.passage.Key;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 import org.webharvest.definition.ScraperConfiguration;
@@ -53,6 +65,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
     private IChapterVotingDAO chapterVotingDAO=null;
     private SessionFactory sessionFactory;
 
+  
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
@@ -61,12 +74,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
         this.sessionFactory = sessionFactory;
     }
 
-
-
-    
-
-  
-
+   
 
     public enum StatusType {
 
@@ -152,8 +160,6 @@ public class BibleDataMiningImp implements IBibleDataMining {
       chapterDAO.update(chapter);
       return chapter;
     }
-
-
 	//@ManagedOperation(description = "Retrieve daily new section of books of bible")
     public void retrieveBookdata() {
 
@@ -375,4 +381,60 @@ public class BibleDataMiningImp implements IBibleDataMining {
     public ChapterVoting findRatingByChapterid(long id) {
         return chapterVotingDAO.findRatingByChapterid(id);
     }
+
+    public void addBibleData(org.crosswire.jsword.book.Book book) {
+
+        Key results = book.getGlobalKeyList();
+        int entries = 0;
+
+
+        System.out.println("Book " + book.getInitials() + " is available");
+        if (BookCategory.BIBLE.equals(book.getBookCategory())) {
+            
+            Bibletranslation translation= new Bibletranslation();
+            translation.setBibleName(book.getName());
+            translation.setBibleAbbrv(book.getInitials());
+            translation.setPublishedDate(new Date());
+            translation.setPublisherName("test");
+            translationDAO.save( translation);
+            Iterator it2 = results.iterator();
+
+            while (it2.hasNext()) {
+                Key key = (Key) it2.next();
+                BookData data = new BookData(book, key);
+                try {
+                    System.out.println("And the text against that key is " + OSISUtil.getPlainText(data.getOsisFragment()));
+                    // entries++;
+                    /* StringBuffer buf = new StringBuffer();
+                    String osisID = key.getOsisID();
+                    buf.append(book.getInitials());
+                    buf.append(':');
+                    buf.append(osisID);
+                    buf.append(" - "); //$NON-NLS-1$
+                    String rawText = book.getRawText(key);
+                    if (rawText != null && rawText.trim().length() > 0) {
+                    buf.append(rawText);
+                    } else {
+                    buf.append("Not found"); //$NON-NLS-1$
+                    }*/
+                } catch (BookException ex) {
+                    Logger.getLogger(BibleDataMiningImp.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            // entries++;
+              /* StringBuffer buf = new StringBuffer();
+            String osisID = key.getOsisID();
+            buf.append(book.getInitials());
+            buf.append(':');
+            buf.append(osisID);
+            buf.append(" - "); //$NON-NLS-1$
+            String rawText = book.getRawText(key);
+            if (rawText != null && rawText.trim().length() > 0) {
+            buf.append(rawText);
+            } else {
+            buf.append("Not found"); //$NON-NLS-1$
+            }*/
+            }
+        }
+    }
+
 }

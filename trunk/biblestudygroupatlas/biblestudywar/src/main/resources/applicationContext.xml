@@ -51,10 +51,10 @@
 
      <bean id="BibleDataService" class="fi.passiba.services.bibledata.SiteDataService">
     </bean>
-     <!--
-    <bean id="biblesessionProcessingGageway" class="fi.passiba.groups.ui.pages.wizards.biblesession.dataprocessing.BibleBookdDataProcessingImp">
+     
+    <bean id="bibleDataProcessingGageway" class="fi.passiba.services.bibledata.BibleBookDataProcessingImp">
         <property name="jmsTemplate" ref="jmsTemplate"/>
-    </bean>  -->
+    </bean> 
      
   
   
