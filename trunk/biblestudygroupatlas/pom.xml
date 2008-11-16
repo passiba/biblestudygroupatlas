@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
@@ -44,4 +45,23 @@
     <module>biblestudywebservice</module>
     <module>biblestudywar</module>
   </modules>
+   <properties>
+        <installDir>C:/java/tools/sun/tomcat6</installDir>
+        <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
+        <wicket.version>1.3.5</wicket.version>
+         <!-- <wicket.version>1.4-m3</wicket.version>-->
+        <slf4j.version>1.4.3</slf4j.version>
+        <spring.version>2.0.8</spring.version>
+        <spring.ws.version>1.0.4</spring.ws.version>
+        <spring.modules.version>0.8a</spring.modules.version>
+        <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+        <jdbc.url>jdbc:mysql://localhost:3306/biblestudy?autoReconnect=true</jdbc.url>
+        <jdbc.username>bibleuser</jdbc.username>
+        <jdbc.password>b8bl47s4r</jdbc.password>
+        <maven.test.skip>false</maven.test.skip>
+        <originalDataSetFile>./src/test/data/sample-data.xml</originalDataSetFile>
+        <compass.version>2.1.0</compass.version>
+        <lucene.version>2.3.2</lucene.version>
+        <jsword.version>1.6</jsword.version>
+    </properties>
 </project>
