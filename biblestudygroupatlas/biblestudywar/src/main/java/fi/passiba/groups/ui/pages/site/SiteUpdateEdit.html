@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>BiblegroupsAtlas</title>
+        <wicket:link>
+		<link rel="stylesheet" type="text/css" media="all" href="css/styles.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/content_frontpage.css" />
+		<link rel="stylesheet" type="text/css" media="print" href="css/updates.css" />
+	</wicket:link>
+                 <script language="javascript" type="text/javascript" src="js/scripts.js"></script>
+</head>
+
+<body>
+
+<div id="main">
+
+	<!-- header -->
+	<div id="header">
+		<div id="logo">
+                     <wicket:link>
+                         <img src="bibleimages/rakas_raamattu_2007.jpg" alt="Rakas raamattu " width="113" height="68"/>
+                     </wicket:link>
+                 </div>
+
+	</div>
+	<!-- // header -->
+
+	<!-- navi -->
+	<div id="navi">
+		<div class="start"><!-- MSIE fix --></div>
+
+		<div class="end"><!-- MSIE fix --></div>
+		
+	</div>
+	<!-- // navi -->
+<!-- content_area -->
+<div id="content_area">
+    <div class="start"><!-- MSIE fix --></div>
+    <div class="data">
+        
+        <form wicket:id="siteform">
+            <div class="data_row">
+                <h3><wicket:message key="editsite"/></h3>
+                
+                <table>
+                    <tr class="header">
+                        <th> <wicket:message key="siteinstallers"></wicket:message>:</th>
+                        <td>
+                            <select wicket:id="installers">
+
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="header">
+                            <wicket:message key="sitename"/>
+                        :</td>
+                        <td> <span wicket:id="sitename" /></td>
+                    </tr>
+                    <tr>
+                        <td class="header">
+                            <wicket:message key="host"/>
+                        :</td>
+                        <td> <input wicket:id="host" type="text" class="text"/></td>
+                    </tr>
+                    <tr>
+                        <td> <wicket:message key="catalogDir"/>
+                            
+                        :</td>
+                        <td><input wicket:id="catalogDir" type="text" class="text"/></td>
+                    </tr>
+                    <tr>
+                        <td><wicket:message key="packageDir"/> :</td>
+                        <td><input wicket:id="packageDir" type="text"  class="text"/></td>
+                    </tr>
+
+                   
+                     <tr>
+                        <td>
+                            <input type="image" src="images/btn_PERUUTA.gif"  class="button" wicket:id="cancel"/>
+                            <input type="image" src="images/btn_TALLENNA.gif"  class="button" wicket:id="save"  />
+                        </td>
+                    </tr>
+                 
+                    
+                    
+                </table>
+            </div>
+           
+        </form>
+    </div>
+    <div class="end"><!-- MSIE fix --></div>
+    
+</div>
+</div>
+</body>
+</html>
