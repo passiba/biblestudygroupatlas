@@ -175,7 +175,12 @@
               <version>1.0</version>
               <scope>provided</scope>
           </dependency>
-
+            <dependency>
+               <groupId>org.apache.geronimo.specs</groupId>
+               <artifactId>geronimo-jms_1.1_spec</artifactId>
+               <version>1.1.1</version>
+               <scope>provided</scope>
+         </dependency>
          <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
@@ -183,12 +188,7 @@
             <scope>provided</scope>
          </dependency>
 
-         <dependency>
-            <groupId>javax.jms</groupId>
-            <artifactId>jms</artifactId>
-            <version>1.1</version>
-            <scope>provided</scope>
-         </dependency>
+         
                <!--Spring Jersey module dependency for creating Restful web services 
        <dependency>
             <groupId>javax.ws.rs</groupId>
