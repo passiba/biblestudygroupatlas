@@ -21,7 +21,6 @@
  */
 package fi.passiba.services.bibledata;
 
-import fi.passiba.groups.ui.pages.SiteEditor;
 import java.io.IOException;
 import java.util.MissingResourceException;
 import java.util.Properties;

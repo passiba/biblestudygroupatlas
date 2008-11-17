@@ -5,8 +5,8 @@
     <entry key="sitename">Sivuston nimi</entry>
     <entry key="host">Palvelin</entry>
     <entry key="catalogDir">Katalogi hakemisto</entry>
-    <entry key="packagegDir">Paketti hakemisto</entry>
+    <entry key="packageDir">Paketti hakemisto</entry>
     <entry key="proxyHost">Proxy palvelin</entry>
     <entry key="proxyPort">Proxy portti</entry>
-        
+    <entry key="siteinstallers">Sivusto päivitys</entry>
 </properties>
