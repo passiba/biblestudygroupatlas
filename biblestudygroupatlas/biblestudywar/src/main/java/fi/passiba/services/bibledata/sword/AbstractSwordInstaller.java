@@ -56,7 +56,7 @@ import org.crosswire.jsword.book.sword.SwordConstants;
 
 import com.ice.tar.TarEntry;
 import com.ice.tar.TarInputStream;
-import org.crosswire.common.util.Reporter;
+import fi.passiba.hibernate.DomainObject;
 import org.crosswire.jsword.book.BookException;
 
 /**
@@ -67,7 +67,7 @@ import org.crosswire.jsword.book.BookException;
  * @author Joe Walker [joe at eireneh dot com]
  * @author DM Smith [dmsmith555 at yahoo dot com]
  */
-public abstract class AbstractSwordInstaller extends AbstractBookList implements Installer, Comparable
+public abstract class AbstractSwordInstaller extends AbstractBookList implements DomainObject, Installer, Comparable
 {
 
 

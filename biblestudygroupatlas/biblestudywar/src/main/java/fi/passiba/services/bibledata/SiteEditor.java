@@ -63,6 +63,15 @@ public interface SiteEditor
      * @return Map installers
      */
     public Map getInstallers();
+
+     /**
+     * Get the installer associated with this SiteEditor
+      *
+      * @param sitename - get the installer of specific site
+     * @return the installer
+     */
+    public Installer getInstaller(String sitename);
+
     
     
   

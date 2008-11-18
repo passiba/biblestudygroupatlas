@@ -175,9 +175,15 @@ public class SiteDataService implements SiteEditor{
         return installers;
     }
 
+    @Override
+    public Installer getInstaller(String sitename) {
+        Installer installer = (Installer) installers.get(sitename);
+        return installer;
+    }
 
 
-   
+
+
    
 
     /**
