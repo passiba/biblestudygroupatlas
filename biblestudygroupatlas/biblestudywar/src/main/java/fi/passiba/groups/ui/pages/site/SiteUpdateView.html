@@ -1,42 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<title>BiblegroupsAtlas</title>
-        <wicket:link>
-		<link rel="stylesheet" type="text/css" media="all" href="css/styles.css" />
-		<link rel="stylesheet" type="text/css" media="screen" href="css/content_frontpage.css" />
-		<link rel="stylesheet" type="text/css" media="print" href="css/updates.css" />
-	</wicket:link>
-                 <script language="javascript" type="text/javascript" src="js/scripts.js"></script>
-</head>
-
-<body>
-
-<div id="main">
-
-	<!-- header -->
-	<div id="header">
-		<div id="logo">
-                     <wicket:link>
-                         <img src="bibleimages/rakas_raamattu_2007.jpg" alt="Rakas raamattu " width="113" height="68"/>
-                     </wicket:link>
-                 </div>
-
-	</div>
-	<!-- // header -->
-
-	<!-- navi -->
-	<div id="navi">
-		<div class="start"><!-- MSIE fix --></div>
-
-		<div class="end"><!-- MSIE fix --></div>
-		
-	</div>
-	<!-- // navi -->
-<!-- content_area -->
-<div id="content_area">
+<wicket:extend>
     <div class="start"><!-- MSIE fix --></div>
     <div class="data">
         
@@ -69,20 +31,20 @@
                         <td> <span wicket:id="host"/></td>
                     </tr>
                     <tr>
-                        <td> <wicket:message key="catalogDir"/>
+                        <td class="header"> <wicket:message key="catalogDir"/>
                             
                         :</td>
                         <td><span wicket:id="catalogDir"/></td>
                     </tr>
                     <tr>
-                        <td><wicket:message key="packageDir"/> :</td>
+                        <td class="header"><wicket:message key="packageDir"/> :</td>
                         <td><span wicket:id="packageDir"/></td>
                     </tr>
 
                    
                     
                     <tr>
-                         <span wicket:id="sitebookspanel"/>
+                         <td><span wicket:id="sitebookspanel"/></td>
                     </tr>
                      <tr>
                         <td>
@@ -100,7 +62,4 @@
 
     <div class="end"><!-- MSIE fix --></div>
     
-</div>
-</div>
-</body>
-</html>
+</wicket:extend>
