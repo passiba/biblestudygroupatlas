@@ -5,7 +5,7 @@
 package fi.passiba.groups.ui.pages.site;
 
 import fi.passiba.groups.ui.pages.Main;
-import fi.passiba.groups.ui.pages.ProtectedPage;
+import fi.passiba.groups.ui.pages.BasePage;
 import fi.passiba.services.bibledata.SiteEditor;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,16 +18,13 @@ import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.validation.validator.StringValidator;
 import org.crosswire.jsword.book.install.Installer;
 
 
@@ -35,7 +32,7 @@ import org.crosswire.jsword.book.install.Installer;
  *
  * @author haverinen
  */
-public class SiteUpdateView extends ProtectedPage {
+public class SiteUpdateView extends BasePage {
 
     /**
      * The model that we are providing a view/controller for
