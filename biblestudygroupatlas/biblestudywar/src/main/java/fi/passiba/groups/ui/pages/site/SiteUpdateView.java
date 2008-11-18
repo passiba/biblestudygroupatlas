@@ -146,15 +146,15 @@ public class SiteUpdateView extends BasePage {
                     catalogDir.setModel(new PropertyModel(installer, "catalogDirectory"));
                     packageDir.setModel(new PropertyModel(installer, "packageDirectory"));
                     siteName.setModel(new PropertyModel( getModel(), "siteUpdateName"));
-
-                    addOrReplace(new  SiteBookTreePanel("sitebookspanel",installerValues.getSiteUpdateName()));
-
+                    sitebookspanel.getTree().getTreeState().collapseAll();
+                    sitebookspanel.getTree().updateTree(target);
                     target.addComponent(siteName);
                     target.addComponent(hostName);
                     target.addComponent(catalogDir);
                     target.addComponent(packageDir);
                     target.addComponent(installers);
                     target.addComponent(siteinstallers);
+                    target.addComponent(addOrReplace(new  SiteBookTreePanel("sitebookspanel",installerValues.getSiteUpdateName())));
                     //reset();
                 }
 
