@@ -45,13 +45,16 @@
                 <h3><wicket:message key="editsite"/></h3>
                 
                 <table>
-                    <tr class="header">
+                    <tr class="header" wicket:id="installer">
                         <th> <wicket:message key="siteinstallers"></wicket:message>:</th>
-                        <td>
-                            <select wicket:id="installers">
 
-                            </select>
-                        </td>
+
+                       <td>
+                           <select wicket:id="siteinstallers">
+
+                           </select>
+                       </td>
+
                     </tr>
                     <tr>
                         <td class="header">
@@ -63,34 +66,38 @@
                         <td class="header">
                             <wicket:message key="host"/>
                         :</td>
-                        <td> <input wicket:id="host" type="text" class="text"/></td>
+                        <td> <span wicket:id="host"/></td>
                     </tr>
                     <tr>
                         <td> <wicket:message key="catalogDir"/>
                             
                         :</td>
-                        <td><input wicket:id="catalogDir" type="text" class="text"/></td>
+                        <td><span wicket:id="catalogDir"/></td>
                     </tr>
                     <tr>
                         <td><wicket:message key="packageDir"/> :</td>
-                        <td><input wicket:id="packageDir" type="text"  class="text"/></td>
+                        <td><span wicket:id="packageDir"/></td>
                     </tr>
 
                    
+                    
+                    <tr>
+                         <span wicket:id="sitebookspanel"/>
+                    </tr>
                      <tr>
                         <td>
                             <input type="image" src="images/btn_PERUUTA.gif"  class="button" wicket:id="cancel"/>
-                            <input type="image" src="images/btn_TALLENNA.gif"  class="button" wicket:id="save"  />
+                  
                         </td>
                     </tr>
-                 
-                    
-                    
+
                 </table>
             </div>
-           
+
         </form>
+       
     </div>
+
     <div class="end"><!-- MSIE fix --></div>
     
 </div>

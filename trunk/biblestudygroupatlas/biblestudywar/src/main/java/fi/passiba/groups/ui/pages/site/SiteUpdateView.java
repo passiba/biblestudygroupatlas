@@ -15,6 +15,7 @@ import java.util.Map;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
@@ -34,7 +35,7 @@ import org.crosswire.jsword.book.install.Installer;
  *
  * @author haverinen
  */
-public class SiteUpdateEdit extends ProtectedPage {
+public class SiteUpdateView extends ProtectedPage {
 
     /**
      * The model that we are providing a view/controller for
@@ -54,7 +55,7 @@ public class SiteUpdateEdit extends ProtectedPage {
     private List names = new ArrayList();
     private final Page backPage;
 
-    public SiteUpdateEdit() {
+    public SiteUpdateView() {
         super();
         backPage = null;
         init();
@@ -95,11 +96,10 @@ public class SiteUpdateEdit extends ProtectedPage {
         }));
         final SiteForm form = new SiteForm("siteform", getModel(), name);
         add(form);
-
+        
     //setInstaller(installer);
 
     }
-
     private final class SiteForm extends Form {
 
         public SiteForm(String id, IModel m, String name) {
@@ -108,25 +108,65 @@ public class SiteUpdateEdit extends ProtectedPage {
             final Label siteName = new Label("sitename", new PropertyModel(getModel(), "siteUpdateName"));
             siteName.setOutputMarkupId(true);
             add(siteName);
-            final TextField hostName = new TextField("host", new PropertyModel(getModel(), "installer.host"));
-            hostName.setRequired(true);
-            hostName.add(StringValidator.maximumLength(50));
+            final Label hostName = new Label("host", new PropertyModel(getModel(), "installer.host"));
             hostName.setOutputMarkupId(true);
             add(hostName);
 
-            final TextField catalogDir = new TextField("catalogDir", new PropertyModel(getModel(), "installer.catalogDirectory"));
-            catalogDir.setRequired(true);
-            catalogDir.add(StringValidator.maximumLength(50));
+            final Label catalogDir =  new Label("catalogDir", new PropertyModel(getModel(), "installer.catalogDirectory"));
             catalogDir.setOutputMarkupId(true);
             add(catalogDir);
 
 
-            final TextField packageDir = new TextField("packageDir", new PropertyModel(getModel(), "installer.packageDirectory"));
-            packageDir.add(StringValidator.maximumLength(50));
+            final Label packageDir = new Label("packageDir", new PropertyModel(getModel(), "installer.packageDirectory"));
             packageDir.setOutputMarkupId(true);
             add(packageDir);
 
-            ChoiceRenderer choiceRenderer = new ChoiceRenderer("siteUpdateName");
+            final SiteBookTreePanel sitebookspanel = new SiteBookTreePanel("sitebookspanel",name);
+            sitebookspanel.setOutputMarkupId(true);
+            add(sitebookspanel);
+
+            final WebMarkupContainer installers = new WebMarkupContainer("installer");
+            add(installers );
+            installers.setVisible(true);
+            installers.setOutputMarkupId(true);
+            final DropDownChoice siteinstallers=new DropDownChoice("siteinstallers", new PropertyModel(getModel(),
+                    "siteUpdateName"), names );
+            
+            siteinstallers.setRequired(true);
+            siteinstallers.setOutputMarkupId(true);
+            
+            installers.add(siteinstallers);
+            
+            installers.add(new AjaxFormSubmitBehavior("onchange") {
+
+                @Override
+                protected void onSubmit(AjaxRequestTarget target) {
+                    //group.setAdress(groupservice.findGroupAddressByGroupId(group.getId()));
+                    String sitename=installerValues.getSiteUpdateName();
+                    Installer installer = siteEditorService.getInstaller(sitename);
+
+                    hostName.setModel(new PropertyModel(installer, "host"));
+                    catalogDir.setModel(new PropertyModel(installer, "catalogDirectory"));
+                    packageDir.setModel(new PropertyModel(installer, "packageDirectory"));
+                    siteName.setModel(new PropertyModel( getModel(), "siteUpdateName"));
+
+                    addOrReplace(new  SiteBookTreePanel("sitebookspanel",installerValues.getSiteUpdateName()));
+
+                    target.addComponent(siteName);
+                    target.addComponent(hostName);
+                    target.addComponent(catalogDir);
+                    target.addComponent(packageDir);
+                    target.addComponent(installers);
+                    target.addComponent(siteinstallers);
+                    //reset();
+                }
+
+                @Override
+                protected void onError(AjaxRequestTarget target) {
+                }
+            });
+
+          /*  ChoiceRenderer choiceRenderer = new ChoiceRenderer("siteUpdateName");
 
             DropDownChoice siteinstallers = new DropDownChoice("installers", new PropertyModel(installerValues, "siteUpdateName"),
                     new LoadableDetachableModel() {
@@ -147,11 +187,13 @@ public class SiteUpdateEdit extends ProtectedPage {
                             return siteIntstallers;
 
                         }
-                    },choiceRenderer);
+                    },choiceRenderer)
 
             siteinstallers.setOutputMarkupId(true);
             add(siteinstallers);
 
+
+            
             siteinstallers.add(new AjaxFormSubmitBehavior("onchange") {
 
                 @Override
@@ -161,6 +203,10 @@ public class SiteUpdateEdit extends ProtectedPage {
                     catalogDir.setModel(new PropertyModel( installerValues, "catalogDirectory"));
                     packageDir.setModel(new PropertyModel( installerValues, "packageDirectory"));
                     siteName.setModel(new PropertyModel( installerValues, "packageDirectory"));
+
+                    addOrReplace(new  SiteBookTreePanel("sitebookspanel",installerValues.getSiteUpdateName()));
+                  
+
                     target.addComponent(siteName);
                     target.addComponent(hostName);
                     target.addComponent(catalogDir);
@@ -171,7 +217,7 @@ public class SiteUpdateEdit extends ProtectedPage {
                 @Override
                 protected void onError(AjaxRequestTarget target) {
                 }
-            });
+            });*/
 
             /*  TextField proxyHost = new TextField("proxyHost", new PropertyModel(getModel(), "proxyHost"));
             proxyHost.add(StringValidator.maximumLength(50));
@@ -182,30 +228,11 @@ public class SiteUpdateEdit extends ProtectedPage {
             add(proxyPort);*/
             // ChoiceRenderer choiceRenderer = new ChoiceRenderer("fk_userid.rolename");
 
-
-
-            add(new SaveButton("save"));
             add(new CancelButton("cancel"));
         }
     }
 
-    private final class SaveButton extends Button {
-
-        private SaveButton(String id) {
-            super(id);
-
-        }
-
-        @Override
-        public void onSubmit() {
-            // Person person = (Person) getForm().getModelObject();
-            //person.setFk_userid(user);
-            //authenticate.updatePerson(person);
-            save();
-            setResponsePage(SiteUpdateEdit.class);
-        //setResponsePage(SiteEdit.this.backPage);
-        }
-    }
+  
 
     private final class CancelButton extends Button {
 
@@ -219,7 +246,7 @@ public class SiteUpdateEdit extends ProtectedPage {
 
         @Override
         public void onSubmit() {
-            if (SiteUpdateEdit.this.backPage != null) {
+            if (SiteUpdateView.this.backPage != null) {
                 //  setResponsePage(SiteEdit.this.backPage);
             } else {
                 setResponsePage(Main.class);

@@ -11,7 +11,7 @@ import org.crosswire.jsword.book.install.Installer;
  * 
  * @author haverinen
  */
-public final class SiteInstaller implements IClusterable {
+public final class SiteInstaller{
 
     private String siteUpdateName;
     private HttpSwordInstaller  installer;

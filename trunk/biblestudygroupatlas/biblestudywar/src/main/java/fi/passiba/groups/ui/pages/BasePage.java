@@ -1,6 +1,6 @@
 package fi.passiba.groups.ui.pages;
 
-import fi.passiba.groups.ui.pages.site.SiteUpdateEdit;
+import fi.passiba.groups.ui.pages.site.SiteUpdateView;
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.groups.ui.pages.search.ListPersons;
 import fi.passiba.groups.ui.pages.search.SearchPanelPage;
@@ -124,7 +124,7 @@ public class BasePage extends ProtectedPage {
 
         item = new MenuItem();
         item.caption = getLocalizer().getString("navigation_installed_bibledatasites", this);
-        item.destination = SiteUpdateEdit.class;
+        item.destination = SiteUpdateView.class;
         menu.add(item);
 
         item = new MenuItem();
