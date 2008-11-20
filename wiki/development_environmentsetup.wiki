@@ -1,5 +1,5 @@
-#summary One-sentence summary of this page.
 #labels Phase-Implementation,Phase-Deploy
+#Development environment setup intructions.
 
 = Introduction =
 
@@ -20,3 +20,14 @@ Step-by-step instructions:
 
 * Checkout thirdparty modules from svn repository https://crosswire.org/svn/jsword/trunk
   -needed modules are common and jsword 
+
+* Install each maven module depenency using maven install command
+     mvn install:install-file -DgroupId=org.webharvest -DartifactId=webharvest    -Dversion=1.0 -Dpackaging=jar -Dfile=/path/to/file
+
+ mvn install:install-file -DgroupId=org.crosswire -DartifactId=jsword -Dversion=1.6 -Dpackaging=jar -Dfile=/path/to/file
+
+ mvn install:install-file -DgroupId=org.crosswire -DartifactId=jsword-common -Dversion=1.6 -Dpackaging=jar -Dfile=/path/to/file
+
+
+
+
