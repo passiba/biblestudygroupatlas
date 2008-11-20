@@ -29,5 +29,3 @@ Step-by-step instructions:
  mvn install:install-file -DgroupId=org.crosswire -DartifactId=jsword-common -Dversion=1.6 -Dpackaging=jar -Dfile=/path/to/file
 
 
-
-
