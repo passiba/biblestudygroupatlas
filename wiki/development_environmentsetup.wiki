@@ -3,8 +3,7 @@
 
 = Introduction =
 
-This page highlights the setup instructions to get the biblestudygroupatlas application
-running on your pc.
+Setup environment instructions in order to run biblestudygroup atlas application on your pc
 
 
 = Details =
@@ -27,5 +26,3 @@ Step-by-step instructions:
  mvn install:install-file -DgroupId=org.crosswire -DartifactId=jsword -Dversion=1.6 -Dpackaging=jar -Dfile=/path/to/file
 
  mvn install:install-file -DgroupId=org.crosswire -DartifactId=jsword-common -Dversion=1.6 -Dpackaging=jar -Dfile=/path/to/file
-
-
