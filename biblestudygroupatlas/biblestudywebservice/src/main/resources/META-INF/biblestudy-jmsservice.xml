@@ -4,8 +4,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:jee="http://www.springframework.org/schema/jee"
 
-        xmlns:aop="http://www.springframework.org/schema/aop"
-        xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
       
 
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
@@ -14,16 +15,16 @@
         http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
         http://www.springframework.org/schema/tx 
         http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
-        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
-            
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
    <tx:annotation-driven transaction-manager="transactionManager"/>
   <!--references to the configured jmsFactory and queue -->
-  <jee:jndi-lookup id="jmsConntectionFactory" jndi-name="jms/ConnectionFactory" resource-ref="true"/>
+  <jee:jndi-lookup id="jmsConntectionFactory" jndi-name="jms/ConnectionFactory" resource-ref="true" environment-ref="jndiproperties" expected-type="org.apache.activemq.ActiveMQConnectionFactory"/>
 
   <jee:jndi-lookup id="biblebookDataDestination" jndi-name="jms/bibleDataQueue"
-		resource-ref="true" proxy-interface="javax.jms.Queue"/>
+		resource-ref="true" proxy-interface="javax.jms.Queue" environment-ref="jndiproperties" />
 
- 
+   <util:properties id="jndiproperties" location="classpath:META-INF/jndi.properties"/>
   <!--default ActiveMQ portnuber 
   <bean id="jmsConntectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
     
@@ -38,8 +39,8 @@
   <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
       <property name="connectionFactory" ref="jmsConntectionFactory" />
       <property name="defaultDestination" ref="biblebookDataDestination"/>
-      <!-- recieving messages timeout 1 min -->
-      <property name="receiveTimeout" value="6000" />
+      <!-- recieving messages timeout 1 min 
+      <property name="receiveTimeout" value="6000" />-->
       <property name="messageConverter" ref="bibleBookDataConverter" />
   </bean>
   <!--handles converting messages from MapMessages to java objects -->
