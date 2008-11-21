@@ -33,21 +33,25 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.jms.MapMessage;
 import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.OSISUtil;
 import org.crosswire.jsword.passage.Key;
+import org.crosswire.jsword.passage.KeyFactory;
+import org.crosswire.jsword.passage.NoSuchKeyException;
+import org.crosswire.jsword.passage.NoSuchVerseException;
+import org.crosswire.jsword.passage.Passage;
+import org.crosswire.jsword.passage.PassageKeyFactory;
+import org.crosswire.jsword.passage.VerseFactory;
+import org.crosswire.jsword.versification.BibleInfo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
-import org.webharvest.definition.ScraperConfiguration;
-import org.webharvest.runtime.Scraper;
+//import org.webharvest.definition.ScraperConfiguration;
+//import org.webharvest.runtime.Scraper;
 
 /**
  *
@@ -65,6 +69,10 @@ public class BibleDataMiningImp implements IBibleDataMining {
     private IChapterVotingDAO chapterVotingDAO=null;
     private SessionFactory sessionFactory;
 
+        /**
+     * How we create Passages
+     */
+    private static KeyFactory keyf = PassageKeyFactory.instance();
   
     public SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -162,9 +170,9 @@ public class BibleDataMiningImp implements IBibleDataMining {
     }
 	//@ManagedOperation(description = "Retrieve daily new section of books of bible")
     public void retrieveBookdata() {
-
+         /*
         try {
-            ScraperConfiguration config = null;
+           ScraperConfiguration config = null;
             Scraper scraper = null;
 
             List<Bookdatasource> datasources = datasourceDAO.findBookDataSourcesByStatus(StatusType.ACTIVE.getStatus());
@@ -198,7 +206,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
         //  System.out.println(article.toString())
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
-        }
+        }*/
 
     }
 
@@ -241,7 +249,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
 
     public void parseBookXMLData(Bookdatasource datasource, String ouputDir) {
 
-        Transaction tx = null;
+    /*    Transaction tx = null;
         Session session = null;
         try {
             session = sessionFactory.openSession();
@@ -295,10 +303,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
 
                 i += 1;
             }
-           /* for (Chapter chp : chaps) {
-                chapterDao.save(chp);
-
-            }*/
+          
             bookDao.update(book);
             //datasource.setBook(book);
             //datasource.setStatus(status);
@@ -319,7 +324,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
             if (session != null && session.isOpen()) {
                 session.close();
             }
-        }
+        }*/
     }
 
     public void addBookDatasource(Bookdatasource datasource) {
@@ -385,7 +390,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
     public void addBibleData(org.crosswire.jsword.book.Book book) {
 
         Key results = book.getGlobalKeyList();
-        int entries = 0;
+        
 
 
         System.out.println("Book " + book.getInitials() + " is available");
@@ -399,12 +404,22 @@ public class BibleDataMiningImp implements IBibleDataMining {
             translationDAO.save( translation);
             Iterator it2 = results.iterator();
 
-            while (it2.hasNext()) {
+            for(int entries = 1;it2.hasNext() && entries < BibleInfo.booksInBible();entries++) {
                 Key key = (Key) it2.next();
                 BookData data = new BookData(book, key);
+
                 try {
-                    System.out.println("And the text against that key is " + OSISUtil.getPlainText(data.getOsisFragment()));
-                    // entries++;
+                     org.crosswire.jsword.passage.Verse verse =getVerse(key);
+                    if(verse!=null)
+                    {
+                        int bookNum=verse.getBook();
+                        int chapterNum=verse.getChapter();
+                        int verseNum=verse.getVerse();
+                    } 
+                    if (data.getOsisFragment() == null)
+                    {
+                        System.out.println("And the text against that key is " + OSISUtil.getPlainText(data.getOsisFragment()));
+                    }
                     /* StringBuffer buf = new StringBuffer();
                     String osisID = key.getOsisID();
                     buf.append(book.getInitials());
@@ -436,5 +451,58 @@ public class BibleDataMiningImp implements IBibleDataMining {
             }
         }
     }
+     private static org.crosswire.jsword.passage.Verse getVerse(Key key)
+    {
+        if (key instanceof org.crosswire.jsword.passage.Verse)
+        {
+            return (org.crosswire.jsword.passage.Verse) key;
+        }
+
+       /* if (key instanceof Passage)
+        {
+            Passage ref = getPassage(key);
+            return ref.getVerseAt(0);
+        }*/
+
+        try
+        {
+            return VerseFactory.fromString(key.getName());
+        }
+        catch (NoSuchVerseException ex)
+        {
+           // log.warn("Key can't be a verse: " + key.getName()); //$NON-NLS-1$
+            return null;
+        }
+    }
+     /**
+     * Not all keys represent passages, but we ought to be able to get something
+     * close to a passage from anything that does passage like work.
+     * If you pass a null key into this method, you get a null Passage out.
+     */
+    private static Passage getPassage(Key key)
+    {
+        if (key == null)
+        {
+            return null;
+        }
+
+        if (key instanceof Passage)
+        {
+            return (Passage) key;
+        }
+
+        Key ref = null;
+        try
+        {
+            ref = keyf.getKey(key.getName());
+        }
+        catch (NoSuchKeyException ex)
+        {
+           // log.warn("Key can't be a passage: " + key.getName()); //$NON-NLS-1$
+            ref = keyf.createEmptyKeyList();
+        }
+        return (Passage) ref;
+    }
+
 
 }

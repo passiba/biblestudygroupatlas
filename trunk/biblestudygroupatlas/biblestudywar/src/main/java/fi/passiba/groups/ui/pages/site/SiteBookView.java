@@ -99,26 +99,30 @@ public class SiteBookView extends BasePage{
             language.setOutputMarkupId(true);
             add(language);
 
-            add(new SaveButton("save"));
+            add(new SaveButton("save",siteName,book));
             add(new CancelButton("cancel"));
         }
     }
 
     private final class SaveButton extends Button {
 
-        private SaveButton(String id) {
+        private Book installedBook;
+        private String siteName;
+        private SaveButton(String id,String sitename,Book book) {
             super(id);
+            this.siteName=sitename;
+            this.installedBook=book;
 
         }
 
         @Override
         public void onSubmit() {
             try {
-                siteEditorService.getInstaller(siteName).install(book);
+                siteEditorService.getInstaller(siteName).install(installedBook);
             } catch (InstallException ex) {
                // Logger.getLogger(SiteBookView.class.getName()).log(Level.SEVERE, null, ex);
             }
-            bibleDataProcessing.sendBibleBookDataForProcessing(book);
+            bibleDataProcessing.sendBibleBookDataForProcessing(installedBook);
             setResponsePage(SiteUpdateView.class);
         //setResponsePage(SiteEdit.this.backPage);
         }
