@@ -23,6 +23,8 @@ package fi.passiba.services.bibledata;
 
 import java.util.List;
 import java.util.Map;
+import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.install.InstallException;
 import org.crosswire.jsword.book.install.Installer;
 
 /**
@@ -72,9 +74,8 @@ public interface SiteEditor
      */
     public Installer getInstaller(String sitename);
 
+
     
-    
-  
 
 
 

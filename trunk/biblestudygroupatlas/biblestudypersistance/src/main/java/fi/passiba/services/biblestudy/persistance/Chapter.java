@@ -62,19 +62,7 @@ public class Chapter implements DomainObject,Identifiable {
    
     private Set<Verse> verses = new HashSet();
 
-    private Biblesession session;
-
-
-    @ContainedIn
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_biblesessionid", unique = false, nullable = true, insertable = true, updatable = true)
-    public Biblesession getSession() {
-        return session;
-    }
-
-    public void setSession(Biblesession session) {
-        this.session = session;
-    }
+    
     
     @ContainedIn
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
