@@ -18,9 +18,7 @@ import org.springframework.transaction.annotation.Propagation;
 public interface IBiblesessionDAO extends  BaseDao<Biblesession>{
 
     
-    @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
-    public List<Verse> findBibleSessionVerses(long sessionid);
-    
+     
    
     
     

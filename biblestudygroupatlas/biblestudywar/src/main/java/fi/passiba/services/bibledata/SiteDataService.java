@@ -14,8 +14,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.install.Installer;
 import fi.passiba.services.bibledata.sword.HttpSwordInstaller;
+import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.install.InstallException;
 
 
@@ -181,50 +186,12 @@ public class SiteDataService implements SiteEditor{
         return installer;
     }
 
+    
+
 
 
 
    
-
-    /**
-     * Pick an installer
-     * @param parent A component to tie dialogs to
-     * @return The chosen installer or null if the user cancelled.
-     
-    private static Installer selectInstaller(Component parent)
-    {
-        // Pick an installer
-        InstallManager insman = new InstallManager();
-        Map installers = insman.getInstallers();
-        Installer installer = null;
-        if (installers.size() == 1)
-        {
-            Iterator it = installers.values().iterator();
-            boolean hasNext = it.hasNext();
-            assert hasNext;
-            installer = (Installer) it.next();
-        }
-        else
-        {
-            JComboBox choice = new JComboBox(new InstallManagerComboBoxModel(insman));
-            JLabel label = new JLabel(Msg.HOW_SITE.toString());
-            JPanel panel = new JPanel(new BorderLayout());
-            panel.add(label, BorderLayout.NORTH);
-            panel.add(choice, BorderLayout.CENTER);
-
-            String title = Msg.HOW_SITE_TITLE.toString();
-
-            int yn = CWOptionPane.showConfirmDialog(parent, panel, title, JOptionPane.YES_OPTION);
-            if (yn == JOptionPane.YES_OPTION)
-            {
-                installer = (Installer) choice.getSelectedItem();
-            }
-        }
-
-        return installer;
-    }
-
- */
 
 
 

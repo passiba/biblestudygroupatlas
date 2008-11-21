@@ -15,7 +15,7 @@
    <tx:annotation-driven transaction-manager="transactionManager"/>
   
     <import resource="classpath:META-INF/biblestudy-data-hibernate.xml"/>
-    <import resource="classpath:META-INF/biblestudy-jmsservice.xml"/>
+    <!--<import resource="classpath:META-INF/biblestudy-jmsservice.xml"/>-->
     <bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
@@ -121,12 +121,12 @@
   </bean>
   <!-- crating pure MD pojo can be accomplished by using MessageListnerAdaper,which hides JMS specific
   code of recieving JMS Message and the converter converts MapMessage into the bean type which we expect to
-  be returend from the queue -->
+  be returend from the queue 
 
    <bean id="bibleBookDataListner" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
         <property name="delegate" ref="IBibleDataMining"/>
         <property name="defaultListenerMethod" value="addBibleData"/>
         <property name="messageConverter" ref="bibleBookDataConverter"/>
-  </bean>
+  </bean>-->
   
 </beans>

@@ -57,7 +57,7 @@ public class Biblesession implements DomainObject,Identifiable {
   
     private Date sessiontime;
 
-    private Set<Chapter> chapters = new HashSet<Chapter>(0);
+    //private Set<Chapter> chapters = new HashSet<Chapter>(0);
     @DateBridge( resolution = Resolution.DAY )
     @Field(index = Index.TOKENIZED)
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -69,7 +69,7 @@ public class Biblesession implements DomainObject,Identifiable {
     public void setSessiontime(Date sessiontime) {
         this.sessiontime = sessiontime;
     }
-    @IndexedEmbedded
+   /* @IndexedEmbedded
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST}, fetch = FetchType.LAZY, mappedBy = "session")
     public Set<Chapter> getChapters() {
         return chapters;
@@ -77,7 +77,7 @@ public class Biblesession implements DomainObject,Identifiable {
 
     public void setChapters(Set<Chapter> chapters) {
         this.chapters = chapters;
-    }
+    }*/
 
 
     

@@ -5,6 +5,7 @@
 
 package fi.passiba.groups.ui.pages.site;
 
+import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.groups.ui.pages.BasePage;
 
 import fi.passiba.services.bibledata.IBibleBookDataProcessing;
@@ -16,6 +17,8 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -24,11 +27,13 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.crosswire.common.util.Language;
 import org.crosswire.jsword.book.Book;
+import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.BookList;
 //import org.crosswire.bibledesktop.book.install.BookTreeCellRenderer;
 //import org.crosswire.bibledesktop.book.install.BookNode;
 
 import org.crosswire.jsword.book.BookSet;
+import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.install.InstallException;
 /**
  *
@@ -43,8 +48,11 @@ public class SiteBookView extends BasePage{
 
     @SpringBean
     private SiteEditor siteEditorService ;
+    //@SpringBean
+   // private IBibleBookDataProcessing bibleDataProcessing;
+
     @SpringBean
-    private IBibleBookDataProcessing bibleDataProcessing;
+    IBibleDataMining bibeDataMining;
 
     private String siteName;
     private Page backPage;
@@ -104,7 +112,7 @@ public class SiteBookView extends BasePage{
         }
     }
 
-    private final class SaveButton extends Button {
+    private final class SaveButton extends AjaxButton {
 
         private Book installedBook;
         private String siteName;
@@ -114,17 +122,30 @@ public class SiteBookView extends BasePage{
             this.installedBook=book;
 
         }
-
         @Override
-        public void onSubmit() {
+        protected void onSubmit(AjaxRequestTarget target, Form bookform) {
+
             try {
+
+
+                if (Books.installed().getBook(installedBook.getInitials()) != null) //$NON-NLS-1$
+                {
+                    // Actually do the delete
+                    // This should be a call on installer.
+                    try {
+                        Books.installed().removeBook(installedBook);
+                        book.getDriver().delete(installedBook);
+                    } catch (BookException e) {
+                        e.printStackTrace();
+                    }
+                }
                 siteEditorService.getInstaller(siteName).install(installedBook);
             } catch (InstallException ex) {
                // Logger.getLogger(SiteBookView.class.getName()).log(Level.SEVERE, null, ex);
             }
-            bibleDataProcessing.sendBibleBookDataForProcessing(installedBook);
+            //bibleDataProcessing.sendBibleBookDataForProcessing(installedBook);
+            bibeDataMining.addBibleData(installedBook);
             setResponsePage(SiteUpdateView.class);
-        //setResponsePage(SiteEdit.this.backPage);
         }
     }
 
