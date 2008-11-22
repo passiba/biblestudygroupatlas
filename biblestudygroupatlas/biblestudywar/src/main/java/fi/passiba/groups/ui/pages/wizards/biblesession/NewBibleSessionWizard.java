@@ -16,6 +16,7 @@
  */
 package fi.passiba.groups.ui.pages.wizards.biblesession;
 
+import fi.passiba.biblestudy.BibleStudyApplication;
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
@@ -64,9 +65,6 @@ import org.wicketstuff.dojo.markup.html.form.DojoDatePicker;
  */
 public class NewBibleSessionWizard extends Wizard {
 
-     
-    @SpringBean
-    private IBibleDataMining bibleDatamining;
     @SpringBean
     private IBibleSessionServices sessionServices;
 
@@ -107,11 +105,9 @@ public class NewBibleSessionWizard extends Wizard {
 
 
             if (getModel() != null) {
-                String weburl = (String) new PropertyModel(getModel(), "weburlName").getObject();
+              
                 bibleSession = (BibleSession) getModel().getObject();
-                if (weburl != null) {
-                    bibleSession.setBibleChapterText(getSelectedBibleVerseText(weburl));
-                }
+               
             }
 
 
@@ -153,35 +149,8 @@ public class NewBibleSessionWizard extends Wizard {
                 sessiontypes.add(new DropDownChoice("types", new PropertyModel(bibleSession,
                         "sessiontype"), allSessionTypes).setRequired(true));
           
-                final AutoCompleteTextField weburlName = new AutoCompleteTextField("weburlName", new PropertyModel(bibleSession,
-                        "weburlName")) {
-
-                    @Override
-                    protected Iterator getChoices(String arg0) {
-                        return Collections.EMPTY_LIST.iterator();
-                    }
-                };
-
-                weburlName.setOutputMarkupId(true);
-
-                add(weburlName);
                 add(new BibleDataTreePanel("bibleDataTree"));
-                final Label selectedBibleChapterVerses = new Label("selectedChapterText", new PropertyModel(bibleSession, "bibleChapterText"));
-                selectedBibleChapterVerses.setOutputMarkupId(true);
-                add(selectedBibleChapterVerses);
-                weburlName.add(new AjaxFormSubmitBehavior("onchange") {
-
-                    @Override
-                    protected void onSubmit(AjaxRequestTarget target) {
-                        bibleSession.setBibleChapterText(NewBibleSessionWizard.this.getSelectedBibleVerseText(weburlName.getModelObjectAsString()));
-                        target.addComponent(selectedBibleChapterVerses);
-
-                    }
-
-                    @Override
-                    protected void onError(AjaxRequestTarget target) {
-                    }
-                });
+               
 
             }
         }
@@ -221,17 +190,6 @@ public class NewBibleSessionWizard extends Wizard {
         
         if(bibleSession!=null)
         {
-            
-            
-            if(bibleSession.getWeburlName()!=null || ! bibleSession.getWeburlName().trim().isEmpty())
-            {
-                Bookdatasource bookSource= new Bookdatasource();
-
-                bookSource.setWeburlName(bibleSession.getWeburlName());
-                bookSource.setCreatedBy(bibleSession.getCreatedBy());
-                bookSource.setStatus(bibleSession.getStatus());
-                bibleDatamining.addBookDatasource(bookSource);
-            }
             
             Biblesession session=new Biblesession();
             session.setSessiontime(bibleSession.getSessionDate());

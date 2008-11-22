@@ -14,14 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookException;
 import org.crosswire.jsword.book.install.Installer;
 import fi.passiba.services.bibledata.sword.HttpSwordInstaller;
-import org.crosswire.jsword.book.Books;
-import org.crosswire.jsword.book.install.InstallException;
 
 
 /**
@@ -36,18 +30,7 @@ public class SiteDataService implements SiteEditor{
     private static InstallManager imanager;
     private  HttpSwordInstaller installer;
     private String port,host,catalogDir,packageDir,proxyHost,proxyPort;
-
-    private static final String INSTALLED_BOOKS_LABEL = "InstalledBooksLabel"; //$NON-NLS-1$
-    private static final String AVAILABLE_BOOKS_LABEL = "AvailableBooksLabel"; //$NON-NLS-1$
-    private static final String SELECTED_BOOK_LABEL = "SelectedBookLabel"; //$NON-NLS-1$
-    private static final String REFRESH = "Refresh"; //$NON-NLS-1$
-    private static final String INSTALL = "Install"; //$NON-NLS-1$
-    private static final String INSTALL_SEARCH = "InstallSearch"; //$NON-NLS-1$
-    private static final String DELETE = "Delete"; //$NON-NLS-1$
-    private static final String UNLOCK = "Unlock"; //$NON-NLS-1$
-    private static final String CHOOSE_FONT = "ChooseFont"; //$NON-NLS-1$
-    private static final String UNINDEX = "Unindex"; //$NON-NLS-1$
-    
+  
     private Map installers=null;
   
       /**

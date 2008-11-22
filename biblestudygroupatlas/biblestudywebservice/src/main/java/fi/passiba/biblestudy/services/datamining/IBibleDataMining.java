@@ -31,7 +31,8 @@ public interface IBibleDataMining {
     public Bookdatasource updateBookDatasource(Bookdatasource datasource); 
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteBookDatasource(Bookdatasource datasource); 
-    public void parseBookXMLData(Bookdatasource datasource,String ouputDir);
+
+    
     @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
     public List<Bookdatasource> findBookDataSourcesByStatus(String status);
 
@@ -71,6 +72,6 @@ public interface IBibleDataMining {
     public ChapterVoting findRatingByChapterid(long id);
 
     @Transactional(propagation = Propagation.REQUIRED)
-     public void addBibleData(org.crosswire.jsword.book.Book book);
+     public void addBibleData(org.crosswire.jsword.book.Book book,Bookdatasource datasource);
 
 }
