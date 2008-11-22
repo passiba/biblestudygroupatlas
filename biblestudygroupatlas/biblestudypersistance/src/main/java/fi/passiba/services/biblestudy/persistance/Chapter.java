@@ -60,7 +60,7 @@ public class Chapter implements DomainObject,Identifiable {
   
     private String chapterTitle;
    
-    private Set<Verse> verses = new HashSet();
+    private Set<Verse> verses = new HashSet<Verse>(0);
 
     
     
