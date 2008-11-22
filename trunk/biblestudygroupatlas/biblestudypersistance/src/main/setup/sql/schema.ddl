@@ -47,19 +47,13 @@
         updated_by varchar(255),
         updated_on datetime,
         catalog_dir varchar(50) not null,
-        configfiledir varchar(50),
         hostname varchar(50) not null,
-        outputdir varchar(20),
-        outputfilename varchar(15),
-        outputsubdir varchar(15),
         package_dir varchar(50) not null,
-        proxy_host varchar(50) not null,
-        proxy_port varchar(10) not null,
-        configfile varchar(15),
+        proxy_host varchar(255),
+        proxy_port varchar(255),
         sitename varchar(50) not null,
         status varchar(50) not null,
-        weburlname varchar(50) not null,
-        fk_book_id bigint,
+        fk_bible_translation_id bigint,
         primary key (bookdatasource_id)
     ) type=InnoDB;
 
@@ -120,8 +114,8 @@
         email varchar(80) not null,
         firstname varchar(80) not null,
         lastname varchar(80) not null,
-        fk_address_id bigint,
         fk_userid bigint,
+        fk_address_id bigint,
         primary key (person_id)
     ) type=InnoDB;
 
@@ -160,10 +154,10 @@
         references booksection (section_id);
 
     alter table bookdatasource 
-        add index FKF5C7DBEE81600C76 (fk_book_id), 
-        add constraint FKF5C7DBEE81600C76 
-        foreign key (fk_book_id) 
-        references book (book_id);
+        add index FKF5C7DBEE31C41AE1 (fk_bible_translation_id), 
+        add constraint FKF5C7DBEE31C41AE1 
+        foreign key (fk_bible_translation_id) 
+        references bibletranslation (bible_translation_id);
 
     alter table booksection 
         add index FK159DDBDC31C41AE1 (fk_bible_translation_id), 
