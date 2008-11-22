@@ -380,120 +380,122 @@ public class BibleDataMiningImp implements IBibleDataMining {
 
     public void addBibleData(org.crosswire.jsword.book.Book book) {
 
+        if (book != null) {
+            org.crosswire.jsword.book.Book installedBook = Books.installed().getBook(book.getName());
 
-        org.crosswire.jsword.book.Book installedBook = Books.installed().getBook(book.getName());
+            Key results = installedBook.getGlobalKeyList();
+            if (installedBook != null) {
+                Booksection oldTestament = new Booksection();
+                oldTestament.setSection(BibleBookSectionType.OLDTESTAMENT.getType());
 
-        Key results = installedBook.getGlobalKeyList();
-
-        Booksection oldTestament = new Booksection();
-        oldTestament.setSection(BibleBookSectionType.OLDTESTAMENT.getType());
-
-        Booksection newTestament = new Booksection();
-        newTestament.setSection(BibleBookSectionType.NEWTESTAMENT.getType());
-
-
-        System.out.println("Book " + installedBook.getInitials() + " is available");
-        if (Books.installed().getBook(installedBook.getName()) != null && BookCategory.BIBLE.equals(installedBook.getBookCategory())) {
-
-            Bibletranslation translation = new Bibletranslation();
-            translation.setBibleName(installedBook.getName());
-            translation.setBibleAbbrv(installedBook.getInitials());
-            translation.setPublishedDate(new Date());
-            translation.setPublisherName("test");
-            translationDAO.save(translation);
-
-            oldTestament.setBibletranslation(translation);
-            newTestament.setBibletranslation(translation);
-            booksectionDAO.save(oldTestament);
-            booksectionDAO.save(newTestament);
+                Booksection newTestament = new Booksection();
+                newTestament.setSection(BibleBookSectionType.NEWTESTAMENT.getType());
 
 
+                System.out.println("Book " + installedBook.getInitials() + " is available");
+                if (Books.installed().getBook(installedBook.getName()) != null && BookCategory.BIBLE.equals(installedBook.getBookCategory())) {
 
-            Book biblebook;
-            Chapter chapter;
-            Verse verseText;
-            //try {
+                    Bibletranslation translation = new Bibletranslation();
+                    translation.setBibleName(installedBook.getName());
+                    translation.setBibleAbbrv(installedBook.getInitials());
+                    translation.setPublishedDate(new Date());
+                    translation.setPublisherName("test");
+                    translationDAO.save(translation);
 
-            try {
-                for (int b = 1; b <=BibleInfo.booksInBible(); b++) {
+                    oldTestament.setBibletranslation(translation);
+                    newTestament.setBibletranslation(translation);
+                    booksectionDAO.save(oldTestament);
+                    booksectionDAO.save(newTestament);
 
-                    if (b < 40) {
-                        biblebook = storeBookData(b, oldTestament);
 
-                    } else {
-                        biblebook = storeBookData(b, newTestament);
-                    }
-                    for (int c = 1; c <= BibleInfo.chaptersInBook(b); c++) {
-                        chapter = storeChapter(c, biblebook);
 
-                        for (int v = 1; v <= BibleInfo.versesInChapter(b, c); v++) {
+                    Book biblebook;
+                    Chapter chapter;
+                    Verse verseText;
+                    //try {
 
-                            // int[] simple = { 1, 1, all++ };
-                            org.crosswire.jsword.passage.Verse verse = new org.crosswire.jsword.passage.Verse(b, c, v);
-                            Key verseKey = (Key) verse;
-                            //BookData data = new BookData(book, verseKey);
-                            StoreVerseData(verseKey, book, chapter);
+                    try {
+                        for (int b = 1; b <= BibleInfo.booksInBible(); b++) {
+
+                            if (b < 40) {
+                                biblebook = storeBookData(b, oldTestament);
+
+                            } else {
+                                biblebook = storeBookData(b, newTestament);
+                            }
+                            for (int c = 1; c <= BibleInfo.chaptersInBook(b); c++) {
+                                chapter = storeChapter(c, biblebook);
+
+                                for (int v = 1; v <= BibleInfo.versesInChapter(b, c); v++) {
+
+                                    // int[] simple = { 1, 1, all++ };
+                                    org.crosswire.jsword.passage.Verse verse = new org.crosswire.jsword.passage.Verse(b, c, v);
+                                    Key verseKey = (Key) verse;
+                                    //BookData data = new BookData(book, verseKey);
+                                    StoreVerseData(verseKey, book, chapter);
+                                }
+                            }
                         }
+                    } catch (NoSuchVerseException ex) {
                     }
+
+                /*
+
+                Iterator it2 = results.iterator();
+                List<Book> books = new ArrayList<Book>();
+                List<Chapter> chapters = new ArrayList<Chapter>();
+
+                for(int entries = 1;it2.hasNext();entries++) {
+                Key key = (Key) it2.next();
+                BookData data = new BookData(book, key);
+
+
+                org.crosswire.jsword.passage.Verse verse = getVerse(key);
+
+
+
+                if(verse!=null)
+                {
+                int bookNum=verse.getBook();
+                if(bookNum>books.size() || (bookNum==66 && books.size()<=66))
+                {
+                //set the booksection
+                if (bookNum < 40 ) {
+                books.add(storeBookData(verse,oldTestament));
+
+                } else {
+                books.add(storeBookData(verse,newTestament));
                 }
-            } catch (NoSuchVerseException ex) {
+                }
+
+                int chapterNum=verse.getChapter();
+                int verseNum=verse.getVerse();
+
+                System.out.println("Booknum " +bookNum +" chapternum "+chapterNum + " verseNum"+verseNum);
+                try {
+                if (data.getOsisFragment() != null) {
+                String osisID = key.getOsisID();
+                String name = key.getName();
+                String verseText = OSISUtil.getPlainText(data.getOsisFragment());
+                System.out.println("And the text against that key is with bookname:" + verseText);
+                verseText = verseText.substring(name.length(), verseText.length());
+                System.out.println("osisid: " + osisID + " name: " + name);
+                System.out.println("And the text against that key is " + verseText);
+                }
+                } catch (BookException ex) {
+                Logger.getLogger(BibleDataMiningImp.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                } else
+                {
+                System.out.println("verse on null");
+                }
+
+
+
+                }*/
+                }
             }
-
-        /*
-
-        Iterator it2 = results.iterator();
-        List<Book> books = new ArrayList<Book>();
-        List<Chapter> chapters = new ArrayList<Chapter>();
-
-        for(int entries = 1;it2.hasNext();entries++) {
-        Key key = (Key) it2.next();
-        BookData data = new BookData(book, key);
-
-
-        org.crosswire.jsword.passage.Verse verse = getVerse(key);
-
-
-
-        if(verse!=null)
-        {
-        int bookNum=verse.getBook();
-        if(bookNum>books.size() || (bookNum==66 && books.size()<=66))
-        {
-        //set the booksection
-        if (bookNum < 40 ) {
-        books.add(storeBookData(verse,oldTestament));
-
-        } else {
-        books.add(storeBookData(verse,newTestament));
-        }
-        }
-
-        int chapterNum=verse.getChapter();
-        int verseNum=verse.getVerse();
-
-        System.out.println("Booknum " +bookNum +" chapternum "+chapterNum + " verseNum"+verseNum);
-        try {
-        if (data.getOsisFragment() != null) {
-        String osisID = key.getOsisID();
-        String name = key.getName();
-        String verseText = OSISUtil.getPlainText(data.getOsisFragment());
-        System.out.println("And the text against that key is with bookname:" + verseText);
-        verseText = verseText.substring(name.length(), verseText.length());
-        System.out.println("osisid: " + osisID + " name: " + name);
-        System.out.println("And the text against that key is " + verseText);
-        }
-        } catch (BookException ex) {
-        Logger.getLogger(BibleDataMiningImp.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        } else
-        {
-        System.out.println("verse on null");
-        }
-
-
-
-        }*/
         }
     }
 
@@ -569,7 +571,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
             verseText.setVerseNum(verseNum);
             try {
                 if (verseNum <= BibleInfo.versesInChapter(bookNum, chapterNum)) {
-                  //  this.verseDAO.save(verseText);
+                    this.verseDAO.save(verseText);
                 }
             } catch (NoSuchVerseException ex) {
             }
