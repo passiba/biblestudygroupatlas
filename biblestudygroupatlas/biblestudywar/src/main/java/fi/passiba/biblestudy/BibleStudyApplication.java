@@ -3,11 +3,7 @@ package fi.passiba.biblestudy;
 import fi.passiba.biblestudy.authorization.BibleStudyFaceBookAuthorizationStrategy;
 
 
-import fi.passiba.groups.ui.pages.Home;
 import fi.passiba.groups.ui.pages.Main;
-import fi.passiba.services.authenticate.IAuthenticator;
-import fi.passiba.services.persistance.Person;
-import java.util.List;
 import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.Session;
@@ -19,7 +15,6 @@ import org.apache.wicket.protocol.http.request.WebRequestCodingStrategy;
 import org.apache.wicket.request.IRequestCodingStrategy;
 import org.apache.wicket.request.IRequestCycleProcessor;
 import org.apache.wicket.settings.ISecuritySettings;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -40,9 +35,7 @@ public class BibleStudyApplication extends WebApplication implements Application
     private ApplicationContext ctx;
 
 
-     @SpringBean
-    private IAuthenticator authenticate;
-
+    
     public Class getHomePage() {
         return Main.class;
     }
