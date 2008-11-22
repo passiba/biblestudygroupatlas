@@ -205,7 +205,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
         }*/
     }
 
-    private List<Verse> addVersesData(Chapter chap, String Text, String numbers) {
+     /*  private List<Verse> addVersesData(Chapter chap, String Text, String numbers) {
 
 
         System.out.println("number " + numbers);
@@ -239,7 +239,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
 
     public void parseBookXMLData(Bookdatasource datasource, String ouputDir) {
 
-        /*    Transaction tx = null;
+         Transaction tx = null;
         Session session = null;
         try {
         session = sessionFactory.openSession();
@@ -314,8 +314,8 @@ public class BibleDataMiningImp implements IBibleDataMining {
         if (session != null && session.isOpen()) {
         session.close();
         }
-        }*/
-    }
+        
+    }}*/
 
     public void addBookDatasource(Bookdatasource datasource) {
         datasourceDAO.save(datasource);
@@ -378,7 +378,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
         return chapterVotingDAO.findRatingByChapterid(id);
     }
 
-    public void addBibleData(org.crosswire.jsword.book.Book book) {
+    public void addBibleData(org.crosswire.jsword.book.Book book,Bookdatasource datasource) {
 
         if (book != null) {
             org.crosswire.jsword.book.Book installedBook = Books.installed().getBook(book.getName());
@@ -401,6 +401,10 @@ public class BibleDataMiningImp implements IBibleDataMining {
                     translation.setPublishedDate(new Date());
                     translation.setPublisherName("test");
                     translationDAO.save(translation);
+
+                    //save the newly created bibletranslation datasource
+                    datasource.setBibletranslation(translation);
+                    datasourceDAO.save(datasource);
 
                     oldTestament.setBibletranslation(translation);
                     newTestament.setBibletranslation(translation);

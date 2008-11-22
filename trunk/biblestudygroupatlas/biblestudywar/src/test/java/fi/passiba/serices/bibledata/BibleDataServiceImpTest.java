@@ -6,26 +6,19 @@ package fi.passiba.serices.bibledata;
 
 import fi.passiba.AbstractDependencyInjectionSpringContextTest;
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
-import fi.passiba.services.bibledata.IBibleBookDataProcessing;
 import fi.passiba.services.bibledata.SiteEditor;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.crosswire.jsword.book.install.Installer;
 import fi.passiba.services.bibledata.sword.HttpSwordInstaller;
 import fi.passiba.services.bibledata.sword.IndexResolver;
-import java.util.List;
+import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
 import org.crosswire.jsword.book.Book;
 import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
-import org.crosswire.jsword.book.BookFilters;
 import org.crosswire.jsword.book.Books;
 import org.crosswire.jsword.book.OSISUtil;
 import org.crosswire.jsword.book.install.InstallException;
-import org.crosswire.jsword.bridge.BookIndexer;
-import org.crosswire.jsword.bridge.BookInstaller;
 import org.crosswire.jsword.passage.Key;
 import org.crosswire.jsword.passage.KeyFactory;
 import org.crosswire.jsword.passage.NoSuchKeyException;
@@ -124,7 +117,7 @@ public class BibleDataServiceImpTest extends AbstractDependencyInjectionSpringCo
         IBibleDataMining bibeDataMining = (IBibleDataMining) applicationContext.getBean("IBibleDataMining");
         // IBibleBookDataProcessing bibleDataProcessing=(IBibleBookDataProcessing) applicationContext.getBean("bibleDataProcessingGageway");
         Map installers = siteEditorService.getInstallers();
-        String name = "", bookInitials = "FinPR92";
+        String name = "", bookInitials = "ESV";//bookInitials = "FinPR92";
 
         Iterator iter = installers.keySet().iterator();
         this.assertEquals(3, installers.size());
@@ -175,6 +168,7 @@ public class BibleDataServiceImpTest extends AbstractDependencyInjectionSpringCo
                 //installer.install(book);
                 try {
                 siteEditorService.getInstaller(name).install(book);
+                IndexResolver.scheduleIndex(book, siteEditorService.getInstaller(name));
             } catch (InstallException ex) {
                // Logger.getLogger(SiteBookView.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -184,7 +178,15 @@ public class BibleDataServiceImpTest extends AbstractDependencyInjectionSpringCo
 
                 //processBookData(book);
                 //bibleDataProcessing.sendBibleBookDataForProcessing(book);
-                bibeDataMining.addBibleData(book);
+                Bookdatasource bookSource= new Bookdatasource();
+                HttpSwordInstaller inst=(HttpSwordInstaller) siteEditorService.getInstaller(name);
+                bookSource.setCreatedBy("Junit Testcase");
+                bookSource.setHostname(inst.getHost());
+                bookSource.setSitename(name);
+                bookSource.setCatalogDir(inst.getCatalogDirectory());
+                bookSource.setPackageDir(inst.getPackageDirectory());
+                bookSource.setStatus("AKTIIVINEN");
+                bibeDataMining.addBibleData(book,bookSource);
             }
         }
 

@@ -120,7 +120,7 @@ org.springframework.orm.hibernate3.support.OpenSessionInViewFilter
     <servlet-mapping>
         <servlet-name>Jersey</servlet-name>
         <url-pattern>/atom/*</url-pattern>
-    </servlet-mapping>-->
+    </servlet-mapping>
         <resource-ref>
             <res-ref-name>jms/ConnectionFactory</res-ref-name>
             <res-type>javax.jms.ConnectionFactory</res-type>
@@ -132,5 +132,5 @@ org.springframework.orm.hibernate3.support.OpenSessionInViewFilter
             <res-type>javax.jms.Queue</res-type>
             <res-auth>Container</res-auth>
             <res-sharing-scope>Shareable</res-sharing-scope>
-        </resource-ref>
+        </resource-ref>-->
 </web-app>

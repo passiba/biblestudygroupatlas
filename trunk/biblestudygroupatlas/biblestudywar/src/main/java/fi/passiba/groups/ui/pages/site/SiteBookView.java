@@ -5,11 +5,18 @@
 
 package fi.passiba.groups.ui.pages.site;
 
+import fi.passiba.biblestudy.BibleStudyApplication;
+import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.groups.ui.pages.BasePage;
 
-import fi.passiba.services.bibledata.IBibleBookDataProcessing;
+import fi.passiba.services.authenticate.IAuthenticator;
 import fi.passiba.services.bibledata.SiteEditor;
+import fi.passiba.services.bibledata.sword.HttpSwordInstaller;
+import fi.passiba.services.bibledata.sword.IndexResolver;
+import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
+import fi.passiba.services.persistance.Person;
+import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
@@ -22,8 +29,6 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.crosswire.common.util.Language;
 import org.crosswire.jsword.book.Book;
@@ -45,7 +50,8 @@ public class SiteBookView extends BasePage{
      * The model that we are providing a view/controller for
      */
 
-
+    @SpringBean
+    private IAuthenticator authenticate;
     @SpringBean
     private SiteEditor siteEditorService ;
     //@SpringBean
@@ -57,6 +63,21 @@ public class SiteBookView extends BasePage{
     private String siteName;
     private Page backPage;
     private Book book;
+
+
+    public enum StatusType {
+
+        ACTIVE("AKTIIVINEN"), NOTACTIVE("EI AKTIIVINEN");
+        private String type;
+
+        private StatusType(String type) {
+            this.type = type;
+        }
+
+        public String getType() {
+            return type;
+        }
+    }
 
     public SiteBookView(PageParameters parameters) {
 
@@ -139,14 +160,36 @@ public class SiteBookView extends BasePage{
                         e.printStackTrace();
                     }
                 }
+                
                 siteEditorService.getInstaller(siteName).install(installedBook);
+                IndexResolver.scheduleIndex(installedBook, siteEditorService.getInstaller(siteName));
             } catch (InstallException ex) {
                // Logger.getLogger(SiteBookView.class.getName()).log(Level.SEVERE, null, ex);
             }
             //bibleDataProcessing.sendBibleBookDataForProcessing(installedBook);
-            bibeDataMining.addBibleData(installedBook);
+
+            if(getLoggInPerson()!=null)
+            {
+
+                Bookdatasource bookSource= new Bookdatasource();
+                HttpSwordInstaller installer=(HttpSwordInstaller) siteEditorService.getInstaller(siteName);
+                bookSource.setCreatedBy(getLoggInPerson().getFk_userid().getUsername());
+                bookSource.setHostname(installer.getHost());
+                bookSource.setSitename(siteName);
+                bookSource.setCatalogDir(installer.getCatalogDirectory());
+                bookSource.setPackageDir(installer.getPackageDirectory());
+                bookSource.setStatus(StatusType.ACTIVE.getType());
+
+                bibeDataMining.addBibleData(installedBook,bookSource);
+            }
             setResponsePage(SiteUpdateView.class);
         }
+
+        @Override
+        public boolean isVisible() {
+            return (getLoggInPerson()!=null);
+        }
+
     }
 
     private final class CancelButton extends Button {
@@ -230,6 +273,14 @@ public class SiteBookView extends BasePage{
             return (Language) obj;
         }
         return null;
+    }
+    private Person getLoggInPerson() {
+        List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
+        Person currentLogInPerson = null;
+        if (persons != null && !persons.isEmpty()) {
+            currentLogInPerson = persons.get(0);
+        }
+        return currentLogInPerson;
     }
 
     /*

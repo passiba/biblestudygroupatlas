@@ -297,43 +297,4 @@ public class SiteUpdateView extends BasePage {
         this.installerValues=newInstaller;
         
     }
-    /**
-     * Pick an installer
-     * @param parent A component to tie dialogs to
-     * @return The chosen installer or null if the user cancelled.
-
-    private static Installer selectInstaller(Component parent)
-    {
-    // Pick an installer
-    InstallManager insman = new InstallManager();
-    Map installers = insman.getInstallers();
-    Installer installer = null;
-    if (installers.size() == 1)
-    {
-    Iterator it = installers.values().iterator();
-    boolean hasNext = it.hasNext();
-    assert hasNext;
-    installer = (Installer) it.next();
-    }
-    else
-    {
-    JComboBox choice = new JComboBox(new InstallManagerComboBoxModel(insman));
-    JLabel label = new JLabel(Msg.HOW_SITE.toString());
-    JPanel panel = new JPanel(new BorderLayout());
-    panel.add(label, BorderLayout.NORTH);
-    panel.add(choice, BorderLayout.CENTER);
-
-    String title = Msg.HOW_SITE_TITLE.toString();
-
-    int yn = CWOptionPane.showConfirmDialog(parent, panel, title, JOptionPane.YES_OPTION);
-    if (yn == JOptionPane.YES_OPTION)
-    {
-    installer = (Installer) choice.getSelectedItem();
-    }
-    }
-
-    return installer;
-    }
-
-     */
 }

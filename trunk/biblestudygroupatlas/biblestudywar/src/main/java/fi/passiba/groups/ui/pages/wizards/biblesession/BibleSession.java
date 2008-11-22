@@ -31,8 +31,7 @@ public final class BibleSession implements IClusterable {
    private String status;
    private String createdBy;
    private String sessiontype;
-   private String weburlName;
-   private String bibleChapterText;
+  
 
     public Date getSessionDate() {
         return sessionDate;
@@ -48,22 +47,6 @@ public final class BibleSession implements IClusterable {
 
     public void setSessiontype(String sessiontype) {
         this.sessiontype = sessiontype;
-    }
-
-    public String getWeburlName() {
-        return weburlName;
-    }
-
-    public void setWeburlName(String weburlName) {
-        this.weburlName = weburlName;
-    }
-
-    public String getBibleChapterText() {
-        return bibleChapterText;
-    }
-
-    public void setBibleChapterText(String bibleChapterText) {
-        this.bibleChapterText = bibleChapterText;
     }
 
     public String getCreatedBy() {
