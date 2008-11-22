@@ -36,12 +36,13 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 public class Verse implements DomainObject,Identifiable  {
 
     // Fields
+  
+    private Long id;
+
     @Id
     @DocumentId
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "verse_id")
-    private Long id;
-
     public Long getId() {
         return id;
     }
@@ -76,7 +77,7 @@ public class Verse implements DomainObject,Identifiable  {
         this.verseNum = verseNum;
     }
     @Boost(2.0f)
-    @Field(index = Index.TOKENIZED)
+    @Field(index = Index.UN_TOKENIZED)
     @Column(name = "verse_text", unique = false, nullable = false, insertable = true, updatable = true, length = 9000)
     public String getVerseText() {
         return this.verseText;

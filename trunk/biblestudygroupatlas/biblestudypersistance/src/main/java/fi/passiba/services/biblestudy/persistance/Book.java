@@ -57,7 +57,7 @@ public class Book implements DomainObject,Identifiable {
     private Booksection booksection;
     private Integer bookNum;
     private String bookText;
-    private Set<Chapter> chapters = new HashSet();
+    private Set<Chapter> chapters = new HashSet<Chapter>(0);
     
    
     @ContainedIn

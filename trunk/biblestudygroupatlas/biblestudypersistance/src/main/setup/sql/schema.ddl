@@ -1,9 +1,6 @@
-create table adress (
+
+    create table adress (
         adress_id bigint not null auto_increment,
-        created_by varchar(255),
-        created_on datetime,
-        updated_by varchar(255),
-        updated_on datetime,
         addr1 varchar(80) not null,
         addr2 varchar(40),
         city varchar(80) not null,
@@ -18,10 +15,6 @@ create table adress (
 
     create table biblesession (
         biblesessionid bigint not null auto_increment,
-        created_by varchar(255),
-        created_on datetime,
-        updated_by varchar(255),
-        updated_on datetime,
         sessiontime datetime not null,
         primary key (biblesessionid)
     ) type=InnoDB;
@@ -41,14 +34,9 @@ create table adress (
 
     create table book (
         book_id bigint not null auto_increment,
-        created_by varchar(255),
-        created_on datetime,
-        updated_by varchar(255),
-        updated_on datetime,
         book_num integer,
         book_text varchar(200) not null,
         fk_section_id bigint not null,
-        fk_bookdatasource_id bigint,
         primary key (book_id)
     ) type=InnoDB;
 
@@ -58,17 +46,25 @@ create table adress (
         created_on datetime,
         updated_by varchar(255),
         updated_on datetime,
+        catalog_dir varchar(50) not null,
+        configfiledir varchar(50),
+        hostname varchar(50) not null,
+        outputdir varchar(20),
+        outputfilename varchar(15),
+        outputsubdir varchar(15),
+        package_dir varchar(50) not null,
+        proxy_host varchar(50) not null,
+        proxy_port varchar(10) not null,
+        configfile varchar(15),
+        sitename varchar(50) not null,
         status varchar(50) not null,
         weburlname varchar(50) not null,
+        fk_book_id bigint,
         primary key (bookdatasource_id)
     ) type=InnoDB;
 
     create table booksection (
         section_id bigint not null auto_increment,
-        created_by varchar(255),
-        created_on datetime,
-        updated_by varchar(255),
-        updated_on datetime,
         section varchar(40) not null,
         fk_bible_translation_id bigint,
         primary key (section_id)
@@ -76,12 +72,8 @@ create table adress (
 
     create table chapter (
         chapter_id bigint not null auto_increment,
-        created_by varchar(255),
-        created_on datetime,
-        updated_by varchar(255),
-        updated_on datetime,
-        chapter_num integer not null,
-        chapter_title varchar(200) not null,
+        chapter_num integer,
+        chapter_title text not null,
         fk_book_id bigint not null,
         primary key (chapter_id)
     ) type=InnoDB;
@@ -94,10 +86,6 @@ create table adress (
 
     create table groups (
         group_id bigint not null auto_increment,
-        created_by varchar(255),
-        created_on datetime,
-        updated_by varchar(255),
-        updated_on datetime,
         congregatiolistemailaddress varchar(70),
         congregationname varchar(60) not null,
         congregationwebsiteurl varchar(70),
@@ -128,10 +116,6 @@ create table adress (
 
     create table person (
         person_id bigint not null auto_increment,
-        created_by varchar(255),
-        created_on datetime,
-        updated_by varchar(255),
-        updated_on datetime,
         dateofbirth date not null,
         email varchar(80) not null,
         firstname varchar(80) not null,
@@ -155,11 +139,6 @@ create table adress (
 
     create table users (
         userid bigint not null auto_increment,
-        created_by varchar(255),
-        created_on datetime,
-        updated_by varchar(255),
-        updated_on datetime,
-        password varchar(255),
         rolename varchar(255),
         status varchar(255),
         username varchar(255),
@@ -168,28 +147,23 @@ create table adress (
 
     create table verse (
         verse_id bigint not null auto_increment,
-        created_by varchar(255),
-        created_on datetime,
-        updated_by varchar(255),
-        updated_on datetime,
         verse_num integer not null,
         verse_text text not null,
         fk_chapter_id bigint not null,
-        fk_biblesessionid bigint,
         primary key (verse_id)
     ) type=InnoDB;
-
-    alter table book 
-        add index FK2E3AE9E3A20654 (fk_bookdatasource_id), 
-        add constraint FK2E3AE9E3A20654 
-        foreign key (fk_bookdatasource_id) 
-        references bookdatasource (bookdatasource_id);
 
     alter table book 
         add index FK2E3AE96F79E6B5 (fk_section_id), 
         add constraint FK2E3AE96F79E6B5 
         foreign key (fk_section_id) 
         references booksection (section_id);
+
+    alter table bookdatasource 
+        add index FKF5C7DBEE81600C76 (fk_book_id), 
+        add constraint FKF5C7DBEE81600C76 
+        foreign key (fk_book_id) 
+        references book (book_id);
 
     alter table booksection 
         add index FK159DDBDC31C41AE1 (fk_bible_translation_id), 
@@ -264,390 +238,7 @@ create table adress (
         references biblesession (biblesessionid);
 
     alter table verse 
-        add index FK6AE793512A8A6EF (fk_biblesessionid), 
-        add constraint FK6AE793512A8A6EF 
-        foreign key (fk_biblesessionid) 
-        references biblesession (biblesessionid);
-
-    alter table verse 
         add index FK6AE793514BB75BE (fk_chapter_id), 
         add constraint FK6AE793514BB75BE 
         foreign key (fk_chapter_id) 
         references chapter (chapter_id);
-
-
-
- insert into  bibletranslation(
-             created_by,updated_by,created_on,updated_on, bible_abbrv,bible_name, published_date,publisher_name)
-        values('Admin','Admin',curdate(),curdate(),'ESV','English Standard Version',20010101,'Ministry of Good News Publishers: Crossway bibles');
-
-
-
-insert into  booksection(
-             created_by,updated_by,created_on,updated_on, section,fk_bible_translation_id)
-        values('Admin','Admin',curdate(),curdate(),'New Testament',1);
-
-insert into  booksection(
-             created_by,updated_by,created_on,updated_on, section,fk_bible_translation_id)
-        values('Admin','Admin',curdate(),curdate(),'Old Testament',1);
-
-
-insert into  bibletranslation(
-             created_by,updated_by,created_on,updated_on, bible_abbrv,bible_name, published_date,publisher_name)
-        values('Admin','Admin',curdate(),curdate(),'EVL 1992
-','vuoden 1992 suomenkielinen raamattu',19920101,'Kirkon keskusrahasto');
-
-
-insert into  booksection(
-             created_by,updated_by,created_on,updated_on, section,fk_bible_translation_id)
-        values('Admin','Admin',curdate(),curdate(),'Uusi Testamentti',2);
-
-insert into  booksection(
-             created_by,updated_by,created_on,updated_on, section,fk_bible_translation_id)
-        values('Admin','Admin',curdate(),curdate(),'Vanha Testamentti',2);
-
-
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Matt.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Mark.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Luuk.html','Aktiivinen');
-
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Joh.html','Aktiivinen');
-
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Apt.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Room.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/1Kor.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/2Kor.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Gal.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Ef.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Fil.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Kol.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Tit.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/2Tess.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/1Tim.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/2Tim.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Tit.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Filem.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Hepr.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Jaak.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/1Piet.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/2Piet.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/1Joh.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/2Joh.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/3Joh.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Juud.html','Aktiivinen');
-
-insert into  bookdatasource(
-             created_by,updated_by,created_on,updated_on,  weburlname,
-        status)
-        values('Admin','Admin',curdate(),curdate(),'http://ftp.funet.fi/index/bible/fi/1992/Ilm.html','Aktiivinen');
-
-
-
-
-
-
-
-
-
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Evankeliumi Matteuksen mukaan',3,1);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Evankeliumi Markuksen mukaan',3,2);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Evankeliumi Luukaksen mukaan',3,3);
-
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Evankeliumi Johanneksen mukaan',3,4);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Apostolien teot',3,5);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Kirje Roomalaisille',3,6);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'1. kirje korinttilaisille',3,7);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'2. kirje korinttilaisille',3,8);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Kirje galataltaisille',3,9);
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Kirje efesolaisille',3,10);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Kirje filippiläisille',3,11);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Kirje kolossalaisille',3,12);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'1. Kirje tessalonikalaisille',3,13);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'2. Kirje tessalonikalaisille',3,14);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'1. Kirje Timoteukselle',3,15);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'2. Kirje Timoteukselle',3,16);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Kirje Titukselle',3,17);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Kirje Filemonille',3,18);
-
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Kirje heprealaisille',3,19);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Jaakobin kirje',3,20);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'1 Pietarin kirje',3,21);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'2 Pietarin kirje',3,22);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'1 Johanneksen kirje',3,23);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'2 Johanneksen kirje',3,24);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'3 Johanneksen kirje',3,25);
-
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Juudaksen kirje',3,26);
-
-insert into  book (created_by ,
-        created_on,
-        updated_by ,
-        updated_on,
-        book_text , fk_section_id,fk_bookdatasource_id)
- values('Admin',curdate(),'Admin',curdate(),'Johanneksen ilmestys',3,27);
-
-
-
-
-
-
-
