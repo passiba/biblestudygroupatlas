@@ -126,11 +126,7 @@
             <artifactId>commons-collections</artifactId>
             <version>3.2</version>
         </dependency>
-      <dependency>
-            <groupId>org.webharvest</groupId>
-            <artifactId>webharvest</artifactId>
-            <version>1.0</version>
-        </dependency> 
+    
          <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
