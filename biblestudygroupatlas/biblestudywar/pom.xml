@@ -64,7 +64,7 @@
         <!--facebook api repository -->
             <repository>
                 <id>mrepo-happyfern-snapshot</id>
-                <url>http://mrepo.happyfern.com/maven2-snapshot/</url>
+                <url>http://mrepo.happyfern.com/maven2-snapshot</url>
                 <snapshots>
                 </snapshots>
             </repository>
