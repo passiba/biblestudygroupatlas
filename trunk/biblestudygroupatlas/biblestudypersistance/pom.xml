@@ -99,12 +99,7 @@
             <artifactId>spring</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-mock</artifactId>
-            <version>${spring.version}</version>
-            <scope>compile</scope>
-        </dependency>
+       
        
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -278,20 +273,5 @@
             </testResource>
         </testResources>
     </build>
-    <properties>
-        <slf4j.version>1.4.3</slf4j.version>
-        <spring.version>2.0.7</spring.version>
-        <spring.ws.version>1.0.4</spring.ws.version>
-        <spring.modules.version>0.8a</spring.modules.version>
-        
-         <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
-         <jdbc.url>jdbc:mysql://localhost:3306/biblestudy?autoReconnect=true</jdbc.url>
-        <jdbc.username>bibleuser</jdbc.username>
-        <jdbc.password>b8bl47s4r</jdbc.password>
-        <maven.test.skip>false</maven.test.skip>
-        <originalDataSetFile>./src/test/data/sample-data.xml</originalDataSetFile>
-        <!-- Compass Settings -->
-        <compass.version>2.1.0</compass.version>
-        <lucene.version>2.3.2</lucene.version>
-    </properties>
+   
 </project>
