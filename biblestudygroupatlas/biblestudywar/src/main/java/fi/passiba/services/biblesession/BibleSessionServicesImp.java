@@ -11,40 +11,24 @@ import fi.passiba.services.dao.IPersonDAO;
 import fi.passiba.services.group.dao.IGroupsDAO;
 import fi.passiba.services.persistance.Person;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author haverinen
  */
+@Service("BibleSessionServices")
 public class BibleSessionServicesImp implements IBibleSessionServices {
-    
-     private IGroupsDAO groupDAO= null;
-     private IPersonDAO personDAO= null;
+
+     @Autowired
+     private IGroupsDAO groupDAO;
+     @Autowired
+     private IPersonDAO personDAO;
+     @Autowired
      private IBiblesessionDAO biblesessionDAO;
 
-    public IBiblesessionDAO getBiblesessionDAO() {
-        return biblesessionDAO;
-    }
-
-    public void setBiblesessionDAO(IBiblesessionDAO biblesessionDAO) {
-        this.biblesessionDAO = biblesessionDAO;
-    }
-
-    public IGroupsDAO getGroupDAO() {
-        return groupDAO;
-    }
-
-    public void setGroupDAO(IGroupsDAO groupDAO) {
-        this.groupDAO = groupDAO;
-    }
-
-    public IPersonDAO getPersonDAO() {
-        return personDAO;
-    }
-
-    public void setPersonDAO(IPersonDAO personDAO) {
-        this.personDAO = personDAO;
-    }
+   
      
      
     /**

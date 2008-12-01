@@ -10,33 +10,19 @@ import fi.passiba.services.dao.IPersonDAO;
 
 import fi.passiba.services.persistance.Person;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author jaanakayttajatili
  */
+@Service("IAuthenticator")
 public class AuthenticatorImp implements IAuthenticator {
      
-    
-    private IPersonDAO personDAO= null;
+    @Autowired
+    private IPersonDAO personDAO;
    
-    
-    
-    
-    
-    public IPersonDAO getPersonDAO() {
-        return personDAO;
-    }
-
-    public void setPersonDAO(IPersonDAO personDAO) {
-        this.personDAO = personDAO;
-    }
-
-    
-
-    
-    
-    
     public void registerPerson(Person person) {
       
       personDAO.save(person);

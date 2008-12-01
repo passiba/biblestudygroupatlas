@@ -9,30 +9,22 @@ package fi.passiba.services.group;
 import fi.passiba.hibernate.PaginationInfo;
 import fi.passiba.services.group.dao.IGroupsDAO;
 import fi.passiba.services.group.persistance.Groups;
-import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author haverinen
  */
+@Service("IGroupServices")
 public class GroupServicesImp implements IGroupServices{
 
     
-    
-     private IGroupsDAO groupDAO= null;
+    @Autowired
+    private IGroupsDAO groupDAO;
 
-    public IGroupsDAO getGroupDAO() {
-        return groupDAO;
-    }
-
-    public void setGroupDAO(IGroupsDAO groupDAO) {
-        this.groupDAO = groupDAO;
-    }
-    
-   
-    
     
     public List<Groups> findGroupsByLocation(String country, String city,String grouptype) {
        

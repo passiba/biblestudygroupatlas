@@ -22,51 +22,30 @@ import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 /**
  *
  * @author haverinen
  */
+@Service("SearchService")
 public class SearchServiceImp implements ISearchService{
 
+    @Autowired
     private SessionFactory sessionFactory;
-    private IPersonDAO personDAO= null;
+    @Autowired
+    private IPersonDAO personDAO;
 
 
 
-    /**
-     *
-     * @return IPersonDAO
-     */
-    public IPersonDAO getPersonDAO() {
-        return personDAO;
-    }
-    /**
-     *
-     * @param personDAO
-     */
-    public void setPersonDAO(IPersonDAO personDAO) {
-        this.personDAO = personDAO;
-    }
+   
       
-    /**
-     *
-     * @return SessionFactory
-     */
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-    /**
-     *
-     * @param sessionFactory
-     */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+   
 
     protected Session getSession() {
-        return getSessionFactory().openSession();
+        return sessionFactory.openSession();
     }
     public FullTextSession getFullTextSession() {
         return Search.getFullTextSession(getSession());

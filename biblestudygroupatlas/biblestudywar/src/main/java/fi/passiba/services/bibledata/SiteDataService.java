@@ -16,12 +16,14 @@ import java.util.Map;
 
 import org.crosswire.jsword.book.install.Installer;
 import fi.passiba.services.bibledata.sword.HttpSwordInstaller;
+import org.springframework.stereotype.Service;
 
 
 /**
  *
  * @author haverinen
  */
+@Service("BibleDataService")
 public class SiteDataService implements SiteEditor{
 
      /**

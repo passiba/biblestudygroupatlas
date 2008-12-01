@@ -12,43 +12,9 @@
    <tx:annotation-driven transaction-manager="transactionManager"/>
    <import resource="classpath:META-INF/biblestudy-data-hibernate.xml"/>
    <import resource="classpath:META-INF/biblestudy-webservice.xml"/>
-
-   <bean id="placeholderConfig"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location">
-            <value>classpath:application.properties</value>
-        </property>
-        <property name="systemPropertiesModeName">
-            <value>SYSTEM_PROPERTIES_MODE_OVERRIDE</value>
-        </property>
-    </bean>
-    
-    <bean id="IAuthenticator" class="fi.passiba.services.authenticate.AuthenticatorImp">
-        <property name="personDAO" ref="PersonDAO" />
-    </bean>
-   
-     <bean id="IGroupServices" class="fi.passiba.services.group.GroupServicesImp">
-        <property name="groupDAO" ref="GroupsDAO" />
-    </bean>
-    <bean id="IAddressService" class="fi.passiba.services.address.AddressServiceImp">
-        <property name="addressDAO" ref="AddressDAO" />
-    </bean>
-    
-    <bean id="BibleSessionServices" class="fi.passiba.services.biblesession.BibleSessionServicesImp">
-    
-        <property name="biblesessionDAO" ref="BiblesessionDAO" />
-        <property name="groupDAO" ref="GroupsDAO" />
-        <property name="personDAO" ref="PersonDAO" />
-    </bean>
-    
-    <bean id="SearchService" class="fi.passiba.services.search.SearchServiceImp">
-         <property name="sessionFactory" ref="sessionFactory"/>
-         <property name="personDAO" ref="PersonDAO" />
-    </bean>
-
-     <bean id="BibleDataService" class="fi.passiba.services.bibledata.SiteDataService">
-    </bean>
-     
+   <context:component-scan base-package="fi.passiba.services.*"/>
+   <context:property-placeholder location="classpath:application.properties"/>
+      
    <!-- <bean id="bibleDataProcessingGageway" class="fi.passiba.services.bibledata.BibleBookDataProcessingImp">
         <property name="jmsTemplate" ref="jmsTemplate"/>
     </bean> -->
