@@ -72,6 +72,6 @@ public interface IBibleDataMining {
     public ChapterVoting findRatingByChapterid(long id);
 
     @Transactional(propagation = Propagation.REQUIRED)
-     public void addBibleData(org.crosswire.jsword.book.Book book,Bookdatasource datasource);
+    public void addBibleData(Bookdatasource datasource);
 
 }

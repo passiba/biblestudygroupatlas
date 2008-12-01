@@ -122,13 +122,13 @@ org.springframework.orm.hibernate3.support.OpenSessionInViewFilter
         <url-pattern>/atom/*</url-pattern>
     </servlet-mapping>
         <resource-ref>
-            <res-ref-name>jms/ConnectionFactory</res-ref-name>
+            <res-ref-name>java:comp/env/jms/ConnectionFactory</res-ref-name>
             <res-type>javax.jms.ConnectionFactory</res-type>
             <res-auth>Container</res-auth>
             <res-sharing-scope>Shareable</res-sharing-scope>
         </resource-ref>
         <resource-ref>
-            <res-ref-name>jms/bibleDataQueue</res-ref-name>
+            <res-ref-name>java:comp/env/jms/bibleDataQueue</res-ref-name>
             <res-type>javax.jms.Queue</res-type>
             <res-auth>Container</res-auth>
             <res-sharing-scope>Shareable</res-sharing-scope>

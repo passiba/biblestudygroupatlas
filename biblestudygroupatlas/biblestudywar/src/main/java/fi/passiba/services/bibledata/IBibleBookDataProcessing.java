@@ -5,7 +5,9 @@
 
 package fi.passiba.services.bibledata;
 
-import org.crosswire.jsword.book.Book;
+import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
+
+
 
 /**
  *
@@ -15,7 +17,7 @@ import org.crosswire.jsword.book.Book;
  */
 public interface IBibleBookDataProcessing {
 
-     public void sendBibleBookDataForProcessing(Book book);
+     public void sendBibleBookDataForProcessing(Bookdatasource bookSource);
 
 
 }

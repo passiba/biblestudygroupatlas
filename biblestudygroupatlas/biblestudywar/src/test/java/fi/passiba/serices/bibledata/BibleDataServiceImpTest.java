@@ -6,6 +6,7 @@ package fi.passiba.serices.bibledata;
 
 import fi.passiba.AbstractTransactionalJUnit4SpringContext;
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
+import fi.passiba.services.bibledata.IBibleBookDataProcessing;
 import fi.passiba.services.bibledata.SiteEditor;
 import java.util.Iterator;
 import java.util.Map;
@@ -44,6 +45,8 @@ public class BibleDataServiceImpTest extends AbstractTransactionalJUnit4SpringCo
     private SiteEditor siteEditorService;
     @Autowired
     private IBibleDataMining bibeDataMining;
+    /*@Autowired
+    IBibleBookDataProcessing bibleDataProcessing;*/
 
     /**
      * How we create Passages
@@ -189,7 +192,7 @@ public class BibleDataServiceImpTest extends AbstractTransactionalJUnit4SpringCo
                 book = Books.installed().getBook(bookInitials);
 
                 //processBookData(book);
-                //bibleDataProcessing.sendBibleBookDataForProcessing(book);
+               
                 Bookdatasource bookSource= new Bookdatasource();
                 HttpSwordInstaller inst=(HttpSwordInstaller) siteEditorService.getInstaller(name);
                 bookSource.setCreatedBy("Junit Testcase");
@@ -198,7 +201,9 @@ public class BibleDataServiceImpTest extends AbstractTransactionalJUnit4SpringCo
                 bookSource.setCatalogDir(inst.getCatalogDirectory());
                 bookSource.setPackageDir(inst.getPackageDirectory());
                 bookSource.setStatus("AKTIIVINEN");
-                bibeDataMining.addBibleData(book,bookSource);
+                bookSource.setBookName(bookInitials);
+               // bibleDataProcessing.sendBibleBookDataForProcessing( bookSource);
+                bibeDataMining.addBibleData(bookSource);
             }
         }
 

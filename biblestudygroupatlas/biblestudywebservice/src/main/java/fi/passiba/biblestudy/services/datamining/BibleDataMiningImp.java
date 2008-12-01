@@ -42,7 +42,6 @@ import org.springframework.jmx.export.annotation.ManagedResource;
  *
  * @author haverinen
  */
-@ManagedResource(objectName = "biblestudy:name=BibleDataMining")
 public class BibleDataMiningImp implements IBibleDataMining {
 
     private IBookDatasouceDAO datasourceDAO = null;
@@ -378,10 +377,10 @@ public class BibleDataMiningImp implements IBibleDataMining {
         return chapterVotingDAO.findRatingByChapterid(id);
     }
 
-    public void addBibleData(org.crosswire.jsword.book.Book book,Bookdatasource datasource) {
+    public void addBibleData(Bookdatasource datasource) {
 
-        if (book != null) {
-            org.crosswire.jsword.book.Book installedBook = Books.installed().getBook(book.getName());
+        if (datasource != null) {
+            org.crosswire.jsword.book.Book installedBook = Books.installed().getBook(datasource.getBookName());
 
             Key results = installedBook.getGlobalKeyList();
             if (installedBook != null) {
@@ -436,7 +435,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
                                     org.crosswire.jsword.passage.Verse verse = new org.crosswire.jsword.passage.Verse(b, c, v);
                                     Key verseKey = (Key) verse;
                                     //BookData data = new BookData(book, verseKey);
-                                    StoreVerseData(verseKey, book, chapter);
+                                    StoreVerseData(verseKey, installedBook, chapter);
                                 }
                             }
                         }

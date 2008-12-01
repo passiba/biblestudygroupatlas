@@ -11,6 +11,7 @@ import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.groups.ui.pages.BasePage;
 
 import fi.passiba.services.authenticate.IAuthenticator;
+import fi.passiba.services.bibledata.IBibleBookDataProcessing;
 import fi.passiba.services.bibledata.SiteEditor;
 import fi.passiba.services.bibledata.sword.HttpSwordInstaller;
 import fi.passiba.services.bibledata.sword.IndexResolver;
@@ -54,8 +55,8 @@ public class SiteBookView extends BasePage{
     private IAuthenticator authenticate;
     @SpringBean
     private SiteEditor siteEditorService ;
-    //@SpringBean
-   // private IBibleBookDataProcessing bibleDataProcessing;
+  /*  @SpringBean
+    private IBibleBookDataProcessing bibleDataProcessing;*/
 
     @SpringBean
     IBibleDataMining bibeDataMining;
@@ -155,7 +156,7 @@ public class SiteBookView extends BasePage{
                     // This should be a call on installer.
                     try {
                         Books.installed().removeBook(installedBook);
-                        book.getDriver().delete(installedBook);
+                        installedBook.getDriver().delete(installedBook);
                     } catch (BookException e) {
                         e.printStackTrace();
                     }
@@ -179,8 +180,10 @@ public class SiteBookView extends BasePage{
                 bookSource.setCatalogDir(installer.getCatalogDirectory());
                 bookSource.setPackageDir(installer.getPackageDirectory());
                 bookSource.setStatus(StatusType.ACTIVE.getType());
+                bookSource.setBookName(installedBook.getInitials());
 
-                bibeDataMining.addBibleData(installedBook,bookSource);
+                bibeDataMining.addBibleData(bookSource);
+               // bibleDataProcessing.sendBibleBookDataForProcessing(bookSource);
             }
             setResponsePage(SiteUpdateView.class);
         }
