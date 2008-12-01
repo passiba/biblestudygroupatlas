@@ -249,6 +249,9 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <excludes>
+                     <exclude>**/biblestudy-data-compass.xml</exclude>
+                </excludes>
             </resource>
             <resource>
                 <directory>src/main/java</directory>
