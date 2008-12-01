@@ -117,7 +117,7 @@ public class BibleDataServiceImpTest extends AbstractDependencyInjectionSpringCo
         IBibleDataMining bibeDataMining = (IBibleDataMining) applicationContext.getBean("IBibleDataMining");
         // IBibleBookDataProcessing bibleDataProcessing=(IBibleBookDataProcessing) applicationContext.getBean("bibleDataProcessingGageway");
         Map installers = siteEditorService.getInstallers();
-        String name = "", bookInitials = "ESV";//bookInitials = "FinPR92";
+        String name = "",bookInitials = "FinPR92"; //bookInitials = "ESV";
 
         Iterator iter = installers.keySet().iterator();
         this.assertEquals(3, installers.size());

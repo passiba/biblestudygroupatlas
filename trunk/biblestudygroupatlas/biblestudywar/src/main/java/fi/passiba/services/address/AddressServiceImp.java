@@ -7,28 +7,21 @@ package fi.passiba.services.address;
 
 import fi.passiba.services.dao.IAddressDAO;
 import fi.passiba.services.persistance.Adress;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author haverinen
  */
+@Service("IAddressService")
 public class AddressServiceImp implements IAddressService{
 
     
     
-    
-    private IAddressDAO addressDAO= null;
+    @Autowired
+    private IAddressDAO addressDAO;
 
-    public IAddressDAO getAddressDAO() {
-        return addressDAO;
-    }
-
-    public void setAddressDAO(IAddressDAO addressDAO) {
-        this.addressDAO = addressDAO;
-    }
-    
-    
-    
     public Adress  findAddressByAddressId(Long id) {
          return this.addressDAO.getById(id);
     }
