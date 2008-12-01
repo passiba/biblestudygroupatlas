@@ -3,17 +3,18 @@
      xmlns:tx="http://www.springframework.org/schema/tx"
      xmlns:aop="http://www.springframework.org/schema/aop"
      xmlns:context="http://www.springframework.org/schema/context"
+     xmlns:jms="http://www.springframework.org/schema/jms"
      xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
-       >
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-2.5.xsd">
             
    <tx:annotation-driven transaction-manager="transactionManager"/>
   
     <import resource="classpath:META-INF/biblestudy-data-hibernate.xml"/>
-    <!--<import resource="classpath:META-INF/biblestudy-jmsservice.xml"/>-->
+  <!--  <import resource="classpath:META-INF/biblestudy-jmsservice.xml"/>-->
     <bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
@@ -101,7 +102,7 @@
         <property name="chapterVotingDAO" ref="ChapterVotingDAO" />
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-  
+     
   <!-- crating pure MD pojo can be accomplished by using MessageListnerAdaper,which hides JMS specific
   code of recieving JMS Message and the converter converts MapMessage into the bean type which we expect to
   be returend from the queue 
@@ -111,5 +112,5 @@
         <property name="defaultListenerMethod" value="addBibleData"/>
         <property name="messageConverter" ref="bibleBookDataConverter"/>
   </bean>-->
-  
+   
 </beans>
