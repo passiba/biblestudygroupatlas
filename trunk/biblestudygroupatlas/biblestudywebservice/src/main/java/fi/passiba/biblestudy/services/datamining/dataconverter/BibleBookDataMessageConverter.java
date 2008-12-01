@@ -7,7 +7,7 @@ package fi.passiba.biblestudy.services.datamining.dataconverter;
 
 import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
 import javax.jms.JMSException;
-import javax.jms.MapMessage;
+import javax.jms.ObjectMessage;
 import javax.jms.Message;
 import javax.jms.Session;
 import org.springframework.jms.support.converter.MessageConversionException;
@@ -29,20 +29,21 @@ public class BibleBookDataMessageConverter implements MessageConverter{
 
     public Object fromMessage(Message dataMessage) throws JMSException, MessageConversionException {
 
-        if(dataMessage!=null && !( dataMessage instanceof MapMessage))
+        if(dataMessage!=null && !( dataMessage instanceof ObjectMessage))
         {
-            throw new MessageConversionException("Given message was not MapMessage");
+            throw new MessageConversionException("Given message was not ObjectMessage");
  	    }
-        MapMessage mapMessage=(MapMessage)dataMessage;
+        ObjectMessage objectMessage=(ObjectMessage)dataMessage;
        // Bookdatasource bookSource= new Bookdatasource();
-        String bookInitials=mapMessage.getString("bookInitials");
+       // objectMessage.getObject();
+       /* String bookInitials=mapMessage.getString("bookInitials");
         Book book=Books.installed().getBook(bookInitials);
 
         if(!BookCategory.BIBLE.equals(book.getBookCategory()))
         {
             throw new MessageConversionException("Given book is not a bible");
-        }
-        return  book;
+        }*/
+        return   objectMessage.getObject();
     }
 
 

@@ -6,11 +6,11 @@
 package fi.passiba.services.bibledata;
 
 import fi.passiba.groups.ui.pages.wizards.biblesession.BibleSession;
+import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
 import javax.jms.JMSException;
-import javax.jms.MapMessage;
+import javax.jms.ObjectMessage;
 import javax.jms.Message;
 import javax.jms.Session;
-import org.crosswire.jsword.book.Book;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
@@ -44,19 +44,20 @@ public class BibleBookDataProcessingImp implements IBibleBookDataProcessing {
     /**
      * Handles the sending of new Databook Weburl and send for futher processing
      *
-     * @param book- org.crosswire.jsword.book.Book bible book instance to be installed
+     * @param bookSource- fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource  instance to be installed
      */
-    public void sendBibleBookDataForProcessing(final Book book) {
+    public void sendBibleBookDataForProcessing(final Bookdatasource bookSource) {
 
-        if (book != null  && book.getInitials()!=null)
+        if (bookSource != null  && bookSource.getBookName()!=null)
 
         {
             jmsTemplate.send(new MessageCreator() {
 
                 public Message createMessage(Session session) throws JMSException {
-                  MapMessage mapMessage = session.createMapMessage();
-                  mapMessage.setString("bookInitials", book.getInitials());
-                  return mapMessage;
+                  ObjectMessage objectMessage = session.createObjectMessage();
+                  objectMessage.setObject(bookSource);
+                 // mapMessage.setString("bookInitials", bookSource.getBookInitials());
+                  return objectMessage;
                 }
             });
 

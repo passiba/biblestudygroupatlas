@@ -35,7 +35,7 @@ public class Bookdatasource extends AuditableEntity {
     private String packageDir;
     private String proxyHost;
     private String proxyPort;
-    
+    private String bookName;
     private String status;
    
     
@@ -78,7 +78,16 @@ public class Bookdatasource extends AuditableEntity {
     public void setPackageDir(String packageDir) {
         this.packageDir = packageDir;
     }
-  
+    @Column(name = "bookname", unique = false, nullable = false, insertable = true, updatable = true, length = 50)
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+   
+
     public String getProxyHost() {
         return proxyHost;
     }
@@ -94,6 +103,7 @@ public class Bookdatasource extends AuditableEntity {
     public void setProxyPort(String proxyPort) {
         this.proxyPort = proxyPort;
     }
+
 
     
 
