@@ -1,20 +1,25 @@
 package fi.passiba.groups;
-import fi.passiba.AbstractDependencyInjectionSpringContextTest;
+import fi.passiba.AbstractTransactionalJUnit4SpringContext;
 import fi.passiba.services.authenticate.IAuthenticator;
 import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;
 import fi.passiba.services.persistance.Users;
 import java.util.Date;
 import java.util.List;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
-
-public final class PersionServiceImpTest extends AbstractDependencyInjectionSpringContextTest{
+@Transactional
+public final class PersionServiceImpTest extends AbstractTransactionalJUnit4SpringContext{
 
   private String username="passiba";
-
+  @Autowired
+  private IAuthenticator authenticator;
   private Person addPerson(Person person)throws Exception
   {
-      IAuthenticator authenticator = (IAuthenticator) applicationContext.getBean("IAuthenticator");
+     
       if (person == null) {
           Adress ad = new Adress();
           ad.setAddr1("Testikuja 1 b");
@@ -45,11 +50,11 @@ public final class PersionServiceImpTest extends AbstractDependencyInjectionSpri
       authenticator.updatePerson(person);
       return person;
   }
+  @Test
   public void testAddingNewPerson() throws Exception
   {
 
-       IAuthenticator authenticator = (IAuthenticator) applicationContext.getBean("IAuthenticator");
-
+       
 
         Person  person=addPerson(null);
         List<Person> persons=    authenticator.findPerson(username);
@@ -60,11 +65,10 @@ public final class PersionServiceImpTest extends AbstractDependencyInjectionSpri
         }
         assert(person.getFk_userid().getUsername().equals(fetchUser.getFk_userid().getUsername()));
   }
-
+  @Test
    public void testUpdatingPerson() throws Exception
   {
-       IAuthenticator authenticator = (IAuthenticator) applicationContext.getBean("IAuthenticator");
-
+      
         Person per=null;
         Adress ad= new Adress();
         ad.setAddr1("Testikuja 1 b");
@@ -95,10 +99,10 @@ public final class PersionServiceImpTest extends AbstractDependencyInjectionSpri
         }
         assert(per.getAdress().getCity().equals(fetchUser.getAdress().getCity()));
   }
-
+   @Test
   public void testDeletingPerson() throws Exception
   {
-     IAuthenticator authenticator = (IAuthenticator) applicationContext.getBean("IAuthenticator");
+    
       Person per=null;
       List<Person> persons=authenticator.findPerson(username);
 

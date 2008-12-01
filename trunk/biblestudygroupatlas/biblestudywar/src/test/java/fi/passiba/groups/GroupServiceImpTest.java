@@ -1,20 +1,25 @@
 package fi.passiba.groups;
 
-import fi.passiba.AbstractDependencyInjectionSpringContextTest;
+import fi.passiba.AbstractTransactionalJUnit4SpringContext;
 import fi.passiba.services.group.IGroupServices;
 import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.group.persistance.Groups;
 import java.util.List;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
-
-public final class GroupServiceImpTest extends AbstractDependencyInjectionSpringContextTest {
+@Transactional
+public final class GroupServiceImpTest  extends AbstractTransactionalJUnit4SpringContext {
 
     private String groupType = "Miestenpiiri",  city = "Espoo",  country = "Finland";
 
-   
+    @Autowired
+    private  IGroupServices groupServices;
 
     private Groups addGroup(Groups group) throws Exception {
-        IGroupServices groupServices = (IGroupServices) applicationContext.getBean("IGroupServices");
+     
         if (group == null) {
             Adress ad = new Adress();
             ad.setAddr1("Testikuja 2 b");
@@ -44,7 +49,7 @@ public final class GroupServiceImpTest extends AbstractDependencyInjectionSpring
         groupServices.addGroup(group);
         return group;
     }
-
+    @Test
     public void testAddingNewGroup() throws Exception {
 
         
@@ -57,10 +62,9 @@ public final class GroupServiceImpTest extends AbstractDependencyInjectionSpring
         }
         assert (group.getName().equals(fetchGroup.getName()));*/
     }
-
+    @Test
     public void testUpdatingGroup() throws Exception {
-       IGroupServices groupServices = (IGroupServices) applicationContext.getBean("IGroupServices");
-
+      
         Adress ad = new Adress();
         ad.setAddr1("Testikuja 1 b");
         ad.setAddr2("PL 39");
@@ -88,10 +92,9 @@ public final class GroupServiceImpTest extends AbstractDependencyInjectionSpring
         }
         assert (group.getAdress().getCity().equals(fetchGroup.getAdress().getCity()));
     }
-
+    @Test
     public void testDeletingGroup() throws Exception {
-        IGroupServices groupServices = (IGroupServices) applicationContext.getBean("IGroupServices");
-
+      
         List<Groups> groups = groupServices.findGroupsByLocation(country, city, groupType);
 
         Groups group = null;

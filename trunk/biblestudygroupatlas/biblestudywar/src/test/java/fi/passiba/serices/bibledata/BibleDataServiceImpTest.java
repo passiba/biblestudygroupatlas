@@ -4,7 +4,7 @@
  */
 package fi.passiba.serices.bibledata;
 
-import fi.passiba.AbstractDependencyInjectionSpringContextTest;
+import fi.passiba.AbstractTransactionalJUnit4SpringContext;
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.services.bibledata.SiteEditor;
 import java.util.Iterator;
@@ -27,12 +27,23 @@ import org.crosswire.jsword.passage.Passage;
 import org.crosswire.jsword.passage.PassageKeyFactory;
 import org.crosswire.jsword.passage.VerseFactory;
 import org.crosswire.jsword.versification.BibleInfo;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author haverinen
  */
-public class BibleDataServiceImpTest extends AbstractDependencyInjectionSpringContextTest {
+@Transactional
+public class BibleDataServiceImpTest extends AbstractTransactionalJUnit4SpringContext {
+
+
+    @Autowired
+    private SiteEditor siteEditorService;
+    @Autowired
+    private IBibleDataMining bibeDataMining;
 
     /**
      * How we create Passages
@@ -112,15 +123,16 @@ public class BibleDataServiceImpTest extends AbstractDependencyInjectionSpringCo
 
         }*/
     }
+    @Test
     public void testSingeBibleDataInstaller() throws Exception {
-        SiteEditor siteEditorService = (SiteEditor) applicationContext.getBean("BibleDataService");
-        IBibleDataMining bibeDataMining = (IBibleDataMining) applicationContext.getBean("IBibleDataMining");
+       // SiteEditor siteEditorService = (SiteEditor) applicationContext.getBean("BibleDataService");
+        //IBibleDataMining bibeDataMining = (IBibleDataMining) applicationContext.getBean("IBibleDataMining");
         // IBibleBookDataProcessing bibleDataProcessing=(IBibleBookDataProcessing) applicationContext.getBean("bibleDataProcessingGageway");
         Map installers = siteEditorService.getInstallers();
         String name = "",bookInitials = "FinPR92"; //bookInitials = "ESV";
 
         Iterator iter = installers.keySet().iterator();
-        this.assertEquals(3, installers.size());
+        assertEquals(3, installers.size());
         while (iter.hasNext()) {
             name = (String) iter.next();
             HttpSwordInstaller installer = (HttpSwordInstaller) installers.get(name);
