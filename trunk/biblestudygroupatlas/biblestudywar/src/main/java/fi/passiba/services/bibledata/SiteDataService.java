@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
  *
  * @author haverinen
  */
-@Service("BibleDataService")
+//@Service("BibleDataService")
 public class SiteDataService implements SiteEditor{
 
      /**
