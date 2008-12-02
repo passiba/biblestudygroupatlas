@@ -259,43 +259,47 @@
 	  </dependency>
 
         <!-- apache ActiveMQ dependency-->
-        <dependency>
+         <dependency>
            <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-core</artifactId>
-            <version>5.1.0</version>
-           <scope>provided</scope>
+           <version>5.2.0</version>
+            <scope>compile</scope>
          </dependency>
+         <dependency>
+            <groupId>org.apache.xbean</groupId>
+            <artifactId>xbean-spring</artifactId>
+             <version>3.4.3</version>
+             <scope>compile</scope>
+        </dependency>
          <dependency>
                 <groupId>concurrent</groupId>
                  <artifactId>concurrent</artifactId>
                  <version>1.3.4</version>
-                <scope>provided</scope>
+                 <scope>compile</scope>
          </dependency>
-         <dependency>
+          <dependency>
+              <groupId>org.apache.geronimo.specs</groupId>
+              <artifactId>geronimo-jta_1.1_spec</artifactId>
+              <version>1.0</version>
+               <scope>compile</scope>
+          </dependency>
+           <dependency>
               <groupId>org.apache.geronimo.specs</groupId>
               <artifactId>geronimo-j2ee-management_1.0_spec</artifactId>
               <version>1.0</version>
-             <scope>provided</scope>
+               <scope>compile</scope>
           </dependency>
-
-           <dependency>
-              <groupId>org.apache.geronimo.specs</groupId>
-              <artifactId>geronimo-j2ee_1.4_spec</artifactId>
-              <version>1.0</version>
-             <scope>provided</scope>
-          </dependency>
-           <dependency>
+            <dependency>
                <groupId>org.apache.geronimo.specs</groupId>
                <artifactId>geronimo-jms_1.1_spec</artifactId>
                <version>1.1.1</version>
-               <scope>provided</scope>
-         </dependency> 
-
+                <scope>compile</scope>
+         </dependency>
          <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.1.1</version>
-           <scope>provided</scope>
+            <scope>compile</scope>
          </dependency>
 
          
