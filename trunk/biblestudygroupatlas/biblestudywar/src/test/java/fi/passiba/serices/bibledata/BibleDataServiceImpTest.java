@@ -45,8 +45,8 @@ public class BibleDataServiceImpTest extends AbstractTransactionalJUnit4SpringCo
     private SiteEditor siteEditorService;
     @Autowired
     private IBibleDataMining bibeDataMining;
-    /*@Autowired
-    IBibleBookDataProcessing bibleDataProcessing;*/
+    @Autowired
+    IBibleBookDataProcessing bibleDataProcessing;
 
     /**
      * How we create Passages
@@ -202,8 +202,8 @@ public class BibleDataServiceImpTest extends AbstractTransactionalJUnit4SpringCo
                 bookSource.setPackageDir(inst.getPackageDirectory());
                 bookSource.setStatus("AKTIIVINEN");
                 bookSource.setBookName(bookInitials);
-               // bibleDataProcessing.sendBibleBookDataForProcessing( bookSource);
-                bibeDataMining.addBibleData(bookSource);
+                bibleDataProcessing.sendBibleBookDataForProcessing( bookSource);
+              //  bibeDataMining.addBibleData(bookSource);
             }
         }
 

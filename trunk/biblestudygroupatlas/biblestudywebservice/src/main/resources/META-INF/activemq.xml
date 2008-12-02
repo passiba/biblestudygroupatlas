@@ -1,0 +1,113 @@
+<beans
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:amq="http://activemq.apache.org/schema/core"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+  http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+   <!-- Allows us to use system properties as variables in this configuration file -->
+  <context:property-placeholder location="classpath:META-INF/activemq.properties"/>
+  <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.base}/data">
+
+        <!-- Destination specific policies using destination names or wildcards -->
+        <destinationPolicy>
+            <policyMap>
+                <policyEntries>
+                    <policyEntry queue=">" memoryLimit="5mb"/>
+                    <policyEntry topic=">" memoryLimit="5mb">
+                        <dispatchPolicy>
+                            <strictOrderDispatchPolicy/>
+                        </dispatchPolicy>
+                        <subscriptionRecoveryPolicy>
+                            <lastImageSubscriptionRecoveryPolicy/>
+                        </subscriptionRecoveryPolicy>
+                    </policyEntry>
+                </policyEntries>
+            </policyMap>
+        </destinationPolicy>
+
+        <!-- Use the following to configure how ActiveMQ is exposed in JMX -->
+        <managementContext>
+            <managementContext createConnector="false"/>
+        </managementContext>
+
+        <!-- The store and forward broker networks ActiveMQ will listen to -->
+        <networkConnectors>
+            <!-- by default just auto discover the other brokers -->
+            <networkConnector name="default-nc" uri="multicast://default"/>
+            <!-- Example of a static configuration:
+            <networkConnector name="host1 and host2" uri="static://(tcp://host1:61616,tcp://host2:61616)"/>
+            -->
+        </networkConnectors>
+
+        <persistenceAdapter>
+            <amqPersistenceAdapter syncOnWrite="false" directory="${activemq.base}/data" maxFileLength="20 mb"/>
+        </persistenceAdapter>
+
+        <!-- Use the following if you wish to configure the journal with JDBC -->
+        <!--
+        <persistenceAdapter>
+             <journaledJDBC journalLogFiles="5" dataDirectory="${basedir}/activemq-data" dataSource="#mysql-ds"/>
+
+        </persistenceAdapter>
+        -->
+
+        <!-- Or if you want to use pure JDBC without a journal -->
+        <!--
+        <persistenceAdapter>
+            <jdbcPersistenceAdapter dataSource="#mysql-ds"/>
+        </persistenceAdapter>
+
+
+        <sslContext>
+            <sslContext keyStore="file:${activemq.base}/conf/broker.ks" keyStorePassword="password" trustStore="file:${activemq.base}/conf/broker.ts" trustStorePassword="password"/>
+        </sslContext>
+        -->
+        <!-- The maximum about of space the broker will use before slowing down producers -->
+        <systemUsage>
+            <systemUsage>
+                <memoryUsage>
+                    <memoryUsage limit="20 mb"/>
+                </memoryUsage>
+                <storeUsage>
+                    <storeUsage limit="1 gb" name="foo"/>
+                </storeUsage>
+                <tempUsage>
+                    <tempUsage limit="100 mb"/>
+                </tempUsage>
+            </systemUsage>
+        </systemUsage>
+
+
+        <!-- The transport connectors ActiveMQ will listen to -->
+        <transportConnectors>
+            <transportConnector name="openwire" uri="tcp://localhost:61616" discoveryUri="multicast://default"/>
+            <transportConnector name="ssl" uri="ssl://localhost:61617"/>
+            <transportConnector name="stomp" uri="stomp://localhost:61613"/>
+            <transportConnector name="xmpp" uri="xmpp://localhost:61222"/>
+        </transportConnectors>
+
+    </broker>
+
+  <!-- MySql DataSource Sample Setup -->
+  <!--  
+  <bean id="mysql-ds" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+    <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/activemq?relaxAutoCommit=true"/>
+    <property name="user" value="activemq"/>
+    <property name="password" value="activemq"/>
+    <property name="minPoolSize">
+            <value>10</value>
+    </property>
+    <property name="maxPoolSize">
+            <value>20</value>
+    </property>
+  </bean>
+  -->
+
+   
+
+</beans>
+
