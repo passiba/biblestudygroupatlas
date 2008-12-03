@@ -6,6 +6,7 @@
     xmlns:aop="http://www.springframework.org/schema/aop"
     xmlns:tx="http://www.springframework.org/schema/tx"
     xmlns:util="http://www.springframework.org/schema/util"
+  
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
         http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
         http://www.springframework.org/schema/aop
@@ -14,7 +15,7 @@
         http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
-   <tx:annotation-driven transaction-manager="transactionManager"/>
+  <tx:annotation-driven transaction-manager="transactionManager"/>
   <!--references to the configured jmsFactory and queue 
   <jee:jndi-lookup id="jmsConntectionFactory" jndi-name="jms/ConnectionFactory" resource-ref="true" environment-ref="jndiproperties" expected-type="org.apache.activemq.ActiveMQConnectionFactory"/>
 
@@ -32,10 +33,11 @@
     <property name="config" value="classpath:META-INF/activemq.xml" />
     <property name="start" value="true" />
   </bean>
+  
+ <bean id="jmsConntectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+    <property name="brokerURL" value="tcp://localhost:61636"/>
+ </bean>
 
-  <bean id="jmsConntectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory" depends-on="broker">
-    <property name="brokerURL" value="vm://localhost"/>
-  </bean>
 
     <bean id="biblebookDataDestination" class="org.apache.activemq.command.ActiveMQQueue ">
         <constructor-arg value="biblestudy.bookdatastorage.queue"/>

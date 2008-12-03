@@ -151,6 +151,11 @@
             <artifactId>jsword-common</artifactId>
             <version>${jsword.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>${spring.version}</version>
+         </dependency>
      <!-- apache ActiveMQ dependency-->
         <dependency>
            <groupId>org.apache.activemq</groupId>
@@ -164,6 +169,27 @@
              <version>3.4.3</version>
              <scope>compile</scope>
         </dependency>
+        <!--<dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+             <version>1.5.0</version>
+             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jms</artifactId>
+             <version>1.5.0</version>
+             <scope>compile</scope>
+        </dependency>
+
+        -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring</artifactId>
+             <version>1.5.0</version>
+             <scope>compile</scope>
+        </dependency>
+
          <dependency>
                 <groupId>concurrent</groupId>
                  <artifactId>concurrent</artifactId>
