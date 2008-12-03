@@ -6,7 +6,8 @@
     xmlns:aop="http://www.springframework.org/schema/aop"
     xmlns:tx="http://www.springframework.org/schema/tx"
     xmlns:util="http://www.springframework.org/schema/util"
-  
+    xmlns:amq="http://activemq.apache.org/schema/core"
+     xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
         http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
         http://www.springframework.org/schema/aop
@@ -14,8 +15,13 @@
         http://www.springframework.org/schema/tx 
         http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+  http://activemq.apache.org/camel/schema/spring http://activemq.apache.org/camel/schema/spring/camel-spring.xsd">
   <tx:annotation-driven transaction-manager="transactionManager"/>
+   <!-- Allows us to use system properties as variables in this configuration file -->
+  <context:property-placeholder location="classpath:META-INF/activemq.properties"/>
   <!--references to the configured jmsFactory and queue 
   <jee:jndi-lookup id="jmsConntectionFactory" jndi-name="jms/ConnectionFactory" resource-ref="true" environment-ref="jndiproperties" expected-type="org.apache.activemq.ActiveMQConnectionFactory"/>
 
@@ -29,15 +35,40 @@
         <property name="brokerURL" value="tcp://localhost:61636" />
   </bean>
    -->
-  <bean id="broker" class="org.apache.activemq.xbean.BrokerFactoryBean">
-    <property name="config" value="classpath:META-INF/activemq.xml" />
-    <property name="start" value="true" />
-  </bean>
+ <amq:broker
+brokerName="localhost" useJmx="false" persistent="false">
+<!-- The transport connectors ActiveMQ will listen to -->
+<amq:transportConnectors>
+<amq:transportConnector
+uri="tcp://localhost:0" />
+</amq:transportConnectors>
+<!--<amq:plugins>
+<amq:simpleAuthenticationPlugin>
+<amq:users>
+<amq:authenticationUser username="admin"
+password="password"
+groups="admins,publishers,consumers"/>
+<amq:authenticationUser username="publisher"
+password="password"
+groups="publishers,consumers"/>
+<amq:authenticationUser username="consumer"
+password="password"
+groups="consumers"/>
+<amq:authenticationUser username="guest"
+password="password"
+groups="guests"/>
+</amq:users>
+</amq:simpleAuthenticationPlugin>
+
+</amq:plugins>-->
+</amq:broker>
+ <amq:connectionFactory id="jmsConntectionFactory" brokerURL="vm://localhost"/>
+<!--
  <bean id="jmsConntectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
     <property name="brokerURL" value="tcp://localhost:61616"/>
     <property name="userName"><value>admin</value></property>
     <property name="password"><value>password</value></property>
- </bean>
+ </bean>-->
 
 
     <bean id="biblebookDataDestination" class="org.apache.activemq.command.ActiveMQQueue ">
