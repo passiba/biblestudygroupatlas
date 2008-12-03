@@ -27,13 +27,12 @@
 <!-- 
    <bean id="jmsConntectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
         <property name="brokerURL" value="tcp://localhost:61636" />
-  </bean>-->
-   
+  </bean>
+   -->
   <bean id="broker" class="org.apache.activemq.xbean.BrokerFactoryBean">
     <property name="config" value="classpath:META-INF/activemq.xml" />
     <property name="start" value="true" />
   </bean>
-
  <bean id="jmsConntectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
     <property name="brokerURL" value="tcp://localhost:61616"/>
     <property name="userName"><value>admin</value></property>

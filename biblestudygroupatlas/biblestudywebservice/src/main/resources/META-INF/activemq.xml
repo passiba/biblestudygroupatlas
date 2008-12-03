@@ -1,3 +1,4 @@
+
 <beans
   xmlns="http://www.springframework.org/schema/beans"
   xmlns:amq="http://activemq.apache.org/schema/core"
@@ -9,9 +10,9 @@
   http://activemq.apache.org/camel/schema/spring http://activemq.apache.org/camel/schema/spring/camel-spring.xsd">
 
    <!-- Allows us to use system properties as variables in this configuration file -->
-  <context:property-placeholder location="classpath:META-INF/activemq.properties"/>
+    <context:property-placeholder location="classpath:META-INF/activemq.properties"/>
   <!--<broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.base}/data">-->
-  <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" useJmx="false" dataDirectory="${activemq.base}/data">
+    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" useJmx="false" dataDirectory="${activemq.base}/data" plugins="#ipAuthenticationPlugin">
 
         <!-- Destination specific policies using destination names or wildcards
         <destinationPolicy>
@@ -35,14 +36,14 @@
             <managementContext createConnector="false"/>
         </managementContext>
 
-        <!-- The store and forward broker networks ActiveMQ will listen to -->
-        <networkConnectors>
+        <!-- The store and forward broker networks ActiveMQ will listen to 
+        <networkConnectors>-->
             <!-- by default just auto discover the other brokers
             <networkConnector name="default-nc" uri="multicast://default"/>-->
-            <!-- Example of a static configuration: -->
+            <!-- Example of a static configuration: 
             <networkConnector name="localhost" uri="static://(tcp://localhost:61616)"/>
 
-        </networkConnectors>
+        </networkConnectors>-->
         <!--
         <persistenceAdapter>
             <amqPersistenceAdapter syncOnWrite="false" directory="${activemq.base}/data" maxFileLength="20 mb"/>
@@ -62,11 +63,11 @@
             <jdbcPersistenceAdapter dataSource="#mysql-ds"/>
         </persistenceAdapter>-->
 
-         <!--
+         <!--  -->
         <sslContext>
             <sslContext keyStore="file:${activemq.base}/conf/broker.ks" keyStorePassword="password" trustStore="file:${activemq.base}/conf/broker.ts" trustStorePassword="password"/>
         </sslContext>
-        -->
+       
         <!-- The maximum about of space the broker will use before slowing down producers
         <systemUsage>
             <systemUsage>
@@ -87,9 +88,9 @@
         <transportConnectors>
              <!-- <transportConnector uri="tcp://localhost:61636" />-->
 
-          <transportConnector name="openwire" uri="tcp://localhost:61616"/>
-           <!-- <transportConnector name="ssl" uri="ssl://localhost:61617"/>
-            <transportConnector name="stomp" uri="stomp://localhost:61613"/>-->
+            <transportConnector name="openwire" uri="tcp://localhost:61616"/>
+            <transportConnector name="ssl" uri="ssl://localhost:61617"/>
+            <transportConnector name="stomp" uri="stomp://localhost:61613"/>
          <!--   <transportConnector name="xmpp" uri="xmpp://localhost:61222"/>-->
         </transportConnectors>
         <plugins>
@@ -100,6 +101,7 @@
                     <authenticationUser username="consumer" password="password" groups="consumers"/>
                     <authenticationUser username="guest" password="password" groups="guests"/>
                 </users>
+
             </simpleAuthenticationPlugin>
         </plugins>
 
@@ -120,7 +122,13 @@
     </property>
   </bean>-->
 
-
+    <bean id="ipAuthenticationPlugin" class="fi.passiba.biblestudy.services.datamining.IPAuthenticationBibleDataPlugin">
+        <property name="allowedIPAddresses">
+            <list>
+                <value>127.0.0.1</value>
+            </list>
+        </property>
+    </bean>
 
 
 </beans>
