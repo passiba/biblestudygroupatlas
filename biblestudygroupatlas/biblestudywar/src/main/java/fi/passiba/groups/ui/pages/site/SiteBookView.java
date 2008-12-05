@@ -55,8 +55,8 @@ public class SiteBookView extends BasePage{
     private IAuthenticator authenticate;
     @SpringBean
     private SiteEditor siteEditorService ;
-  /*  @SpringBean
-    private IBibleBookDataProcessing bibleDataProcessing;*/
+    @SpringBean
+    private IBibleBookDataProcessing bibleDataProcessing;
 
     @SpringBean
     IBibleDataMining bibeDataMining;
@@ -182,8 +182,8 @@ public class SiteBookView extends BasePage{
                 bookSource.setStatus(StatusType.ACTIVE.getType());
                 bookSource.setBookName(installedBook.getInitials());
 
-                bibeDataMining.addBibleData(bookSource);
-               // bibleDataProcessing.sendBibleBookDataForProcessing(bookSource);
+               // bibeDataMining.addBibleData(bookSource);
+                bibleDataProcessing.sendBibleBookDataForProcessing(bookSource);
             }
             setResponsePage(SiteUpdateView.class);
         }

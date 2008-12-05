@@ -29,6 +29,7 @@ public class BibleBookDataMessageConverter implements MessageConverter{
 
     public Object fromMessage(Message dataMessage) throws JMSException, MessageConversionException {
 
+        System.out.println("converting object");
         if(dataMessage!=null && !( dataMessage instanceof ObjectMessage))
         {
             throw new MessageConversionException("Given message was not ObjectMessage");
