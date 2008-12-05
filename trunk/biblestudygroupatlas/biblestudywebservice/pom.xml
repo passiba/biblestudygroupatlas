@@ -156,39 +156,45 @@
             <artifactId>spring-jms</artifactId>
             <version>${spring.version}</version>
          </dependency>
-     <!-- apache ActiveMQ dependency-->
+     <!-- apache ActiveMQ dependency
         <dependency>
            <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-core</artifactId>
             <version>5.2.0</version>
             <scope>compile</scope>
-         </dependency>
+         </dependency>-->
          <dependency>
             <groupId>org.apache.xbean</groupId>
             <artifactId>xbean-spring</artifactId>
              <version>3.4.3</version>
              <scope>compile</scope>
         </dependency>
-        <!--<dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-core</artifactId>
-             <version>1.5.0</version>
-             <scope>compile</scope>
+          <dependency>
+            <groupId>org.apache.activemq</groupId>
+
+            <artifactId>activemq-core</artifactId>
+            <version>5.2.0</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.activemq</groupId>
+
+            <artifactId>activemq-camel</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+       <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-jms</artifactId>
              <version>1.5.0</version>
              <scope>compile</scope>
         </dependency>
 
-        -->
+         
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-spring</artifactId>
              <version>1.5.0</version>
              <scope>compile</scope>
-        </dependency>
+        </dependency>  
 
          <dependency>
                 <groupId>concurrent</groupId>
@@ -202,7 +208,7 @@
               <version>1.0</version>
                <scope>compile</scope>
           </dependency>
-         <!-- <dependency>
+       <!-- <dependency>
               <groupId>org.apache.geronimo.specs</groupId>
               <artifactId>geronimo-j2ee_1.4_spec</artifactId>
               <version>1.0</version>

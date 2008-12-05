@@ -18,3 +18,4 @@ http\://activemq.org/config/1.0=activemq.xsd
 http\://activemq.org/config/1.0/1.0.xsd=activemq.xsd
 http\://activemq.apache.org/schema/core=activemq.xsd
 http\://activemq.apache.org/schema/core/activemq-core.xsd=activemq.xsd
+

@@ -12,7 +12,7 @@
    <!-- Allows us to use system properties as variables in this configuration file -->
     <context:property-placeholder location="classpath:META-INF/activemq.properties"/>
   <!--<broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.base}/data">-->
-    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" useJmx="false" dataDirectory="${activemq.base}/data" plugins="#ipAuthenticationPlugin">
+    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" useJmx="false"  plugins="#ipAuthenticationPlugin">
 
         <!-- Destination specific policies using destination names or wildcards
         <destinationPolicy>
@@ -58,10 +58,10 @@
         -->
 
         <!-- Or if you want to use pure JDBC without a journal -->
-        <!--
+        <!-- -->
         <persistenceAdapter>
             <jdbcPersistenceAdapter dataSource="#mysql-ds"/>
-        </persistenceAdapter>-->
+        </persistenceAdapter>
 
          <!--  -->
         <sslContext>
@@ -88,7 +88,7 @@
         <transportConnectors>
              <!-- <transportConnector uri="tcp://localhost:61636" />-->
 
-            <transportConnector name="openwire" uri="tcp://localhost:61616"/>
+            <transportConnector name="openwire" uri="tcp://localhost:0"/>
             <transportConnector name="ssl" uri="ssl://localhost:61617"/>
             <transportConnector name="stomp" uri="stomp://localhost:61613"/>
          <!--   <transportConnector name="xmpp" uri="xmpp://localhost:61222"/>-->
@@ -108,7 +108,7 @@
     </broker>
 
   <!-- MySql DataSource Sample Setup -->
-  <!--   
+  <!--   -->
   <bean id="mysql-ds" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
     <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/activemq?relaxAutoCommit=true"/>
@@ -120,7 +120,7 @@
     <property name="maxPoolSize">
             <value>20</value>
     </property>
-  </bean>-->
+  </bean>
 
     <bean id="ipAuthenticationPlugin" class="fi.passiba.biblestudy.services.datamining.IPAuthenticationBibleDataPlugin">
         <property name="allowedIPAddresses">

@@ -51,7 +51,9 @@ public class BibleBookDataProcessingImp implements IBibleBookDataProcessing {
         if (bookSource != null  && bookSource.getBookName()!=null)
 
         {
-            jmsTemplate.send(new MessageCreator() {
+
+             System.out.println("Sending: " +bookSource.getBookName());
+            jmsTemplate.send("biblestudy.bookdatastorage.queue",new MessageCreator() {
 
                 public Message createMessage(Session session) throws JMSException {
                   ObjectMessage objectMessage = session.createObjectMessage();
