@@ -13,9 +13,6 @@ import javax.jms.Session;
 import org.springframework.jms.support.converter.MessageConversionException;
 import org.springframework.jms.support.converter.MessageConverter;
 
-import org.crosswire.jsword.book.Book;
-import org.crosswire.jsword.book.BookCategory;
-import org.crosswire.jsword.book.Books;
 /**
  *
  *@author haverinen
@@ -23,8 +20,15 @@ import org.crosswire.jsword.book.Books;
  */
 public class BibleBookDataMessageConverter implements MessageConverter{
 
-    public Message toMessage(Object arg0, Session arg1) throws JMSException, MessageConversionException {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Message toMessage(Object object, Session session) throws JMSException, MessageConversionException {
+
+     System.out.println("object converted to message");
+         if (!(object instanceof Bookdatasource)) {
+         throw new MessageConversionException("Object isn't a Datasource");
+      }
+      Bookdatasource datasource = (Bookdatasource) object;
+      ObjectMessage message = session.createObjectMessage(datasource);
+      return message;
     }
 
     public Object fromMessage(Message dataMessage) throws JMSException, MessageConversionException {
@@ -44,7 +48,9 @@ public class BibleBookDataMessageConverter implements MessageConverter{
         {
             throw new MessageConversionException("Given book is not a bible");
         }*/
-        return   objectMessage.getObject();
+        Bookdatasource bookSource=(Bookdatasource)objectMessage.getObject();
+        return bookSource;
+
     }
 
 

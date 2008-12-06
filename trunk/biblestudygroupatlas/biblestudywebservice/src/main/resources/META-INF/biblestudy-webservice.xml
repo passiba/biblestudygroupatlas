@@ -105,12 +105,19 @@
      
   <!-- crating pure MD pojo can be accomplished by using MessageListnerAdaper,which hides JMS specific
   code of recieving JMS Message and the converter converts MapMessage into the bean type which we expect to
-  be returend from the queue -->
+  be returend from the queue-->
 
    <bean id="bibleBookDataListner" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
         <property name="delegate" ref="IBibleDataMining"/>
         <property name="defaultListenerMethod" value="addBibleData"/>
         <property name="messageConverter" ref="bibleBookDataConverter"/>
-  </bean>
+  </bean> 
+   <!-- and this is the message listener container -->
+    <bean id="activationQueueJmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConntectionFactory"/>
+        <property name="destination" ref="biblebookDataDestination"/>
+        <property name="messageListener" ref="bibleBookDataListner" />
+    </bean>
+
    
 </beans>
