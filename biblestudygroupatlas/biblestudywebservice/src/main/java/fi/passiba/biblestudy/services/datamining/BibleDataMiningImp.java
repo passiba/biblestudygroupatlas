@@ -35,6 +35,7 @@ import org.crosswire.jsword.passage.PassageKeyFactory;
 import org.crosswire.jsword.passage.VerseFactory;
 import org.crosswire.jsword.versification.BibleInfo;
 import org.hibernate.SessionFactory;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 
@@ -52,6 +53,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
     private IVerseDAO verseDAO = null;
     private IChapterVotingDAO chapterVotingDAO = null;
     private SessionFactory sessionFactory;
+   
     /**
      * How we create Passages
      */
@@ -65,6 +67,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
         this.sessionFactory = sessionFactory;
     }
 
+   
     public enum StatusType {
 
         ACTIVE("Aktiivinen"), NOTACTIVE("Ei Aktiivinen"), PARSED("Parsittu"), FLAWED("Virheellinen");
@@ -378,7 +381,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
     }
 
     public void addBibleData(Bookdatasource datasource) {
-
+        //Bookdatasource datasource=(Bookdatasource) jmsTemplate.receiveAndConvert();
         if (datasource != null) {
             org.crosswire.jsword.book.Book installedBook = Books.installed().getBook(datasource.getBookName());
 

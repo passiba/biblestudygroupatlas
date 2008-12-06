@@ -49,13 +49,6 @@
             <amqPersistenceAdapter syncOnWrite="false" directory="${activemq.base}/data" maxFileLength="20 mb"/>
         </persistenceAdapter>
         -->
-        <!-- Use the following if you wish to configure the journal with JDBC -->
-        <!--
-        <persistenceAdapter>
-             <journaledJDBC journalLogFiles="5" dataDirectory="${basedir}/activemq-data" dataSource="#mysql-ds"/>
-
-        </persistenceAdapter>
-        -->
 
         <!-- Or if you want to use pure JDBC without a journal -->
         <!-- -->

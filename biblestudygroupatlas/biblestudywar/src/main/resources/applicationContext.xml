@@ -17,7 +17,8 @@
    <bean id="BibleDataService" class="fi.passiba.services.bibledata.SiteDataService"/>
   <!-- -->
   <bean id="bibleDataProcessingGageway" class="fi.passiba.services.bibledata.BibleBookDataProcessingImp">
-        <property name="jmsTemplate" ref="jmsTemplate"/>
+        <property name="jmsTemplate" ref="myJmsTemplate"/>
+        <property name="destination" ref="biblebookDataDestination"/>
   </bean>
      
   

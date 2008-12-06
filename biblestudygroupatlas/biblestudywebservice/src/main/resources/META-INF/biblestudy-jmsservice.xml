@@ -6,7 +6,7 @@
     xmlns:aop="http://www.springframework.org/schema/aop"
     xmlns:tx="http://www.springframework.org/schema/tx"
     xmlns:util="http://www.springframework.org/schema/util"
-
+    xmlns:amq="http://activemq.apache.org/schema/core"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
         http://www.springframework.org/schema/aop
@@ -14,7 +14,8 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
   <tx:annotation-driven transaction-manager="transactionManager"/>
   <!--references to the configured jmsFactory and queue
   <jee:jndi-lookup id="jmsConntectionFactory" jndi-name="jms/ConnectionFactory" resource-ref="true" environment-ref="jndiproperties" expected-type="org.apache.activemq.ActiveMQConnectionFactory"/>
@@ -28,21 +29,43 @@
    <bean id="jmsConntectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
         <property name="brokerURL" value="tcp://localhost:61636" />
   </bean>
- -->
+
   <bean id="broker" class="org.apache.activemq.xbean.BrokerFactoryBean">
     <property name="config" value="classpath:META-INF/activemq.xml" />
     <property name="start" value="true" />
-  </bean>  
- <bean id="jmsConntectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+  </bean> -->
+  <amq:broker useJmx="false" persistent="false"  brokerName="localhost">
+    <amq:transportConnectors>
+      <amq:transportConnector uri="tcp://localhost:0" />
+    </amq:transportConnectors>
+
+  </amq:broker>
+ <!--<amq:connectionFactory id="jmsConntectionFactory" brokerURL="tcp://localhost:61616"/>
+  <amq:queue id="biblebookDataDestination"  physicalName="org.apache.activemq.spring.Test.spring.embedded" />
+ 
+
+<bean id="jmsConntectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
     <property name="brokerURL" value="vm://localhost"/>
-    <property name="userName"><value>admin</value></property>
-    <property name="password"><value>password</value></property>
+   <property name="userName"><value>admin</value></property>
+   <property name="password"><value>password</value></property>
  </bean>
 
-
-    <bean id="biblebookDataDestination" class="org.apache.activemq.command.ActiveMQQueue ">
-        <constructor-arg value="biblestudy.bookdatastorage.queue"/>
+-->
+ <amq:queue id="biblebookDataDestination"  physicalName="biblebookDataDestination"/>
+ 
+ <bean id="jmsConntectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
+        <property name="connectionFactory">
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL">
+                    <value>vm://localhost</value>
+                </property>
+            </bean>
+        </property>
     </bean>
+
+    <!--<bean id="biblebookDataDestination" class="org.apache.activemq.command.ActiveMQQueue ">
+        <constructor-arg value="biblestudy.bookdatastorage.queue"/>
+    </bean>-->
 
 
 
@@ -51,6 +74,19 @@
   <bean id="biblebookDataDestination" class="org.apache.activemq.command.ActiveMQQueue">
         <constructor-arg index="0" value="biblestudy.bookdatastorage.queue" />
   </bean>-->
+
+  <bean id="myJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory" ref="jmsConntectionFactory"/>
+     
+  
+    <property name="defaultDestination" ref="biblebookDataDestination"/>
+    <property name="messageConverter" ref="bibleBookDataConverter" />
+  </bean>
+  <bean id="consumerJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory" ref="jmsConntectionFactory"/>
+     <property name="messageConverter" ref="bibleBookDataConverter" />
+     <property name="defaultDestination" ref="biblebookDataDestination"/>
+  </bean>
   <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
       <property name="connectionFactory" ref="jmsConntectionFactory" />
       <property name="defaultDestination" ref="biblebookDataDestination"/>
