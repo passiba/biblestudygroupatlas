@@ -15,19 +15,7 @@
   
     <import resource="classpath:META-INF/biblestudy-data-hibernate.xml"/>
   <import resource="classpath:META-INF/biblestudy-jmsservice.xml"/>
-    <bean id="placeholderConfig"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location">
-            <value>classpath:application.properties</value>
-        </property>
-        <property name="systemPropertiesModeName">
-            <value>SYSTEM_PROPERTIES_MODE_OVERRIDE</value>
-        </property>
-    </bean>
-   
-    
-   
-    <bean id="IBibleStudyService" class="fi.passiba.biblestudy.restlet.BibleStudyServiceImp">
+  <bean id="IBibleStudyService" class="fi.passiba.biblestudy.restlet.BibleStudyServiceImp">
         <property name="translationDao" ref="BibletranslationDAO"/>
         <property name="sectionDao" ref="BooksectionDAO" />
         <property name="bookDAO" ref="BookDAO" />
@@ -117,7 +105,13 @@
         <property name="connectionFactory" ref="jmsConntectionFactory"/>
         <property name="destination" ref="biblebookDataDestination"/>
         <property name="messageListener" ref="bibleBookDataListner" />
+        <property name="transactionManager" ref="jmsTransActionManager"/>
     </bean>
+
+    <bean id="jmsTransActionManager"
+      class="org.springframework.jms.connection.JmsTransactionManager">
+    	<property name="connectionFactory" ref="jmsConntectionFactory"/>
+  	</bean>
 
    
 </beans>
