@@ -5,15 +5,9 @@
 
 package fi.passiba.services.bibledata;
 
-import fi.passiba.groups.ui.pages.wizards.biblesession.BibleSession;
 import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
 import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.ObjectMessage;
-import javax.jms.Message;
-import javax.jms.Session;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.core.MessageCreator;
 
 /**
  *
@@ -51,17 +45,7 @@ public class BibleBookDataProcessingImp implements IBibleBookDataProcessing {
 
         {
 
-             System.out.println("SendingSending: " +bookSource.getBookName());
              jmsTemplate.convertAndSend(destination, bookSource);
-            /*jmsTemplate.send(destination,new MessageCreator() {
-
-                public Message createMessage(Session session) throws JMSException {
-                  ObjectMessage objectMessage = session.createObjectMessage();
-                  objectMessage.setObject(bookSource);
-                 // mapMessage.setString("bookInitials", bookSource.getBookInitials());
-                  return objectMessage;
-                }
-            });*/
 
         }
 

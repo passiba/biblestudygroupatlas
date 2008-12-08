@@ -108,10 +108,7 @@
         <property name="transactionManager" ref="jmsTransActionManager"/>
     </bean>
 
-    <bean id="jmsTransActionManager"
-      class="org.springframework.jms.connection.JmsTransactionManager">
-    	<property name="connectionFactory" ref="jmsConntectionFactory"/>
-  	</bean>
+  
 
    
 </beans>

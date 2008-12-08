@@ -24,18 +24,22 @@
       <amq:transportConnector uri="tcp://localhost:0" />
     </amq:transportConnectors>
 
+    
   </amq:broker>
  <amq:queue id="biblebookDataDestination"  physicalName="biblebookDataDestination"/>
- 
- <bean id="jmsConntectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
-        <property name="connectionFactory">
-            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+ <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
                 <property name="brokerURL">
                     <value>vm://localhost</value>
                 </property>
-            </bean>
-        </property>
-    </bean>
+ </bean>
+ <bean id="jmsTransActionManager"
+      class="org.springframework.jms.connection.JmsTransactionManager">
+    	<property name="connectionFactory" ref="connectionFactory"/>
+ </bean>
+ <bean id="jmsConntectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
+        <property name="connectionFactory" ref="connectionFactory"/>
+            
+ </bean>
   <bean id="myJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
     <property name="connectionFactory" ref="jmsConntectionFactory"/>
      
