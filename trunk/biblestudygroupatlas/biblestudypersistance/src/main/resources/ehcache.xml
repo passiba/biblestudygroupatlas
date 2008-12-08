@@ -1,0 +1,27 @@
+<!-- 
+  The EHCache configuration from in Listing 5.12
+ -->
+<ehcache>
+  <defaultCache
+      maxElementsInMemory="500"
+      eternal="true"
+      overflowToDisk="false"
+      memoryStoreEvictionPolicy="LFU" />
+  <cache name="bibletranslationCache"
+      maxElementsInMemory="500"
+      eternal="true"
+      overflowToDisk="false"
+      memoryStoreEvictionPolicy="LFU" />
+
+  <cache name="biblestudySectionCache"
+      maxElementsInMemory="500"
+      eternal="true"
+      overflowToDisk="false"
+      memoryStoreEvictionPolicy="LFU" />
+
+   <cache name="biblestudyBookCache"
+      maxElementsInMemory="5000"
+      eternal="true"
+      overflowToDisk="false"
+      memoryStoreEvictionPolicy="LFU" />
+</ehcache>
