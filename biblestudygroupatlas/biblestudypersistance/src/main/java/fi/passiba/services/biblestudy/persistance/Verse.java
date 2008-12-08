@@ -1,10 +1,7 @@
 package fi.passiba.services.biblestudy.persistance;
 
-import fi.passiba.hibernate.AuditableEntity;
-import fi.passiba.hibernate.BaseEntity;
 import fi.passiba.hibernate.DomainObject;
 import fi.passiba.hibernate.Identifiable;
-import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +18,6 @@ import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
 
 
 /**

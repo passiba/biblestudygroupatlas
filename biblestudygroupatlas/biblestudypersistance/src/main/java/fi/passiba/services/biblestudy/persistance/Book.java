@@ -1,11 +1,9 @@
 package fi.passiba.services.biblestudy.persistance;
 
-import fi.passiba.hibernate.AuditableEntity;
 import fi.passiba.hibernate.DomainObject;
 import fi.passiba.hibernate.Identifiable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;

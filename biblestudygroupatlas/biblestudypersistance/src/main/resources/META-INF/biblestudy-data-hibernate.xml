@@ -9,6 +9,7 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
        >
+
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <context:property-placeholder location="classpath:application.properties"/>
 
@@ -95,6 +96,12 @@
             </prop>
             <prop key="hibernate.jdbc.batch_size">50</prop>
             <prop key="hibernate.default_batch_fetch_size">50</prop>
+            <prop key="hibernate.cache.use_query_cache">true</prop>
+            <prop key="hibernate.cache.use_second_level_cache">true</prop>
+            <prop key="hibernate.jdbc.fetch_size">20</prop>
+            <prop key="org.hibernate.cache">info</prop>
+            <prop key="hibernate.jdbc.batch_versioned_data">true</prop>
+            <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
             <prop key="hibernate.search.default.indexBase">c:/temp/biblestudy
             </prop>
             <!--optional parameters
@@ -112,6 +119,7 @@
 
     </property>
     <property name="entityInterceptor" ref="entityAuditInterceptor"/>
+    <property name="schemaUpdate" value="true"/>
     <!--<property name="eventListeners">
            <map>
                <entry key="post-update" value-ref="searchListener" />
