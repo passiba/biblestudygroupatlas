@@ -106,6 +106,11 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>3.4.0.GA</version>
         </dependency>
+         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>3.3.1.GA</version>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
@@ -171,99 +176,8 @@
          <artifactId>hibernate-search</artifactId>
          <version>3.1.0.Beta2</version>
       </dependency>
-      	<dependency><!-- override hibernate default 1.2.3 inclusion -->
-			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache</artifactId>
-			<version>1.5.0</version>
-		</dependency>
-         <dependency>
-      <groupId>org.springmodules</groupId>
-      <artifactId>spring-modules-cache</artifactId>
-      <version>${spring.modules.version}</version>
-      <scope>compile</scope>
-
-      <!--
-           Exclusions to make up fo the fact that the 0.8a POM for
-           spring-modules-cache isn't marking many of its optional
-           dependencies as optional.
-        -->
-      <exclusions>
-        <exclusion>
-          <groupId>gigaspaces</groupId>
-          <artifactId>gigaspaces-ce</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jini</groupId>
-          <artifactId>webster</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jboss</groupId>
-          <artifactId>jboss-jmx</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>xpp3</groupId>
-          <artifactId>xpp3_min</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jini</groupId>
-          <artifactId>start</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jboss</groupId>
-          <artifactId>jboss-minimal</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jini</groupId>
-          <artifactId>reggie</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jboss</groupId>
-          <artifactId>jboss-cache</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jcs</groupId>
-          <artifactId>jcs</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jboss</groupId>
-          <artifactId>jboss-system</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jini</groupId>
-          <artifactId>jsk-platform</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jboss</groupId>
-          <artifactId>jboss-common</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jini</groupId>
-          <artifactId>mahalo</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jini</groupId>
-          <artifactId>jsk-lib</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jini</groupId>
-          <artifactId>boot</artifactId>
-        </exclusion>
-
-        <!-- This one's here because Hibernate already loads a newer version -->
-        <exclusion>
-          <groupId>ehcache</groupId>
-          <artifactId>ehcache</artifactId>
-        </exclusion>
-
-        <!-- This one's here, because (1) I don't use it and (2) it has a transitive
-             dependency to com.sun.tools:jar:1.4.2, which is not available in the
-             repository. -->
-        <exclusion>
-          <groupId>commons-attributes</groupId>
-          <artifactId>commons-attributes-compiler</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
+      
+        
      <!-- <dependency>
           <groupId>org.apache.lucene</groupId>
           <artifactId>lucene-analyzers</artifactId>
@@ -369,7 +283,5 @@
             </testResource>
         </testResources>
     </build>
-    <properties>
-        <spring.modules.version>0.8a</spring.modules.version>
-    </properties>
+   
 </project>
