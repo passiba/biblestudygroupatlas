@@ -27,6 +27,25 @@ public class Constants {
         }
     }
 
+     public static enum BibleSessionType {
+
+        GROUP("Ryhmä"), PERSON("Henkilö");
+        private String type;
+
+        private BibleSessionType(String type) {
+            this.type = type;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public static List<String> getBibleSessionTypes() {
+
+            return Arrays.asList(new String[]{GROUP.getType(), PERSON.getType()});
+        }
+    }
+
     public static enum GroupType {
 
         MENSGROUP("Miestenpiiri"), WOMENSGROUP("Naistenpiiri"), SUNDAYSCHOOL("Pyhäkoulu"), MOTHERBABYGROUP("Äiti/lapsi-piiri"), PRAYERGROUP("Rukouspiiri"),
@@ -83,4 +102,44 @@ public class Constants {
             return Arrays.asList(new String[]{ACTIVE.getType(), NOTACTIVE.getType()});
         }
     }
+     
+    public static enum GroupSearchOption {
+
+        TYPE("Ryhmätyyppi"), CITY("Kaupunki"),GROUPNAME("Nimi");
+        private String option;
+
+        private GroupSearchOption (String option) {
+            this.option = option;
+        }
+
+        public String getOption() {
+            return option;
+        }
+
+        public static List<String> getGroupSearchOptions() {
+
+            return Arrays.asList(new String[]{TYPE.getOption(),CITY.getOption(),GROUPNAME.getOption()});
+        }
+    }
+
+     public static enum PersonSearchOption {
+
+        USERROLE("Rooli"), USERNAME("Käyttäjänimi"),CITY("Kaupunki");
+        private String option;
+
+        private PersonSearchOption (String option) {
+            this.option = option;
+        }
+
+        public String getOption() {
+            return option;
+        }
+
+        public static List<String> getPersonSearchOptions() {
+
+            return Arrays.asList(new String[]{USERROLE.getOption(),USERNAME.getOption(),CITY.getOption()});
+        }
+    }
+
+
 }
