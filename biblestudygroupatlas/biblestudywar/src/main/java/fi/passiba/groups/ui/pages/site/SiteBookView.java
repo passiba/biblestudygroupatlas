@@ -8,6 +8,7 @@ package fi.passiba.groups.ui.pages.site;
 import fi.passiba.biblestudy.BibleStudyApplication;
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
+import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.pages.BasePage;
 
 import fi.passiba.services.authenticate.IAuthenticator;
@@ -66,19 +67,7 @@ public class SiteBookView extends BasePage{
     private Book book;
 
 
-    public enum StatusType {
-
-        ACTIVE("AKTIIVINEN"), NOTACTIVE("EI AKTIIVINEN");
-        private String type;
-
-        private StatusType(String type) {
-            this.type = type;
-        }
-
-        public String getType() {
-            return type;
-        }
-    }
+    
 
     public SiteBookView(PageParameters parameters) {
 
@@ -179,7 +168,7 @@ public class SiteBookView extends BasePage{
                 bookSource.setSitename(siteName);
                 bookSource.setCatalogDir(installer.getCatalogDirectory());
                 bookSource.setPackageDir(installer.getPackageDirectory());
-                bookSource.setStatus(StatusType.ACTIVE.getType());
+                bookSource.setStatus(Constants.StatusType.ACTIVE.getType());
                 bookSource.setBookName(installedBook.getInitials());
 
                // bibeDataMining.addBibleData(bookSource);

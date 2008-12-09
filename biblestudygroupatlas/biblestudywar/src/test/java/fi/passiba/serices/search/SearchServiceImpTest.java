@@ -5,6 +5,7 @@
 package fi.passiba.serices.search;
 
 import fi.passiba.AbstractDependencyInjectionSpringContextTest;
+import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.services.authenticate.IAuthenticator;
 import fi.passiba.services.group.IGroupServices;
 import fi.passiba.services.group.persistance.Groups;
@@ -21,8 +22,8 @@ import java.util.List;
  */
 public class SearchServiceImpTest extends AbstractDependencyInjectionSpringContextTest {
 
-    private String username = "hemuli",  rolename = "User";
-    private String groupType = "Miestenpiiri",groupName="Miehet muutoksessa",  city = "Espoo",  country = "Finland";
+    private String username = "hemuli",  rolename = Constants.RoleType.USER.getType();
+    private String groupType = Constants.GroupType.MENSGROUP.getType(),groupName="Miehet muutoksessa",  city = "Espoo",  country = "Finland";
 
     public void testsearchingPersons() throws Exception {
         IAuthenticator authenticator = (IAuthenticator) applicationContext.getBean("IAuthenticator");
@@ -84,7 +85,7 @@ public class SearchServiceImpTest extends AbstractDependencyInjectionSpringConte
         Users regularUser = new Users();
         regularUser.setUsername(username);
         regularUser.setRolename(rolename);
-        regularUser.setStatus("Aktiivinen");
+        regularUser.setStatus(Constants.StatusType.ACTIVE.getType());
         person.setFk_userid(regularUser);
 
 
@@ -145,7 +146,7 @@ public class SearchServiceImpTest extends AbstractDependencyInjectionSpringConte
         group.setCongregationwebsiteurl("www.lahisrk.fi");
         group.setGrouptypename(groupType);
         group.setDescription("Kristillisten miesten kasvuryhmä");
-        group.setStatus("Aktiivinen");
+        group.setStatus(Constants.StatusType.ACTIVE.getType());
         group.setName(groupName);
         // group.setCreatedBy("Admin");
         // group.setCreatedBy("Admin");
