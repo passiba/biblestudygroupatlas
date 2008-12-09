@@ -6,6 +6,7 @@ package fi.passiba.serices.bibledata;
 
 import fi.passiba.AbstractTransactionalJUnit4SpringContext;
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
+import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.services.bibledata.IBibleBookDataProcessing;
 import fi.passiba.services.bibledata.SiteEditor;
 import java.util.Iterator;
@@ -200,7 +201,7 @@ public class BibleDataServiceImpTest extends AbstractTransactionalJUnit4SpringCo
                 bookSource.setSitename(name);
                 bookSource.setCatalogDir(inst.getCatalogDirectory());
                 bookSource.setPackageDir(inst.getPackageDirectory());
-                bookSource.setStatus("AKTIIVINEN");
+                bookSource.setStatus(Constants.StatusType.ACTIVE.getType());
                 bookSource.setBookName(bookInitials);
                 bibleDataProcessing.sendBibleBookDataForProcessing( bookSource);
               //  bibeDataMining.addBibleData(bookSource);

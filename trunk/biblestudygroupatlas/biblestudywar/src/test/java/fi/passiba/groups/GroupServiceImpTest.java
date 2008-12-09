@@ -1,6 +1,7 @@
 package fi.passiba.groups;
 
 import fi.passiba.AbstractTransactionalJUnit4SpringContext;
+import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.services.group.IGroupServices;
 import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.group.persistance.Groups;
@@ -39,7 +40,7 @@ public final class GroupServiceImpTest  extends AbstractTransactionalJUnit4Sprin
             group.setCongregationwebsiteurl("www.lahisrk.fi");
             group.setGrouptypename(groupType);
             group.setDescription("Kristillisten miesten kasvuryhmä");
-            group.setStatus("Aktiivinen");
+            group.setStatus(Constants.StatusType.ACTIVE.getType());
             group.setName("Miehet muutoksessa");
            // group.setCreatedBy("Admin");
            // group.setCreatedBy("Admin");

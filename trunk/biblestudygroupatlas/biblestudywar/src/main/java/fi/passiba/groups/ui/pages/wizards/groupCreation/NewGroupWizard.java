@@ -17,6 +17,7 @@
 package fi.passiba.groups.ui.pages.wizards.groupCreation;
 
 import fi.passiba.biblestudy.BibleStudyApplication;
+import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.pages.Main;
 import fi.passiba.groups.ui.pages.googlemap.GoogleMapsPanel;
 import fi.passiba.groups.ui.pages.wizards.BaseAddressdModel;
@@ -98,7 +99,7 @@ public class NewGroupWizard extends Wizard {
     @SpringBean
     private IGroupServices groupservice;
     /**group types */
-    private static final List<String> allGroupTypes = Arrays.asList(new String[]{"Miestenpiiri", "Naistenpiiri", "Raamattupiiri", "Pyhäkoulu", "Äiti/lapsi-piiri", "Rukouspiiri", "Nuoret aikuiset"});
+    private static final List<String> allGroupTypes = Constants.GroupType.getGroupTypes();
     /** Whether the assign Contactperson step should be executed. */
     private boolean assignContacperson = false;
     /** The group we are creating. */
@@ -201,7 +202,7 @@ public class NewGroupWizard extends Wizard {
 
                     public void onSubmit() {
 
-                        contactpersons = authenticate.findPersonByRolename("Admin", properties.getString("contactcountry"), properties.getString("contactcity"));
+                        contactpersons = authenticate.findPersonByRolename(Constants.RoleType.ADMIN.getType(), properties.getString("contactcountry"), properties.getString("contactcity"));
 
                     }
                 });
@@ -214,7 +215,7 @@ public class NewGroupWizard extends Wizard {
                             @Override
                             protected Object load() {
                                 if (properties.getString("contactcountry") == null || properties.getString("contactcountry").equals("")) {
-                                    contactpersons = authenticate.findPersonByRolename("Admin", group.getCountry(), group.getCity());
+                                    contactpersons = authenticate.findPersonByRolename(Constants.RoleType.ADMIN.getType(), group.getCountry(), group.getCity());
                                 }
                                 if (contactpersons != null && !contactpersons.isEmpty()) {
                                     contactperson = contactpersons.get(0);
@@ -478,7 +479,7 @@ public class NewGroupWizard extends Wizard {
             newGroup.setCongregationname(group.getCongregationname());
             newGroup.setCongregatiolistemailaddress(group.getCongregationemail());
             newGroup.setCongregationwebsiteurl(group.getCongregationwebsiteurl());
-            newGroup.setStatus("Aktiivinen");
+            newGroup.setStatus(Constants.StatusType.ACTIVE.getType());
             newGroup.setGrouptypename(group.getGrouptype());
             groupservice.addGroup(newGroup);
             if (contactperson != null && contactperson.getLastname() != null &&

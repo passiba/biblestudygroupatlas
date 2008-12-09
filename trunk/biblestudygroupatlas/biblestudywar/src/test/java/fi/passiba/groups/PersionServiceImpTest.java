@@ -1,5 +1,6 @@
 package fi.passiba.groups;
 import fi.passiba.AbstractTransactionalJUnit4SpringContext;
+import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.services.authenticate.IAuthenticator;
 import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;
@@ -42,8 +43,8 @@ public final class PersionServiceImpTest extends AbstractTransactionalJUnit4Spri
 
           Users regularUser = new Users();
           regularUser.setUsername(username);
-          regularUser.setRolename("User");
-          regularUser.setStatus("Aktiivinen");
+          regularUser.setRolename(Constants.RoleType.USER.getType());
+          regularUser.setStatus(Constants.StatusType.ACTIVE.getType());
           person.setFk_userid(regularUser);
       }
 

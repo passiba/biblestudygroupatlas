@@ -18,7 +18,7 @@ package fi.passiba.groups.ui.pages.wizards.userCreation;
 
 import fi.passiba.biblestudy.BibleStudyApplication;
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
-import fi.passiba.groups.ui.pages.Home;
+import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.pages.Main;
 import fi.passiba.groups.ui.pages.googlemap.GoogleMapsPanel;
 import fi.passiba.groups.ui.pages.wizards.captcha.CaptchaPanel;
@@ -30,7 +30,6 @@ import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;
 import fi.passiba.services.persistance.Users;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -94,7 +93,6 @@ import wicket.contrib.gmap.util.GeocoderException;
  * @author Eelco Hillenius
  */
 public class NewUserWizard extends Wizard {
-
     @SpringBean
     private IAuthenticator authenticate;
     @SpringBean
@@ -346,6 +344,7 @@ public class NewUserWizard extends Wizard {
      */
     private final class GroupSelectionStep extends WizardStep implements ICondition {
 
+
         public GroupSelectionStep(Groups group) {
             super(new ResourceModel("groupselection.title"), null);
             setSummaryModel(new StringResourceModel("groupselection.summary", this, new Model(group)));
@@ -457,9 +456,10 @@ public class NewUserWizard extends Wizard {
         }
     }
     /** cheap roles database. */
-    private static final List<String> allRoles = Arrays.asList(new String[]{"Admin", "User"});
+    private static final List<String> allRoles =  Constants.RoleType.getRoleTypes();
     /**group types */
-    private static final List<String> allGroupTypes = Arrays.asList(new String[]{"Miestenpiiri", "Naistenpiiri", "Raamattupiiri", "Pyhäkoulu", "Äiti/lapsi-piiri", "Rukouspiiri", "Nuoret aikuiset"});
+    private static final List<String>allGroupTypes = Constants.GroupType.getGroupTypes();
+    
     /** Whether the assign roles or groupd assigment steps should be executed */
     private boolean assignRoles = false,  assignGroups = false;
     /** The user we are editing. */
@@ -558,7 +558,7 @@ public class NewUserWizard extends Wizard {
             } catch (Exception ex) {
                 
             }*/
-            regularuser.setStatus("Aktiivinen");
+            regularuser.setStatus(Constants.StatusType.ACTIVE.getType());
             person.setFk_userid(regularuser);
 
 
