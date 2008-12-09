@@ -3,6 +3,7 @@ package fi.passiba.groups.ui.pages.search;
 
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.biblestudy.BibleStudySession;
+import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.services.search.ISearchService;
 import java.util.Arrays;
 import java.util.List;
@@ -35,8 +36,7 @@ public class UserSearchPanel extends Panel {
      private class SearchForm extends Form {
 
          
-       private List<String> searchoptions = Arrays
-			.asList("Rooli","Käyttäjänimi","Paikkakunta");
+       private List<String> searchoptions = Constants.PersonSearchOption.getPersonSearchOptions();
         
         public SearchForm(String id) {
             super(id);

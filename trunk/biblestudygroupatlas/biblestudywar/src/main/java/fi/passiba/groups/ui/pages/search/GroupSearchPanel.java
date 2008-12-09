@@ -2,6 +2,7 @@ package fi.passiba.groups.ui.pages.search;
 
 
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
+import fi.passiba.groups.ui.model.Constants;
 import java.util.Arrays;
 import java.util.List;
 import org.apache.wicket.PageParameters;
@@ -28,8 +29,7 @@ public class GroupSearchPanel extends Panel {
      private class SearchForm extends Form {
 
          
-       private List<String> searchoptions = Arrays
-			.asList("Ryhmätyyppi","Kaupunki","Nimi");
+       private List<String> searchoptions = Constants.GroupSearchOption.getGroupSearchOptions();
         
         public SearchForm(String id) {
             super(id);

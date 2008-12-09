@@ -16,10 +16,8 @@
  */
 package fi.passiba.groups.ui.pages.wizards.biblesession;
 
-import fi.passiba.biblestudy.BibleStudyApplication;
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
-import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
-import fi.passiba.services.biblestudy.datamining.persistance.Bookdatasource;
+import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.pages.Main;
 import fi.passiba.groups.ui.pages.biblesession.BibleDataTreePanel;
 import fi.passiba.services.authenticate.IAuthenticator;
@@ -30,12 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.extensions.wizard.StaticContentStep;
 import org.apache.wicket.extensions.wizard.Wizard;
 import org.apache.wicket.extensions.wizard.WizardModel;
@@ -43,7 +36,6 @@ import org.apache.wicket.extensions.wizard.WizardStep;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -71,7 +63,7 @@ public class NewBibleSessionWizard extends Wizard {
     @SpringBean
     private IAuthenticator authenticate;
 
-    private static final List<String> allSessionTypes = Arrays.asList(new String[]{"Ryhmä", "Henkilö"});
+    private static final List<String> allSessionTypes = Constants.BibleSessionType.getBibleSessionTypes();
     private BibleSession bibleSession = new BibleSession();
 
     /**
@@ -194,7 +186,7 @@ public class NewBibleSessionWizard extends Wizard {
             Biblesession session=new Biblesession();
             session.setSessiontime(bibleSession.getSessionDate());
             Object sessionOwner=null;
-            if(bibleSession.getSessiontype().equals("Henkilö"))
+            if(bibleSession.getSessiontype().equals(Constants.BibleSessionType.PERSON.getType()))
             {
                   sessionOwner=getLoggInPerson();
             }else

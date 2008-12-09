@@ -2,11 +2,10 @@ package fi.passiba.groups.ui.pages.search;
 
 import fi.passiba.biblestudy.BibleStudyApplication;
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
+import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.model.DomainModelIteratorAdaptor;
 import fi.passiba.groups.ui.model.HashcodeEnabledCompoundPropertyModel;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
@@ -81,12 +80,12 @@ public class ListGroups extends BasePage {
 
         if (searchCriteria != null && searchString != null) {
             try {
-                if (searchCriteria.equals("Ryhmätyyppi")) {
+                if (searchCriteria.equals(Constants.GroupSearchOption.TYPE.getOption())) {
 
                     results = searchService.findGroupsByType(country, searchString);
 
 
-                } else if (searchCriteria.equals("Kaupunki")) {
+                } else if (searchCriteria.equals(Constants.GroupSearchOption.CITY.getOption())) {
 
 
                     // results = groupService.findGroupsByLocation(country, city, searchCriteria);
@@ -262,8 +261,12 @@ public class ListGroups extends BasePage {
 
             long address_id = group.getAdress().getId();
             Adress address = addressservice.findAddressByAddressId(address_id);
-            bottomMap.addOverlay(createOverlay(group.getName(), new GLatLng(address.getLocation_lat(),
+
+            if(address.getLocation_lat()!=0 &&  address.getLocation_lng()!=0)
+            {
+                bottomMap.addOverlay(createOverlay(group.getName(), new GLatLng(address.getLocation_lat(),
                     address.getLocation_lng()), "groups.png", "shadow.png"));
+            }
 
         }
 
