@@ -28,6 +28,6 @@ public interface ISearchService {
 
      public List<Groups> findGroupsByName(String goupName, int startNum,int maxNum) throws ParseException;
 
-     public void reindex();
+     
 
 }

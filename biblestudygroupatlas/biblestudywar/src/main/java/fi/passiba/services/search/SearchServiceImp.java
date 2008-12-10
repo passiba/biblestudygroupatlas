@@ -253,11 +253,7 @@ fields, new WhitespaceAnalyzer());
     }
 
 
-    @Override
-    public void reindex() {
-       
-       
-    }
+   
     /**
      *  Returns the Group entities matching the given search criteria country and city
      * 

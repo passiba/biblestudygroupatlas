@@ -48,7 +48,6 @@ public class UserSearchPanel extends Panel {
              add(new Button("Find") {
 
                     public void onSubmit() {
-                           searchService.reindex();
                         PageParameters params = new PageParameters();
                         params.add("searchcriteria",  properties.getString("searchcriteria"));
                         params.add("searchString",  properties.getString("searchString"));
