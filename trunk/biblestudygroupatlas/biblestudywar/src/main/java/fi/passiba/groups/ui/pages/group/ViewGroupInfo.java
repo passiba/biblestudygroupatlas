@@ -1,5 +1,6 @@
 package fi.passiba.groups.ui.pages.group;
 
+import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.pages.*;
 
 import fi.passiba.groups.ui.pages.search.ListGroups;
@@ -62,7 +63,7 @@ public class ViewGroupInfo extends BasePage {
 
     private class GroupForm extends Form {
 
-        final List<String> allGroupTypes = Arrays.asList(new String[]{"Miestenpiiri", "Naistenpiiri", "Raamattupiiri", "Pyhäkoulu", "Äiti/lapsi-piiri", "Rukouspiiri", "Nuoret aikuiset"});
+        final List<String> allGroupTypes =  Constants.GroupType.getGroupTypes();
 
         public GroupForm(String id, IModel m) {
             super(id, m);
