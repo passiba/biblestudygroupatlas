@@ -1,0 +1,71 @@
+<wicket:panel>
+ 
+
+
+        <div class="data_row">
+
+        <h1><wicket:message key="searchresultusers"/></h1>
+
+        
+        <div class="pagination">
+                <h4>
+                    K&auml;ytt&auml;j&auml;t 1-10/20
+                </h4>
+                <div class="count_jump">
+                    <div class="count">
+                        Näytä sivulla:
+                        <select>
+                            <option>10 kpl</option>
+                            <option>25 kpl</option>
+                            <option>50 kpl</option>
+                            <option>100 kpl</option>
+                        </select>
+                    </div>
+                    <div class="jump">
+                        Siirry:
+                        <select>
+                            <option>1-10</option>
+                            <option>11-20</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <a href="#"><img src="images/arrow_left_off.gif" alt="Edellinen" title="Edellinen" /></a>|
+                    <a href="#"><img src="images/arrow_right.gif" alt="Seuraava" title="Seuraava" /></a>
+                </div>
+            </div>
+
+         <form>
+                <table class="tbl_list">
+                 <div wicket:id="contacts">
+                    <thead>
+                        <tr>
+                            <th><wicket:message key="name"/></th>
+                            <th><wicket:message key="phonenumber"/></th>
+                            <th><wicket:message key="email"/></th>
+                            <th><wicket:message key="rolename"/></th>
+                            <th><wicket:message key="action"/></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="dark">
+                            <td> <a wicket:id="view" href="#"><span wicket:id="firstName"></span>
+                        <span wicket:id="lastName"></span></a></td>
+                            <td> <span wicket:id="phone"></span></td>
+                            <td wicket:id="email"></td>
+                            <td><span wicket:id="role"></span></td>
+                            <td>
+                               <input wicket:id="edit" type="image" src="images/btn_Muokkaa.gif" value="Muokkaa" class="button" />
+                               <input wicket:id="delete" type="image" src="images/btn_POISTA.gif" value="Poista" class="button" />
+                            </td>
+
+                        </tr>
+                    </tbody>
+
+                </div>
+                </table>
+            </form>
+
+    </div>
+
+</wicket:panel>

@@ -5,7 +5,7 @@
 package fi.passiba.serices.search;
 
 import fi.passiba.AbstractDependencyInjectionSpringContextTest;
-import fi.passiba.groups.ui.model.Constants;
+import fi.passiba.AbstractTransactionalJUnit4SpringContext;
 import fi.passiba.services.authenticate.IAuthenticator;
 import fi.passiba.services.group.IGroupServices;
 import fi.passiba.services.group.persistance.Groups;
@@ -15,20 +15,29 @@ import fi.passiba.services.persistance.Users;
 import fi.passiba.services.search.ISearchService;
 import java.util.Date;
 import java.util.List;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author haverinen
  */
-public class SearchServiceImpTest extends AbstractDependencyInjectionSpringContextTest {
+public class SearchServiceImpTest extends AbstractTransactionalJUnit4SpringContext {
 
-    private String username = "hemuli",  rolename = Constants.RoleType.USER.getType();
-    private String groupType = Constants.GroupType.MENSGROUP.getType(),groupName="Miehet muutoksessa",  city = "Espoo",  country = "Finland";
+    private String username = "hemuli",  rolename = "User";
+    private String groupType = "Miestenpiiri",groupName="Miehet muutoksessa",  city = "Espoo",  country = "Finland";
 
+    @Autowired
+    private IAuthenticator authenticator;
+    @Autowired
+    private  ISearchService searchService;
+    @Autowired
+    private IGroupServices groupServices;
+    @Test
     public void testsearchingPersons() throws Exception {
-        IAuthenticator authenticator = (IAuthenticator) applicationContext.getBean("IAuthenticator");
+        //IAuthenticator authenticator = (IAuthenticator) applicationContext.getBean("IAuthenticator");
         Person person = addPerson();
-        ISearchService searchService = (ISearchService) applicationContext.getBean("SearchService");
+       // ISearchService searchService = (ISearchService) applicationContext.getBean("SearchService");
 
         List<Person> persons = searchService.findPersonByUserName(username, 0, 20);
 
@@ -61,7 +70,7 @@ public class SearchServiceImpTest extends AbstractDependencyInjectionSpringConte
     }
 
     private Person addPerson() throws Exception {
-        IAuthenticator authenticator = (IAuthenticator) applicationContext.getBean("IAuthenticator");
+        //IAuthenticator authenticator = (IAuthenticator) applicationContext.getBean("IAuthenticator");
 
         Adress ad = new Adress();
         ad.setAddr1("Testikuja 1 b");
@@ -85,18 +94,18 @@ public class SearchServiceImpTest extends AbstractDependencyInjectionSpringConte
         Users regularUser = new Users();
         regularUser.setUsername(username);
         regularUser.setRolename(rolename);
-        regularUser.setStatus(Constants.StatusType.ACTIVE.getType());
+        regularUser.setStatus("Aktiivinen");
         person.setFk_userid(regularUser);
 
 
         authenticator.registerPerson(person);
         return person;
     }
-
+    @Test
     public void testsearchingGroups() throws Exception {
         Groups group = addGroup();
-        ISearchService searchService = (ISearchService) applicationContext.getBean("SearchService");
-        IGroupServices groupServices = (IGroupServices) applicationContext.getBean("IGroupServices");
+        //ISearchService searchService = (ISearchService) applicationContext.getBean("SearchService");
+       // IGroupServices groupServices = (IGroupServices) applicationContext.getBean("IGroupServices");
         List<Groups> groups = searchService.findGroupsByLocation(country, city);
 
         Groups fetchGroup = null;
@@ -126,7 +135,7 @@ public class SearchServiceImpTest extends AbstractDependencyInjectionSpringConte
     }
 
     private Groups addGroup() throws Exception {
-        IGroupServices groupServices = (IGroupServices) applicationContext.getBean("IGroupServices");
+        //IGroupServices groupServices = (IGroupServices) applicationContext.getBean("IGroupServices");
 
         Adress ad = new Adress();
         ad.setAddr1("Testikuja 2 b");
@@ -146,7 +155,7 @@ public class SearchServiceImpTest extends AbstractDependencyInjectionSpringConte
         group.setCongregationwebsiteurl("www.lahisrk.fi");
         group.setGrouptypename(groupType);
         group.setDescription("Kristillisten miesten kasvuryhmä");
-        group.setStatus(Constants.StatusType.ACTIVE.getType());
+        group.setStatus("Aktiivinen");
         group.setName(groupName);
         // group.setCreatedBy("Admin");
         // group.setCreatedBy("Admin");
