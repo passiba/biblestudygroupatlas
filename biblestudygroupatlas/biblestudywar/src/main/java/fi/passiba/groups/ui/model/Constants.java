@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author haverinen
  */
-public class Constants {
+public final class  Constants {
 
     public static enum BibleSessionDataType {
 

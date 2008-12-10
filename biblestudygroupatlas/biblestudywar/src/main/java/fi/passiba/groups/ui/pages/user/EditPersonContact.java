@@ -1,5 +1,6 @@
 package fi.passiba.groups.ui.pages.user;
 
+import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.pages.*;
 import fi.passiba.groups.ui.pages.address.AddressPanel;
 
@@ -22,7 +23,6 @@ import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;
 
 import fi.passiba.services.persistance.Users;
-import java.util.Arrays;
 import java.util.List;
 import org.apache.wicket.Page;
 import org.apache.wicket.extensions.wizard.Wizard;
@@ -42,7 +42,7 @@ public class EditPersonContact extends BasePage {
     private IGroupServices groupservice;
     private final Page backPage;
     /** cheap roles database. */
-    private static final List<String> allRoles = Arrays.asList(new String[]{"Admin", "User"});
+    private static final List<String> allRoles = Constants.RoleType.getRoleTypes();
 
     public EditPersonContact(Page backPage, final Long contactId) {
 

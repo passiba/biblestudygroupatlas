@@ -1,8 +1,10 @@
 package fi.passiba.groups.ui.pages.group;
 
+import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.pages.*;
 import fi.passiba.groups.ui.pages.address.AddressPanel;
 
+import fi.passiba.groups.ui.pages.search.ListPersonsPanel;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -11,13 +13,11 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
-import org.apache.wicket.validation.validator.StringValidator;
 import fi.passiba.services.group.IGroupServices;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;
 
-import java.util.Arrays;
 import java.util.List;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
@@ -36,9 +36,9 @@ public class EditGroupInfo extends BasePage {
     private Groups groups = null;
     private Person contactperson = new Person();
     private final Page backPage;
-    /** cheap roles database. */
-    private static final List<String> allRoles = Arrays.asList(new String[]{"Admin", "User"});
-
+  
+    private static final List<String> allRoles = Constants.RoleType.getRoleTypes();
+    List<Person> contactpersons ;
     public EditGroupInfo(Page backPage, final Long groupId) {
         this.backPage = backPage;
         setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
@@ -46,7 +46,7 @@ public class EditGroupInfo extends BasePage {
             protected Object load() {
 
                 groups = groupservice.findGroupByGroupId(groupId);
-                List<Person> contactpersons = groupservice.findGroupsPersonsByGroupId(groupId);
+                contactpersons = groupservice.findGroupsPersonsByGroupId(groupId);
 
                 if (contactpersons != null && !contactpersons.isEmpty()) {
                     contactperson = contactpersons.get(0);
@@ -68,7 +68,7 @@ public class EditGroupInfo extends BasePage {
 
     private class GroupForm extends Form {
 
-        final List<String> allGroupTypes = Arrays.asList(new String[]{"Miestenpiiri", "Naistenpiiri", "Raamattupiiri", "Pyhäkoulu", "Äiti/lapsi-piiri", "Rukouspiiri", "Nuoret aikuiset"});
+        final List<String> allGroupTypes = Constants.GroupType.getGroupTypes();
 
         public GroupForm(String id, IModel m) {
             super(id, m);
@@ -106,7 +106,7 @@ public class EditGroupInfo extends BasePage {
                         @Override
                         protected Object load() {
                             long groupid = Long.valueOf(new PropertyModel(getModel(), "id").getObject().toString());
-                            List<Person> contactpersons = groupservice.findGroupsPersonsByGroupId(groupid);
+                            contactpersons = groupservice.findGroupsPersonsByGroupId(groupid);
                             if (contactpersons != null && !contactpersons.isEmpty()) {
                                 contactperson = contactpersons.get(0);
                             }
@@ -154,7 +154,8 @@ public class EditGroupInfo extends BasePage {
                 protected void onError(AjaxRequestTarget target) {
                 }
             });
-
+            ListPersonsPanel personListPanel=new ListPersonsPanel ("userlistPanel",contactpersons,EditGroupInfo.this.getPage());
+            add(personListPanel);
             add(new Button("save") {
 
                 public void onSubmit() {
