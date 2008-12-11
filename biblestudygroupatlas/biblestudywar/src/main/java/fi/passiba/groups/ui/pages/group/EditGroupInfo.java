@@ -75,7 +75,7 @@ public class EditGroupInfo extends BasePage {
             TextField groupName = new TextField("groupname", new PropertyModel(getModel(), "name"));
             groupName.setRequired(true);
             add(groupName);
-
+            final long groupid = Long.valueOf(new PropertyModel(getModel(), "id").getObject().toString());
 
             WebMarkupContainer grouptypes = new WebMarkupContainer("grouptype");
             add(grouptypes);
@@ -105,7 +105,7 @@ public class EditGroupInfo extends BasePage {
 
                         @Override
                         protected Object load() {
-                            long groupid = Long.valueOf(new PropertyModel(getModel(), "id").getObject().toString());
+                          
                             contactpersons = groupservice.findGroupsPersonsByGroupId(groupid);
                             if (contactpersons != null && !contactpersons.isEmpty()) {
                                 contactperson = contactpersons.get(0);
@@ -154,7 +154,39 @@ public class EditGroupInfo extends BasePage {
                 protected void onError(AjaxRequestTarget target) {
                 }
             });
-            ListPersonsPanel personListPanel=new ListPersonsPanel ("userlistPanel",contactpersons,EditGroupInfo.this.getPage());
+            ListPersonsPanel personListPanel=new ListPersonsPanel ("userlistPanel",contactpersons,EditGroupInfo.this.getPage(),groupid);
+            personListPanel.setOutputMarkupId(true);
+
+
+            personListPanel.add(new AjaxFormSubmitBehavior("onchange") {
+
+                @Override
+                protected void onSubmit(AjaxRequestTarget target) {
+                    //group.setAdress(groupservice.findGroupAddressByGroupId(group.getId()));
+                  
+                    contactpersons = groupservice.findGroupsPersonsByGroupId(groupid);
+                    target.addComponent(addOrReplace(new  ListPersonsPanel("userlistPanel",contactpersons,EditGroupInfo.this.getPage(), groupid)));
+                    //reset();
+                }
+
+                @Override
+                protected void onError(AjaxRequestTarget target) {
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             add(personListPanel);
             add(new Button("save") {
 

@@ -53,6 +53,11 @@ public class GroupServicesImp implements IGroupServices{
        return groupDAO.findGroupsPersonsByGroupId(id);
     }
 
+   
+    public void deleteGroupPersonFromGroup(Long personid) {
+        groupDAO.deleteGroupPersonFromGroup(personid);
+    }
+
 
     public List<Groups> findGroupsByPersonId(Long id) {
         return groupDAO.findGroupsByPersonId(id);

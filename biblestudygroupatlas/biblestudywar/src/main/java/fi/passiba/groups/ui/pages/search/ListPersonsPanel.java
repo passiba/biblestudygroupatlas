@@ -5,9 +5,11 @@ import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.model.DomainModelIteratorAdaptor;
 import fi.passiba.groups.ui.model.HashcodeEnabledCompoundPropertyModel;
+import fi.passiba.groups.ui.pages.group.EditGroupInfo;
 import fi.passiba.groups.ui.pages.user.EditPersonContact;
 import fi.passiba.groups.ui.pages.user.ViewPersonContact;
 import fi.passiba.services.authenticate.IAuthenticator;
+import fi.passiba.services.group.IGroupServices;
 import fi.passiba.services.persistance.Person;
 import fi.passiba.services.search.ISearchService;
 import java.util.ArrayList;
@@ -34,6 +36,9 @@ public class ListPersonsPanel extends Panel {
     private IAuthenticator authenticate;
     @SpringBean
     private ISearchService searchService;
+  
+    @SpringBean
+    IGroupServices groupServices;
     private final Page backPage;
     
     public ListPersonsPanel(String id,String searchCriteria,String searchString,Page backPage) {
@@ -49,7 +54,7 @@ public class ListPersonsPanel extends Panel {
         add(contacts);
 
     }
-     public ListPersonsPanel(String id,List<Person> result,Page backPage) {
+     public ListPersonsPanel(String id,List<Person> result,Page backPage,long groupid) {
         super(id);
         this.backPage=backPage;
         final List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
@@ -57,7 +62,7 @@ public class ListPersonsPanel extends Panel {
         if (persons != null && !persons.isEmpty()) {
             currentLogInPerson = persons.get(0);
         }
-        RefreshingView contacts = populateResult(result);
+        RefreshingView contacts = populateResult(result,groupid);
         contacts.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
         add(contacts);
 
@@ -69,7 +74,7 @@ public class ListPersonsPanel extends Panel {
      // return BibleStudySession.get().isAuthenticated();
       return BibleStudyFaceBookSession.get().isAuthenticated();
   }
-   private RefreshingView populateResult(final List<Person> result) {
+   private RefreshingView populateResult(final List<Person> result,final long groupid) {
 
         RefreshingView contacts = new RefreshingView("contacts") {
 
@@ -125,8 +130,8 @@ public class ListPersonsPanel extends Panel {
 
                     public void onClick() {
                         Person p = (Person) getModelObject();
-                        authenticate.deletePerson(p);
-                        setResponsePage(ListPersonsPanel.this.backPage);
+                        groupServices.deleteGroupPersonFromGroup(p.getId());
+                        setResponsePage(new EditGroupInfo(getPage(),groupid));
                     }
                 });
             }
