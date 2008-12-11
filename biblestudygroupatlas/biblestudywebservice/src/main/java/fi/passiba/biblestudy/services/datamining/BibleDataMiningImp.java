@@ -556,7 +556,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
             int chapterNum = verse.getChapter();
             int verseNum = verse.getVerse();
 
-            System.out.println("Booknum " + bookNum + " chapternum " + chapterNum + " verseNum" + verseNum +" chapter id"+chapter.getId());
+           // System.out.println("Booknum " + bookNum + " chapternum " + chapterNum + " verseNum" + verseNum +" chapter id"+chapter.getId());
             try {
                 if (data.getOsisFragment() != null) {
                     String osisID = key.getOsisID();
@@ -564,7 +564,7 @@ public class BibleDataMiningImp implements IBibleDataMining {
                     String versetext = OSISUtil.getPlainText(data.getOsisFragment());
                    
                     versetext = versetext.substring(name.length(), versetext.length());
-                    System.out.println("And the text against that key is with bookname:" + versetext);
+                   // System.out.println("And the text against that key is with bookname:" + versetext);
 
                     //System.out.println("osisid: " + osisID + " name: " + name);
                     // System.out.println("And the text against that key is " + verseText);
