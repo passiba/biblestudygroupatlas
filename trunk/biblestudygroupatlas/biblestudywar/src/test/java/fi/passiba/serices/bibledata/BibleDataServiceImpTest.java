@@ -5,9 +5,9 @@
 package fi.passiba.serices.bibledata;
 
 import fi.passiba.AbstractTransactionalJUnit4SpringContext;
+import fi.passiba.biblestudy.services.datamining.IBibleBookDataProcessing;
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.groups.ui.model.Constants;
-import fi.passiba.services.bibledata.IBibleBookDataProcessing;
 import fi.passiba.services.bibledata.SiteEditor;
 import java.util.Iterator;
 import java.util.Map;

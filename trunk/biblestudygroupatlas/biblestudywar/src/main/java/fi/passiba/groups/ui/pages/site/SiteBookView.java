@@ -7,12 +7,12 @@ package fi.passiba.groups.ui.pages.site;
 
 import fi.passiba.biblestudy.BibleStudyApplication;
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
+import fi.passiba.biblestudy.services.datamining.IBibleBookDataProcessing;
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.pages.BasePage;
 
 import fi.passiba.services.authenticate.IAuthenticator;
-import fi.passiba.services.bibledata.IBibleBookDataProcessing;
 import fi.passiba.services.bibledata.SiteEditor;
 import fi.passiba.services.bibledata.sword.HttpSwordInstaller;
 import fi.passiba.services.bibledata.sword.IndexResolver;
