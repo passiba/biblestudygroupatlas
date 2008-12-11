@@ -30,6 +30,8 @@ public interface IGroupServices {
      
      @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
      public List<Person> findGroupsPersonsByGroupId(Long id);
+     @Transactional(propagation = Propagation.REQUIRED)
+     public void deleteGroupPersonFromGroup(Long personid) ;
      
      @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
      public Groups findGroupByGroupId(Long id);
