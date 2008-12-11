@@ -62,6 +62,10 @@
   <!--handles converting messages from MapMessages to java objects -->
   <bean id="bibleBookDataConverter" class="fi.passiba.biblestudy.services.datamining.dataconverter.BibleBookDataMessageConverter"/>
 
+  <bean id="bibleDataProcessingGageway" class="fi.passiba.services.bibledata.BibleBookDataProcessingImp">
+        <property name="jmsTemplate" ref="myJmsTemplate"/>
+        <property name="destination" ref="biblebookDataDestination"/>
+  </bean>
 
 
 </beans>
