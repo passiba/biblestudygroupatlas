@@ -32,5 +32,8 @@ public interface IGroupsDAO extends BaseDao<Groups>{
          
          @Transactional(propagation = Propagation.SUPPORTS,readOnly=true)
          public List<Biblesession> findBibleSessionsByGroupId(long groupid);
+
+         @Transactional(propagation = Propagation.REQUIRED)
+         public void deleteGroupPersonFromGroup(long personid);
     
 }
