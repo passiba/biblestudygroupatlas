@@ -130,8 +130,9 @@ public final class ListPersonsPanel extends Panel {
 
                     public void onClick() {
                         Person p = (Person) getModelObject();
-                        groupServices.deleteGroupPersonFromGroup(p.getId());
+                        groupServices.deleteGroupPersonFromGroup(p.getId(),groupid);
                         setResponsePage(new EditGroupInfo(getPage(),groupid));
+                        setVisible(true);
                     }
                 });
             }
@@ -226,6 +227,7 @@ public final class ListPersonsPanel extends Panel {
                         Person p = (Person) getModelObject();
                         authenticate.deletePerson(p);
                         setResponsePage(ListPersonsPanel.this.backPage);
+                        setVisible(false);
                     }
                 });
             }

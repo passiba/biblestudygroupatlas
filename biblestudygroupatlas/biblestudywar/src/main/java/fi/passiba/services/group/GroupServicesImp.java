@@ -54,8 +54,8 @@ public class GroupServicesImp implements IGroupServices{
     }
 
    
-    public void deleteGroupPersonFromGroup(Long personid) {
-        groupDAO.deleteGroupPersonFromGroup(personid);
+    public void deleteGroupPersonFromGroup(Long personid,long groupid) {
+        groupDAO.deleteGroupPersonFromGroup(personid,groupid);
     }
 
 

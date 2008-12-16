@@ -12,8 +12,8 @@ public class ListGroups extends BasePage {
        final String searchCriteria = params.getString("searchcriteria");
        final String searchString = params.getString("searchString");
 
-       final ListGroupsPanel personListPanel=new ListGroupsPanel ("usergroupsPanel",searchCriteria,searchString,getPage());
-        add(personListPanel);
+       final ListGroupsPanel groupsListPanel=new ListGroupsPanel ("usergroupsPanel",searchCriteria,searchString,getPage());
+        add(groupsListPanel);
 
     }
 

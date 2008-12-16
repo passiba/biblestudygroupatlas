@@ -138,7 +138,7 @@ public final class GroupServiceImpTest  extends AbstractTransactionalJUnit4Sprin
         assertEquals(1,fetchedPersons.size());
         Person groupperson=fetchedPersons.get(0);
         assertEquals(person.getId(),groupperson.getId());
-        groupServices.deleteGroupPersonFromGroup(person.getId());
+        groupServices.deleteGroupPersonFromGroup(person.getId(),group.getId());
         fetchedPersons=groupServices.findGroupsPersonsByGroupId(group.getId());
         assertEquals(0,fetchedPersons.size());
         person=authenticator.findPersonByPersonID(person.getId());
