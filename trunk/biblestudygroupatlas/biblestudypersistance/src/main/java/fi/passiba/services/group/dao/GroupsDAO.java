@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Restrictions;
 
 public class GroupsDAO extends BaseDaoHibernate<Groups> implements IGroupsDAO {
@@ -57,6 +58,11 @@ public class GroupsDAO extends BaseDaoHibernate<Groups> implements IGroupsDAO {
        Query query = super.getSessionFactory().getCurrentSession().createQuery("select distinct b from Biblesession b join Groups g where g.id=:id");
        query.setLong("id", groupid);
        return query.list();
+    }
+
+    public void deleteGroupPersonFromGroup(long personid) {
+       SQLQuery query= super.getSessionFactory().getCurrentSession().createSQLQuery("delete from groupperson where fk_person_id="+personid);
+       int i=query.executeUpdate();
     }
 
    
