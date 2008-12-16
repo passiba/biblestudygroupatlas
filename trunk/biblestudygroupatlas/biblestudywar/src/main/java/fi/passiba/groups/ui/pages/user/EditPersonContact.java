@@ -5,6 +5,7 @@ import fi.passiba.groups.ui.pages.*;
 import fi.passiba.groups.ui.pages.address.AddressPanel;
 
 import fi.passiba.groups.ui.pages.group.EditGroupInfo;
+import fi.passiba.groups.ui.pages.search.ListGroupsPanel;
 import fi.passiba.groups.ui.pages.wizards.WizardPage;
 import fi.passiba.groups.ui.pages.wizards.biblesession.NewBibleSessionWizard;
 import org.apache.wicket.markup.html.form.Button;
@@ -70,6 +71,7 @@ public class EditPersonContact extends BasePage {
 
         public ContactForm(String id, IModel m) {
             super(id, m);
+            final long personid = Long.valueOf(new PropertyModel(getModel(), "id").getObject().toString());
             TextField firstName = new TextField("firstName", new PropertyModel(getModel(), "firstname"));
             firstName.setRequired(true);
             firstName.add(StringValidator.maximumLength(15));
@@ -120,16 +122,17 @@ public class EditPersonContact extends BasePage {
 
 
 
-            IModel groupsModel = new LoadableDetachableModel() {
+            /*IModel groupsModel = new LoadableDetachableModel() {
 
                 protected Object load() {
-                    long personid = Long.valueOf(new PropertyModel(getModel(), "id").getObject().toString());
+                   
                     List<Groups> groupsCol = groupservice.findGroupsByPersonId(personid);
                     return groupsCol;
                 }
-            };
-
-            ListView groups = new ListView("groups", groupsModel) {
+            };*/
+            ListGroupsPanel listGroupsPanel=new ListGroupsPanel("groups",EditPersonContact.this.backPage,personid);
+            add(listGroupsPanel);
+            /* ListView groups = new ListView("groups", groupsModel) {
 
                 protected void populateItem(ListItem item) {
 
@@ -152,7 +155,7 @@ public class EditPersonContact extends BasePage {
                 }
             };
 
-            add(groups);
+            add(groups);*/
 
             Adress address = (Adress) new PropertyModel(getModel(), "adress").getObject();
             long addressid = address.getId();

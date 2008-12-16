@@ -16,6 +16,7 @@ import org.apache.wicket.model.PropertyModel;
 import fi.passiba.groups.ui.pages.BasePage;
 import fi.passiba.groups.ui.pages.group.EditGroupInfo;
 import fi.passiba.groups.ui.pages.group.ViewGroupInfo;
+import fi.passiba.groups.ui.pages.user.EditPersonContact;
 import fi.passiba.hibernate.PaginationInfo;
 import fi.passiba.services.address.IAddressService;
 import fi.passiba.services.authenticate.IAuthenticator;
@@ -61,7 +62,7 @@ public final class ListGroupsPanel  extends Panel{
     @SpringBean
     private IAuthenticator authenticate;
     private PaginationInfo pageInfo;
-    private List<Groups> results = new ArrayList<Groups>(0);
+ 
     private Page backPage;
     public ListGroupsPanel(String id,String searchCriteria, String searchString,Page backPage) {
         super(id);
@@ -69,9 +70,59 @@ public final class ListGroupsPanel  extends Panel{
         init(searchCriteria,searchString);
 
     }
+     public  ListGroupsPanel(String id,Page backPage,long personid)
+    {   
+        super(id);
+        this.backPage=backPage;
+        List<Groups> groupsCol = groupService.findGroupsByPersonId(personid);
+        add(populateSearchResult(groupsCol,true));
+        addNextandPrevious();
+        add(createSearchResultMap(groupsCol));
+
+    }
+    private void addNextandPrevious()
+    {
+
+         IModel linkModel = new CompoundPropertyModel(new LoadableDetachableModel() {
+
+            protected Object load() {
+                pageInfo = groupService.findPagingInfoForGroups(10);
+                return pageInfo;
+            }
+        });
+        Link previous = new Link("previous", new Model(linkModel)) {
+
+            public void onClick() {
+                List<Groups> results = new ArrayList<Groups>(0);
+                pageInfo = (PaginationInfo) getModelObject();
+                pageInfo.setFirstRow(pageInfo.getFirstRow() - 1);
+                results = groupService.findGroupsWithPaging(pageInfo);
+                setResponsePage(ListGroups.class);
+            }
+        };
+        Link next = new Link("next", new Model(linkModel)) {
+
+            public void onClick() {
+                List<Groups> results = new ArrayList<Groups>(0);
+                pageInfo = (PaginationInfo) getModelObject();
+                pageInfo.setFirstRow(pageInfo.getFirstRow() + 1);
+                results = groupService.findGroupsWithPaging(pageInfo);
+                setResponsePage(ListGroups.class);
+            }
+        };
+        if (pageInfo == null) {
+            previous.setVisible(false);
+            next.setVisible(false);
+        } else if (pageInfo != null) {
+            previous.setVisible(pageInfo.isPreviousPage());
+            next.setVisible(pageInfo.isPreviousPage());
+        }
+        add(previous);
+        add(next);
+    }
 
     private void init(String searchCriteria, String searchString) {
-
+        List<Groups> results = new ArrayList<Groups>(0);
         final Person loggedInPerson = getLoggInPerson();
         String country = "", city = "";
         if (loggedInPerson != null) {
@@ -102,42 +153,9 @@ public final class ListGroupsPanel  extends Panel{
                 throw new WicketRuntimeException(ex);
             }
         }
-        add(populateSearchResult(results));
-
-        IModel linkModel = new CompoundPropertyModel(new LoadableDetachableModel() {
-
-            protected Object load() {
-                pageInfo = groupService.findPagingInfoForGroups(10);
-                return pageInfo;
-            }
-        });
-        Link previous = new Link("previous", new Model(linkModel)) {
-
-            public void onClick() {
-                pageInfo = (PaginationInfo) getModelObject();
-                pageInfo.setFirstRow(pageInfo.getFirstRow() - 1);
-                results = groupService.findGroupsWithPaging(pageInfo);
-                setResponsePage(ListGroups.class);
-            }
-        };
-        Link next = new Link("next", new Model(linkModel)) {
-
-            public void onClick() {
-                pageInfo = (PaginationInfo) getModelObject();
-                pageInfo.setFirstRow(pageInfo.getFirstRow() + 1);
-                results = groupService.findGroupsWithPaging(pageInfo);
-                setResponsePage(ListGroups.class);
-            }
-        };
-        if (pageInfo == null) {
-            previous.setVisible(false);
-            next.setVisible(false);
-        } else if (pageInfo != null) {
-            previous.setVisible(pageInfo.isPreviousPage());
-            next.setVisible(pageInfo.isPreviousPage());
-        }
-        add(previous);
-        add(next);
+        add(populateSearchResult(results,false));
+        addNextandPrevious();
+       
 
         /*@AdminOnly
         private class UserLink extends Link {
@@ -184,7 +202,7 @@ public final class ListGroupsPanel  extends Panel{
         return new GMarker(latLng, new GMarkerOptions(title, icon));
     }
 
-    private RefreshingView populateSearchResult(final List<Groups> results) {
+    private RefreshingView populateSearchResult(final List<Groups> results,final boolean removeFromGroup) {
 
         RefreshingView groups = new RefreshingView("groups") {
 
@@ -231,14 +249,31 @@ public final class ListGroupsPanel  extends Panel{
                         setResponsePage(new EditGroupInfo(getPage(), g.getId()));
                     }
                 });
-                item.add(new Link("delete", item.getModel()) {
+
+                
+                    item.add(new Link("delete", item.getModel()) {
 
                     public void onClick() {
+
                         Groups g = (Groups) getModelObject();
-                        groupService.deleteGroup(g);
-                        setResponsePage(ListGroups.class);
+                        if(removeFromGroup!=true)
+                        {
+
+                            groupService.deleteGroup(g);
+                            setResponsePage(ListGroups.class);
+                            setVisible(false);
+
+
+                        }else
+                        {
+                           final Person loggedInPerson = getLoggInPerson();
+                           groupService.deleteGroupPersonFromGroup(loggedInPerson.getId(), g.getId());
+                           setResponsePage(new EditPersonContact(getPage(),loggedInPerson.getId()));
+                           setVisible(true);
+                        }
                     }
                 });
+                
 
             }
         };

@@ -60,8 +60,8 @@ public class GroupsDAO extends BaseDaoHibernate<Groups> implements IGroupsDAO {
        return query.list();
     }
 
-    public void deleteGroupPersonFromGroup(long personid) {
-       SQLQuery query= super.getSessionFactory().getCurrentSession().createSQLQuery("delete from groupperson where fk_person_id="+personid);
+    public void deleteGroupPersonFromGroup(long personid,long groupid) {
+       SQLQuery query= super.getSessionFactory().getCurrentSession().createSQLQuery("delete from groupperson where fk_person_id="+personid+ " and fk_group_id="+groupid);
        int i=query.executeUpdate();
     }
 
