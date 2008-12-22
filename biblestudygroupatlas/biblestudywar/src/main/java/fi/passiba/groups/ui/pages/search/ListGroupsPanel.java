@@ -26,7 +26,9 @@ import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;
 import fi.passiba.services.search.ISearchService;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.apache.wicket.Page;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.WicketRuntimeException;
@@ -51,7 +53,7 @@ import wicket.contrib.gmap.api.GOverlay;
 import wicket.contrib.gmap.api.GPoint;
 import wicket.contrib.gmap.api.GSize;
 
-public final class ListGroupsPanel  extends Panel{
+public final class ListGroupsPanel extends Panel {
 
     @SpringBean
     private IGroupServices groupService;
@@ -62,28 +64,28 @@ public final class ListGroupsPanel  extends Panel{
     @SpringBean
     private IAuthenticator authenticate;
     private PaginationInfo pageInfo;
- 
     private Page backPage;
-    public ListGroupsPanel(String id,String searchCriteria, String searchString,Page backPage) {
+ 
+    public ListGroupsPanel(String id, String searchCriteria, String searchString, Page backPage) {
         super(id);
-        this.backPage=backPage;
-        init(searchCriteria,searchString);
+        this.backPage = backPage;
+        init(searchCriteria, searchString);
 
     }
-     public  ListGroupsPanel(String id,Page backPage,long personid)
-    {   
+
+    public ListGroupsPanel(String id, Page backPage, long personid) {
         super(id);
-        this.backPage=backPage;
+        this.backPage = backPage;
         List<Groups> groupsCol = groupService.findGroupsByPersonId(personid);
-        add(populateSearchResult(groupsCol,true));
+        add(populateSearchResult(groupsCol, true));
         addNextandPrevious();
         add(createSearchResultMap(groupsCol));
 
     }
-    private void addNextandPrevious()
-    {
 
-         IModel linkModel = new CompoundPropertyModel(new LoadableDetachableModel() {
+    private void addNextandPrevious() {
+
+        IModel linkModel = new CompoundPropertyModel(new LoadableDetachableModel() {
 
             protected Object load() {
                 pageInfo = groupService.findPagingInfoForGroups(10);
@@ -153,9 +155,9 @@ public final class ListGroupsPanel  extends Panel{
                 throw new WicketRuntimeException(ex);
             }
         }
-        add(populateSearchResult(results,false));
+        add(populateSearchResult(results, false));
         addNextandPrevious();
-       
+
 
         /*@AdminOnly
         private class UserLink extends Link {
@@ -202,7 +204,7 @@ public final class ListGroupsPanel  extends Panel{
         return new GMarker(latLng, new GMarkerOptions(title, icon));
     }
 
-    private RefreshingView populateSearchResult(final List<Groups> results,final boolean removeFromGroup) {
+    private RefreshingView populateSearchResult(final List<Groups> results, final boolean removeFromGroup) {
 
         RefreshingView groups = new RefreshingView("groups") {
 
@@ -250,33 +252,66 @@ public final class ListGroupsPanel  extends Panel{
                     }
                 });
 
-                
-                    item.add(new Link("delete", item.getModel()) {
+                Link delete=new Link("delete", item.getModel()) {
 
                     public void onClick() {
 
                         Groups g = (Groups) getModelObject();
-                        if(removeFromGroup!=true)
-                        {
+                        if (removeFromGroup != true) {
 
                             groupService.deleteGroup(g);
                             setResponsePage(ListGroups.class);
-                            setVisible(false);
+                         
 
-
-                        }else
-                        {
-                           final Person loggedInPerson = getLoggInPerson();
-                           groupService.deleteGroupPersonFromGroup(loggedInPerson.getId(), g.getId());
-                           setResponsePage(new EditPersonContact(getPage(),loggedInPerson.getId()));
-                           setVisible(true);
+                        } else {
+                            final Person loggedInPerson = getLoggInPerson();
+                            groupService.deleteGroupPersonFromGroup(loggedInPerson.getId(), g.getId());
+                            setResponsePage(new EditPersonContact(getPage(), loggedInPerson.getId()));
+                          
                         }
                     }
-                });
-                
+                };
 
+                item.add(delete);
+
+               Link join= new Link("join", item.getModel()) {
+
+                    public void onClick() {
+
+                        Groups g = (Groups) getModelObject();
+                        final Person loggedInPerson = getLoggInPerson();
+                        List<Person> groupPersons = groupService.findGroupsPersonsByGroupId(g.getId());
+                        Set<Groups> groups = new HashSet<Groups>(0);
+                        groups.add(g);
+                        loggedInPerson.setGroups(groups);
+                        if (removeFromGroup != true) {
+
+                            groupPersons.add(loggedInPerson);
+
+                            Set<Person> persons = new HashSet<Person>(0);
+                            for (Person per : groupPersons) {
+                                persons.add(per);
+                            }
+                            g.setGrouppersons(persons);
+                            groupService.updateGroup(g);
+                            setResponsePage(ListGroups.class);
+                         
+
+
+                        } 
+                    }
+                };
+                if(!removeFromGroup)
+                {
+                    join.setVisible(true);
+                }else
+                {
+                   join.setVisible(false);
+                }
+                item.add(join);
             }
         };
+
         groups.setItemReuseStrategy(ReuseIfModelsEqualStrategy.getInstance());
         return groups;
 
@@ -293,18 +328,20 @@ public final class ListGroupsPanel  extends Panel{
         bottomMap.setZoom(9);
         bottomMap.setCenter(new GLatLng(60.226280212402344, 24.820398330688477));
 
+       if(results!=null)
+       {
         for (Groups group : results) {
 
             long address_id = group.getAdress().getId();
             Adress address = addressservice.findAddressByAddressId(address_id);
 
-            if(address.getLocation_lat()!=0 &&  address.getLocation_lng()!=0)
-            {
+            if (address.getLocation_lat() != 0 && address.getLocation_lng() != 0) {
                 bottomMap.addOverlay(createOverlay(group.getName(), new GLatLng(address.getLocation_lat(),
-                    address.getLocation_lng()), "groups.png", "shadow.png"));
+                        address.getLocation_lng()), "groups.png", "shadow.png"));
             }
 
         }
+       }
 
         ///bottomMap.setOverlays(overlays);
 
