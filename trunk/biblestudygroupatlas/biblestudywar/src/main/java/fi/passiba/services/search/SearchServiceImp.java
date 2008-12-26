@@ -54,10 +54,13 @@ public class SearchServiceImp implements ISearchService{
      *
      * @param searchQuery
      * @param fields
-     * @return
+     * @param boostPerField
+     * @param pageNumber
+     * @param  window
+     * @return List<Person> persons
      * @throws org.apache.lucene.queryParser.ParseException
      */
-     private List<Person> searchPerson(String []searchQuery,String []fields) throws ParseException {
+     private List<Person> searchPerson(String []searchQuery,String []fields,int pageNumber,int window) throws ParseException {
         for(String query:searchQuery)
         {
             if (!StringUtils.hasText(query)) {
@@ -65,7 +68,7 @@ public class SearchServiceImp implements ISearchService{
                 return null;
             }
         }
-        Query query = searchPersonQuery(searchQuery,fields);
+        Query query = searchPersonQuery(searchQuery,fields,pageNumber,window);
 
         List<Person> persons = query.list();
         return persons;
@@ -75,17 +78,19 @@ public class SearchServiceImp implements ISearchService{
      * @param searchQuery
      * @param fields
      * @param boostPerField
-     * @return
+     * @param pageNumber
+     * @param  window
+     * @return List<Person> persons
      * @throws org.apache.lucene.queryParser.ParseException
      */
-    private List<Person> searchPerson(String searchQuery,String []fields,Map<String, Float> boostPerField) throws ParseException {
+    private List<Person> searchPerson(String searchQuery,String []fields,Map<String, Float> boostPerField,int pageNumber,int window) throws ParseException {
 
        if (!StringUtils.hasText(searchQuery)) {
 
                 return null;
         }
 
-        Query query = searchPersonQuery(searchQuery,fields,boostPerField);
+        Query query = searchPersonQuery(searchQuery,fields,boostPerField,pageNumber,window);
 
         List<Person> persons = query.list();
         return persons;
@@ -193,7 +198,7 @@ fields, new WhitespaceAnalyzer());
      * @return
      * @throws org.apache.lucene.queryParser.ParseException
      */
-    private Query searchPersonQuery(String [] searchQuery,String []fields) throws ParseException {
+    private Query searchPersonQuery(String [] searchQuery,String []fields,int pageNumber,int window) throws ParseException {
         //lucene part
         org.apache.lucene.search.Query luceneQuery = MultiFieldQueryParser.parse(searchQuery,
 fields, new WhitespaceAnalyzer());
@@ -201,6 +206,8 @@ fields, new WhitespaceAnalyzer());
         //Hibernate Search
         final FullTextQuery query = getFullTextSession().createFullTextQuery(luceneQuery, Person.class);
 
+        query.setFirstResult( (pageNumber - 1) * window );
+        query.setMaxResults(window);
         return query;
     }
     /**
@@ -208,10 +215,12 @@ fields, new WhitespaceAnalyzer());
      * @param searchQuery
      * @param fields
      * @param boostPerField
-     * @return
+     * @param pageNumber
+     * @param  window
+     * @return Query
      * @throws org.apache.lucene.queryParser.ParseException
      */
-    private Query searchPersonQuery(String  searchQuery,String []fields, Map<String, Float> boostPerField) throws ParseException {
+    private Query searchPersonQuery(String  searchQuery,String []fields, Map<String, Float> boostPerField,int pageNumber,int window) throws ParseException {
         //lucene part
 
        QueryParser parser = new MultiFieldQueryParser(fields ,new WhitespaceAnalyzer(), boostPerField);
@@ -220,7 +229,8 @@ fields, new WhitespaceAnalyzer());
 
         //Hibernate Search
         final FullTextQuery query = getFullTextSession().createFullTextQuery(luceneQuery, Person.class);
-
+        query.setFirstResult( (pageNumber - 1) * window );
+        query.setMaxResults(window);
         return query;
     }
     /**
@@ -229,15 +239,17 @@ fields, new WhitespaceAnalyzer());
      * @param rolename
      * @param country
      * @param city
-     * @return
+     * @param pageNumber
+     * @param  window
+     * @return List<Person>
      * @throws org.apache.lucene.queryParser.ParseException
      */
     @Override
-    public List<Person> findPersonByRolenameWithLocation(String rolename, String country, String city) throws ParseException {
+    public List<Person> findPersonByRolenameWithLocation(String rolename, String country, String city,int pageNumber,int window) throws ParseException {
        
        final String[] fields = { "fk_userid.rolename","adress.country","adress.city"};
        String[] queries = new String[]{rolename, country,city};
-        return searchPerson(queries,fields);
+        return searchPerson(queries,fields,pageNumber,window);
        
     }
     /**
@@ -256,15 +268,15 @@ fields, new WhitespaceAnalyzer());
         Map<String, Float> boostPerField = new HashMap<String, Float>(4);
         boostPerField.put("fk_userid.username", (float) 5);
         boostPerField.put("lastname", (float) .2);
-        return searchPerson(username,fields,boostPerField);
+        return searchPerson(username,fields,boostPerField,startNum,maxNum);
     }
 
     @Override
-    public List<Person> findPersonByLocation(String country, String city) throws ParseException {
+    public List<Person> findPersonByLocation(String country, String city,int pageNumber,int window) throws ParseException {
         final String[] fields = { "adress.city","adress.country" };
 
        String[] queries = new String[]{city,country};
-       return searchPerson(queries,fields);
+       return searchPerson(queries,fields,pageNumber,window);
     }
 
 

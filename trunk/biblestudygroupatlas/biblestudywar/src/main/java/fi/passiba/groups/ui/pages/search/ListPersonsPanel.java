@@ -40,7 +40,7 @@ public final class ListPersonsPanel extends Panel {
     @SpringBean
     IGroupServices groupServices;
     private final Page backPage;
-    
+    private int startPage = 1,  window = 20;
     public ListPersonsPanel(String id,String searchCriteria,String searchString,Page backPage) {
         super(id);
         this.backPage=backPage;
@@ -152,7 +152,7 @@ public final class ListPersonsPanel extends Panel {
                     if (searchCriteria != null && searchString != null) {
                         if (searchCriteria.equals(Constants.PersonSearchOption.USERNAME.getOption())) {
 
-                            result = searchService.findPersonByUserName(searchString, 0, 20);
+                            result = searchService.findPersonByUserName(searchString, startPage, window);
 
                         } else if (searchCriteria.equals(Constants.PersonSearchOption.USERNAME.USERROLE.getOption())) {
                             String city = "";
@@ -162,7 +162,7 @@ public final class ListPersonsPanel extends Panel {
                                 country = currentLogInPerson.getAdress().getCountry();
                             }
 
-                            result = searchService.findPersonByRolenameWithLocation(searchString, country, city);
+                            result = searchService.findPersonByRolenameWithLocation(searchString, country, city,startPage, window);
 
                         } else {
 
@@ -171,7 +171,7 @@ public final class ListPersonsPanel extends Panel {
                                 city = currentLogInPerson.getAdress().getCity();
                                 country = currentLogInPerson.getAdress().getCountry();
                             }
-                            result = searchService.findPersonByLocation(country, searchString);
+                            result = searchService.findPersonByLocation(country, searchString,startPage, window);
                         }
 
                     }
