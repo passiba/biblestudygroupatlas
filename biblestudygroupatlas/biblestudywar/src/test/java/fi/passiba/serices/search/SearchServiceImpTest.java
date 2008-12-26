@@ -39,7 +39,7 @@ public class SearchServiceImpTest extends AbstractTransactionalJUnit4SpringConte
         Person person = addPerson();
        // ISearchService searchService = (ISearchService) applicationContext.getBean("SearchService");
 
-        List<Person> persons = searchService.findPersonByUserName(username, 0, 20);
+        List<Person> persons = searchService.findPersonByUserName(username, startPage, maxNumber);
 
         Person fetchUser = null;
         for (Person per : persons) {
@@ -49,7 +49,7 @@ public class SearchServiceImpTest extends AbstractTransactionalJUnit4SpringConte
         assert (person.getFk_userid().getUsername().equals(fetchUser.getFk_userid().getUsername()));
 
 
-        persons = searchService.findPersonByRolenameWithLocation(rolename, person.getAdress().getCountry(), person.getAdress().getCity());
+        persons = searchService.findPersonByRolenameWithLocation(rolename, person.getAdress().getCountry(), person.getAdress().getCity(),startPage, maxNumber);
 
         for (Person per : persons) {
             fetchUser = per;
@@ -57,7 +57,7 @@ public class SearchServiceImpTest extends AbstractTransactionalJUnit4SpringConte
         }
         assert (person.getFk_userid().getUsername().equals(fetchUser.getFk_userid().getUsername()));
 
-        persons = searchService.findPersonByLocation(person.getAdress().getCountry(), person.getAdress().getCity());
+        persons = searchService.findPersonByLocation(person.getAdress().getCountry(), person.getAdress().getCity(),startPage, maxNumber);
 
         for (Person per : persons) {
             fetchUser = per;
