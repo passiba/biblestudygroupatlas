@@ -96,16 +96,18 @@ public class SearchServiceImp implements ISearchService{
      * @param searchQuery
      * @param fields
      * @param boostPerField
-     * @return
+     * @param pageNumber
+     * @param  window
+     * @return List<Groups> groups
      * @throws org.apache.lucene.queryParser.ParseException
      */
-    private List<Groups> searchGroups(String searchQuery,String []fields,Map<String, Float> boostPerField) throws ParseException {
+    private List<Groups> searchGroups(String searchQuery,String []fields,Map<String, Float> boostPerField,int pageNumber,int window) throws ParseException {
 
         if (!StringUtils.hasText(searchQuery)) {
 
             return null;
         }
-        Query query = searchGroupQuery(searchQuery,fields,boostPerField);
+        Query query = searchGroupQuery(searchQuery,fields,boostPerField,pageNumber,window);
 
          List<Groups> groups = query.list();
         return groups;
@@ -116,10 +118,12 @@ public class SearchServiceImp implements ISearchService{
      * @param searchQuery
      * @param fields
      * @param boostPerField
-     * @return
+     * @param pageNumber
+     * @param  window
+     * @return List<Groups> groups
      * @throws org.apache.lucene.queryParser.ParseException
      */
-    private List<Groups> searchGroups(String []searchQueries,String []fields) throws ParseException {
+    private List<Groups> searchGroups(String []searchQueries,String []fields,int pageNumber,int window) throws ParseException {
 
          for(String query:searchQueries)
         {
@@ -128,7 +132,7 @@ public class SearchServiceImp implements ISearchService{
                 return null;
             }
         }
-        Query query = searchGroupQuery(searchQueries,fields);
+        Query query = searchGroupQuery(searchQueries,fields,pageNumber,window);
 
          List<Groups> groups = query.list();
         return groups;
@@ -139,10 +143,12 @@ public class SearchServiceImp implements ISearchService{
      * @param searchQuery
      * @param fields
      * @param boostPerField
-     * @return
+     * @param pageNumber
+     * @param  window
+     * @return Query
      * @throws org.apache.lucene.queryParser.ParseException
      */
-    private Query searchGroupQuery(String searchQuery,String []fields, Map<String, Float> boostPerField) throws ParseException {
+    private Query searchGroupQuery(String searchQuery,String []fields, Map<String, Float> boostPerField,int pageNumber,int window) throws ParseException {
         //lucene part
 
         QueryParser parser = new MultiFieldQueryParser(fields, new WhitespaceAnalyzer(), boostPerField);
@@ -152,6 +158,9 @@ public class SearchServiceImp implements ISearchService{
         //Hibernate Search
         final FullTextQuery query = getFullTextSession().createFullTextQuery(luceneQuery, Groups.class);
 
+        query.setFirstResult( (pageNumber - 1) * window );
+        query.setMaxResults(window);
+
         return query;
     }
     /**
@@ -159,16 +168,22 @@ public class SearchServiceImp implements ISearchService{
      *
      * @param searchQuery
      * @param fields
-     * @return
+     * @param pageNumber
+     * @param  window
+     * @return Query
      * @throws org.apache.lucene.queryParser.ParseException
      */
-     private Query searchGroupQuery(String [] searchQuery,String []fields) throws ParseException {
+     private Query searchGroupQuery(String [] searchQuery,String []fields,int pageNumber,int window) throws ParseException {
         //lucene part
        org.apache.lucene.search.Query luceneQuery = MultiFieldQueryParser.parse(searchQuery,
 fields, new WhitespaceAnalyzer());
 
         //Hibernate Search
         final FullTextQuery query = getFullTextSession().createFullTextQuery(luceneQuery, Groups.class);
+
+        query.setFirstResult( (pageNumber - 1) * window );
+        query.setMaxResults(window);
+
         return query;
     }
     /**
@@ -259,16 +274,18 @@ fields, new WhitespaceAnalyzer());
      * 
      * @param country
      * @param city
-     * @return
+     * @param pageNumber
+     * @param  window
+     * @return List<Groups> groups
      * @throws org.apache.lucene.queryParser.ParseException
      */
     @Override
-    public List<Groups> findGroupsByLocation(String country, String city) throws ParseException{
+    public List<Groups> findGroupsByLocation(String country, String city,int pageNumber,int window) throws ParseException{
        
         final String[] fields = { "adress.city","adress.country" };
 
        String[] queries = new String[]{city,country};
-       List<Groups> groups= searchGroups(queries,fields);
+       List<Groups> groups= searchGroups(queries,fields,pageNumber,window);
        return  groups;
         
     }
@@ -277,15 +294,17 @@ fields, new WhitespaceAnalyzer());
      * 
      * @param country
      * @param type
+     * @param pageNumber
+     * @param  window
      * @return
      * @throws org.apache.lucene.queryParser.ParseException
      */
     @Override
-    public List<Groups> findGroupsByType(String country, String type) throws ParseException {
+    public List<Groups> findGroupsByType(String country, String type,int pageNumber,int window) throws ParseException {
 
        final String[] fields = { "grouptypename","adress.country" };
        String[] queries = new String[]{type,country};
-       List<Groups> groups= searchGroups(queries,fields);
+       List<Groups> groups= searchGroups(queries,fields,pageNumber,window);
         return  groups;
 
 
@@ -296,7 +315,7 @@ fields, new WhitespaceAnalyzer());
      * @param groupName
      * @param startNum
      * @param maxNum
-     * @return
+     * @return List<Groups>
      * @throws org.apache.lucene.queryParser.ParseException
      */
     @Override
@@ -304,7 +323,7 @@ fields, new WhitespaceAnalyzer());
         final String[] fields = { "name" };
         Map<String, Float> boostPerField = new HashMap<String, Float>(4);
         boostPerField.put("name", (float) 5);
-        return searchGroups(groupName,fields,boostPerField);
+        return searchGroups(groupName,fields,boostPerField,startNum,maxNum);
 
     }
 

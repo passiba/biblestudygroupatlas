@@ -26,7 +26,7 @@ public class SearchServiceImpTest extends AbstractTransactionalJUnit4SpringConte
 
     private String username = "hemuli",  rolename = "User";
     private String groupType = "Miestenpiiri",groupName="Miehet muutoksessa",  city = "Espoo",  country = "Finland";
-
+    private int startPage=1,maxNumber=10;
     @Autowired
     private IAuthenticator authenticator;
     @Autowired
@@ -106,7 +106,7 @@ public class SearchServiceImpTest extends AbstractTransactionalJUnit4SpringConte
         Groups group = addGroup();
         //ISearchService searchService = (ISearchService) applicationContext.getBean("SearchService");
        // IGroupServices groupServices = (IGroupServices) applicationContext.getBean("IGroupServices");
-        List<Groups> groups = searchService.findGroupsByLocation(country, city);
+        List<Groups> groups = searchService.findGroupsByLocation(country, city,startPage,maxNumber);
 
         Groups fetchGroup = null;
         for (Groups g : groups) {
@@ -115,7 +115,7 @@ public class SearchServiceImpTest extends AbstractTransactionalJUnit4SpringConte
         }
         assert (group.getName().equals(fetchGroup.getName()));
 
-        groups = searchService.findGroupsByType(country, groupType);
+        groups = searchService.findGroupsByType(country, groupType,startPage,maxNumber);
 
         for (Groups g : groups) {
             fetchGroup = g;
@@ -123,7 +123,7 @@ public class SearchServiceImpTest extends AbstractTransactionalJUnit4SpringConte
         }
         assert (group.getGrouptypename().equals(fetchGroup.getGrouptypename()));
 
-        groups = searchService.findGroupsByName(groupName, 0,20);
+        groups = searchService.findGroupsByName(groupName, startPage,maxNumber);
 
         for (Groups g : groups) {
             fetchGroup = g;
