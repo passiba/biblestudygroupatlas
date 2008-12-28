@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
@@ -30,14 +31,14 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Entity
 @Table(name = "booksection")
 //@AttributeOverride(name = "id", column = @Column(name = "section_id"))
-@Indexed
+//@Indexed
 public class Booksection implements DomainObject,Identifiable {
 
     // Fields
     private Long id;
 
     @Id
-    @DocumentId
+    //@DocumentId
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "section_id")
     public Long getId() {
@@ -53,7 +54,7 @@ public class Booksection implements DomainObject,Identifiable {
     private Set<Book> books = new HashSet<Book>(0);
 
     
-
+    @IndexedEmbedded
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_bible_translation_id")
     public Bibletranslation getBibletranslation() {
@@ -72,8 +73,8 @@ public class Booksection implements DomainObject,Identifiable {
     public void setSection(String section) {
         this.section = section;
     }
-    //@ContainedIn
-    @IndexedEmbedded
+   // @ContainedIn
+    //@IndexedEmbedded
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "booksection")
     public Set<Book> getBooks() {
         return this.books;

@@ -31,14 +31,14 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Entity
 @Table(name = "book")
 //@AttributeOverride(name = "id", column = @Column(name = "book_id"))
-@Indexed
+//@Indexed
 public class Book implements DomainObject,Identifiable {
     
 
     private Long id;
 
     @Id
-    @DocumentId
+    //@DocumentId
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "book_id")
     public Long getId() {
@@ -58,7 +58,8 @@ public class Book implements DomainObject,Identifiable {
     private Set<Chapter> chapters = new HashSet<Chapter>(0);
     
    
-    @ContainedIn
+    //@ContainedIn
+    @IndexedEmbedded
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_section_id", unique = false, nullable = false, insertable = true, updatable = true)
     public Booksection getBooksection() {
@@ -87,8 +88,8 @@ public class Book implements DomainObject,Identifiable {
     public void setBookText(String bookText) {
         this.bookText = bookText;
     }
-   // @ContainedIn
-    @IndexedEmbedded
+    //@ContainedIn
+    //@IndexedEmbedded
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "book")
     public Set<Chapter> getChapters() {
         return this.chapters;
