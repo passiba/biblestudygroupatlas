@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+        <entry key="versSearchResultTitle">Haetut Jakeet</entry>
+        <entry key="chapterNum">Luvun nro</entry>
+        <entry key="verseNum">Jae nro</entry>
+        <entry key="verseText">Jae Teksti</entry>
+        <entry key="raiting">Anna Ristejä</entry>
+        <entry key="reset">Resetoi</entry>
+
+</properties>

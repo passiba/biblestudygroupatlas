@@ -5,6 +5,8 @@
 
 package fi.passiba.services.search;
 
+import fi.passiba.services.biblestudy.dao.IVerseDAO;
+import fi.passiba.services.biblestudy.persistance.Verse;
 import fi.passiba.services.dao.IPersonDAO;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Person;
@@ -13,9 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.lucene.analysis.WhitespaceAnalyzer;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.WildcardQuery;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -38,8 +42,9 @@ public class SearchServiceImp implements ISearchService{
     @Autowired
     private IPersonDAO personDAO;
 
+    @Autowired
 
-
+    private IVerseDAO versonDao;
    
       
    
@@ -338,8 +343,75 @@ fields, new WhitespaceAnalyzer());
         return searchGroups(groupName,fields,boostPerField,startNum,maxNum);
 
     }
+    /**
+     *  multiple search queries peformed againts matchig fields in Verses indexed entities
+     *
+     * @param searchQuery
+     * @param fields
+     * @param pageNumber
+     * @param  window
+     * @return Query
+     * @throws org.apache.lucene.queryParser.ParseException
+     */
+     private Query searchVersesQuery(String [] searchQuery,String []fields,int pageNumber,int window) throws ParseException {
+        //lucene part
+       org.apache.lucene.search.Query luceneQuery = MultiFieldQueryParser.parse(searchQuery,fields, new WhitespaceAnalyzer());
+      
 
-   
+       /*  WildcardQuery qr =
+new WildcardQuery(new Term(fields[0], searchQuery[0]));*/
+        //Hibernate Search
+        final FullTextQuery query = getFullTextSession().createFullTextQuery( luceneQuery, Verse.class);
+
+    //    query.setFirstResult( (pageNumber - 1) * window );
+     //   query.setMaxResults(window);
+
+        return query;
+    }
+     /**
+     *   searching veres with single query run againts multiple fields
+     *  with boostPerField factor added
+     * @param searchQuery
+     * @param fields
+     * @param boostPerField
+     * @param pageNumber
+     * @param  window
+     * @return List<Verse> verses
+     * @throws org.apache.lucene.queryParser.ParseException
+     */
+    private List<Verse> searchVerses(String []searchQueries,String []fields,int pageNumber,int window) throws ParseException {
+
+         for(String query:searchQueries)
+        {
+            if (!StringUtils.hasText(query)) {
+
+                return null;
+            }
+        }
+        Query query = searchVersesQuery(searchQueries,fields,pageNumber,window);
+
+         List<Verse> verses = query.list();
+        return verses;
+    }
+    /**
+     * Returns the verses mathinc the search criteria
+     * 
+     * @param verseContext
+     * @param pageNumber
+     * @param window
+     * @return List<Verse>
+     * @throws org.apache.lucene.queryParser.ParseException
+     */
+    @Override
+    public List<Verse> findVersesByContext(String verseContext, int pageNumber, int window) throws ParseException {
+       final String[] fields ={"verse_text"};
+       String[] queries = new String[]{verseContext};
+       //List<Verse> verses= searchVerses(queries,fields,pageNumber,window);
+       List<Verse> verses=versonDao.findVersesByContext(verseContext);
+       return  verses;
+    }
+
+
 
 
   
