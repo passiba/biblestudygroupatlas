@@ -63,8 +63,7 @@ public class SiteUpdateView extends BasePage {
 
         public SiteForm(String id) {
             super(id);
-
-         
+          
 
             final SiteBookTreePanel sitebookspanel = new SiteBookTreePanel("sitebookspanel");
             sitebookspanel.setOutputMarkupId(true);
