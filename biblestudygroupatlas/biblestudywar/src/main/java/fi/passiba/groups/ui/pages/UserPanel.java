@@ -2,6 +2,7 @@ package fi.passiba.groups.ui.pages;
 
 import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.groups.ui.pages.locale.LocaleDropDown;
+import fi.passiba.groups.ui.pages.search.VerseSearchPanel;
 import fi.passiba.groups.ui.pages.user.EditPersonContact;
 import fi.passiba.groups.ui.pages.wizards.WizardPage;
 import fi.passiba.groups.ui.pages.wizards.userCreation.NewUserWizard;
@@ -76,6 +77,7 @@ public class UserPanel extends Panel {
         }
         add(edit);
         add(userWisard);
+        add(new VerseSearchPanel("searchversePanel"));
 
     }
     private static final class EditPerson extends Link

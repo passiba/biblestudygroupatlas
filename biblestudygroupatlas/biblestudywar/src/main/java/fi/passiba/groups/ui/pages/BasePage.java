@@ -3,6 +3,7 @@ package fi.passiba.groups.ui.pages;
 import fi.passiba.groups.ui.pages.site.SiteUpdateView;
 import fi.passiba.groups.ui.pages.search.ListPersons;
 import fi.passiba.groups.ui.pages.search.SearchPanelPage;
+import fi.passiba.groups.ui.pages.search.VerseSearchPanel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

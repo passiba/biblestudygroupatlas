@@ -31,4 +31,12 @@ public class VerseDAO extends BaseDaoHibernate<Verse> implements IVerseDAO {
 	     crit.createCriteria("chapter").add(Restrictions.eq("id", id));
 	     return crit.list();
 	}
+
+    public List<Verse> findVersesByContext(String verseContext) {
+         Criteria crit = super.getSessionFactory().getCurrentSession().createCriteria(getQueryClass());
+	     crit.add(Restrictions.ilike("verseText", "%"+verseContext+"%"));
+	     return crit.list();
+    }
+    
+
 }

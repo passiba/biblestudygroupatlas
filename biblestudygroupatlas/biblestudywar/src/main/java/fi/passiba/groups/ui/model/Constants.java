@@ -141,5 +141,24 @@ public final class  Constants {
         }
     }
 
+    public static enum VerseSearchOption {
+
+        VERSE("Jae");
+        private String option;
+
+        private VerseSearchOption (String option) {
+            this.option = option;
+        }
+
+        public String getOption() {
+            return option;
+        }
+
+        public static List<String> getVerseSearchOptions() {
+
+            return Arrays.asList(new String[]{VERSE.getOption()});
+        }
+    }
+
 
 }

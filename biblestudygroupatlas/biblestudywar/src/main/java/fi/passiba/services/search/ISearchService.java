@@ -5,6 +5,7 @@
 
 package fi.passiba.services.search;
 
+import fi.passiba.services.biblestudy.persistance.Verse;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Person;
 import java.util.List;
@@ -27,7 +28,6 @@ public interface ISearchService {
      public List<Groups> findGroupsByType(String country,String type,int pageNumber,int window) throws ParseException;
 
      public List<Groups> findGroupsByName(String goupName, int pageNumber,int window) throws ParseException;
-
-     
+     public List<Verse>findVersesByContext(String verseContext, int pageNumber,int window) throws ParseException;
 
 }
