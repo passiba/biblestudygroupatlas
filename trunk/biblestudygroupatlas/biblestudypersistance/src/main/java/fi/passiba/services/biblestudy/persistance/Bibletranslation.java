@@ -13,6 +13,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 
 /**
  * Bibletranslation entity.
@@ -38,7 +41,7 @@ public class Bibletranslation extends AuditableEntity {
     private Set<Booksection> booksections = new HashSet<Booksection>(0);
 
    
-
+    @Field(index=Index.UN_TOKENIZED)
     @Column(name = "bible_Abbrv", unique = false, nullable = false, insertable = true, updatable = true, length = 70)
     public String getBibleAbbrv() {
         return this.bibleAbbrv;
@@ -47,7 +50,7 @@ public class Bibletranslation extends AuditableEntity {
     public void setBibleAbbrv(String bibleAbbrv) {
         this.bibleAbbrv = bibleAbbrv;
     }
-
+    @Field(index=Index.UN_TOKENIZED)
     @Column(name = "bible_name", unique = false, nullable = false, insertable = true, updatable = true, length = 200)
     public String getBibleName() {
         return this.bibleName;
@@ -56,7 +59,7 @@ public class Bibletranslation extends AuditableEntity {
     public void setBibleName(String bibleName) {
         this.bibleName = bibleName;
     }
-
+    @Field(index=Index.UN_TOKENIZED)
     @Column(name = "publisher_name", unique = false, nullable = false, insertable = true, updatable = true, length = 100)
     public String getPublisherName() {
         return this.publisherName;
@@ -75,7 +78,6 @@ public class Bibletranslation extends AuditableEntity {
     public void setPublishedDate(Date publishedDate) {
         this.publishedDate = publishedDate;
     }
-
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "bibletranslation")
     public Set<Booksection> getBooksections() {
         return this.booksections;

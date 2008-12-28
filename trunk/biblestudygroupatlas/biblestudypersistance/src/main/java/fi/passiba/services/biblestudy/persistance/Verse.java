@@ -18,6 +18,7 @@ import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 
 /**
@@ -52,8 +53,8 @@ public class Verse implements DomainObject,Identifiable  {
     private Integer verseNum;
 
     private String verseText;
-   
-    @ContainedIn
+    @IndexedEmbedded
+   // @ContainedIn
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_chapter_id", unique = false, nullable = false, insertable = true, updatable = true)
     public Chapter getChapter() {
@@ -73,7 +74,7 @@ public class Verse implements DomainObject,Identifiable  {
         this.verseNum = verseNum;
     }
     @Boost(2.0f)
-    @Field(index = Index.UN_TOKENIZED)
+    @Field(index = Index.TOKENIZED)
     @Column(name = "verse_text", unique = false, nullable = false, insertable = true, updatable = true, length = 9000)
     public String getVerseText() {
         return this.verseText;

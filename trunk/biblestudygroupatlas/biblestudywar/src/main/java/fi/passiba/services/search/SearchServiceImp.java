@@ -408,7 +408,11 @@ new WildcardQuery(new Term(fields[0], searchQuery[0]));*/
        String[] queries = new String[]{verseContext};
        //List<Verse> verses= searchVerses(queries,fields,pageNumber,window);
        List<Verse> verses=versonDao.findVersesByContext(verseContext);
-       return  verses;
+       if(verses!=null && verses.size()>window)
+       {
+            return verses.subList((pageNumber - 1) * window, window);
+       }
+       return verses;
     }
 
 
