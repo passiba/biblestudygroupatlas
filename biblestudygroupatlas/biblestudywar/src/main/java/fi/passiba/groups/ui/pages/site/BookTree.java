@@ -15,17 +15,20 @@ public class BookTree extends Tree {
 	}
 	
         @Override
-	protected String renderNode(TreeNode node) {
-		String nodeTitle="";
-                Object nodeItem = (Object) ((DefaultMutableTreeNode) node).getUserObject();
-		
-                if(nodeItem!=null && nodeItem instanceof  Book)
-                {
-                    Book book=(Book )nodeItem;
-                    nodeTitle=book.getInitials();
-                }
-                return nodeTitle;
-	}
+	   protected String renderNode(TreeNode node) {
+        String nodeTitle = "";
+        Object nodeItem = (Object) ((DefaultMutableTreeNode) node).getUserObject();
+
+        if (nodeItem != null && nodeItem instanceof Book) {
+            Book book = (Book) nodeItem;
+            nodeTitle = book.getInitials();
+        }
+        if (nodeItem != null && nodeItem instanceof SiteInstaller) {
+            SiteInstaller installer = (SiteInstaller) nodeItem;
+            nodeTitle = installer.getSiteUpdateName();
+        }
+        return nodeTitle;
+    }
 	
 	@Override
 	protected ResourceReference getFolderClosed() {
