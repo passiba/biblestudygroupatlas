@@ -2,6 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <entry key="editsite">Päivitys sivu</entry>
+    <entry key="siteinfo">Selaa saatavilla olevia raamatun kääännöksiä ja asenna haluamasi raamatun käännös päivityssivuston alla listatuista raamatuista.</entry>
     <entry key="sitename">Sivuston nimi</entry>
     <entry key="host">Palvelin</entry>
     <entry key="catalogDir">Katalogi hakemisto</entry>
