@@ -9,7 +9,7 @@ public class ListChapterVerses extends BasePage {
 
     public ListChapterVerses(long chapterid) {
 
-       ChapterPanel chapter=new ChapterPanel("chapterpanel",chapterid);
+       ChapterPanel chapter=new ChapterPanel("chapterpanel",chapterid,getPage());
        add(chapter);
     }
 

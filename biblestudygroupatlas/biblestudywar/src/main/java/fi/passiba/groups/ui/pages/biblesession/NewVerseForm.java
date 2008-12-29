@@ -93,7 +93,7 @@ public final class NewVerseForm extends AbstractDataPanel {
                 verse.setVerseText(NewVerseForm.this.dojoInlineEditBox.getModelObjectAsString());
                 verse.setChapter(chapter);
                 bibleTranslationDataRetrievalService.updateVerse(verse);
-                NewVerseForm.this.replaceWith(new ChapterPanel("bibleSessionpanel",chapter.getId()).setOutputMarkupId(true));
+                NewVerseForm.this.replaceWith(new ChapterPanel("bibleSessionpanel",chapter.getId(),getPage()).setOutputMarkupId(true));
             }
         }
 
@@ -107,7 +107,7 @@ public final class NewVerseForm extends AbstractDataPanel {
 
             @Override
             public void onSubmit() {
-                NewVerseForm.this.replaceWith(new ChapterPanel("bibleSessionpanel",chapterid).setOutputMarkupId(true));
+                NewVerseForm.this.replaceWith(new ChapterPanel("bibleSessionpanel",chapterid,getPage()).setOutputMarkupId(true));
             }
         }
     }

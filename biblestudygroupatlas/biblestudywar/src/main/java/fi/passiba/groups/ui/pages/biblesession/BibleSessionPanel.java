@@ -34,7 +34,7 @@ public class BibleSessionPanel extends AbstractDataPanel  {
        }
        if(EnumSet.of(DataType.CHAPTER).contains(type))
        {
-            addOrReplace(new ChapterPanel("bibleSessionpanel",itemId).setOutputMarkupId(true));
+            addOrReplace(new ChapterPanel("bibleSessionpanel",itemId,getPage()).setOutputMarkupId(true));
        }
        
     }
