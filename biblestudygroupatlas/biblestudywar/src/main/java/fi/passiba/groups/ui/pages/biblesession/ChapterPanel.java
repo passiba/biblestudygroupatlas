@@ -8,6 +8,8 @@ import java.util.List;
 import fi.passiba.biblestudy.BibleStudySession;
 import fi.passiba.groups.ui.model.DomainModelIteratorAdaptor;
 import fi.passiba.groups.ui.model.HashcodeEnabledCompoundPropertyModel;
+import fi.passiba.groups.ui.pages.search.ListChapterVerses;
+import fi.passiba.services.biblestudy.persistance.Book;
 import fi.passiba.services.biblestudy.persistance.Chapter;
 import fi.passiba.services.biblestudy.persistance.ChapterVoting;
 import fi.passiba.services.biblestudy.persistance.Verse;
@@ -63,6 +65,7 @@ public class ChapterPanel extends AbstractDataPanel {
         });
 
         setModel(model);
+    
         init(chapterid);
       
 
@@ -74,10 +77,56 @@ public class ChapterPanel extends AbstractDataPanel {
        return BibleStudyFaceBookSession.get().isAuthenticated();
     }
     private void init(long chapterid) {
-
         add(new VersesForm("form", getModel(), chapterid));
-    }
+        Chapter chapter=(Chapter) getModel().getObject();
+        long previouschapterid=chapterid, nextchapterid=chapterid;
+        List<Chapter> chapters=bibleTranslationDataRetrievalService.findChaptersByBookId(chapter.getBook().getId());
+        int index=0;
+        for(Chapter chp:chapters)
+        {
 
+            if(chp.equals(chapter))
+            {
+                break;
+            }
+            index++;
+        }
+        if(index!=0)
+        {
+            previouschapterid=chapters.get(index-1).getId();
+        }
+        if(index+1<chapters.size())
+        {
+            nextchapterid=chapters.get(index+1).getId();
+        }
+         previousAndNextChapters(chapterid,previouschapterid,nextchapterid);
+    }
+    private void previousAndNextChapters(long chapterid,final long previouschapterid,final long nextchapterid)
+    {
+         Link viewpreviouschapter = new Link("previous") {
+                    @Override
+                    public void onClick(){
+                        setResponsePage(new ListChapterVerses(previouschapterid));
+                    }
+        };
+        if(chapterid==previouschapterid)
+        {
+            viewpreviouschapter.setVisible(false);
+        }
+
+        Link viewnextchapter = new Link("next") {
+                    @Override
+                    public void onClick(){
+                        setResponsePage(new ListChapterVerses(nextchapterid));
+                    }
+        };
+         if(chapterid==nextchapterid)
+        {
+            viewnextchapter.setVisible(false);
+        }
+        add(viewpreviouschapter);
+        add(viewnextchapter);
+    }
     private final class VersesForm extends Form {
 
         public VersesForm(String id, IModel m, long chapterid) {
@@ -117,6 +166,8 @@ public class ChapterPanel extends AbstractDataPanel {
             @Override
             public void onSubmit() {
                 Chapter chapter = (Chapter) getForm().getModelObject();
+
+
                 ChapterVoting rating=bibleTranslationDataRetrievalService.findRatingByChapterid(chapter.getId());
                 if(rating==null)
                 {
