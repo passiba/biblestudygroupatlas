@@ -97,7 +97,7 @@ public class ChapterPanel extends AbstractDataPanel {
 
             add(new ResetRatingLink("reset", new Model(rating)));
             
-            add(new NewButton("newButton"));
+           // add(new NewButton("newButton"));
             add(new SaveButton("saveButton"));
             
             
@@ -232,7 +232,7 @@ public class ChapterPanel extends AbstractDataPanel {
                 @Override
                 protected void populateItem(Item item) {
 
-                Link editview = new Link("editView", item.getModel()) {
+                /*Link editview = new Link("editView", item.getModel()) {
                     public void onClick() {
                         Verse verse = (Verse) getModelObject();
                         ChapterPanel.this.replaceWith(new NewVerseForm("bibleSessionpanel", verse).setOutputMarkupId(true));
@@ -241,8 +241,10 @@ public class ChapterPanel extends AbstractDataPanel {
                 };
                 editview.add(new Label("verseNum",
                             new PropertyModel(item.getModel(), "verseNum")));
-                item.add(editview);
-
+                item.add(editview);*/
+                
+                item.add(new Label("verseNum",
+                            new PropertyModel(item.getModel(), "verseNum")));
                 item.add(new MultiLineLabel("verseText",
                             new PropertyModel(item.getModel(), "verseText")));
                 }

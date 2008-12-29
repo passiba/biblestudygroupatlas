@@ -8,6 +8,7 @@ import fi.passiba.groups.ui.model.DomainModelIteratorAdaptor;
 import fi.passiba.groups.ui.model.HashcodeEnabledCompoundPropertyModel;
 import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.pages.BasePage;
+import fi.passiba.services.biblestudy.persistance.Chapter;
 import fi.passiba.services.biblestudy.persistance.Verse;
 
 import fi.passiba.services.search.ISearchService;
@@ -19,6 +20,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.markup.repeater.ReuseIfModelsEqualStrategy;
@@ -98,8 +100,18 @@ public class ListVerses extends BasePage {
                 @Override
                 protected void populateItem(Item item) {
 
-                item.add(new Label("verseNum",
+                Chapter chapter = (Chapter) new PropertyModel(item.getModel(), "chapter").getObject();
+                final long chapterid = chapter.getId();
+                Link viewchapter = new Link("chapterView") {
+                    @Override
+                    public void onClick() {
+                        setResponsePage(new ListChapterVerses(chapterid));
+                    }
+                };
+                viewchapter.add(new Label("verseNum",
                             new PropertyModel(item.getModel(), "verseNum")));
+                item.add(viewchapter);
+
               
                 item.add(new MultiLineLabel("verseText",
                             new PropertyModel(item.getModel(), "verseText")));
