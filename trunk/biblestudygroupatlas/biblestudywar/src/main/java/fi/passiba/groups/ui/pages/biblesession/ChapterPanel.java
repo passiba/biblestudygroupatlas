@@ -12,6 +12,7 @@ import fi.passiba.services.biblestudy.persistance.Chapter;
 import fi.passiba.services.biblestudy.persistance.ChapterVoting;
 import fi.passiba.services.biblestudy.persistance.Verse;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.rating.RatingPanel;
@@ -47,11 +48,13 @@ public class ChapterPanel extends AbstractDataPanel {
 	 */
 	private Boolean hasVoted = Boolean.FALSE;
 
-    public ChapterPanel(String id, final long chapterid) {
+    private final Page backPage;
+
+    public ChapterPanel(String id, final long chapterid,Page backpage) {
 
 
         super(id);
-
+        this.backPage=backpage;
         IModel model = new CompoundPropertyModel(new LoadableDetachableModel() {
 
             public Object load() {
@@ -99,7 +102,7 @@ public class ChapterPanel extends AbstractDataPanel {
             
            // add(new NewButton("newButton"));
             add(new SaveButton("saveButton"));
-            
+            add(new CancelButton("cancelButton"));
             
         }
 
@@ -141,7 +144,23 @@ public class ChapterPanel extends AbstractDataPanel {
                 ChapterPanel.this.replaceWith(new NewVerseForm("bibleSessionpanel", chapter).setOutputMarkupId(true));
             }
         }
+        private final class CancelButton extends Button {
 
+        private static final long serialVersionUID = 1L;
+
+        private CancelButton(String id) {
+            super(id);
+
+            setDefaultFormProcessing(false);
+        }
+
+        @Override
+        public void onSubmit() {
+            if (ChapterPanel.this.backPage != null) {
+                  setResponsePage(ChapterPanel.this.backPage);
+            }
+        }
+    }
         private final class ChapterRating extends RatingPanel
         {
 
