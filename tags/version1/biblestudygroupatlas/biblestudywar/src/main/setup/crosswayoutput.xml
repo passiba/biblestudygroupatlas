@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<!DOCTYPE crossway-bible SYSTEM
+    "http://www.gnpcb.org/esv/share/schemas/crossway.base.entities.dtd">
+<crossway-bible class="passage-query">
+<passage>
+  <reference>Matthew 22:43 - 23:1</reference>
+  <surrounding-chapters>
+    <previous>Matthew 21</previous>
+    <current>Matthew 22 - 23</current>
+    <next>Matthew 24</next>
+  </surrounding-chapters>
+  <content>
+    <verse-unit unit-id="40022043">
+      <begin-paragraph class="virtual"/>
+        <verse-num>43</verse-num>He said to them,
+          <woc>&ldblquot;How is it then that David, in the Spirit, calls
+               him Lord, saying,
+          </woc>
+      <end-paragraph/>
+    </verse-unit>
+    <verse-unit unit-id="40022044">
+      <begin-block-indent/>
+        <begin-paragraph class="line-group"/>
+          <begin-line/>
+            <verse-num class="woc">44</verse-num>
+            <woc>&ldblquot;&lquot;The Lord said to my Lord,
+          <end-line class="br"/>
+          <begin-line/>Sit at my right hand,<end-line class="br"/>
+          <begin-line class="indent"/>until I put your enemies
+             under your feet&rquot;?
+            </woc>
+          <end-line/>
+        <end-paragraph/>
+      <end-block-indent/>
+    </verse-unit>
+    <verse-unit unit-id="40022045">
+      <begin-paragraph class="same-paragraph"/>
+        <verse-num class="woc">45</verse-num>
+        <woc>If then David calls him Lord, how is he his
+             son?&rdblquot;
+        </woc>
+    </verse-unit>
+    <verse-unit unit-id="40022046">
+       <verse-num>46</verse-num>And no one was able to answer him
+       a word, nor from that day did anyone dare to ask him any
+       more questions.
+       <end-paragraph/>
+       <end-chapter/>
+    </verse-unit>
+    <verse-unit unit-id="40023001">
+       <begin-chapter num="23"/>
+       <heading>Seven Woes to the Scribes and Pharisees</heading>
+       <begin-paragraph/>
+         <verse-num begin-chapter="23">1</verse-num>Then Jesus
+         said to the crowds and to his disciples,
+       <end-paragraph class="virtual"/>
+    </verse-unit>
+  </content>
+</passage>
+
+<copyright>The Holy Bible, English Standard Version copyright (c)2001
+  by Crossway Bibles, a publishing ministry of Good News Publishers. Used by permission.
+  All rights reserved. http://www.crosswaybibles.org
+</copyright>
+
+</crossway-bible>

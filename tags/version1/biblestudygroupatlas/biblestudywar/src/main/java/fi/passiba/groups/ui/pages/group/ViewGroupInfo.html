@@ -1,0 +1,94 @@
+
+<wicket:extend>
+    <div class="start"><!-- MSIE fix --></div>
+    <div class="data">
+        
+        <form wicket:id="form">
+            <div class="data_row">
+                <h3><wicket:message key="editgrouptitle"/></h3>
+                
+                <table>
+                    <tr>
+                        <td class="header">
+                            <wicket:message key="groupname"/>
+                        :</td>
+                        <td> <span wicket:id="groupname"/></td>
+                    </tr>
+                    <tr>
+                        <tr class="header">
+                            <th> <wicket:message key="grouptype">[types]</wicket:message>:</th>
+                            <td>
+                                <span wicket:id="grouptypes"/>
+                                
+                            </td>
+                        </tr>
+                    </tr>
+                    <tr>
+                        <td><wicket:message key="congregationname"/> :</td>
+                        <td><span wicket:id="congregationname"/></td>
+                    </tr>
+                    <tr>
+                        <td><wicket:message key="congregationemail"/> :</td>
+                        <td><span wicket:id="congregationemail"/></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><wicket:message key="congregationwebsiteurl"/> :</td>
+                        <td><span wicket:id="congregationwebsiteurl"/></td>
+                    </tr>
+                    
+                    
+                    
+                </table>
+            </div>
+            <div class="data_row">
+                <h3><wicket:message key="contacpersons"/></h3>
+                
+                <ul style="margin-left:130px;">
+                    <div wicket:id="contacpersons"> 
+                        
+                        <li><span wicket:id="contactperson"></span></li>
+                        
+                    </div>
+                </ul>    
+            </div>
+            <div class="buttons">
+                
+                <input wicket:id="cancel" type="image" src="images/btn_PERUUTA.gif" value="Muokkaa" class="button" />
+                <input wicket:id="edit" type="image" src="images/btn_Muokkaa.gif" value="Muokkaa" class="button" />
+                <input wicket:id="delete" type="image" src="images/btn_POISTA.gif" value="Poista" class="button" />
+                
+            </div>
+        </form>
+    </div>
+    <div class="end"><!-- MSIE fix --></div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</wicket:extend>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="obligatoryfield">* pakollinen tieto</entry>
+    
+    <entry key="infotitle">Anna käyttäjän tiedot</entry>
+    <entry key="infodes">Anna käyttäjän tiedot ja liitä käyttäjä mihin tahansa ryhmään. Anna käyttäjälle myöskin sopiva rooli joko tavallisena käyttäjänä tai sitten ryhmän ylläpitoon kontaktihenkilönä.</entry>
+    <entry key="username.title">Käyttäjätunnus </entry>
+    <entry key="username.summary">Luo uusi käyttäjä antamalla käyttäjätunnus,salasana ja email-osoite.</entry>
+     
+    <entry key="userdetails.title">Käyttäjän tiedot</entry>
+    <entry key="userdetails.summary">Anna uuden käyttäjän '${userName}' ykstyiskohtaiset tiedot</entry>
+    <entry key="userroles.title">Käyttäjäroolit</entry>
+    <entry key="userroles.summary">Valitse käyttäjälle '${userName}' roolit</entry>
+    <entry key="confirmation.title">Vahvistus</entry>
+    <entry key="confirmation.summary">Ole hyvä ja vahvista '${userName}' käyttäjätunnuksen luominen</entry>
+    <entry key="confirmation.content">Olet luomassa uutta käyttäjää '${firstName} ${lastName}' käyttäjätunnuksella '${userName}' ,joka on liitetty ryhmään '${group}'
+    
+     Haluatko todella luoda uuden käyttäjän ? \
+	Todella haluat rekisteröityä tämän järjestelmän käyttäjäksi  \
+	Paina,Hyväksy kun olet valmis lisäämään uuden käyttäjän.
+    </entry>
+    <entry key="username">Käyttäjätunnus</entry>
+    <entry key="email">Sähköposti</entry>
+    <entry key="confirmpassword">Vahvista salasana</entry>
+    <entry key="password">salasana</entry>
+
+    <entry key="firstName">Etunimi</entry>
+    <entry key="lastName">Sukunimi</entry>
+    <entry key="group">Ryhmä</entry>
+    <entry key="assignRoles">Anna roolit</entry>
+    <entry key="assignGroups">Lisää ryhmään</entry>
+    <entry key="rolesSetName">Roolien nimet</entry>
+    <entry key="roles">Käyttäjälle annetut roolit</entry>
+    <entry key="error.noSetNameForRoles">Jos valitset käyttäjälle rooleja,sinun täytyy antaa roolin nimi</entry>
+    
+     <entry key="username">Käyttäjätunnus</entry>
+     <entry key="email">Sähköposti</entry>
+     <entry key="confirmpassword">Vahvista salasana</entry>
+     
+     <entry key="addresstitle">Osoite tiedot</entry>
+     <entry key="address.summary">Lisää käyttäjälle '${userName}' osoitetiedot</entry>
+     <entry key="phone">Puhelin</entry>
+     <entry key="addr1">Katuosoite</entry>
+     <entry key="addr2">Katuosoite 2</entry>
+     <entry key="city">Kaupunki</entry>
+     <entry key="zip">Postinumero</entry>
+     <entry key="country">Maa</entry>
+     <entry key="selectedCountry">Valittu Maa</entry>
+     <entry key="state">Lääni</entry>
+     <entry key="addressInfo">Haetun osoitteen sijainti kartalla</entry>
+     
+     <entry key="groupselection.title">Pienryhmän valinta</entry>
+     <entry key="groupselection.summary">Valitse haluamasi olemassa oleva pienryhmä</entry> 
+     <entry key="groupselectiontile">Ryhmän valinta</entry>
+     <entry key="groupretrievalInfo">Ole hyvä ja kirjoita hakukriteerit: maa ja kaupunki ,Ryhmätyyppi hakukenttiin</entry>
+     <entry key="groupcountry">Hakumaa</entry>
+     <entry key="grouptypes">Ryhmän tyyppi </entry>
+  
+     
+     <entry key="groups">Haetut ryhmät</entry>
+     
+      <entry key="selectedGroupAddressInfo">Valitun ryhmän osoite tiedot</entry>
+     
+</properties>

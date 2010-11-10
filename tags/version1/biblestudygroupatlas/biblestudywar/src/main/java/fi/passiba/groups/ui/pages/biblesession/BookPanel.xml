@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+        <entry key="bookTitle">Kirja</entry>
+	<entry key="booktitle">Kirjan nimi</entry>
+	
+        <entry key="bookNum">Kirjan nro</entry>
+        <entry key="booksection">Raamatun osa</entry>
+</properties>

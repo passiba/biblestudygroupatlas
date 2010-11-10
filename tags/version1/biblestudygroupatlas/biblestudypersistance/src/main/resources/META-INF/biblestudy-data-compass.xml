@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:compass="http://www.compass-project.org/schema/spring-core-config"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+         http://www.compass-project.org/schema/spring-core-config
+         http://www.compass-project.org/schema/spring-compass-core-config-2.0.xsd">
+    
+
+    <import resource="classpath:META-INF/biblestudy-data-hibernate.xml"/>
+	<!-- COMPASS START -->
+    <bean id="compass" class="org.compass.spring.LocalCompassBean">
+        <property name="classMappings">
+            <list>
+                <value>fi.passiba.services.biblestudy.persistance.Verse</value>
+                <value>fi.passiba.services.group.persistance.Groups</value>
+                <value>fi.passiba.services.persistance.Person</value>
+                <value>fi.passiba.services.persistance.Adress</value>
+                <value>fi.passiba.services.persistance.Users</value>
+            </list>
+        </property>
+       
+        <property name="compassSettings">
+                        <props>
+                                <prop key="compass.engine.connection">file://${user.home}/compass/</prop>
+                                <prop key="compass.transaction.factory">org.compass.spring.transaction.SpringSyncTransactionFactory</prop>
+                                  <!-- snowball analyzer provides stemming (so 'monkey' gets 'monkeys', too) -->
+                <prop key="compass.engine.analyzer.default.type">snowball</prop>
+                <prop key="compass.engine.analyzer.default.name">English</prop>
+                <prop key="compass.property.all.enabled">true</prop>
+                </props>
+         </property>
+         <!--<property name="dataSource" ref="dataSource" />-->
+         <property name="transactionManager" ref="transactionManager" />
+
+    </bean>
+	
+	
+    <bean id="hibernateGpsDevice" class="org.compass.gps.device.hibernate.HibernateGpsDevice">
+        <property name="name">
+            <value>hibernateDevice</value>
+        </property>
+        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="nativeExtractor">
+            <bean class="org.compass.spring.device.hibernate.SpringNativeHibernateExtractor" />
+        </property>
+    </bean>
+    <bean id="compassGps" class="org.compass.gps.impl.SingleCompassGps" init-method="start" destroy-method="stop">
+        <property name="compass">
+            <ref bean="compass" />
+        </property>
+        <property name="gpsDevices">
+            <list>
+                <bean class="org.compass.spring.device.SpringSyncTransactionGpsDeviceWrapper">
+                    <property name="gpsDevice" ref="hibernateGpsDevice" />
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <!--<bean id="compassTemplate" class="org.compass.core.CompassTemplate">
+<property name="compass" ref="compass" />
+</bean>-->
+
+<compass:context/>
+</beans>

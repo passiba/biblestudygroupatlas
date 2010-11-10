@@ -1,0 +1,42 @@
+<wicket:panel>
+    <div class="data_row">	
+        <p><wicket:message key="obligatoryfield"/></p>
+        <p><wicket:message key="infodes"/>
+        </p>
+        
+        <p/>
+        <p/>
+        
+        <div class="user">	
+            <h4><wicket:message key="biblesessiontitle"/></h4>
+            <form wicket:id="sessionform">
+                <table>
+                    
+                    
+                    
+                    <tr>
+                        <td class="header"><wicket:message key="sessiodate"/>    *:</td>
+                        <td> <input wicket:id="sessionDate" type="text" /></td>
+                    </tr>
+                    <tr  wicket:id="sessiontype">  
+                        <td class="header"><wicket:message key="sessiontype">[types]</wicket:message>: </td>
+                        <td>
+                            <select wicket:id="types">
+                                
+                            </select>
+                        </td>
+                    </tr> 
+                    <tr>
+                        
+                        <div wicket:id="bibleDataTree" />
+	
+
+                    </tr>
+                   
+                    
+                </table>
+            </form>
+        </div>
+    </div>
+    <div class="end"><!-- MSIE fix --></div>
+</wicket:panel>

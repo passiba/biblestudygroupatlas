@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>fi.passiba.biblestudy</groupId>
+        <artifactId>biblestudymain</artifactId>
+        <version>1.0</version>
+    </parent>
+    <groupId>fi.passiba.biblestudy</groupId>
+    <artifactId>biblestudypersistance</artifactId>
+    <packaging>jar</packaging>
+    <name>biblestudypersistance</name>
+    <version>1.0</version>
+    <repositories>
+ <!--<repository>
+  <id>java.net</id> 
+  <url>https://maven-repository.dev.java.net/nonav/repository</url> 
+  <layout>legacy</layout> 
+  </repository>
+  
+  <repository>
+  <id>java.net</id> 
+  <url>http://download.java.net/maven/2/</url> 
+  <layout>legacy</layout> 
+  </repository>-->
+        <repository>
+            <id>maven</id>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+            <!--  found at https://maven-repository.dev.java.net  -->
+            <id>java.net</id>
+            <url>http://download.java.net/maven/2</url>
+        </repository>
+       <!-- <repository>
+            <id>compass</id>
+            <url>http://repo.compass-project.org</url>
+        </repository>-->
+        <repository>
+            <id>jboss repository</id>
+            <url>http://repository.jboss.org/maven2</url>
+        </repository>
+         <repository>
+            <id>compass</id>
+            <url>http://repo.compass-project.org</url>
+        </repository>
+    </repositories>
+    <dependencies>
+             
+        <!-- Jdom -->
+        <dependency>
+            <groupId>jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.0</version>
+        </dependency> 
+               <!-- LOGGING DEPENDENCIES - LOG4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+        </dependency>
+
+        <!--  JUNIT DEPENDENCY FOR TESTING -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        
+       
+        <!-- SPRING DEPENDENCY FOR THE EXAMPLE APP -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+       
+       
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.4.0.GA</version>
+        </dependency>
+         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>3.3.1.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.4.0.GA</version>
+        </dependency>
+      
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.0.4</version>
+        </dependency>
+       
+          <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+         <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+          <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.1_3</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.6</version>
+            <scope>test</scope>
+        </dependency>
+       
+
+        <!--compass searh integration -->
+        <dependency>
+            <groupId>org.compass-project</groupId>
+            <artifactId>compass</artifactId>
+            <version>${compass.version}</version>
+        </dependency>
+
+     <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-core</artifactId>
+          <version>${lucene.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.hibernate</groupId>
+         <artifactId>hibernate-search</artifactId>
+         <version>3.1.0.Beta2</version>
+      </dependency>
+      
+        
+     <!-- <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-analyzers</artifactId>
+          <version>${lucene.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-highlighter</artifactId>
+          <version>${lucene.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-queries</artifactId>
+          <version>${lucene.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.lucene</groupId>
+          <artifactId>lucene-snowball</artifactId>
+          <version>${lucene.version}</version>
+      </dependency>-->
+       <!--
+        <dependency>
+            <groupId>org.restlet</groupId>
+            <artifactId>org.restlet.ext.jaxrs</artifactId>
+            <version>1.1-M5</version>
+        </dependency>-->
+    </dependencies>
+  
+    <build>
+        <finalName>biblestudypersistance</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <!--this pluging generates the database schema creation sql script  -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>hibernate3-maven-plugin</artifactId>
+                <version>2.1</version>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>hbm2ddl</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <components>
+                        <component>
+                            <name>hbm2ddl</name>
+                            <implementation>annotationconfiguration</implementation>
+                        </component>
+                        <component>
+                            <name>hbmdoc</name>
+                        </component>
+                    </components>
+                    <componentProperties>
+                        <configurationfile>/target/classes/hibernate.cfg.xml</configurationfile>
+                        <outputfilename>schema.ddl</outputfilename>
+                        <namingstrategy>org.hibernate.cfg.ImprovedNamingStrategy</namingstrategy>
+                        <drop>false</drop>
+                        <create>true</create>
+                        <export>false</export>
+                        <format>true</format>
+                    </componentProperties>
+                </configuration>
+            </plugin>
+           
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                     <exclude>**/biblestudy-data-compass.xml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                    <exclude>**/hibernate.cfg.xml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/java</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
+    </build>
+   
+</project>

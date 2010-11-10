@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:amq="http://activemq.apache.org/schema/core"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+  <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!-- Allows us to use system properties as variables in this configuration file -->
+  <context:property-placeholder location="classpath:META-INF/activemq.properties"/>
+  <amq:broker useJmx="false" persistent="false"  brokerName="localhost">
+    <amq:transportConnectors>
+      <amq:transportConnector uri="tcp://localhost:0" />
+    </amq:transportConnectors>
+
+    
+  </amq:broker>
+ <amq:queue id="biblebookDataDestination"  physicalName="biblebookDataDestination"/>
+ <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL">
+                    <value>vm://localhost</value>
+                </property>
+ </bean>
+ <bean id="jmsTransActionManager"
+      class="org.springframework.jms.connection.JmsTransactionManager">
+    	<property name="connectionFactory" ref="connectionFactory"/>
+ </bean>
+ <bean id="jmsConntectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
+        <property name="connectionFactory" ref="connectionFactory"/>
+            
+ </bean>
+  <bean id="myJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory" ref="jmsConntectionFactory"/>
+     
+  
+    <property name="defaultDestination" ref="biblebookDataDestination"/>
+    <property name="messageConverter" ref="bibleBookDataConverter" />
+  </bean>
+  <bean id="consumerJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="connectionFactory" ref="jmsConntectionFactory"/>
+     <property name="messageConverter" ref="bibleBookDataConverter" />
+     <property name="defaultDestination" ref="biblebookDataDestination"/>
+  </bean>
+  <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+      <property name="connectionFactory" ref="jmsConntectionFactory" />
+      <property name="defaultDestination" ref="biblebookDataDestination"/>
+      <!-- recieving messages timeout 1 min
+      <property name="receiveTimeout" value="6000" />-->
+      <property name="messageConverter" ref="bibleBookDataConverter" />
+  </bean>
+  <!--handles converting messages from MapMessages to java objects -->
+  <bean id="bibleBookDataConverter" class="fi.passiba.biblestudy.services.datamining.dataconverter.BibleBookDataMessageConverter"/>
+
+  <bean id="bibleDataProcessingGageway" class="fi.passiba.biblestudy.services.datamining.BibleBookDataProcessingImp">
+        <property name="jmsTemplate" ref="myJmsTemplate"/>
+        <property name="destination" ref="biblebookDataDestination"/>
+  </bean>
+
+
+</beans>
+

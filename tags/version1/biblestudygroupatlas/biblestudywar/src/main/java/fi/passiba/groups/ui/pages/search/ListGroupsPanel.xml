@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+        <entry key="listGroupsTitle">Ryhmähaku</entry>
+	<entry key="groupInfo">Piiri tiedot</entry>
+	<entry key="groupcalendar">Piirin tapahtumakalenteri</entry>
+        <entry key="searchresultgroups">Ryhmät</entry>
+        <entry key="frontpage">Etusivu</entry>
+        
+        <entry key="name">Nimi</entry>
+        <entry key="congregationname">Seurakunta</entry>
+        <entry key="type">Ryhmän tyyppi</entry>
+        <entry key="action">Toiminto</entry>
+        <entry key="edit">Muokkaa</entry>
+        <entry key="delete">Poista</entry>
+</properties>
