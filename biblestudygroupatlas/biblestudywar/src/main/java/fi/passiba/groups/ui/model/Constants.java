@@ -29,7 +29,7 @@ public final class  Constants {
 
      public static enum BibleSessionType {
 
-        GROUP("Ryhmä"), PERSON("Henkilö");
+        GROUP("Ryhmï¿½"), PERSON("Henkilï¿½");
         private String type;
 
         private BibleSessionType(String type) {
@@ -48,7 +48,7 @@ public final class  Constants {
 
     public static enum GroupType {
 
-        MENSGROUP("Miestenpiiri"), WOMENSGROUP("Naistenpiiri"), SUNDAYSCHOOL("Pyhäkoulu"), MOTHERBABYGROUP("Äiti/lapsi-piiri"), PRAYERGROUP("Rukouspiiri"),
+        MENSGROUP("Miestenpiiri"), WOMENSGROUP("Naistenpiiri"), SUNDAYSCHOOL("PyhÃ¤koulu"), MOTHERBABYGROUP("Ã¤iti/lapsi-piiri"), PRAYERGROUP("Rukouspiiri"),
         YOUNGADULTS("Nuoret aikuiset");
         private String type;
 
@@ -105,7 +105,7 @@ public final class  Constants {
      
     public static enum GroupSearchOption {
 
-        TYPE("Ryhmätyyppi"), CITY("Kaupunki"),GROUPNAME("Nimi");
+        TYPE("RyhmÃ¤tyyppi"), CITY("Kaupunki"),GROUPNAME("Nimi");
         private String option;
 
         private GroupSearchOption (String option) {
@@ -124,7 +124,7 @@ public final class  Constants {
 
      public static enum PersonSearchOption {
 
-        USERROLE("Rooli"), USERNAME("Käyttäjänimi"),CITY("Kaupunki");
+        USERROLE("Rooli"), USERNAME("KÃ¤yttÃ¤jÃ¤nimi"),CITY("Kaupunki");
         private String option;
 
         private PersonSearchOption (String option) {
