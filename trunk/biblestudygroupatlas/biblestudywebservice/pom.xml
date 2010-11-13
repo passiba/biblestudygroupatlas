@@ -45,23 +45,19 @@
             <id>java.net</id>
             <url>http://download.java.net/maven/2</url>
         </repository>
-        <repository>
-            <id>maven-restlet</id>
-            <name>Public online Restlet repository</name>
-            <url>http://maven.restlet.org</url>
-        </repository>
+      
         <repository>
             <id>jboss repository</id>
             <url>http://repository.jboss.org/maven2</url>
         </repository>
     </repositories>
     <dependencies>
-        <!--compiled groovy modules jar file -->
+        <!--compiled groovy modules jar file 
         <dependency>
             <groupId>fi.passiba.biblestudy</groupId>
             <artifactId>biblestudygroovy</artifactId>
             <version>1.0</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>fi.passiba.biblestudy</groupId>
             <artifactId>biblestudypersistance</artifactId>
@@ -313,21 +309,7 @@
              <artifactId>jersey</artifactId>
              <version>0.8-ea</version>
         </dependency>-->
-        <dependency>
-            <groupId>org.restlet</groupId>
-            <artifactId>org.restlet</artifactId>
-            <version>1.0.11</version>
-        </dependency>
-        <dependency>
-            <groupId>com.noelios.restlet</groupId>
-            <artifactId>com.noelios.restlet</artifactId>
-            <version>1.0.11</version>
-        </dependency>
-        <dependency>
-            <groupId>com.noelios.restlet</groupId>
-            <artifactId>com.noelios.restlet.ext.servlet</artifactId>
-            <version>1.0.11</version>
-        </dependency>
+ 
         <dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
@@ -484,6 +466,18 @@
             <artifactId>org.restlet.ext.jaxrs</artifactId>
             <version>1.1-M5</version>
         </dependency>-->
+                <dependency>
+		    <!-- Apache JAX-WS CXF Dependency for WAR and JAX-WS Client-->
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+		    <!-- Apache JAX-WS CXF Dependency for JAX-WS Client-->
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
     </dependencies>
     <build>
         <finalName>biblestudywebservice</finalName>
@@ -534,5 +528,6 @@
         <spring.ws.version>1.0.4</spring.ws.version>
         <spring.modules.version>0.8a</spring.modules.version>
         <maven.test.skip>true</maven.test.skip>
+        <cxf.version>2.3.0</cxf.version>
     </properties>
 </project>

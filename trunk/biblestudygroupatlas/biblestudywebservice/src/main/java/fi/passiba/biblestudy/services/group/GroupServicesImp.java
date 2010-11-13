@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package fi.passiba.services.group;
+package fi.passiba.biblestudy.services.group;
 
 
 import fi.passiba.hibernate.PaginationInfo;

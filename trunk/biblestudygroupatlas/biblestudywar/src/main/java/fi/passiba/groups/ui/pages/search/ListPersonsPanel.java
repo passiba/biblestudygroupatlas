@@ -9,7 +9,7 @@ import fi.passiba.groups.ui.pages.group.EditGroupInfo;
 import fi.passiba.groups.ui.pages.user.EditPersonContact;
 import fi.passiba.groups.ui.pages.user.ViewPersonContact;
 import fi.passiba.services.authenticate.IAuthenticator;
-import fi.passiba.services.group.IGroupServices;
+import fi.passiba.biblestudy.services.group.IGroupServices;
 import fi.passiba.services.persistance.Person;
 import fi.passiba.services.search.ISearchService;
 import java.util.ArrayList;

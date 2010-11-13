@@ -19,7 +19,7 @@
  *
  * ID: $Id: Msg.java 1672 2007-08-08 18:40:44Z dmsmith $
  */
-package org.crosswire.jsword.util;
+package fi.passiba.services.bibledata.sword.util;
 
 import org.crosswire.common.util.MsgBase;
 
