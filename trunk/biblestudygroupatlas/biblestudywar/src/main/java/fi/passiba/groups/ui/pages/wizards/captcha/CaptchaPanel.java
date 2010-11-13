@@ -46,7 +46,7 @@ public class CaptchaPanel extends Panel {
 
             protected void onUpdate(AjaxRequestTarget target) {
                     if (!imagePass.equals(getPassword())) {
-                        error("Captcha salasana '" + getPassword() + "' on v‰‰r‰.\n" +
+                        error("Captcha salasana '" + getPassword() + "' on v√§√§r√§.\n" +
                                 "Oikea salasana on: " + imagePass);
                     } else {
                        
@@ -93,7 +93,7 @@ public class CaptchaPanel extends Panel {
 
                 protected void onUpdate(AjaxRequestTarget target) {
                     if (!imagePass.equals(getPassword())) {
-                        error("Captcha salasana '" + getPassword() + "' on v‰‰r‰.\n" +
+                        error("Captcha salasana '" + getPassword() + "' on v√§√§r√§.\n" +
                                 "Oikea salasana on: " + imagePass);
                     } else {
                         info("Onnistui!");
@@ -112,7 +112,7 @@ public class CaptchaPanel extends Panel {
          
         public void onSubmit() {
             if (!imagePass.equals(getPassword())) {
-                error("Captcha salasana '" + getPassword() + "' on v‰‰r‰.\n" +
+                error("Captcha salasana '" + getPassword() + "' on v√§√§r√§.\n" +
                         "Oikea salasana on: " + imagePass);
             } else {
                 info("Onnistui!");
