@@ -40,7 +40,6 @@
         </plugins>
   </reporting>
   <modules>
-    <module>biblestudygroovy</module>
     <module>biblestudypersistance</module>
     <module>biblestudywebservice</module>
     <module>biblestudywar</module>
