@@ -3,7 +3,6 @@
      xmlns:tx="http://www.springframework.org/schema/tx"
      xmlns:aop="http://www.springframework.org/schema/aop"
      xmlns:context="http://www.springframework.org/schema/context"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xmlns:jaxws="http://cxf.apache.org/jaxws"
      xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
@@ -44,8 +43,6 @@
 	  id="bibleStudyGroupFeed" 
 	  implementor="fi.passiba.biblestudy.feed.GroupFeedResource"
 	  address="/GroupFeed" >
-              
-              <property naname="groupservice" ref="IGroupServices"/>
       </jaxws:endpoint>
 
 
