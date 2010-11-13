@@ -17,12 +17,9 @@ import fi.passiba.services.biblestudy.persistance.Booksection;
 import fi.passiba.services.biblestudy.persistance.Chapter;
 import fi.passiba.services.biblestudy.persistance.ChapterVoting;
 import fi.passiba.services.biblestudy.persistance.Verse;
-import fi.passiba.biblestudy.datamining.ParserHelper;
 import fi.passiba.services.biblestudy.dao.IChapterVotingDAO;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.StringTokenizer;
 import org.crosswire.jsword.book.BookCategory;
 import org.crosswire.jsword.book.BookData;
 import org.crosswire.jsword.book.BookException;
@@ -35,8 +32,6 @@ import org.crosswire.jsword.passage.PassageKeyFactory;
 import org.crosswire.jsword.passage.VerseFactory;
 import org.crosswire.jsword.versification.BibleInfo;
 import org.hibernate.SessionFactory;
-import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jmx.export.annotation.ManagedResource;
 
 
 /**

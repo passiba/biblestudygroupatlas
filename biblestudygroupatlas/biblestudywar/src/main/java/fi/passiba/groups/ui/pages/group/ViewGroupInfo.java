@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
-import fi.passiba.services.group.IGroupServices;
+import fi.passiba.biblestudy.services.group.IGroupServices;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;

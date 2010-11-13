@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import fi.passiba.services.authenticate.IAuthenticator;
-import fi.passiba.services.group.IGroupServices;
+import fi.passiba.biblestudy.services.group.IGroupServices;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Person;
 import java.util.List;

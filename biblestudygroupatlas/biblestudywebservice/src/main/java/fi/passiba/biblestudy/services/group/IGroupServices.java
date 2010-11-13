@@ -1,6 +1,6 @@
 
 
-package fi.passiba.services.group;
+package fi.passiba.biblestudy.services.group;
 
 import fi.passiba.hibernate.PaginationInfo;
 import fi.passiba.services.persistance.Adress;

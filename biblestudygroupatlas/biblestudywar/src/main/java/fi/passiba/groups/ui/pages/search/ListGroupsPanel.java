@@ -22,7 +22,7 @@ import fi.passiba.groups.ui.pages.user.EditPersonContact;
 import fi.passiba.hibernate.PaginationInfo;
 import fi.passiba.services.address.IAddressService;
 import fi.passiba.services.authenticate.IAuthenticator;
-import fi.passiba.services.group.IGroupServices;
+import fi.passiba.biblestudy.services.group.IGroupServices;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;

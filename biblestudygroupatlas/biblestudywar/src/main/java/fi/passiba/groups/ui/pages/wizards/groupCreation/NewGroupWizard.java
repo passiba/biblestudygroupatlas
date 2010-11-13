@@ -22,7 +22,7 @@ import fi.passiba.groups.ui.pages.Main;
 import fi.passiba.groups.ui.pages.googlemap.GoogleMapsPanel;
 import fi.passiba.groups.ui.pages.wizards.BaseAddressdModel;
 import fi.passiba.services.authenticate.IAuthenticator;
-import fi.passiba.services.group.IGroupServices;
+import fi.passiba.biblestudy.services.group.IGroupServices;
 import fi.passiba.services.group.persistance.Groups;
 
 import fi.passiba.services.persistance.Adress;

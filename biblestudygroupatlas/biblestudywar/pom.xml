@@ -48,11 +48,7 @@
             <id>java.net</id>
             <url>http://download.java.net/maven/2</url>
         </repository>
-        <repository>
-            <id>maven-restlet</id>
-            <name>Public online Restlet repository</name>
-            <url>http://maven.restlet.org</url>
-        </repository>
+       
         <repository>
             <id>wicket-snaps</id>
             <url>http://wicketstuff.org/maven/repository</url>
@@ -70,12 +66,12 @@
             </repository>
     </repositories>
     <dependencies>
-        <!--compiled groovy modules jar file -->
+        <!--compiled groovy modules jar file -
         <dependency>
             <groupId>fi.passiba.biblestudy</groupId>
             <artifactId>biblestudygroovy</artifactId>
             <version>1.0</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>fi.passiba.biblestudy</groupId>
             <artifactId>biblestudypersistance</artifactId>

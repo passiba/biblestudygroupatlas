@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package fi.passiba.biblestudy.restlet;
+package fi.passiba.biblestudy;
 
 import fi.passiba.services.biblestudy.dao.IBibletranslationDAO;
 import fi.passiba.services.biblestudy.dao.IBookDAO;

@@ -3,7 +3,7 @@ package fi.passiba.groups;
 import fi.passiba.AbstractTransactionalJUnit4SpringContext;
 import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.services.authenticate.IAuthenticator;
-import fi.passiba.services.group.IGroupServices;
+import fi.passiba.biblestudy.services.group.IGroupServices;
 import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Person;
@@ -44,10 +44,10 @@ public final class GroupServiceImpTest  extends AbstractTransactionalJUnit4Sprin
             group.setAdress(ad);
 
             group.setCongregatiolistemailaddress("hellarit@svk.fi");
-            group.setCongregationname("Espoon Lähiseurakunta");
+            group.setCongregationname("Espoon Lï¿½hiseurakunta");
             group.setCongregationwebsiteurl("www.lahisrk.fi");
             group.setGrouptypename(groupType);
-            group.setDescription("Kristillisten miesten kasvuryhmä");
+            group.setDescription("Kristillisten miesten kasvuryhmï¿½");
             group.setStatus(Constants.StatusType.ACTIVE.getType());
             group.setName("Miehet muutoksessa");
            // group.setCreatedBy("Admin");

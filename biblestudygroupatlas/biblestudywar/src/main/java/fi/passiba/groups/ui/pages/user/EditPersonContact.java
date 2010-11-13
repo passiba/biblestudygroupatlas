@@ -18,7 +18,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 import fi.passiba.services.authenticate.IAuthenticator;
-import fi.passiba.services.group.IGroupServices;
+import fi.passiba.biblestudy.services.group.IGroupServices;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.persistance.Person;
