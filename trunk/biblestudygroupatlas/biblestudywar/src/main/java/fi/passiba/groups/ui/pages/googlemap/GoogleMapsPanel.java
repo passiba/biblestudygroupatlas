@@ -57,7 +57,7 @@ public class GoogleMapsPanel extends Panel {
     }
     public GoogleMapsPanel(String id, boolean required) {
         super(id);
-        setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
+        setDefaultModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
             public Object load() {
                  return addr;
@@ -73,7 +73,7 @@ public class GoogleMapsPanel extends Panel {
             bottomMap.setZoom(9);
             add(bottomMap);
 
-            GeoForm geocodeForm = new GeoForm("geocoder", getModel());
+            GeoForm geocodeForm = new GeoForm("geocoder", getDefaultModel());
             final String addressInfo = getLocalizer().getString("addressInfo", this);
 
             feedback = new FeedbackPanel("feedback");

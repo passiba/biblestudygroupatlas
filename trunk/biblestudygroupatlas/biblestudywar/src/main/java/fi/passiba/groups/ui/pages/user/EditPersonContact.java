@@ -48,7 +48,7 @@ public class EditPersonContact extends BasePage {
     public EditPersonContact(Page backPage, final Long contactId) {
 
         this.backPage = backPage;
-        setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
+        setDefaultModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
             protected Object load() {
 
@@ -61,7 +61,7 @@ public class EditPersonContact extends BasePage {
 
     private void init() {
 
-        add(new ContactForm("form", getModel()));
+        add(new ContactForm("form", getDefaultModel()));
 
 
 
@@ -71,25 +71,25 @@ public class EditPersonContact extends BasePage {
 
         public ContactForm(String id, IModel m) {
             super(id, m);
-            final long personid = Long.valueOf(new PropertyModel(getModel(), "id").getObject().toString());
-            TextField firstName = new TextField("firstName", new PropertyModel(getModel(), "firstname"));
+            final long personid = Long.valueOf(new PropertyModel(getDefaultModel(), "id").getObject().toString());
+            TextField firstName = new TextField("firstName", new PropertyModel(getDefaultModel(), "firstname"));
             firstName.setRequired(true);
             firstName.add(StringValidator.maximumLength(15));
             add(firstName);
 
-            TextField lastName = new TextField("lastName", new PropertyModel(getModel(), "lastname"));
+            TextField lastName = new TextField("lastName", new PropertyModel(getDefaultModel(), "lastname"));
             lastName.setRequired(true);
             lastName.add(StringValidator.maximumLength(20));
             add(lastName);
 
-            add(new Label("username", new PropertyModel(getModel(), "fk_userid.username")));
+            add(new Label("username", new PropertyModel(getDefaultModel(), "fk_userid.username")));
 
 
             try {
-                Users user = (Users) new PropertyModel(getModel(), "fk_userid").getObject();
+                Users user = (Users) new PropertyModel(getDefaultModel(), "fk_userid").getObject();
                 /* String passwd = PasswordService.decrypt(user.getUsername().toCharArray(), user.getPassword());
                 user.setPassword(passwd);*/
-                Person person = (Person) getModel().getObject();
+                Person person = (Person) getDefaultModel().getObject();
                 person.setFk_userid(user);
             } catch (Exception ex) {
             }
@@ -111,12 +111,12 @@ public class EditPersonContact extends BasePage {
             add(new EqualPasswordInputValidator(password, confirmpassword));
 
              */
-            TextField email = new TextField("email", new PropertyModel(getModel(), "email"));
+            TextField email = new TextField("email", new PropertyModel(getDefaultModel(), "email"));
             email.add(StringValidator.maximumLength(150));
             email.add(EmailAddressValidator.getInstance());
             add(email);
             // ChoiceRenderer choiceRenderer = new ChoiceRenderer("fk_userid.rolename");
-            add(new DropDownChoice("role", new PropertyModel(getModel(),
+            add(new DropDownChoice("role", new PropertyModel(getDefaultModel(),
                     "fk_userid.rolename"), allRoles).setRequired(true));
 
 
@@ -139,7 +139,7 @@ public class EditPersonContact extends BasePage {
 
 
 
-                    Link editView = new Link("edit", item.getModel()) {
+                    Link editView = new Link("edit", item.getDefaultModel()) {
 
                         public void onClick() {
                             Groups g = (Groups) getModelObject();
@@ -148,7 +148,7 @@ public class EditPersonContact extends BasePage {
                     };
 
                     editView.add(new Label("group",
-                            new PropertyModel(item.getModel(), "name")));
+                            new PropertyModel(item.getDefaultModel(), "name")));
 
                     item.add(editView);
 
@@ -157,7 +157,7 @@ public class EditPersonContact extends BasePage {
 
             add(groups);*/
 
-            Adress address = (Adress) new PropertyModel(getModel(), "adress").getObject();
+            Adress address = (Adress) new PropertyModel(getDefaultModel(), "adress").getObject();
             long addressid = address.getId();
             final AddressPanel addressPanel = new AddressPanel("addressPanel", addressid);
 

@@ -161,7 +161,7 @@ public class NewGroupWizard extends Wizard {
             super(new ResourceModel("groupcontacperson.title"), null);
             setSummaryModel(new StringResourceModel("groupcontacperson.summary", this, new Model(group)));
 
-            add(new ContactForm("contactform", getModel()));
+            add(new ContactForm("contactform", getDefaultModel()));
             GoogleMapsPanel mapPanel = new GoogleMapsPanel("googleMapPanel", false);
             add(mapPanel);
 
@@ -244,9 +244,9 @@ public class NewGroupWizard extends Wizard {
                     @Override
                     protected void onSubmit(AjaxRequestTarget target) {
                         //group.setAdress(groupservice.findGroupAddressByGroupId(group.getId()));
-                        selectedContactAddressAdd1.setModel(new PropertyModel(contactperson, "adress.addr1"));
-                        selectedContactAddressCity.setModel(new PropertyModel(contactperson, "adress.city"));
-                        selectedContactAddressCountry.setModel(new PropertyModel(contactperson, "adress.country"));
+                        selectedContactAddressAdd1.setDefaultModel(new PropertyModel(contactperson, "adress.addr1"));
+                        selectedContactAddressCity.setDefaultModel(new PropertyModel(contactperson, "adress.city"));
+                        selectedContactAddressCountry.setDefaultModel(new PropertyModel(contactperson, "adress.country"));
                         target.addComponent(selectedContactAddressAdd1);
                         target.addComponent(selectedContactAddressCity);
                         target.addComponent(selectedContactAddressCountry);
@@ -280,7 +280,7 @@ public class NewGroupWizard extends Wizard {
             setSummaryModel(new StringResourceModel("address.summary", this, new Model(group)));
             
             
-             GeoForm geocodeForm = new GeoForm("geocoder", getModel());
+             GeoForm geocodeForm = new GeoForm("geocoder", getDefaultModel());
             final GMap2 bottomMap = new GMap2("bottomPanel",
                     new GMapHeaderContributor(BibleStudyApplication.get().getGoogleMapsAPIkey()));
             bottomMap.setOutputMarkupId(true);
@@ -338,7 +338,7 @@ public class NewGroupWizard extends Wizard {
             country.setRequired(true);
             country.setOutputMarkupId(true);
             geocodeForm.add(country);
-            final Label selectedContry = new Label("selectedCountry", country.getModelObjectAsString());
+            final Label selectedContry = new Label("selectedCountry", country.getDefaultModelObjectAsString());
             selectedContry.setOutputMarkupId(true);
             geocodeForm.add(selectedContry);
             
@@ -361,7 +361,7 @@ public class NewGroupWizard extends Wizard {
                 protected void onSubmit(AjaxRequestTarget target) {
                     target.addComponent(selectedContry);
                     target.addComponent(country);
-                    group.setCountry(country.getModelObjectAsString());
+                    group.setCountry(country.getDefaultModelObjectAsString());
                  
                 }
 
@@ -434,7 +434,7 @@ public class NewGroupWizard extends Wizard {
         // create a blank user
         group = new Group();
 
-        setModel(new CompoundPropertyModel(this));
+       setDefaultModel(new CompoundPropertyModel(this));
         WizardModel model = new WizardModel();
         model.add(new GroupDetailsStep());
         model.add(new GroupAddressStep());

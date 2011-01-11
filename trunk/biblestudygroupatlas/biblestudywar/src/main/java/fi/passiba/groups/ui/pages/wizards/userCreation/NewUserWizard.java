@@ -199,7 +199,7 @@ public class NewUserWizard extends Wizard {
             setTitleModel(new ResourceModel("addresstitle"));
             setSummaryModel(new StringResourceModel("address.summary", this, new Model(user)));
             
-            GeoForm geocodeForm = new GeoForm("geocoder", getModel());
+            GeoForm geocodeForm = new GeoForm("geocoder", getDefaultModel());
             final GMap2 bottomMap = new GMap2("bottomPanel",
                     new GMapHeaderContributor(BibleStudyApplication.get().getGoogleMapsAPIkey()));
             bottomMap.setOutputMarkupId(true);
@@ -258,7 +258,7 @@ public class NewUserWizard extends Wizard {
             country.setRequired(true);
             country.setOutputMarkupId(true);
             geocodeForm.add(country);
-            final Label selectedContry = new Label("selectedCountry", country.getModelObjectAsString());
+            final Label selectedContry = new Label("selectedCountry", country.getDefaultModelObjectAsString());
             selectedContry.setOutputMarkupId(true);
             geocodeForm.add(selectedContry);
 
@@ -277,7 +277,7 @@ public class NewUserWizard extends Wizard {
                 protected void onSubmit(AjaxRequestTarget target) {
                     target.addComponent(selectedContry);
                     target.addComponent(country);
-                    user.setCountry(country.getModelObjectAsString());
+                    user.setCountry(country.getDefaultModelObjectAsString());
                 }
 
                 @Override
@@ -349,7 +349,7 @@ public class NewUserWizard extends Wizard {
             super(new ResourceModel("groupselection.title"), null);
             setSummaryModel(new StringResourceModel("groupselection.summary", this, new Model(group)));
 
-            add(new GroupForm("groupform", getModel()));
+            add(new GroupForm("groupform", getDefaultModel()));
             GoogleMapsPanel mapPanel = new GoogleMapsPanel("googleMapPanel", false);
             add(mapPanel);
 
@@ -437,9 +437,9 @@ public class NewUserWizard extends Wizard {
                     @Override
                     protected void onSubmit(AjaxRequestTarget target) {
                         group.setAdress(addressservice.findAddressByAddressId(group.getAdress().getId()));
-                        selectedGroupAddressAdd1.setModel(new PropertyModel(group, "adress.addr1"));
-                        selectedGroupAddressCity.setModel(new PropertyModel(group, "adress.city"));
-                        selectedGroupAddressCountry.setModel(new PropertyModel(group, "adress.country"));
+                        selectedGroupAddressAdd1.setDefaultModel(new PropertyModel(group, "adress.addr1"));
+                        selectedGroupAddressCity.setDefaultModel(new PropertyModel(group, "adress.city"));
+                        selectedGroupAddressCountry.setDefaultModel(new PropertyModel(group, "adress.country"));
                         target.addComponent(selectedGroupAddressAdd1);
                         target.addComponent(selectedGroupAddressCity);
                         target.addComponent(selectedGroupAddressCountry);
@@ -481,7 +481,7 @@ public class NewUserWizard extends Wizard {
        
         user.setUserName(BibleStudyFaceBookSession.get().getFaceBookUserName());
         group = new Groups();
-        setModel(new CompoundPropertyModel(this));
+        setDefaultModel(new CompoundPropertyModel(this));
         WizardModel model = new WizardModel();
         model.add(new UserNameStep());
         model.add(new UserDetailsStep());

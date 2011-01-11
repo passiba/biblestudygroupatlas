@@ -36,7 +36,7 @@ public class ViewGroupInfo extends BasePage {
     public ViewGroupInfo(Page backPage,final Long groupId) {
         
         this.backPage=backPage;
-        setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
+        setDefaultModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
             protected Object load() {
 
@@ -55,7 +55,7 @@ public class ViewGroupInfo extends BasePage {
 
     private void init() {
 
-        add(new GroupForm("form", getModel()));
+        add(new GroupForm("form", getDefaultModel()));
 
 
 
@@ -67,25 +67,25 @@ public class ViewGroupInfo extends BasePage {
 
         public GroupForm(String id, IModel m) {
             super(id, m);
-            Label  groupName = new  Label ("groupname", new PropertyModel(getModel(), "name"));
+            Label  groupName = new  Label ("groupname", new PropertyModel(getDefaultModel(), "name"));
             add(groupName);
 
-            Label grouptype = new Label("grouptypes", new PropertyModel(getModel(), "grouptypename"));
+            Label grouptype = new Label("grouptypes", new PropertyModel(getDefaultModel(), "grouptypename"));
 
             add(grouptype);
 
-            Label Name = new Label("congregationname", new PropertyModel(getModel(), "congregationname"));
+            Label Name = new Label("congregationname", new PropertyModel(getDefaultModel(), "congregationname"));
             add(Name);
-            SmartLinkLabel email = new SmartLinkLabel("congregationemail", new PropertyModel(getModel(), "congregatiolistemailaddress"));
+            SmartLinkLabel email = new SmartLinkLabel("congregationemail", new PropertyModel(getDefaultModel(), "congregatiolistemailaddress"));
             add(email);
 
-            SmartLinkLabel siteurl = new SmartLinkLabel("congregationwebsiteurl", new PropertyModel(getModel(), "congregationwebsiteurl"));
+            SmartLinkLabel siteurl = new SmartLinkLabel("congregationwebsiteurl", new PropertyModel(getDefaultModel(), "congregationwebsiteurl"));
             add(siteurl);
 
             IModel contactPersonsModel = new LoadableDetachableModel() {
 
                 protected Object load() {
-                    long groupid = Long.valueOf(new PropertyModel(getModel(), "id").getObject().toString());
+                    long groupid = Long.valueOf(new PropertyModel(getDefaultModel(), "id").getObject().toString());
                     List<Person> contactpersons = groupservice.findGroupsPersonsByGroupId(groupid);
                     return contactpersons;
                 }
@@ -96,7 +96,7 @@ public class ViewGroupInfo extends BasePage {
 
 
                     item.add(new Label("contactperson",
-                            new PropertyModel(item.getModel(), "lastname")));
+                            new PropertyModel(item.getDefaultModel(), "lastname")));
 
                 }
             };
@@ -104,7 +104,7 @@ public class ViewGroupInfo extends BasePage {
 
 
 
-            Adress address = (Adress) new PropertyModel(getModel(), "adress").getObject();
+            Adress address = (Adress) new PropertyModel(getDefaultModel(), "adress").getObject();
             long addressid = address.getId();
             //final AddressPanel addressPanel = new AddressPanel("addressPanel", addressid);
 
@@ -118,7 +118,7 @@ public class ViewGroupInfo extends BasePage {
                 }
             });
 
-            add(new Link("edit", getModel()) {
+            add(new Link("edit", getDefaultModel()) {
 
                 public void onClick() {
 
@@ -126,7 +126,7 @@ public class ViewGroupInfo extends BasePage {
                     setResponsePage(new EditGroupInfo(getPage(),group.getId()));
                 }
             });
-             add(new Link("delete", getModel()) {
+             add(new Link("delete", getDefaultModel()) {
 
                 public void onClick() {
 
