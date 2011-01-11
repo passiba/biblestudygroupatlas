@@ -1,6 +1,6 @@
 package fi.passiba.groups.ui.pages.biblesession;
 
-import fi.passiba.biblestudy.BibleStudyFaceBookSession;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -73,8 +73,8 @@ public class ChapterPanel extends AbstractDataPanel {
     @Override
     public boolean isVisible()
     {
-       //return BibleStudySession.get().isAuthenticated();
-       return BibleStudyFaceBookSession.get().isAuthenticated();
+       return BibleStudySession.get().isAuthenticated();
+       //return BibleStudyFaceBookSession.get().isAuthenticated();
     }
     private void init(long chapterid) {
         add(new VersesForm("form", getModel(), chapterid));

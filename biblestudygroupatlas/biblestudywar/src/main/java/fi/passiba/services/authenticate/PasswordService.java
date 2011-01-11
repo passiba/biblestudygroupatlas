@@ -2,7 +2,6 @@
 
 package fi.passiba.services.authenticate;
 
-import java.io.IOException;
 import java.util.Random;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;

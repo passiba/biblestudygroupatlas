@@ -1,6 +1,5 @@
 package fi.passiba.groups.ui.pages.biblesession;
 
-import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.biblestudy.BibleStudySession;
 import java.util.EnumSet;
 
@@ -41,7 +40,7 @@ public class BibleSessionPanel extends AbstractDataPanel  {
 
     @Override
     public boolean isVisible() {
-       // return BibleStudySession.get().isAuthenticated();
-       return BibleStudyFaceBookSession.get().isAuthenticated();
+        return BibleStudySession.get().isAuthenticated();
+       //return BibleStudyFaceBookSession.get().isAuthenticated();
     }
 }

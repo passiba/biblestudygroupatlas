@@ -1,11 +1,9 @@
 package fi.passiba.groups.ui.pages.search;
 
 
-import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.biblestudy.BibleStudySession;
 import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.services.search.ISearchService;
-import java.util.Arrays;
 import java.util.List;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.form.Button;
@@ -74,8 +72,8 @@ public class UserSearchPanel extends Panel {
     @Override
   public boolean isVisible() 
   {
-      //return BibleStudySession.get().isAuthenticated();
-      return BibleStudyFaceBookSession.get().isAuthenticated();
+      return BibleStudySession.get().isAuthenticated();
+      //return BibleStudyFaceBookSession.get().isAuthenticated();
   }
 
 }

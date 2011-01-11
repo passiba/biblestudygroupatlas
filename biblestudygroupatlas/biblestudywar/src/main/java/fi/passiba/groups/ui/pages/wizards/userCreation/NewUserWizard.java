@@ -17,13 +17,14 @@
 package fi.passiba.groups.ui.pages.wizards.userCreation;
 
 import fi.passiba.biblestudy.BibleStudyApplication;
-import fi.passiba.biblestudy.BibleStudyFaceBookSession;
+import fi.passiba.biblestudy.BibleStudySession;
 import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.pages.Main;
 import fi.passiba.groups.ui.pages.googlemap.GoogleMapsPanel;
 import fi.passiba.groups.ui.pages.wizards.captcha.CaptchaPanel;
 import fi.passiba.services.address.IAddressService;
 import fi.passiba.services.authenticate.IAuthenticator;
+import fi.passiba.services.authenticate.PasswordService;
 import fi.passiba.services.group.IGroupServices;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Adress;
@@ -55,8 +56,10 @@ import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
@@ -147,7 +150,7 @@ public class NewUserWizard extends Wizard {
         public UserNameStep() {
             super(new ResourceModel("username.title"), new ResourceModel("username.summary"));
 
-            /*final PasswordTextField password = new PasswordTextField("user.password");
+            final PasswordTextField password = new PasswordTextField("user.password");
             password.setRequired(true);
             password.add(StringValidator.maximumLength(20));
             password.add(StringValidator.minimumLength(6));
@@ -164,9 +167,9 @@ public class NewUserWizard extends Wizard {
             add(confirmpassword);
             add(new EqualPasswordInputValidator(password, confirmpassword));
 
-            */
+            
 
-           // add(new RequiredTextField("user.userName"));
+            add(new RequiredTextField("user.userName"));
             add(new RequiredTextField("user.email").add(EmailAddressValidator.getInstance()));
             add(new CaptchaPanel("captchaPanel") {
 
@@ -479,7 +482,7 @@ public class NewUserWizard extends Wizard {
         // create a blank user
         user = new User();
        
-        user.setUserName(BibleStudyFaceBookSession.get().getFaceBookUserName());
+       // user.setUserName(BibleStudySession.get().);
         group = new Groups();
         setModel(new CompoundPropertyModel(this));
         WizardModel model = new WizardModel();
@@ -553,11 +556,11 @@ public class NewUserWizard extends Wizard {
 
             regularuser.setRolename(user.getRoleName());
             regularuser.setUsername(user.getUserName());
-           /* try {
+            try {
                 regularuser.setPassword(PasswordService.encrypt(user.getUserName().toCharArray(), user.getPassword()));
             } catch (Exception ex) {
                 
-            }*/
+            }
             regularuser.setStatus(Constants.StatusType.ACTIVE.getType());
             person.setFk_userid(regularuser);
 

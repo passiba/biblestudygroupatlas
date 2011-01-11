@@ -1,7 +1,8 @@
 package fi.passiba.groups.ui.pages.search;
 
 
-import fi.passiba.biblestudy.BibleStudyFaceBookSession;
+
+import fi.passiba.biblestudy.BibleStudySession;
 import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.model.DomainModelIteratorAdaptor;
 import fi.passiba.groups.ui.model.HashcodeEnabledCompoundPropertyModel;
@@ -44,7 +45,7 @@ public final class ListPersonsPanel extends Panel {
     public ListPersonsPanel(String id,String searchCriteria,String searchString,Page backPage) {
         super(id);
         this.backPage=backPage;
-        final List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
+        final List<Person> persons = authenticate.findPerson(BibleStudySession.get().getPerson().getFk_userid().getUsername());
         Person currentLogInPerson = null;
         if (persons != null && !persons.isEmpty()) {
             currentLogInPerson = persons.get(0);
@@ -57,7 +58,7 @@ public final class ListPersonsPanel extends Panel {
      public ListPersonsPanel(String id,List<Person> result,Page backPage,long groupid) {
         super(id);
         this.backPage=backPage;
-        final List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
+        final List<Person> persons = authenticate.findPerson(BibleStudySession.get().getPerson().getFk_userid().getUsername());
         Person currentLogInPerson = null;
         if (persons != null && !persons.isEmpty()) {
             currentLogInPerson = persons.get(0);
@@ -71,8 +72,8 @@ public final class ListPersonsPanel extends Panel {
     @Override
   public boolean isVisible() 
   {
-     // return BibleStudySession.get().isAuthenticated();
-      return BibleStudyFaceBookSession.get().isAuthenticated();
+      return BibleStudySession.get().isAuthenticated();
+     // return BibleStudyFaceBookSession.get().isAuthenticated();
   }
    private RefreshingView populateResult(final List<Person> result,final long groupid) {
 

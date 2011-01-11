@@ -1,6 +1,7 @@
 package fi.passiba.groups.ui.pages.search;
 
-import fi.passiba.biblestudy.BibleStudyFaceBookSession;
+
+import fi.passiba.biblestudy.BibleStudySession;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -50,6 +51,6 @@ public class SearchPanelPage extends Panel {
     @Override
     public boolean isVisible() {
        // return BibleStudySession.get().isAuthenticated();
-         return BibleStudyFaceBookSession.get().isAuthenticated();
+         return BibleStudySession.get().isAuthenticated();
     }
 }

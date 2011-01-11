@@ -1,7 +1,7 @@
 package fi.passiba.groups.ui.pages;
 
 import fi.passiba.biblestudy.BibleStudyApplication;
-import fi.passiba.biblestudy.BibleStudyFaceBookSession;
+import fi.passiba.biblestudy.BibleStudySession;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
@@ -20,11 +20,11 @@ public class LogOutPanel extends Panel {
       @Override
       public boolean isVisible() {
        // return BibleStudySession.get().isAuthenticated();
-           return BibleStudyFaceBookSession.get().isAuthenticated();
+           return BibleStudySession.get().isAuthenticated();
       }
       @Override
       public void onClick() {
-       BibleStudyFaceBookSession.get().invalidate();
+       BibleStudySession.get().invalidate();
           Logout(this.getPage());
       }
     });
@@ -39,8 +39,8 @@ public class LogOutPanel extends Panel {
 
       @Override
       public boolean isVisible() {
-       // return !BibleStudySession.get().isAuthenticated();
-           return ! BibleStudyFaceBookSession.get().isAuthenticated();
+        return !BibleStudySession.get().isAuthenticated();
+           //return ! BibleStudyFaceBookSession.get().isAuthenticated();
       }
     });
     add(new BookmarkablePageLink("help", Main.class));

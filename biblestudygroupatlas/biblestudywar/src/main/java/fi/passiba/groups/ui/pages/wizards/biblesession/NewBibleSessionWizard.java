@@ -16,7 +16,7 @@
  */
 package fi.passiba.groups.ui.pages.wizards.biblesession;
 
-import fi.passiba.biblestudy.BibleStudyFaceBookSession;
+import fi.passiba.biblestudy.BibleStudySession;
 import fi.passiba.groups.ui.model.Constants;
 import fi.passiba.groups.ui.pages.Main;
 import fi.passiba.groups.ui.pages.biblesession.BibleDataTreePanel;
@@ -199,7 +199,7 @@ public class NewBibleSessionWizard extends Wizard {
     }
      private Person getLoggInPerson()
     {
-        List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
+        List<Person> persons = authenticate.findPerson(BibleStudySession.get().getPerson().getFk_userid().getUsername());
         Person currentLogInPerson=null;
         if(persons!=null && ! persons.isEmpty())
         {

@@ -1,7 +1,6 @@
 package fi.passiba.groups.ui.pages.biblesession;
 
 
-import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.biblestudy.BibleStudySession;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -35,8 +34,8 @@ public class BibleTranslationPanel extends AbstractDataPanel {
     @Override
   public boolean isVisible() 
   {
-      //return BibleStudySession.get().isAuthenticated();
-      return BibleStudyFaceBookSession.get().isAuthenticated();
+      return BibleStudySession.get().isAuthenticated();
+     //return BibleStudyFaceBookSession.get().isAuthenticated();
   }
 
 }
