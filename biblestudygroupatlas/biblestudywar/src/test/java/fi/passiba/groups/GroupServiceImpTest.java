@@ -44,10 +44,10 @@ public final class GroupServiceImpTest  extends AbstractTransactionalJUnit4Sprin
             group.setAdress(ad);
 
             group.setCongregatiolistemailaddress("hellarit@svk.fi");
-            group.setCongregationname("Espoon L‰hiseurakunta");
+            group.setCongregationname("Espoon L√§hiseurakunta");
             group.setCongregationwebsiteurl("www.lahisrk.fi");
             group.setGrouptypename(groupType);
-            group.setDescription("Kristillisten miesten kasvuryhm‰");
+            group.setDescription("Kristillisten miesten kasvuryhm√§");
             group.setStatus(Constants.StatusType.ACTIVE.getType());
             group.setName("Miehet muutoksessa");
            // group.setCreatedBy("Admin");
