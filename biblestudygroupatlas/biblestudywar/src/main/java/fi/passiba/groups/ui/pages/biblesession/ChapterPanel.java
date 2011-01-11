@@ -64,7 +64,7 @@ public class ChapterPanel extends AbstractDataPanel {
             }
         });
 
-        setModel(model);
+        setDefaultModel(model);
     
         init(chapterid);
       
@@ -77,8 +77,8 @@ public class ChapterPanel extends AbstractDataPanel {
        return BibleStudyFaceBookSession.get().isAuthenticated();
     }
     private void init(long chapterid) {
-        add(new VersesForm("form", getModel(), chapterid));
-        Chapter chapter=(Chapter) getModel().getObject();
+        add(new VersesForm("form", getDefaultModel(), chapterid));
+        Chapter chapter=(Chapter) getDefaultModel().getObject();
         long previouschapterid=chapterid, nextchapterid=chapterid;
         List<Chapter> chapters=bibleTranslationDataRetrievalService.findChaptersByBookId(chapter.getBook().getId());
         int index=0;
@@ -137,8 +137,8 @@ public class ChapterPanel extends AbstractDataPanel {
             add(verses);
 
 
-            add(new Label("chapterTitle", new PropertyModel(getModel(), "chapterTitle")));
-            add(new Label("chapterNum", new PropertyModel(getModel(), "chapterNum")));
+            add(new Label("chapterTitle", new PropertyModel(getDefaultModel(), "chapterTitle")));
+            add(new Label("chapterNum", new PropertyModel(getDefaultModel(), "chapterNum")));
             add(new ChapterRating("rating", new PropertyModel(rating, "rating"), 5, new PropertyModel(
 			rating, "nrOfVotes"), true));
 

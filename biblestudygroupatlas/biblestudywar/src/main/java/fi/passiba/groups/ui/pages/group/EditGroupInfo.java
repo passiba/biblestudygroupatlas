@@ -41,7 +41,7 @@ public class EditGroupInfo extends BasePage {
     List<Person> contactpersons ;
     public EditGroupInfo(Page backPage, final Long groupId) {
         this.backPage = backPage;
-        setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
+        setDefaultModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
             protected Object load() {
 
@@ -60,7 +60,7 @@ public class EditGroupInfo extends BasePage {
 
     private void init() {
 
-        add(new GroupForm("form", getModel()));
+        add(new GroupForm("form", getDefaultModel()));
 
 
 
@@ -72,28 +72,28 @@ public class EditGroupInfo extends BasePage {
 
         public GroupForm(String id, IModel m) {
             super(id, m);
-            TextField groupName = new TextField("groupname", new PropertyModel(getModel(), "name"));
+            TextField groupName = new TextField("groupname", new PropertyModel(getDefaultModel(), "name"));
             groupName.setRequired(true);
             add(groupName);
-            final long groupid = Long.valueOf(new PropertyModel(getModel(), "id").getObject().toString());
+            final long groupid = Long.valueOf(new PropertyModel(getDefaultModel(), "id").getObject().toString());
 
             WebMarkupContainer grouptypes = new WebMarkupContainer("grouptype");
             add(grouptypes);
             grouptypes.setVisible(true);
-            grouptypes.add(new DropDownChoice("grouptypes", new PropertyModel(getModel(),
+            grouptypes.add(new DropDownChoice("grouptypes", new PropertyModel(getDefaultModel(),
                     "grouptypename"), allGroupTypes).setRequired(true));
 
 
-            TextField Name = new TextField("congregationname", new PropertyModel(getModel(), "congregationname"));
+            TextField Name = new TextField("congregationname", new PropertyModel(getDefaultModel(), "congregationname"));
             Name.setRequired(true);
             add(Name);
 
-            TextField email = new TextField("congregationemail", new PropertyModel(getModel(), "congregatiolistemailaddress"));
+            TextField email = new TextField("congregationemail", new PropertyModel(getDefaultModel(), "congregatiolistemailaddress"));
             email.setRequired(true);
             email.add(EmailAddressValidator.getInstance());
             add(email);
 
-            TextField siteurl = new TextField("congregationwebsiteurl", new PropertyModel(getModel(), "congregationwebsiteurl"));
+            TextField siteurl = new TextField("congregationwebsiteurl", new PropertyModel(getDefaultModel(), "congregationwebsiteurl"));
 
             siteurl.setRequired(true);
             add(siteurl);
@@ -131,7 +131,7 @@ public class EditGroupInfo extends BasePage {
 
 
 
-            Adress address = (Adress) new PropertyModel(getModel(), "adress").getObject();
+            Adress address = (Adress) new PropertyModel(getDefaultModel(), "adress").getObject();
             long addressid = address.getId();
             final AddressPanel addressPanel = new AddressPanel("addressPanel", addressid);
 
@@ -142,9 +142,9 @@ public class EditGroupInfo extends BasePage {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target) {
                     //group.setAdress(groupservice.findGroupAddressByGroupId(group.getId()));
-                    selectedContactAddressAdd1.setModel(new PropertyModel(contactperson, "adress.addr1"));
-                    selectedContactAddressCity.setModel(new PropertyModel(contactperson, "adress.city"));
-                    selectedContactAddressCountry.setModel(new PropertyModel(contactperson, "adress.country"));
+                    selectedContactAddressAdd1.setDefaultModel(new PropertyModel(contactperson, "adress.addr1"));
+                    selectedContactAddressCity.setDefaultModel(new PropertyModel(contactperson, "adress.city"));
+                    selectedContactAddressCountry.setDefaultModel(new PropertyModel(contactperson, "adress.country"));
                     target.addComponent(selectedContactAddressAdd1);
                     target.addComponent(selectedContactAddressCity);
                     target.addComponent(selectedContactAddressCountry);

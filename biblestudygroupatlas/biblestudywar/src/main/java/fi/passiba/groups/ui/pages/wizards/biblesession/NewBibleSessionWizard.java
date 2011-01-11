@@ -96,9 +96,9 @@ public class NewBibleSessionWizard extends Wizard {
             setSummaryModel(new StringResourceModel("chapterselection.summary", this, new Model(bibleSession)));
 
 
-            if (getModel() != null) {
+            if (getDefaultModel() != null) {
               
-                bibleSession = (BibleSession) getModel().getObject();
+                bibleSession = (BibleSession) getDefaultModel().getObject();
                
             }
 
@@ -158,7 +158,7 @@ public class NewBibleSessionWizard extends Wizard {
         super(id);
 
 
-        setModel(new CompoundPropertyModel(this));
+        setDefaultModel(new CompoundPropertyModel(this));
         WizardModel model = new WizardModel();
         model.add(new SessionInitializationStep());
         model.add(new VerseSelectionStep());

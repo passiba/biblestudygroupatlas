@@ -32,31 +32,31 @@ public class AddressPanel extends Panel {
 
     public AddressPanel(String id, final long addressId) {
         super(id);
-        setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
+        setDefaultModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
             public Object load() {
                  address= addressservice.findAddressByAddressId(addressId);
                  return address;
             }
         }));
-        AddressForm addForm = new AddressForm("addressForm", getModel());
+        AddressForm addForm = new AddressForm("addressForm", getDefaultModel());
 
 
-        final RequiredTextField addr1 = new RequiredTextField("addr1", new PropertyModel(getModel(), "addr1"));
+        final RequiredTextField addr1 = new RequiredTextField("addr1", new PropertyModel(getDefaultModel(), "addr1"));
         addr1.add(StringValidator.maximumLength(80));
         addForm.add(addr1);
 
 
-        final TextField addr2 = new TextField("addr2", new PropertyModel(getModel(), "addr2"));
+        final TextField addr2 = new TextField("addr2", new PropertyModel(getDefaultModel(), "addr2"));
         addr2.add(StringValidator.maximumLength(40));
         addForm.add(addr2);
 
-        final RequiredTextField city = new RequiredTextField("city", new PropertyModel(getModel(), "city"));
+        final RequiredTextField city = new RequiredTextField("city", new PropertyModel(getDefaultModel(), "city"));
 
         city.add(StringValidator.maximumLength(80));
         addForm.add(city);
 
-        final AutoCompleteTextField country = new AutoCompleteTextField("country", new PropertyModel(getModel(), "country")) {
+        final AutoCompleteTextField country = new AutoCompleteTextField("country", new PropertyModel(getDefaultModel(), "country")) {
 
             protected Iterator getChoices(String input) {
                 if (Strings.isEmpty(input)) {
@@ -86,7 +86,7 @@ public class AddressPanel extends Panel {
         country.setRequired(true);
         country.setOutputMarkupId(true);
         addForm.add(country);
-        final Label selectedContry = new Label("selectedCountry", country.getModelObjectAsString());
+        final Label selectedContry = new Label("selectedCountry", country.getDefaultModelObjectAsString());
         selectedContry.setOutputMarkupId(true);
         addForm.add(selectedContry);
 
@@ -102,11 +102,11 @@ public class AddressPanel extends Panel {
             protected void onError(AjaxRequestTarget target) {
             }
         });
-        final RequiredTextField zip = new RequiredTextField("zip", new PropertyModel(getModel(), "zip"));
+        final RequiredTextField zip = new RequiredTextField("zip", new PropertyModel(getDefaultModel(), "zip"));
         zip.add(StringValidator.maximumLength(80));
         addForm.add(zip);
 
-        RequiredTextField state = new RequiredTextField("state", new PropertyModel(getModel(), "state"));
+        RequiredTextField state = new RequiredTextField("state", new PropertyModel(getDefaultModel(), "state"));
         state.add(StringValidator.maximumLength(80));
         addForm.add(state);
 
@@ -117,7 +117,7 @@ public class AddressPanel extends Panel {
         addr1.add(new AjaxFormComponentUpdatingBehavior("onchange") {
 
             protected void onUpdate(AjaxRequestTarget target) {
-                address.setAddr1(addr1.getModelObjectAsString());
+                address.setAddr1(addr1.getDefaultModelObjectAsString());
 
             }
         });
@@ -125,7 +125,7 @@ public class AddressPanel extends Panel {
 
             protected void onUpdate(AjaxRequestTarget target) {
 
-                address.setAddr2(addr2.getModelObjectAsString());
+                address.setAddr2(addr2.getDefaultModelObjectAsString());
 
             }
         });
@@ -133,7 +133,7 @@ public class AddressPanel extends Panel {
 
             protected void onUpdate(AjaxRequestTarget target) {
 
-                address.setCity(city.getModelObjectAsString());
+                address.setCity(city.getDefaultModelObjectAsString());
 
 
             }
@@ -142,7 +142,7 @@ public class AddressPanel extends Panel {
 
             protected void onUpdate(AjaxRequestTarget target) {
 
-                address.setCountry(country.getModelObjectAsString());
+                address.setCountry(country.getDefaultModelObjectAsString());
 
 
             }
@@ -151,7 +151,7 @@ public class AddressPanel extends Panel {
 
             protected void onUpdate(AjaxRequestTarget target) {
 
-                address.setZip(zip.getModelObjectAsString());
+                address.setZip(zip.getDefaultModelObjectAsString());
 
             }
         });
