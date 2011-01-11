@@ -47,8 +47,8 @@ public class Users  implements DomainObject,Identifiable  {
     @Column(name = "username", nullable = false,unique=true)
     private String username;
     
-   /* @Column(name = "password", nullable = false)
-    private String password;*/
+    @Column(name = "password", nullable = false)
+    private String password;
    
    
     @Column(name="status")
@@ -87,13 +87,13 @@ public class Users  implements DomainObject,Identifiable  {
         this.username = username;
     }
 
-    /*public String getPassword() {
+    public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }*/
+    }
     
     @Override
     public boolean equals(Object obj) {
