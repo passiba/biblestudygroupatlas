@@ -119,10 +119,10 @@ public class SearchServiceImpTest extends AbstractDependencyInjectionSpringConte
      Groups group = new Groups();
      group.setAdress(ad);
      group.setCongregatiolistemailaddress("hellarit@svk.fi");
-     group.setCongregationname("Espoon L‰hiseurakunta");
+     group.setCongregationname("Espoon L√§hiseurakunta");
      group.setCongregationwebsiteurl("www.lahisrk.fi");
      group.setGrouptypename(groupType);
-     group.setDescription("Kristillisten miesten kasvuryhm‰");
+     group.setDescription("Kristillisten miesten kasvuryhm√§");
      group.setStatus(Constants.StatusType.ACTIVE.getType());
      group.setName(groupName);
     
