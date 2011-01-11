@@ -6,7 +6,7 @@
 package fi.passiba.groups.ui.pages.site;
 
 import fi.passiba.biblestudy.BibleStudyApplication;
-import fi.passiba.biblestudy.BibleStudyFaceBookSession;
+import fi.passiba.biblestudy.BibleStudySession;
 import fi.passiba.biblestudy.services.datamining.IBibleBookDataProcessing;
 import fi.passiba.biblestudy.services.datamining.IBibleDataMining;
 import fi.passiba.groups.ui.model.Constants;
@@ -267,7 +267,7 @@ public class SiteBookView extends BasePage{
         return null;
     }
     private Person getLoggInPerson() {
-        List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
+        List<Person> persons = authenticate.findPerson(BibleStudySession.get().getPerson().getFk_userid().getUsername());
         Person currentLogInPerson = null;
         if (persons != null && !persons.isEmpty()) {
             currentLogInPerson = persons.get(0);

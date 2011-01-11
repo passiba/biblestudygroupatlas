@@ -1,7 +1,6 @@
 package fi.passiba.biblestudy.authorization;
 
 import fi.passiba.biblestudy.BibleStudyApplication;
-import fi.passiba.biblestudy.BibleStudyFaceBookSession;
 import fi.passiba.biblestudy.authorization.facebook.FaceBookAuthHandler;
 import fi.passiba.groups.ui.pages.ProtectedPage;
 import com.google.code.facebookapi.FacebookXmlRestClient;
@@ -46,7 +45,7 @@ public final class BibleStudyFaceBookAuthorizationStrategy implements
   public boolean isInstantiationAuthorized(Class componentClass) {
 
     if (ProtectedPage.class.isAssignableFrom(componentClass)) {
-      return  BibleStudyFaceBookSession.get().isAuthenticated();
+      //return  BibleStudyFaceBookSession.get().isAuthenticated();
     }
 
     return true;
@@ -55,30 +54,8 @@ public final class BibleStudyFaceBookAuthorizationStrategy implements
   public void onUnauthorizedInstantiation(Component component) {
    // throw new RestartResponseAtInterceptPageException(
      //   Home.class);
-      if (component instanceof Page) {
-            Page page = (Page) component;
-
-            if ((( BibleStudyFaceBookSession) page.getSession()).getClient() != null) {
-                return;
-            }
-
-            BibleStudyFaceBookSession session = ( BibleStudyFaceBookSession) page.getSession();
-            try {
-              FacebookXmlRestClient authClient = FaceBookAuthHandler.getAuthenticatedClient(page.getRequest(), BibleStudyApplication.get().getFaceBookAPIkey(), BibleStudyApplication.get().getFaceBookSecretkey());
-               
-                session.setClient(authClient);
-            } catch (FailedLoginException fle) {
-                //user not logged in
-                forceLogin(page);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            throw new UnauthorizedInstantiationException(component.getClass());
+      
         }
-
-  }
   private void forceLogin(Page page) {
 
         page.getRequestCycle().setRequestTarget(new RedirectRequestTarget("http://www.facebook.com/login.php?api_key=" + BibleStudyApplication.get().getFaceBookAPIkey() + "&v=1.0"));

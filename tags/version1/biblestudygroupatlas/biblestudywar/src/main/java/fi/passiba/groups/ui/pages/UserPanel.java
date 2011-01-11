@@ -1,6 +1,7 @@
 package fi.passiba.groups.ui.pages;
 
-import fi.passiba.biblestudy.BibleStudyFaceBookSession;
+
+import fi.passiba.biblestudy.BibleStudySession;
 import fi.passiba.groups.ui.pages.locale.LocaleDropDown;
 import fi.passiba.groups.ui.pages.search.VerseSearchPanel;
 import fi.passiba.groups.ui.pages.user.EditPersonContact;
@@ -36,7 +37,7 @@ public class UserPanel extends Panel {
     }
     private void init()
     {
-         final List<Person> persons = authenticate.findPerson(BibleStudyFaceBookSession.get().getFaceBookUserName());
+         final List<Person> persons = authenticate.findPerson(BibleStudySession.get().getPerson().getFk_userid().getUsername());
          long personid=0;
          if (persons!=null && !persons.isEmpty()) {
               personid=persons.get(0).getId();
