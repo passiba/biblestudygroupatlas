@@ -70,12 +70,12 @@
             </repository>
     </repositories>
     <dependencies>
-        <!--compiled groovy modules jar file -->
+        <!--compiled groovy modules jar file 
         <dependency>
             <groupId>fi.passiba.biblestudy</groupId>
             <artifactId>biblestudygroovy</artifactId>
             <version>1.0</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>fi.passiba.biblestudy</groupId>
             <artifactId>biblestudypersistance</artifactId>
@@ -111,10 +111,10 @@
             <version>${wicket.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-spring-annot</artifactId>
-            <version>${wicket.version}</version>
-        </dependency>
+		<groupId>org.apache.wicket</groupId>
+		<artifactId>wicket-spring</artifactId>
+                <version>${wicket.version}</version>
+	</dependency>
         <!-- LOGGING DEPENDENCIES - LOG4J -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -183,7 +183,7 @@
         <dependency>
             <groupId>org.wicketstuff</groupId>
             <artifactId>wicket-contrib-gmap2</artifactId>
-            <version>${wicket.version}</version>
+            <version>1.3.4</version>
         </dependency>
         <dependency>
             <groupId>org.wicketstuff</groupId>
@@ -448,7 +448,7 @@
     </profiles>
     <properties>
 	
-       <maven.test.skip>true</maven.test.skip>
+     
 	
        <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
 	</properties>

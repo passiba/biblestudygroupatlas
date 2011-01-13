@@ -17,7 +17,7 @@ import fi.passiba.services.biblestudy.persistance.Booksection;
 import fi.passiba.services.biblestudy.persistance.Chapter;
 import fi.passiba.services.biblestudy.persistance.ChapterVoting;
 import fi.passiba.services.biblestudy.persistance.Verse;
-import fi.passiba.biblestudy.datamining.ParserHelper;
+//import fi.passiba.biblestudy.datamining.ParserHelper;
 import fi.passiba.services.biblestudy.dao.IChapterVotingDAO;
 import java.util.ArrayList;
 import java.util.Date;

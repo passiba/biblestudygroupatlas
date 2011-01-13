@@ -36,7 +36,7 @@ public class ViewGroupInfo extends BasePage {
     public ViewGroupInfo(Page backPage,final Long groupId) {
         
         this.backPage=backPage;
-        setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
+        setDefaultModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
             protected Object load() {
 
@@ -55,7 +55,7 @@ public class ViewGroupInfo extends BasePage {
 
     private void init() {
 
-        add(new GroupForm("form", getModel()));
+        add(new GroupForm("form", getDefaultModel()));
 
 
 
@@ -82,7 +82,7 @@ public class ViewGroupInfo extends BasePage {
             SmartLinkLabel siteurl = new SmartLinkLabel("congregationwebsiteurl", new PropertyModel(getModel(), "congregationwebsiteurl"));
             add(siteurl);
 
-            IModel contactPersonsModel = new LoadableDetachableModel() {
+            IModel<Person> contactPersonsModel = new LoadableDetachableModel() {
 
                 protected Object load() {
                     long groupid = Long.valueOf(new PropertyModel(getModel(), "id").getObject().toString());

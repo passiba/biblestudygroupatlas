@@ -31,7 +31,7 @@ public class ViewPersonContact extends BasePage {
 
     public ViewPersonContact(Page backPage,final Long contactId) {
         this.backPage=backPage;
-        setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
+        setDefaultModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
             public Object load() {
                 return authenticate.findPersonByPersonID(contactId);
@@ -39,17 +39,17 @@ public class ViewPersonContact extends BasePage {
         }));
 
 
-        add(new Label("firstName", new PropertyModel(getModel(), "firstname")));
-        add(new Label("lastName", new PropertyModel(getModel(), "lastname")));
-        add(new SmartLinkLabel("email", new PropertyModel(getModel(), "email")));
-        add(new Label("role", new PropertyModel(getModel(), "fk_userid.rolename")));
-        add(new Label("username", new PropertyModel(getModel(), "fk_userid.username")));
+        add(new Label("firstName", new PropertyModel(getDefaultModel(), "firstname")));
+        add(new Label("lastName", new PropertyModel(getDefaultModel(), "lastname")));
+        add(new SmartLinkLabel("email", new PropertyModel(getDefaultModel(), "email")));
+        add(new Label("role", new PropertyModel(getDefaultModel(), "fk_userid.rolename")));
+        add(new Label("username", new PropertyModel(getDefaultModel(), "fk_userid.username")));
 
 
-        IModel groupsModel = new LoadableDetachableModel() {
+        IModel<Groups> groupsModel = new LoadableDetachableModel() {
 
             protected Object load() {
-                long personid = Long.valueOf(new PropertyModel(getModel(), "id").getObject().toString());
+                long personid = Long.valueOf(new PropertyModel(getDefaultModel(), "id").getObject().toString());
                 List<Groups> groupsCol = groupservice.findGroupsByPersonId(personid);
                 return groupsCol;
             }
@@ -68,7 +68,7 @@ public class ViewPersonContact extends BasePage {
         };
         add(groups);
 
-        add(new Link("edit", getModel()) {
+        add(new Link("edit", getDefaultModel()) {
 
             public void onClick() {
                 Person p = (Person) getModelObject();
@@ -81,7 +81,7 @@ public class ViewPersonContact extends BasePage {
                 setResponsePage( ViewPersonContact.this.backPage);
             }
         });
-        add(new Link("delete", getModel()) {
+        add(new Link("delete", getDefaultModel()) {
 
             public void onClick() {
                 Person p = (Person) getModelObject();

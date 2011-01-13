@@ -15,13 +15,13 @@
   
     <import resource="classpath:META-INF/biblestudy-data-hibernate.xml"/>
   <import resource="classpath:META-INF/biblestudy-jmsservice.xml"/>
-  <bean id="IBibleStudyService" class="fi.passiba.biblestudy.restlet.BibleStudyServiceImp">
+  <!--<bean id="IBibleStudyService" class="fi.passiba.biblestudy.restlet.BibleStudyServiceImp">
         <property name="translationDao" ref="BibletranslationDAO"/>
         <property name="sectionDao" ref="BooksectionDAO" />
         <property name="bookDAO" ref="BookDAO" />
         <property name="chapterDao" ref="ChapterDAO" />
         <property name="verseDAO" ref="VerseDAO" />
-    </bean>
+    </bean>-->
         <!-- Quartz sceduling on single method
     <bean id="dailyBibleDataRetrievalJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="IBibleDataMining"/>

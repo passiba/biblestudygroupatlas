@@ -76,7 +76,7 @@ public class NewBibleSessionWizard extends Wizard {
          */
         public ConfirmationStep() {
             super(true);
-            IModel sessionModel = new Model(bibleSession);
+            IModel<BibleSession> sessionModel = new Model<BibleSession>(bibleSession);
             setTitleModel(new ResourceModel("confirmation.title"));
             setSummaryModel(new StringResourceModel("confirmation.summary", this, sessionModel));
             setContentModel(new StringResourceModel("confirmation.content", this, sessionModel));
@@ -96,9 +96,9 @@ public class NewBibleSessionWizard extends Wizard {
             setSummaryModel(new StringResourceModel("chapterselection.summary", this, new Model(bibleSession)));
 
 
-            if (getModel() != null) {
+            if (getDefaultModel() != null) {
               
-                bibleSession = (BibleSession) getModel().getObject();
+                bibleSession = (BibleSession) getDefaultModel().getObject();
                
             }
 
@@ -138,7 +138,7 @@ public class NewBibleSessionWizard extends Wizard {
                 WebMarkupContainer sessiontypes = new WebMarkupContainer("sessiontype");
                 add(sessiontypes);
                 sessiontypes.setVisible(true);
-                sessiontypes.add(new DropDownChoice("types", new PropertyModel(bibleSession,
+                sessiontypes.add(new DropDownChoice<String>("types", new PropertyModel(bibleSession,
                         "sessiontype"), allSessionTypes).setRequired(true));
           
                 add(new BibleDataTreePanel("bibleDataTree"));
@@ -158,7 +158,7 @@ public class NewBibleSessionWizard extends Wizard {
         super(id);
 
 
-        setModel(new CompoundPropertyModel(this));
+        setDefaultModel(new CompoundPropertyModel(this));
         WizardModel model = new WizardModel();
         model.add(new SessionInitializationStep());
         model.add(new VerseSelectionStep());

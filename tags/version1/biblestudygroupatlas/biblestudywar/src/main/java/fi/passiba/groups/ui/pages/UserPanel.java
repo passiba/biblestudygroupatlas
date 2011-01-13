@@ -44,7 +44,7 @@ public class UserPanel extends Panel {
 
          }
 
-         IModel model = new CompoundPropertyModel(new LoadableDetachableModel() {
+         IModel<Person> model = new CompoundPropertyModel(new LoadableDetachableModel() {
 
             @Override
             public Object load() {
@@ -57,16 +57,16 @@ public class UserPanel extends Panel {
                 return null;
             }
         });
-        setModel(model);
+        setDefaultModel(model);
         
-        add(new Label("groups", new PropertyModel(getModel(),
+        add(new Label("groups", new PropertyModel(getDefaultModel(),
                 "groupFirstName")));
         add(new LocaleDropDown("localeSelect", Arrays.asList(new Locale[]{Locale.ENGLISH, new Locale("fi")})));
        
        
         EditPerson edit =new EditPerson("edit", model, personid);
            
-        edit.add(new Label("fullname", new PropertyModel(getModel(),
+        edit.add(new Label("fullname", new PropertyModel(getDefaultModel(),
                 "fullname")));
         WizardLink userWisard = new WizardLink("newUserWizardLink", NewUserWizard.class);
         if (persons ==null || persons.isEmpty()) {

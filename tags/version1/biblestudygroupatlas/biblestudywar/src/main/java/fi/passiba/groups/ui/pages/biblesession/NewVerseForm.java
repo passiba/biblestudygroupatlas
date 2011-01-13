@@ -23,14 +23,14 @@ public final class NewVerseForm extends AbstractDataPanel {
         super(id);
         verse.setVerseText("Jakeen teksti");
 
-        IModel model = new CompoundPropertyModel(verse);
-        setModel(model);
+        IModel<Verse> model = new CompoundPropertyModel(verse);
+        setDefaultModel(model);
         init(chapter);
     }
     public NewVerseForm(String id,final Verse verse) {
 
         super(id);
-        IModel model = new CompoundPropertyModel(new LoadableDetachableModel()
+        IModel<Verse> model = new CompoundPropertyModel(new LoadableDetachableModel()
 
         {
             @Override
@@ -41,18 +41,18 @@ public final class NewVerseForm extends AbstractDataPanel {
 
 
                 );
-        setModel(model);
+        setDefaultModel(model);
         init(verse.getChapter());
     }
 
     private void init(Chapter chapter) {
         
-         final VerseForm verseForm=new VerseForm("form", getModel(), chapter);
-         dojoInlineEditBox = new DojoInlineEditBox("verseText", new PropertyModel(getModel(), "verseText")) {
+         final VerseForm verseForm=new VerseForm("form", getDefaultModel(), chapter);
+         dojoInlineEditBox = new DojoInlineEditBox("verseText", new PropertyModel(getDefaultModel(), "verseText")) {
 
                 protected void onSave(AjaxRequestTarget target) {
                    // verse = (Verse) verseForm.getModelObject();
-                    verse.setVerseText(dojoInlineEditBox.getModelObjectAsString());
+                    verse.setVerseText(dojoInlineEditBox.getDefaultModelObjectAsString());
                     target.addComponent(dojoInlineEditBox);
                 }
          };
@@ -90,7 +90,7 @@ public final class NewVerseForm extends AbstractDataPanel {
             @Override
             public void onSubmit() {
                 verse = (Verse) getForm().getModelObject();
-                verse.setVerseText(NewVerseForm.this.dojoInlineEditBox.getModelObjectAsString());
+                verse.setVerseText(NewVerseForm.this.dojoInlineEditBox.getDefaultModelObjectAsString());
                 verse.setChapter(chapter);
                 bibleTranslationDataRetrievalService.updateVerse(verse);
                 NewVerseForm.this.replaceWith(new ChapterPanel("bibleSessionpanel",chapter.getId(),getPage()).setOutputMarkupId(true));
