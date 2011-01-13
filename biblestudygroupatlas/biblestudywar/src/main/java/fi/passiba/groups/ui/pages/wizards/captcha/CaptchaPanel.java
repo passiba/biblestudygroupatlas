@@ -32,7 +32,7 @@ public class CaptchaPanel extends Panel {
         captchaform.add(feedback);
       
       
-        RequiredTextField password = new RequiredTextField("captchapassword", new PropertyModel(properties, "captchapassword")) {
+        RequiredTextField<String> password = new RequiredTextField("captchapassword", new PropertyModel<String>(properties, "captchapassword")) {
 
             protected final void onComponentTag(final ComponentTag tag) {
                 super.onComponentTag(tag);

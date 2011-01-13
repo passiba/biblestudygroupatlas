@@ -5,6 +5,7 @@ import fi.passiba.biblestudy.authorization.BibleStudyFaceBookAuthorizationStrate
 
 
 import fi.passiba.groups.ui.pages.Main;
+import org.apache.wicket.Page;
 import org.apache.wicket.Request;
 import org.apache.wicket.Response;
 import org.apache.wicket.Session;
@@ -37,7 +38,9 @@ public class BibleStudyApplication extends WebApplication implements Application
 
 
     
-    public Class getHomePage() {
+   @Override
+    public Class getHomePage()
+    {
         return Main.class;
     }
     private ApplicationContext getContext() {

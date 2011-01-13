@@ -48,7 +48,7 @@ public class EditPersonContact extends BasePage {
     public EditPersonContact(Page backPage, final Long contactId) {
 
         this.backPage = backPage;
-        setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
+        setDefaultModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
             protected Object load() {
 
@@ -61,7 +61,7 @@ public class EditPersonContact extends BasePage {
 
     private void init() {
 
-        add(new ContactForm("form", getModel()));
+        add(new ContactForm("form", getDefaultModel()));
 
 
 
@@ -116,7 +116,7 @@ public class EditPersonContact extends BasePage {
             email.add(EmailAddressValidator.getInstance());
             add(email);
             // ChoiceRenderer choiceRenderer = new ChoiceRenderer("fk_userid.rolename");
-            add(new DropDownChoice("role", new PropertyModel(getModel(),
+            add(new DropDownChoice<String>("role", new PropertyModel(getModel(),
                     "fk_userid.rolename"), allRoles).setRequired(true));
 
 

@@ -116,7 +116,7 @@ public class NewGroupWizard extends Wizard {
          */
         public ConfirmationStep() {
             super(true);
-            IModel userModel = new Model(group);
+            IModel<Group> userModel = new Model<Group>(group);
             setTitleModel(new ResourceModel("confirmation.title"));
             setSummaryModel(new StringResourceModel("confirmation.summary", this, userModel));
             setContentModel(new StringResourceModel("confirmation.content", this, userModel));
@@ -134,17 +134,17 @@ public class NewGroupWizard extends Wizard {
         public GroupDetailsStep() {
             setTitleModel(new ResourceModel("groupdetails.title"));
             setSummaryModel(new StringResourceModel("groupdetails.summary", this, new Model(group)));
-            add(new RequiredTextField("group.name"));
-            add(new RequiredTextField("group.phone"));
-            add(new RequiredTextField("group.congregationname"));
-            add(new RequiredTextField("group.congregationwebsiteurl"));
-            add(new RequiredTextField("group.congregationemail").add(EmailAddressValidator.getInstance()));
+            add(new RequiredTextField<String>("group.name"));
+            add(new RequiredTextField<String>("group.phone"));
+            add(new RequiredTextField<String>("group.congregationname"));
+            add(new RequiredTextField<String>("group.congregationwebsiteurl"));
+            add(new RequiredTextField<String>("group.congregationemail").add(EmailAddressValidator.getInstance()));
             add(new CheckBox("assignContacperson"));
             
               WebMarkupContainer grouptypes = new WebMarkupContainer("grouptype");
             add(grouptypes);
             grouptypes.setVisible(true);
-            grouptypes.add(new DropDownChoice("grouptypes", new PropertyModel(group,
+            grouptypes.add(new DropDownChoice<String>("grouptypes", new PropertyModel<String>(group,
                     "grouptype"), allGroupTypes).setRequired(true));
 
         }
@@ -161,7 +161,7 @@ public class NewGroupWizard extends Wizard {
             super(new ResourceModel("groupcontacperson.title"), null);
             setSummaryModel(new StringResourceModel("groupcontacperson.summary", this, new Model(group)));
 
-            add(new ContactForm("contactform", getModel()));
+            add(new ContactForm("contactform", getDefaultModel()));
             GoogleMapsPanel mapPanel = new GoogleMapsPanel("googleMapPanel", false);
             add(mapPanel);
 
@@ -180,7 +180,7 @@ public class NewGroupWizard extends Wizard {
             public ContactForm(String id, IModel m) {
                 super(id, m);
 
-                add(new TextField("contactcountry", new PropertyModel(properties, "contactcountry")) {
+                add(new TextField<String>("contactcountry", new PropertyModel<String>(properties, "contactcountry")) {
 
                     protected final void onComponentTag(final ComponentTag tag) {
                         super.onComponentTag(tag);
@@ -189,7 +189,7 @@ public class NewGroupWizard extends Wizard {
                     }
                 });
 
-                add(new TextField("contactcity", new PropertyModel(properties, "contactcity")) {
+                add(new TextField<String>("contactcity", new PropertyModel<String>(properties, "contactcity")) {
 
                     protected final void onComponentTag(final ComponentTag tag) {
                         super.onComponentTag(tag);
@@ -209,7 +209,7 @@ public class NewGroupWizard extends Wizard {
 
 
                 ChoiceRenderer choiceRenderer = new ChoiceRenderer("lastname");
-                DropDownChoice contactpersonddc = new DropDownChoice("contactperson", new PropertyModel(contactperson, "lastname"),
+                DropDownChoice<Person> contactpersonddc = new DropDownChoice<Person>("contactperson", new PropertyModel(contactperson, "lastname"),
                         new LoadableDetachableModel() {
 
                             @Override
@@ -244,9 +244,9 @@ public class NewGroupWizard extends Wizard {
                     @Override
                     protected void onSubmit(AjaxRequestTarget target) {
                         //group.setAdress(groupservice.findGroupAddressByGroupId(group.getId()));
-                        selectedContactAddressAdd1.setModel(new PropertyModel(contactperson, "adress.addr1"));
-                        selectedContactAddressCity.setModel(new PropertyModel(contactperson, "adress.city"));
-                        selectedContactAddressCountry.setModel(new PropertyModel(contactperson, "adress.country"));
+                        selectedContactAddressAdd1.setDefaultModel(new PropertyModel(contactperson, "adress.addr1"));
+                        selectedContactAddressCity.setDefaultModel(new PropertyModel(contactperson, "adress.city"));
+                        selectedContactAddressCountry.setDefaultModel(new PropertyModel(contactperson, "adress.country"));
                         target.addComponent(selectedContactAddressAdd1);
                         target.addComponent(selectedContactAddressCity);
                         target.addComponent(selectedContactAddressCountry);
@@ -280,7 +280,7 @@ public class NewGroupWizard extends Wizard {
             setSummaryModel(new StringResourceModel("address.summary", this, new Model(group)));
             
             
-             GeoForm geocodeForm = new GeoForm("geocoder", getModel());
+             GeoForm geocodeForm = new GeoForm("geocoder", getDefaultModel());
             final GMap2 bottomMap = new GMap2("bottomPanel",
                     new GMapHeaderContributor(BibleStudyApplication.get().getGoogleMapsAPIkey()));
             bottomMap.setOutputMarkupId(true);
@@ -299,9 +299,9 @@ public class NewGroupWizard extends Wizard {
 
             geocodeForm.add(feedback);
 
-            geocodeForm.add(new TextField("group.addr2").add(StringValidator.maximumLength(40)));
+            geocodeForm.add(new TextField<String>("group.addr2").add(StringValidator.maximumLength(40)));
 
-            geocodeForm.add(new RequiredTextField("group.city").add(StringValidator.maximumLength(80)));
+            geocodeForm.add(new RequiredTextField<String>("group.city").add(StringValidator.maximumLength(80)));
             //add(new RequiredTextField("group.country").add(StringValidator.maximumLength(20)));
 
             final AutoCompleteTextField country = new AutoCompleteTextField("group.country") {
@@ -338,13 +338,13 @@ public class NewGroupWizard extends Wizard {
             country.setRequired(true);
             country.setOutputMarkupId(true);
             geocodeForm.add(country);
-            final Label selectedContry = new Label("selectedCountry", country.getModelObjectAsString());
+            final Label selectedContry = new Label("selectedCountry", country.getDefaultModelObjectAsString());
             selectedContry.setOutputMarkupId(true);
             geocodeForm.add(selectedContry);
             
             
-            geocodeForm.add(new RequiredTextField("group.zip").add(StringValidator.maximumLength(80)));
-            geocodeForm.add(new RequiredTextField("group.state").add(StringValidator.maximumLength(80)));
+            geocodeForm.add(new RequiredTextField<String>("group.zip").add(StringValidator.maximumLength(80)));
+            geocodeForm.add(new RequiredTextField<String>("group.state").add(StringValidator.maximumLength(80)));
           
             RequiredTextField address = new RequiredTextField("group.addr1");
             address.add(StringValidator.maximumLength(80));
@@ -361,7 +361,7 @@ public class NewGroupWizard extends Wizard {
                 protected void onSubmit(AjaxRequestTarget target) {
                     target.addComponent(selectedContry);
                     target.addComponent(country);
-                    group.setCountry(country.getModelObjectAsString());
+                    group.setCountry(country.getDefaultModelObjectAsString());
                  
                 }
 
@@ -434,7 +434,7 @@ public class NewGroupWizard extends Wizard {
         // create a blank user
         group = new Group();
 
-        setModel(new CompoundPropertyModel(this));
+        setDefaultModel(new CompoundPropertyModel(this));
         WizardModel model = new WizardModel();
         model.add(new GroupDetailsStep());
         model.add(new GroupAddressStep());

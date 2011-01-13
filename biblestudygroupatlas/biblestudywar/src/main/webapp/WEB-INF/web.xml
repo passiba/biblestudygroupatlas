@@ -95,7 +95,7 @@ org.springframework.orm.hibernate3.support.OpenSessionInViewFilter
         <param-name>org.restlet.application</param-name>
         <param-value>fi.passiba.biblestudy.restlet.BibleChapterApplication</param-value>
     </context-param>
-
+<!--
     <servlet>
         <servlet-name>RestletServlet</servlet-name>
         <servlet-class>
@@ -106,7 +106,7 @@ org.springframework.orm.hibernate3.support.OpenSessionInViewFilter
     <servlet-mapping>
         <servlet-name>RestletServlet</servlet-name>
         <url-pattern>/biblestudy/*</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 
    <!--<servlet>
         <servlet-name>Jersey</servlet-name>

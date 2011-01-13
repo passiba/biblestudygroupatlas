@@ -41,7 +41,7 @@ public class EditGroupInfo extends BasePage {
     List<Person> contactpersons ;
     public EditGroupInfo(Page backPage, final Long groupId) {
         this.backPage = backPage;
-        setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
+        setDefaultModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
             protected Object load() {
 
@@ -60,7 +60,7 @@ public class EditGroupInfo extends BasePage {
 
     private void init() {
 
-        add(new GroupForm("form", getModel()));
+        add(new GroupForm("form", getDefaultModel()));
 
 
 
@@ -72,35 +72,35 @@ public class EditGroupInfo extends BasePage {
 
         public GroupForm(String id, IModel m) {
             super(id, m);
-            TextField groupName = new TextField("groupname", new PropertyModel(getModel(), "name"));
+            TextField groupName = new TextField("groupname", new PropertyModel<String>(getModel(), "name"));
             groupName.setRequired(true);
             add(groupName);
-            final long groupid = Long.valueOf(new PropertyModel(getModel(), "id").getObject().toString());
+            final long groupid = Long.valueOf(new PropertyModel<String>(getModel(), "id").getObject().toString());
 
             WebMarkupContainer grouptypes = new WebMarkupContainer("grouptype");
             add(grouptypes);
             grouptypes.setVisible(true);
-            grouptypes.add(new DropDownChoice("grouptypes", new PropertyModel(getModel(),
+            grouptypes.add(new DropDownChoice("grouptypes", new PropertyModel<String>(getModel(),
                     "grouptypename"), allGroupTypes).setRequired(true));
 
 
-            TextField Name = new TextField("congregationname", new PropertyModel(getModel(), "congregationname"));
+            TextField Name = new TextField("congregationname", new PropertyModel<String>(getModel(), "congregationname"));
             Name.setRequired(true);
             add(Name);
 
-            TextField email = new TextField("congregationemail", new PropertyModel(getModel(), "congregatiolistemailaddress"));
+            TextField email = new TextField("congregationemail", new PropertyModel<String>(getModel(), "congregatiolistemailaddress"));
             email.setRequired(true);
             email.add(EmailAddressValidator.getInstance());
             add(email);
 
-            TextField siteurl = new TextField("congregationwebsiteurl", new PropertyModel(getModel(), "congregationwebsiteurl"));
+            TextField siteurl = new TextField("congregationwebsiteurl", new PropertyModel<String>(getModel(), "congregationwebsiteurl"));
 
             siteurl.setRequired(true);
             add(siteurl);
 
             ChoiceRenderer choiceRenderer = new ChoiceRenderer("lastname");
 
-            DropDownChoice contactpersonddc = new DropDownChoice("contactperson", new PropertyModel(contactperson, "lastname"),
+            DropDownChoice<Person> contactpersonddc = new DropDownChoice("contactperson", new PropertyModel(contactperson, "lastname"),
                     new LoadableDetachableModel() {
 
                         @Override
@@ -117,15 +117,15 @@ public class EditGroupInfo extends BasePage {
             contactpersonddc.setOutputMarkupId(true);
             add(contactpersonddc);
 
-            final Label selectedContactAddressAdd1 = new Label("selectedContactaddr1", new PropertyModel(contactperson, "adress.addr1"));
+            final Label selectedContactAddressAdd1 = new Label("selectedContactaddr1", new PropertyModel<String>(contactperson, "adress.addr1"));
             selectedContactAddressAdd1.setOutputMarkupId(true);
             add(selectedContactAddressAdd1);
 
-            final Label selectedContactAddressCity = new Label("selectedContactcity", new PropertyModel(contactperson, "adress.city"));
+            final Label selectedContactAddressCity = new Label("selectedContactcity", new PropertyModel<String>(contactperson, "adress.city"));
             selectedContactAddressCity.setOutputMarkupId(true);
             add(selectedContactAddressCity);
 
-            final Label selectedContactAddressCountry = new Label("selectedContactcountry", new PropertyModel(contactperson, "adress.country"));
+            final Label selectedContactAddressCountry = new Label("selectedContactcountry", new PropertyModel<String>(contactperson, "adress.country"));
             selectedContactAddressCountry.setOutputMarkupId(true);
             add(selectedContactAddressCountry);
 
@@ -142,9 +142,9 @@ public class EditGroupInfo extends BasePage {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target) {
                     //group.setAdress(groupservice.findGroupAddressByGroupId(group.getId()));
-                    selectedContactAddressAdd1.setModel(new PropertyModel(contactperson, "adress.addr1"));
-                    selectedContactAddressCity.setModel(new PropertyModel(contactperson, "adress.city"));
-                    selectedContactAddressCountry.setModel(new PropertyModel(contactperson, "adress.country"));
+                    selectedContactAddressAdd1.setDefaultModel(new PropertyModel(contactperson, "adress.addr1"));
+                    selectedContactAddressCity.setDefaultModel(new PropertyModel(contactperson, "adress.city"));
+                    selectedContactAddressCountry.setDefaultModel(new PropertyModel(contactperson, "adress.country"));
                     target.addComponent(selectedContactAddressAdd1);
                     target.addComponent(selectedContactAddressCity);
                     target.addComponent(selectedContactAddressCountry);

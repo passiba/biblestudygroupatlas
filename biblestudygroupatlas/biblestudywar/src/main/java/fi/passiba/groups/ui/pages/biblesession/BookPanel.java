@@ -19,21 +19,21 @@ public class BookPanel  extends AbstractDataPanel {
         
         super(id);
            
-        setModel(new CompoundPropertyModel(new LoadableDetachableModel() {
+        setDefaultModel(new CompoundPropertyModel(new LoadableDetachableModel() {
 
             public Object load() {
                 return  bibleTranslationDataRetrievalService.findBookById(bookid);
             }
         }));
 
-        add(new Label("bookTitle", new PropertyModel(getModel(), "bookText")));
-        add(new Label("bookNum", new PropertyModel(getModel(), "bookNum")));
+        add(new Label("bookTitle", new PropertyModel(getDefaultModel(), "bookText")));
+        add(new Label("bookNum", new PropertyModel(getDefaultModel(), "bookNum")));
         
         IModel booksection = new LoadableDetachableModel() {
 
             protected Object load() {
 
-                    Booksection booksection = (Booksection) new PropertyModel(getModel(), "booksection").getObject();
+                    Booksection booksection = (Booksection) new PropertyModel(getDefaultModel(), "booksection").getObject();
                     long booksectionid = booksection.getId();
                     booksection =  bibleTranslationDataRetrievalService.findBookSectionById(booksectionid);
                     return booksection;
