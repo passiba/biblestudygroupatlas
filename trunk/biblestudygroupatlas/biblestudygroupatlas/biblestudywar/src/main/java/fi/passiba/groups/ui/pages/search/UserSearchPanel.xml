@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+        <entry key="search">Haku</entry>
+	<entry key="group">Piiri</entry>
+	<entry key="location">Paikkakunta</entry>
+        <entry key="searchcriteria">Hakusana</entry>
+        <entry key="advancedsearch">Laajennettu haku</entry>
+</properties>

@@ -1,0 +1,71 @@
+<wicket:panel>
+    <div class="data_row">	
+        <p><wicket:message key="obligatoryfield"/></p>
+        
+        <p/>
+        <p/>
+        <form wicket:id = "geocoder">
+            <div class="user">	
+                <h4><wicket:message key="infoformtitle"/></h4>
+                <table>
+                    
+                    <tr><span wicket:id="feedback"></span></tr>
+                  
+                    
+                    <tr>
+                        <td class="header"><wicket:message key="addr1"/>    *:</td>
+                        <td> <input wicket:id="group.addr1" type="text" size="40" class="text"/></td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="header"><wicket:message key="addr2"/>     :</td>
+                        <td> <input wicket:id="group.addr2" type="text" size="40" class="text"/></td>
+                    </tr>
+                    
+                    
+                    <tr>
+                        <td class="header"><wicket:message key="city"/>     *:</td>
+                        <td> <input wicket:id="group.city" type="text" size="40" class="text"/></td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="header"><wicket:message key="zip"/>     *:</td>
+                        <td> <input wicket:id="group.zip" type="text" size="40" class="text"/></td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="header"><wicket:message key="state"/>     *:</td>
+                        <td> <input wicket:id="group.state" type="text" size="40" class="text"/></td>
+                    </tr>
+                    <tr>
+                        <td class="header"><wicket:message key="country"/>     *:</td>
+                        <td>
+                            
+                        <input wicket:id="group.country" type="text" size="40" class="text"/></td>
+                    </tr>
+                    <tr>
+                        <td class="header">
+                        <wicket:message key="selectedCountry"/>: </td>
+                        <td><span wicket:id="selectedCountry"></span></td>
+                    </tr>  
+                    <tr>
+                        <td> <input wicket:id="client" type="image" src="images/btn_HAE.gif" value="HAE" class="button" /></td>
+                    </tr>
+                    
+                </table>
+            </div>
+            
+            
+            
+            <div class="box">
+                <table>
+                    
+                    
+                    <tr>
+                        <div wicket:id="bottomPanel" style="width: 500px; height: 300px;">bottomPanel</div>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+</wicket:panel>
