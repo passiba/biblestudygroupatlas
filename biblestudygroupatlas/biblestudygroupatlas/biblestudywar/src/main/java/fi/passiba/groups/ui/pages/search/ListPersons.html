@@ -1,0 +1,24 @@
+<wicket:extend>
+      <!-- sub_navi -->
+<div id="sub_navi">
+    <div class="start"><!-- MSIE fix --></div>
+    <h4><wicket:message key="listPersonsTitle"/></h4>
+    <ul class="level1">
+        <li><a href="#"><wicket:message key="groupInfo"/>
+            </a></li>
+         <li>   <ul class="level2">
+                <li><a href="#"><wicket:message key="groupcalendar"/>
+                    </a></li>
+            </ul>
+        </li>
+        <li class="active"><wicket:message key="searchresultusers"/></li>
+    </ul>
+    <div class="end"><!-- MSIE fix --></div>
+</div>
+<div id="content">
+    <div class="data">
+    <div class="start"><!-- MSIE fix --></div>
+    <span wicket:id="userlistPanel"/>
+    </div>
+</div>
+</wicket:extend>

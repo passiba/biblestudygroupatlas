@@ -1,0 +1,27 @@
+<wicket:panel>
+ <div class="data_row">
+  <table>
+    <form wicket:id="form">
+      <tbody>
+
+         <tr>
+            <td class="header"><wicket:message key="verseNum"/>     *:</td>
+            <td> <input wicket:id="verseNum" type="text" size="40" class="text"/></td>
+         </tr>
+        <tr>
+           <td class="header"><wicket:message key="verseText"/>     *:</td>
+           <td>
+               <div wicket:id="verseText"></div>
+           </td>
+        </tr>
+        <tr>
+          <td colspan="4">
+           <input type="image"  wicket:id="cancelButton" src="images/btn_PERUUTA.gif"  class="button" />
+           <input type="image"  wicket:id="saveButton" src="images/btn_TALLENNA.gif"  class="button" />
+          </td>
+        </tr>
+      </tbody>
+    </form>
+  </table>
+ </div>
+</wicket:panel>

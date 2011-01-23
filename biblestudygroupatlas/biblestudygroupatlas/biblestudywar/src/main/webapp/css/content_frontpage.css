@@ -1,0 +1,62 @@
+#frontpage {}
+#frontpage h1 {
+	color:#cc0000;
+	font-size:175%;
+	font-weight:normal;
+}
+#quicklinks {
+	margin-left:150px;
+	margin-right:100px;
+	border-top:1px solid #eff2f2;
+}
+#quicklinks .data {
+	background:#ffffff;
+	border-left:1px solid #eff2f2;
+	border-right:1px solid #eff2f2;
+	padding:20px;
+}
+#quicklinks dl {
+	width:299px;
+}
+#quicklinks dt {
+	font-size:110%;
+	background:url('../images/bg_quicklinks_arrow.gif') top left no-repeat;
+	padding-left:23px;
+}
+#quicklinks dd {
+	font-size:95%;
+	width:200px;
+	padding-left:50px;
+	padding-bottom:15px;
+}
+#quicklinks .end {
+	background:url('../images/bg_quicklinks_bottom.gif') top left no-repeat;
+	width:639px;
+	height:9px;
+}
+
+#news {
+	background:#CCFFFF;
+	padding:22px;
+	margin-top:25px;
+	margin-left:150px;
+	margin-right:100px;
+	width:595px;
+}
+#news h1 {
+	color:#000000;
+	font-size:150%;
+}
+#news ul {
+	list-style:none;
+	margin-left:95px;
+	padding-bottom:20px;
+}
+#news li {
+	padding-bottom:8px;
+}
+#news li, #news li a {
+	float:none;
+	width:100%;
+	font-size:95%;
+}

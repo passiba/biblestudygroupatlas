@@ -1,0 +1,56 @@
+/* INDEX:
+main
+header 
+	logo
+	quicksearch
+	top_right
+		lang
+		user_info
+navi 
+	start 
+	end
+	logout
+content_area
+	start 
+	end
+	sub_navi
+	content
+footer
+*/
+
+#main {
+	width:935px;
+	margin-left:30px;
+	margin-top:10px;
+}
+
+#header {
+	height:90px;
+	width:100%;
+	}
+	#logo {padding-right:95px;}
+	#quicksearch {width:255px;height:100px;}
+	#top_right {float:right; width:350px;}
+			
+#navi {
+	height:23px;
+	width:100%;
+	}
+	#logout {}
+	
+#content_area {
+	width:100%; 
+	margin-top:20px;
+	}
+	.start  {}
+	.end {}
+	#sub_navi {width:210px; height:1px;}
+	#content {margin-left:12px; width:700px;}
+		#content .start {}
+		#content .end {height:11px;}
+	#frontpage {}
+	#search {width:255px;}
+#footer {
+	width:100%;
+	}
+

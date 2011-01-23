@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="obligatoryfield">* pakollinen tieto</entry>
+    <entry key="biblesessiontitle">Raamatun lukusessio</entry>
+     <entry key="sessiontitle">Uuden raamattu session aloitus</entry>
+     <entry key="session.summary">Anna uuden raamattuluku hetken tiedot</entry>
+     <entry key="sessiodate">Sessio päivämäärä</entry>
+     <entry key="sessiontype">Session tyyppi</entry>
+     <entry key="sessionweburl">Kappaleen webosoite</entry>
+     
+     <entry key="selectedbibletranslation">Raamatun käännös</entry>
+     
+    <entry key="infodes">Anna raamattusession tiedot, onko kyseessä ryhmän tai henkilön raamattusessio.</entry>
+     
+     
+     <entry key="chapterselection.title">Raamatun kappaleen valinta</entry>
+     <entry key="chapterselection.summary">Annetun raamatun web url kappaleen tiedot</entry>
+     <entry key="chapterselectiontitle">Raamatun valittu kappale</entry>
+   
+   
+   
+   
+    <entry key="confirmation.title">Vahvistus</entry>
+    <entry key="confirmation.summary">Ole hyvä ja vahvista '${sessiontype}' raamattu session lisäys</entry>
+    <entry key="confirmation.content">Olet luomassa uutta raamattuluku sessiota '${weburlName}' webosoitteesta, sisältäen tekstin \
+      '{bibleChapterText}'\
+    
+    . Paina,Hyväksy kun olet valmis lisäämään raamatun lukusession.</entry>
+        
+</properties>

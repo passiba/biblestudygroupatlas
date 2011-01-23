@@ -1,0 +1,81 @@
+<wicket:panel>
+<div class="data_row">
+       <p><wicket:message key="obligatoryfield"/></p>
+       <div class="user">
+      <form wicket:id="groupform">
+          
+          <h4><wicket:message key="groupselection.title"/></h4>
+          <table>
+              <tr>
+                  <td colspan="3"><label><wicket:message key="groupretrievalInfo"/><br/></label></td>
+                      
+              </tr>
+              <tr>
+                    <td class="header"><wicket:message key="groupcountry"/>     :</td>
+                    <td> <input wicket:id="groupcountry" type="text" class="text"/></td>
+              </tr>
+              <tr>
+                    <td class="header"><wicket:message key="city"/>     :</td>
+                    <td> <input wicket:id="groupcity" type="text" class="text"/></td>
+              </tr>
+              <tr class="header" wicket:id="grouptype">
+				<th> <wicket:message key="grouptypes">[types]</wicket:message>:</th>
+				<td>
+					<select wicket:id="grouptypes">
+						
+					</select>
+				</td>
+		  </tr>
+               <tr class="header">
+				<th> <wicket:message key="groups">[contactpersons]</wicket:message>:</th>
+				<td>
+					<select wicket:id="group">
+						
+					</select>
+				</td>
+		</tr>
+              <tr>
+                  <td> <input type="image" src="images/btn_HAE.gif" value="HAE" class="button" wicket:id="Find"/></td>
+              </tr>
+             
+          </table>
+          
+          
+          
+      
+      <div class="box">
+    
+        
+               <table>
+                   <tr>
+                       <td><label><wicket:message key="selectedGroupAddressInfo"/><br/></label></td>
+                           
+                   </tr>
+                  
+                   <tr>
+                      <td class="header"><wicket:message key="addr1"/>: </td>
+                      <td><span wicket:id="selectedGroupaddr1" class="bold"></span></td>
+                  </tr>  
+                  <tr>
+                      <td class="header"><wicket:message key="city"/>: </td>
+                      <td><span wicket:id="selectedGroupcity" class="bold"></span></td>
+                  </tr> 
+                  <tr>
+                      <td class="header"><wicket:message key="country"/>: </td>
+                      <td><span wicket:id="selectedGroupcountry" class="bold"></span></td>
+                  </tr> 
+                       
+               </table>
+              
+       </div>
+              
+              
+              
+              
+  </form>
+
+</div>    
+
+  <span wicket:id="googleMapPanel"></span>
+</div>
+</wicket:panel>

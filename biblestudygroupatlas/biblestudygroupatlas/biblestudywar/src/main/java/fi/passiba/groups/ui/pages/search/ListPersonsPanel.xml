@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+        <entry key="listPersonsTitle">Henkilöhaku</entry>
+	<entry key="groupInfo">Piiri tiedot</entry>
+	<entry key="groupcalendar">Piirin tapahtumakalenteri</entry>
+        <entry key="searchresultusers">Käyttäjät</entry>
+        <entry key="frontpage">Etusivu</entry>
+        
+        <entry key="name">Nimi</entry>
+        <entry key="phonenumber">Puhelinnro</entry>
+        <entry key="email">Sähköposti</entry>
+        <entry key="rolename">Käyttäjärooli</entry>
+        <entry key="action">Toiminto</entry>
+        <entry key="edit">Muokkaa</entry>
+        <entry key="delete">Poista</entry>
+</properties>
