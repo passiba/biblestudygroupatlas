@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-        <entry key="captchatitle">Captcha Kuva</entry>
-	<entry key="info">Ole hyvä ja kirjoita kuvan teksti tekstikentään</entry>
-	
-        <entry key="ok">Onnistui !</entry>
-</properties>

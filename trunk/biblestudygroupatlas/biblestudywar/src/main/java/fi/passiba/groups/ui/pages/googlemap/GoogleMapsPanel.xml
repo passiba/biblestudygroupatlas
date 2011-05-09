@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-        <entry key="googlemapsearchtitle">Google Maps API</entry>
-	<entry key="googlemapsearchinfo">Ole hyvä,ja täytä osoiteen karttahaku kenttä</entry>
-	<entry key="addressInfo">Haetun osoitteen sijainti kartalla</entry>
-        
-</properties>

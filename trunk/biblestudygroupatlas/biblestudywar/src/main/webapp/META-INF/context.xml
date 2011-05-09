@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Context path="/biblestudy-1.0.0">
-  <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="common" prefix="localhost_biblestudy_access_log." resolveHosts="false" suffix=".txt"/>
-  <!-- <Valve className="org.apache.catalina.valves.RemoteHostValve" allow="tyomuuli,localhost"/> -->
-  <Resource auth="Container" brokerName="LocalActiveMQBroker" brokerURL="vm://localhost" description="JMS Connection Factory" factory="org.apache.activemq.jndi.JNDIReferenceFactory" name="jms/ConnectionFactory" type="org.apache.activemq.ActiveMQConnectionFactory"/>
-  <Resource auth="Container" description="my Queue" factory="org.apache.activemq.jndi.JNDIReferenceFactory" name="jms/bibleDataQueue" physicalName="biblestudy.bookdatastorage.queue" type="org.apache.activemq.command.ActiveMQQueue"/>
-</Context>

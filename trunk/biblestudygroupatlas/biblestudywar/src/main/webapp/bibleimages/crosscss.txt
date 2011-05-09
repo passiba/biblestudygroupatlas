@@ -1,6 +1,0 @@
-<style type="text/css">
-body {
-  background-image: url(http://www.christian-myspace-layouts.com/backgrounds/cross-on-top-grave-stone.jpg);
-}
-</style>
-<div><a href="http://www.christian-myspace-layouts.com/" target="_blank" style="font-size:10px;color:#CCCCCC;">Christian MySpace Backgrounds</a></div>
