@@ -1,7 +1,0 @@
-/*	THIS IS THE BASIC STYLESHEET FOR MODERN BROWSERS
-	-to override default layout and text styles, modify or add the import files.
-*/
-@import url("master/reset.css");  /* reset margins and paddings to 0 */
-@import url("master/structure.css"); /* basic structure */
-@import url("master/elements.css"); /* generic elements (forms, inputs etc.) */
-@import url("master/basic.css"); /* colors, paddings, floats, backgrounds of ids and classes etc. */

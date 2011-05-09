@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-        <entry key="bibleTranslationTitle">Raamatun käännös</entry>
-	<entry key="bibleAbbrev">Raamatun lyhenne</entry>
-	<entry key="bibleName">Raamatun käännös</entry>
-        <entry key="publisherName">Julkaisija</entry>
-        <entry key="publishedDate">Julkaisupäivä</entry>
-</properties>

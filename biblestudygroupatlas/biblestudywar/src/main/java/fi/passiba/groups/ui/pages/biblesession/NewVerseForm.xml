@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-        <entry key="chapterTitle">Luku</entry>
-        <entry key="chapterNum">Luvun nro</entry>
-        <entry key="verseNum">Jae nro</entry>
-        <entry key="verseText">Jae Teksti</entry>
-</properties>
