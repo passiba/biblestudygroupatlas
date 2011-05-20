@@ -56,12 +56,12 @@
         </repository>
     </repositories>
     <dependencies>
-        <!--compiled groovy modules jar file -->
+        <!--compiled groovy modules jar file 
         <dependency>
             <groupId>fi.passiba.biblestudy</groupId>
             <artifactId>biblestudygroovy</artifactId>
             <version>1.0</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>fi.passiba.biblestudy</groupId>
             <artifactId>biblestudypersistance</artifactId>
@@ -113,7 +113,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-spring-annot</artifactId>
+            <artifactId>wicket-spring</artifactId>
             <version>${wicket.version}</version>
         </dependency>
         
