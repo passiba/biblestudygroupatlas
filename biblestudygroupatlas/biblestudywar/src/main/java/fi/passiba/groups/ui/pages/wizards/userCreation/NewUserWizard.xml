@@ -4,6 +4,7 @@
     <entry key="obligatoryfield">* pakollinen tieto</entry>
     
     <entry key="infotitle">Anna käyttäjän tiedot</entry>
+    <entry key="infoformtitle">Käyttäjän tiedot</entry>
     <entry key="infodes">Anna käyttäjän tiedot ja liitä käyttäjä mihin tahansa ryhmään. Anna käyttäjälle myöskin sopiva rooli joko tavallisena käyttäjänä tai sitten ryhmän ylläpitoon kontaktihenkilönä.</entry>
     <entry key="username.title">Käyttäjätunnus </entry>
     <entry key="username.summary">Luo uusi käyttäjä antamalla käyttäjätunnus,salasana ja email-osoite.</entry>
