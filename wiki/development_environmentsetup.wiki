@@ -11,11 +11,12 @@ Setup environment instructions in order to run biblestudygroup atlas application
 Step-by-step instructions:
   * Download maven http://maven.apache.org/download.html
   * Download svn client - tortoisesvn will do...http://tortoisesvn.tigris.org/ 
-  * Checkout thirdparty modules - web scraping tool webharvest from svn repository
-    https://web-harvest.svn.sourceforge.net/svnroot/web-harvest
 
- * Checkout thirdparty modules - wicket stuff modules from wicket-1.3.x branch - needed  module - wicket-contrib-gmap2
-    https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/branches/wicket-1.3.x
+
+
+ * Checkout thirdparty modules - wicket stuff modules from wicketstuff-core-1.4.9.2 branch - needed  module - gmap2
+    
+https://wicket-stuff.svn.sourceforge.net/svnroot/wicket-stuff/tags/wicketstuff-core-1.4.9.2/
 
 * Checkout thirdparty modules from svn repository https://crosswire.org/svn/jsword/trunk
   -needed modules are common and jsword 
