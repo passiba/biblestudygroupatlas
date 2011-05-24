@@ -10,6 +10,7 @@
         <entry key="name">Nimi</entry>
         <entry key="congregationname">Seurakunta</entry>
         <entry key="type">Ryhmän tyyppi</entry>
+         <entry key="congregationwebsiteurl">Seurakunnan kotisivut</entry>
         <entry key="action">Toiminto</entry>
         <entry key="edit">Muokkaa</entry>
         <entry key="delete">Poista</entry>
