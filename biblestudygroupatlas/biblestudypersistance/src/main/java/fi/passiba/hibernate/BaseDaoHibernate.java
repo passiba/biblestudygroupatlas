@@ -1,22 +1,21 @@
 package fi.passiba.hibernate;
 
 
-import org.hibernate.SessionFactory;
-import org.hibernate.Session;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Example;
-import org.hibernate.criterion.Order;
-
 import java.util.List;
+
 import org.hibernate.CacheMode;
+import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
 import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
-import org.hibernate.search.SearchFactory;
 
 public class BaseDaoHibernate<B extends Identifiable> implements BaseDao<B> {
     private SessionFactory sessionFactory;

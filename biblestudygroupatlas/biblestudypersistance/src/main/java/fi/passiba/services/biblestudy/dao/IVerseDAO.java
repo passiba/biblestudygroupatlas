@@ -1,13 +1,13 @@
 package fi.passiba.services.biblestudy.dao;
 
 
-import fi.passiba.hibernate.BaseDao;
 import java.util.List;
 
-import fi.passiba.services.biblestudy.persistance.Chapter;
-import fi.passiba.services.biblestudy.persistance.Verse;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import fi.passiba.hibernate.BaseDao;
+import fi.passiba.services.biblestudy.persistance.Verse;
 
 /**
  * Interface for VerseDAO.

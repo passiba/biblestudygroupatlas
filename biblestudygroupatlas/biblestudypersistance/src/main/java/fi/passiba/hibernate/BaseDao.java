@@ -2,9 +2,6 @@ package fi.passiba.hibernate;
 
 
 
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.annotation.Propagation;
-
 import java.util.List;
 
 public interface BaseDao<B extends Identifiable> {

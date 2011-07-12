@@ -1,14 +1,9 @@
 package fi.passiba.services.persistance;
 
-import fi.passiba.hibernate.AuditableEntity;
-import fi.passiba.hibernate.DomainObject;
-import fi.passiba.hibernate.Identifiable;
-import fi.passiba.services.biblestudy.persistance.Biblesession;
-import fi.passiba.services.group.persistance.Groups;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.AttributeOverride;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,12 +14,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.DocumentId;
@@ -32,6 +27,11 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
+
+import fi.passiba.hibernate.DomainObject;
+import fi.passiba.hibernate.Identifiable;
+import fi.passiba.services.biblestudy.persistance.Biblesession;
+import fi.passiba.services.group.persistance.Groups;
 
 
 /**

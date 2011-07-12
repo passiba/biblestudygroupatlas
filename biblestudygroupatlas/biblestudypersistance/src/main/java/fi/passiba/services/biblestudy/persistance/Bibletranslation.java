@@ -1,9 +1,9 @@
 package fi.passiba.services.biblestudy.persistance;
 
-import fi.passiba.hibernate.AuditableEntity;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,9 +13,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.search.annotations.ContainedIn;
+
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
+
+import fi.passiba.hibernate.AuditableEntity;
 
 /**
  * Bibletranslation entity.

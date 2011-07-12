@@ -3,15 +3,16 @@ package fi.passiba.services.group.dao;
 
 
 
+import java.util.List;
+
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import fi.passiba.hibernate.BaseDao;
 import fi.passiba.hibernate.PaginationInfo;
 import fi.passiba.services.biblestudy.persistance.Biblesession;
-import fi.passiba.services.persistance.Adress;
 import fi.passiba.services.group.persistance.Groups;
 import fi.passiba.services.persistance.Person;
-import java.util.List;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Interface for GroupsDAO.
