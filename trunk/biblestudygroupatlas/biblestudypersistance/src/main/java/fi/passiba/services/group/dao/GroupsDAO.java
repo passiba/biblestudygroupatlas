@@ -3,18 +3,18 @@ package fi.passiba.services.group.dao;
 
 
 
-import fi.passiba.hibernate.BaseDaoHibernate;
-import fi.passiba.hibernate.PaginationInfo;
-import fi.passiba.services.biblestudy.persistance.Biblesession;
-import fi.passiba.services.group.persistance.Groups;
-import fi.passiba.services.persistance.Person;
-import fi.passiba.services.persistance.Adress;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Restrictions;
+
+import fi.passiba.hibernate.BaseDaoHibernate;
+import fi.passiba.hibernate.PaginationInfo;
+import fi.passiba.services.biblestudy.persistance.Biblesession;
+import fi.passiba.services.group.persistance.Groups;
+import fi.passiba.services.persistance.Person;
 
 public class GroupsDAO extends BaseDaoHibernate<Groups> implements IGroupsDAO {
     public GroupsDAO() {
@@ -29,7 +29,8 @@ public class GroupsDAO extends BaseDaoHibernate<Groups> implements IGroupsDAO {
             crit.add(Restrictions.eq("grouptypename", grouptype));
         }
         crit.createCriteria("adress").add(Restrictions.eq("country", country)).add(Restrictions.eq("city", city));
-        return crit.list();
+        List list = crit.list();
+		return list;
     }
 
     public List<Person> findGroupsPersonsByGroupId(Long id) {
@@ -62,7 +63,7 @@ public class GroupsDAO extends BaseDaoHibernate<Groups> implements IGroupsDAO {
 
     public void deleteGroupPersonFromGroup(long personid,long groupid) {
        SQLQuery query= super.getSessionFactory().getCurrentSession().createSQLQuery("delete from groupperson where fk_person_id="+personid+ " and fk_group_id="+groupid);
-       int i=query.executeUpdate();
+       query.executeUpdate();
     }
 
    

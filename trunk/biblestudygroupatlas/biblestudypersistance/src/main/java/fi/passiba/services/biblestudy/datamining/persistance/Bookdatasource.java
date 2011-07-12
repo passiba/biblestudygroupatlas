@@ -1,9 +1,5 @@
 package fi.passiba.services.biblestudy.datamining.persistance;
 
-import fi.passiba.hibernate.AuditableEntity;
-import fi.passiba.services.biblestudy.persistance.Bibletranslation;
-import fi.passiba.services.biblestudy.persistance.Book;
-import fi.passiba.services.persistance.Status;
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import fi.passiba.hibernate.AuditableEntity;
+import fi.passiba.services.biblestudy.persistance.Bibletranslation;
 
 /**
  * Bookdatasource entity....storing the information about the retreival of different
